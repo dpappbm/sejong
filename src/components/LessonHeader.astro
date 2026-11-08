@@ -1,0 +1,30 @@
+---
+import { lessonPath, withBase, type LessonInfo } from '../lib/content';
+
+interface Props {
+  lesson: LessonInfo;
+  /** true on the home page: the number and title link to the lesson page. */
+  linked?: boolean;
+}
+
+const { lesson, linked = false } = Astro.props;
+const pageUrl = withBase(lessonPath(lesson.book, lesson.lesson));
+const pointHref = (point: number) => (linked ? `${pageUrl}#point-${point}` : `#point-${point}`);
+---
+<header class="lesson-header">
+  <div class="lesson-number">
+    {linked ? <a class="lesson-title-link" href={pageUrl}>{lesson.book} · {lesson.lesson}. lecke</a> : <span>{lesson.book} · {lesson.lesson}. lecke</span>}
+    <span class="tag current-lesson progress-tag">itt tartasz</span>
+    <span class="tag future-tag progress-tag">még nem vettük</span>
+    <button class="set-current-button" type="button" data-lesson-key={lesson.key} title="Ezt a leckét tanulom most – az „itt tartasz” erre a leckére áll">◎ Itt tartok</button>
+  </div>
+  <div class="lesson-title">
+    {linked
+      ? <a class="lesson-title-link" href={pageUrl}><span class="korean">{lesson.title.korean}</span></a>
+      : <span class="korean">{lesson.title.korean}</span>}
+    {lesson.title.hungarian && <span class="hungarian">{lesson.title.hungarian}</span>}
+  </div>
+  <div class="lesson-forms">
+    {lesson.points.map(point => <a class="lesson-form korean" href={pointHref(point.point)} set:html={point.form} />)}
+  </div>
+</header>

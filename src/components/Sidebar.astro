@@ -1,0 +1,68 @@
+---
+import { BOOK_DATA, CHAPTER_PATHS, LESSONS, LEVELS, POINT_COUNT, lessonPath, withBase, type LessonInfo } from '../lib/content';
+import { stripTags } from '../lib/html';
+
+interface Props {
+  currentLesson?: LessonInfo;
+}
+
+const { currentLesson } = Astro.props;
+/** Name without the trailing explanation in parentheses, for the menu. */
+const shortName = (name: string) => stripTags(name).replace(/\s*\(.*\)\s*$/, '').trim();
+const isCurrent = (book: string, lesson: number) => currentLesson?.book === book && currentLesson.lesson === lesson;
+---
+<aside class="sidebar" id="sidebar">
+  <div class="brand"><a href={withBase('/')}><span class="korean">한국어</span> nyelvtan · 1A–4B</a></div>
+  <div class="sub">Sejong Korean (2022) · {POINT_COUNT} nyelvtani pont</div>
+  <div class="controls">
+    <div class="row">
+      <select id="progress-select" aria-label="Hol tartasz? (lecke)" title="Hol tartasz? A böngésződ megjegyzi.">
+        <option value="">Hol tartasz? –</option>
+        {LESSONS.map(lesson => <option value={lesson.key}>{lesson.book} · {lesson.lesson}. lecke</option>)}
+        <option value="ALL">Mindet vettük ✓</option>
+      </select>
+      <button class="button" id="theme-toggle" type="button">◐ Téma</button>
+    </div>
+    <label class="progress-only" hidden><input type="checkbox" id="hide-future" /> „Még nem vettük” részek elrejtése</label>
+  </div>
+  <button class="button sidebar-toggle" id="sidebar-toggle" type="button">☰ Tartalomjegyzék</button>
+  <nav>
+    <ul class="table-of-contents">
+      <li class="contents-level"><a href={withBase(CHAPTER_PATHS.basics)}><b style="background:var(--accent)">★</b> Alapszabályok</a></li>
+      <li class="contents-level"><a href={withBase(CHAPTER_PATHS.pronunciation)}><b style="background:var(--accent)">♪</b> Kiejtés</a></li>
+      <li class="contents-level"><a href={withBase(CHAPTER_PATHS.honorifics)}><b style="background:var(--accent)">◆</b> Tiszteleti szavak</a></li>
+      {LEVELS.map(level => (
+        <li class={`contents-level level-${level.color}`}>
+          <a class="level-title" href={withBase(`/#level-${level.id}`)}>{level.hungarian} <span class="korean">· {level.korean}</span></a>
+          <ul>
+            {level.books.map(book => {
+              const points = LESSONS.filter(lesson => lesson.book === book).flatMap(lesson => lesson.points);
+              return (
+                <li>
+                  <details class="contents-book" data-book={book} open={currentLesson?.book === book}>
+                    <summary><span class="disclosure-arrow" aria-hidden="true"></span><span class="book-code">{book}</span> 세종한국어 {book} <span class="count">{BOOK_DATA[book].points.length}</span></summary>
+                    <ul>
+                      {points.map(point => (
+                        <li data-book={book} data-lesson={point.lesson}>
+                          <a
+                            class={isCurrent(book, point.lesson) ? 'active' : undefined}
+                            href={withBase(`${lessonPath(book, point.lesson)}#point-${point.point}`)}
+                            title={`${shortName(point.name)} · ${point.lesson}. lecke`}
+                          >
+                            <span class="korean contents-form" set:html={point.form} />
+                            <span class="contents-name">{shortName(point.name)}</span>
+                            <span class="lesson-label">{point.lesson}</span>
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </details>
+                </li>
+              );
+            })}
+          </ul>
+        </li>
+      ))}
+    </ul>
+  </nav>
+</aside>

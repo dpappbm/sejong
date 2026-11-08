@@ -1,0 +1,47 @@
+---
+import '../styles/global.css';
+import Sidebar from '../components/Sidebar.astro';
+import type { LessonInfo } from '../lib/content';
+
+interface Props {
+  title: string;
+  description?: string;
+  /** Short name of the page for the "← Vissza" button of the next page, e.g. "3A 9. lecke". */
+  pageLabel: string;
+  /** The lesson shown on this page, if it is a lesson page. */
+  lesson?: LessonInfo;
+}
+
+const { title, description = 'A Sejong-tankönyvek (세종한국어 1A–4B) teljes nyelvtana magyarul.', pageLabel, lesson } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+<!doctype html>
+<html lang="hu">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
+    <title>{title}</title>
+    <script is:inline>
+      // Apply the saved theme before the first paint.
+      try { var savedTheme = localStorage.getItem('kg-theme'); if (savedTheme) document.documentElement.setAttribute('data-theme', savedTheme); } catch (error) {}
+    </script>
+  </head>
+  <body data-base={base} data-page-label={pageLabel} data-book={lesson?.book} data-lesson={lesson?.lesson}>
+    <div class="layout">
+      <Sidebar currentLesson={lesson} />
+      <main>
+        <slot />
+        <footer>Készült a 세종한국어 1A–4B (국립국어원, 2022) anyagai alapján, tanulási célra.</footer>
+      </main>
+    </div>
+    <div class="floating-buttons" aria-label="Gyorsgombok">
+      <button class="floating-button floating-to-top" id="to-top" type="button" title="Az oldal tetejére" aria-label="Az oldal tetejére">↑</button>
+      <a class="floating-button floating-current-lesson progress-only progress-current-only progress-current-link" href="#" hidden title="Ugrás a leckéhez, ahol tartasz" aria-label="Itt tartasz: ugrás a leckéhez">◎<span class="floating-label">Itt tartasz</span></a>
+    </div>
+    <script>
+      import '../scripts/site';
+    </script>
+  </body>
+</html>

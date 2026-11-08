@@ -1,0 +1,44 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BackButton from '../../components/BackButton.astro';
+import LessonHeader from '../../components/LessonHeader.astro';
+import LessonNavigation from '../../components/LessonNavigation.astro';
+import { LEVELS, lessonPath } from '../../lib/content';
+import { getSite, localizeLinks, type LessonContent } from '../../lib/site';
+import { stripTags } from '../../lib/html';
+
+export function getStaticPaths() {
+  return getSite().lessons.map(lesson => ({
+    params: { book: lesson.book.toLowerCase(), lesson: String(lesson.lesson) },
+    props: { lesson },
+  }));
+}
+
+interface Props {
+  lesson: LessonContent;
+}
+
+const { lesson } = Astro.props;
+const level = LEVELS.find(item => item.books.includes(lesson.book))!;
+const html = localizeLinks(lesson.html, lessonPath(lesson.book, lesson.lesson));
+const label = `${lesson.book} ${lesson.lesson}. lecke`;
+---
+<BaseLayout
+  title={`${label}: ${lesson.title.korean} – 한국어 문법`}
+  description={`${label} (${lesson.title.hungarian}): ${lesson.points.map(point => stripTags(point.form)).join(', ')}`}
+  pageLabel={label}
+  lesson={lesson}
+>
+  <BackButton />
+  <LessonNavigation lesson={lesson} />
+  <section class={`lesson lesson-page level-${level.color}`} id="lesson" data-book={lesson.book} data-lesson={lesson.lesson}>
+    <LessonHeader lesson={lesson} />
+    <div class="lesson-sticky-bar" aria-hidden="true" title="A lecke elejére">
+      <span class="lesson-label">{lesson.book} · {lesson.lesson}. lecke</span>
+      <span class="tag current-lesson">itt tartasz</span>
+      <span class="korean">{lesson.title.korean}</span>
+    </div>
+    <Fragment set:html={html} />
+  </section>
+  <LessonNavigation lesson={lesson} />
+</BaseLayout>

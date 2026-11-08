@@ -1,0 +1,16 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BackButton from '../components/BackButton.astro';
+import { CHAPTER_PATHS } from '../lib/content';
+import { getSite, localizeLinks } from '../lib/site';
+
+const html = localizeLinks(getSite().pronunciationHtml, CHAPTER_PATHS.pronunciation);
+---
+<BaseLayout title="Kiejtés – 한국어 문법" pageLabel="Kiejtés" description="A tankönyvi „발음” dobozok szabálytípus szerint, példákkal és magyar fordítással.">
+  <BackButton />
+  <section class="chapter-section pronunciation-chapter">
+    <h2><span class="level-badge" style="background:var(--accent)">♪</span> Kiejtés <span class="korean">(발음)</span></h2>
+    <p class="pronunciation-chapter-intro">A tankönyvi „발음” dobozok szabálytípus szerint. Mindegyiknél ott a tankönyvi mintaszó és a gyakorló példák a kiejtéssel, magyar fordítással és a lecke linkjével. A gyakorló példák kiejtését a tankönyv nem írja ki; ez a lecke szabályának alkalmazása.</p>
+    <Fragment set:html={html} />
+  </section>
+</BaseLayout>

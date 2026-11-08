@@ -1,0 +1,40 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import LessonHeader from '../components/LessonHeader.astro';
+import { BOOK_DATA, LESSONS, LEVELS, POINT_COUNT } from '../lib/content';
+---
+<BaseLayout title="한국어 문법 – a Sejong-tankönyvek teljes nyelvtana" pageLabel="Főoldal">
+  <div class="hero">
+    <h1><span class="korean">한국어 문법</span> – a Sejong-tankönyvek teljes nyelvtana</h1>
+    <p>A 세종한국어 1A–4B (2022-es kiadás) összes nyelvtani pontja szintek, könyvek és leckék szerint. Mindegyiknél van magyar magyarázat, képzési szabály (mássalhangzó / magánhangzó / ㄹ után), rendhagyó alakok és lefordított példamondatok.</p>
+    <div class="stats">
+      <div class="stat"><b>{POINT_COUNT}</b><span>nyelvtani pont</span></div>
+      <div class="stat progress-only" hidden><b id="stat-done">0</b><span>már vetted</span></div>
+      <div class="stat progress-only" hidden><b id="stat-future">0</b><span>még előtted</span></div>
+      <div class="stat"><b>8</b><span>könyv · 4 szint</span></div>
+    </div>
+    <div class="legend">
+      <span><span class="tag textbook">Tankönyv</span> a könyv szerinti tartalom</span>
+      <span><span class="tag own">＋ Saját</span> saját kiegészítés, nincs a könyvben</span>
+      <span class="progress-only" hidden><span class="tag future-tag">még nem vettük</span> a beállított lecke után</span>
+      <span class="progress-only progress-current-only" hidden><span class="tag current-lesson">itt tartasz</span> <a class="cross-reference progress-current-link" href="#"><span class="progress-current-label"></span>. lecke</a></span>
+      <span class="progress-none-only">A bal oldali <b>„Hol tartasz?”</b> menüben megadhatod, melyik leckénél tartasz: ekkor az oldal jelöli, mit vettél már és mit nem. A böngésződ megjegyzi.</span>
+    </div>
+    <p style="font-size:.85rem;margin-top:12px">Forrás: a 어휘·표현과 문법 (VG) és a Student Book (SB) nyelvtani oldalai; az oldalszám a könyv saját számozása. A példamondatok saját mondatok a tankönyvi minták alapján. A képzési táblázatok alakjait (a rendhagyó szavak soraival együtt) egy ragozó program számolja, és ismert alakokkal van ellenőrizve.</p>
+  </div>
+  {LEVELS.map(level => (
+    <details class={`level level-${level.color}`} id={`level-${level.id}`} open>
+      <summary class="level-summary"><h2><span class="disclosure-arrow" aria-hidden="true"></span><span class="level-badge">{level.hungarian}</span> <span class="korean">({level.korean})</span><span class="count">{level.books.reduce((sum, book) => sum + BOOK_DATA[book].points.length, 0)} pont</span></h2></summary>
+      {level.books.map(book => (
+        <details class="book" id={`book-${book}`} open>
+          <summary class="book-summary"><h3 class="book-heading"><span class="disclosure-arrow" aria-hidden="true"></span><span class="book-code">{book}</span> 세종한국어 {book}<span class="count">{BOOK_DATA[book].points.length} pont</span></h3></summary>
+          {LESSONS.filter(lesson => lesson.book === book).map(lesson => (
+            <div class="lesson lesson-row" data-book={lesson.book} data-lesson={lesson.lesson}>
+              <LessonHeader lesson={lesson} linked />
+            </div>
+          ))}
+        </details>
+      ))}
+    </details>
+  ))}
+</BaseLayout>

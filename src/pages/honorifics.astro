@@ -1,0 +1,15 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BackButton from '../components/BackButton.astro';
+import { CHAPTER_PATHS } from '../lib/content';
+import { getSite, localizeLinks } from '../lib/site';
+
+const html = localizeLinks(getSite().honorificsHtml, CHAPTER_PATHS.honorifics);
+---
+<BaseLayout title="Tiszteleti szavak – 한국어 문법" pageLabel="Tiszteleti szavak" description="Tiszteleti és szerény szavak (높임말): partikulák, főnevek, igék, szerény alakok és megszólítás.">
+  <BackButton />
+  <section class="chapter-section honorifics-chapter">
+    <h2><span class="level-badge" style="background:var(--accent)">◆</span> Tiszteleti szavak <span class="korean">(높임말)</span> <span class="tag own">＋ Saját összeállítás</span></h2>
+    <Fragment set:html={html} />
+  </section>
+</BaseLayout>
