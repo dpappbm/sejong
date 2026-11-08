@@ -1,0 +1,21 @@
+---
+import { withBase } from '../lib/content';
+import { neighbours } from '../lib/navigation';
+
+interface Props {
+  /** Path of the current page, e.g. "/3a/9/" or "/basics/". */
+  path: string;
+}
+
+const { previous, next } = neighbours(Astro.props.path);
+---
+<nav class="lesson-navigation" aria-label="Előző és következő oldal">
+  <a class="previous" href={withBase(previous.path)}>
+    <span class="direction">← Előző</span>
+    <span class="target">{previous.label} {previous.korean && <span class="korean">{previous.korean}</span>}</span>
+  </a>
+  <a class="next" href={withBase(next.path)}>
+    <span class="direction">Következő →</span>
+    <span class="target">{next.label} {next.korean && <span class="korean">{next.korean}</span>}</span>
+  </a>
+</nav>

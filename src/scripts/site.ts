@@ -1,13 +1,18 @@
-// Browser behaviour of every page: theme, per-visitor progress ("Hol tartasz?"), the sticky lesson bar,
-// the "← Vissza" button, the floating buttons and the flash on arriving at a grammar point.
+// Browser behaviour of every page: theme, per-visitor progress ("Hol tartasz?"), the loading bar of page changes,
+// the sticky lesson bar, the "← Vissza" button, the floating buttons and the flash on arriving at a grammar point.
 // Progress and theme live in the visitor's localStorage (kg-progress, kg-hideFuture, kg-theme); keys kept from the old site.
+//
+// Pages change through Astro's ClientRouter: the sidebar, the floating buttons and the loading bar persist, the rest of
+// the body is swapped. Listeners on document and window are set once; per-page work runs on "astro:page-load".
+import { navigate } from 'astro:transitions/client';
 
 const BOOKS = ['1A', '1B', '2A', '2B', '3A', '3B', '4A', '4B'];
 const LESSON_KEY_PATTERN = /^([1-4][AB])-(\d+)$/;
 
 const root = document.documentElement;
-const body = document.body;
-const base = body.dataset.base ?? '';
+/** The body is replaced on every page change, so its data is always read fresh. */
+const pageData = () => document.body.dataset;
+const base = () => pageData().base ?? '';
 
 function readStorage(key: string, storage: Storage = localStorage): string | null {
   try {
@@ -25,7 +30,15 @@ function writeStorage(key: string, value: string, storage: Storage = localStorag
 }
 
 const positionOf = (book: string, lesson: string | number) => BOOKS.indexOf(book) * 100 + Number(lesson);
-const lessonUrl = (book: string, lesson: string | number) => `${base}/${book.toLowerCase()}/${lesson}/`;
+const lessonUrl = (book: string, lesson: string | number) => `${base()}/${book.toLowerCase()}/${lesson}/`;
+
+// Persistent elements (they survive page changes).
+const progressSelect = document.getElementById('progress-select') as HTMLSelectElement;
+const hideFutureCheckbox = document.getElementById('hide-future') as HTMLInputElement;
+const sidebar = document.getElementById('sidebar')!;
+const toTopButton = document.getElementById('to-top')!;
+const loadingBar = document.getElementById('navigation-progress')!;
+const lessonKeys = Array.from(progressSelect.options).map(option => option.value).filter(value => LESSON_KEY_PATTERN.test(value));
 
 // ---------- theme ----------
 document.getElementById('theme-toggle')?.addEventListener('click', () => {
@@ -35,16 +48,36 @@ document.getElementById('theme-toggle')?.addEventListener('click', () => {
   root.setAttribute('data-theme', next);
   writeStorage('kg-theme', next);
 });
+// A page change copies the new page's <html> attributes; keep the chosen theme on it.
+document.addEventListener('astro:before-swap', event => {
+  const theme = readStorage('kg-theme');
+  if (theme) event.newDocument.documentElement.setAttribute('data-theme', theme);
+});
+
+// ---------- loading bar: appears if the new page takes longer than a moment ----------
+let loadingTimer: ReturnType<typeof setTimeout> | undefined;
+/** 'traverse' = browser back/forward: the router restores the scroll position, so the page must not jump to the hash. */
+let navigationType = 'initial';
+document.addEventListener('astro:before-preparation', event => {
+  navigationType = event.navigationType;
+  clearTimeout(loadingTimer);
+  loadingTimer = setTimeout(() => loadingBar.classList.add('loading'), 100);
+});
+document.addEventListener('astro:after-swap', () => {
+  clearTimeout(loadingTimer);
+  loadingBar.classList.remove('loading');
+});
+
+// The persisted menu is moved into the new body, which resets its scroll position: keep it.
+let sidebarScrollTop = 0;
+document.addEventListener('astro:before-swap', () => { sidebarScrollTop = sidebar.scrollTop; });
+document.addEventListener('astro:after-swap', () => { sidebar.scrollTop = sidebarScrollTop; });
 
 // ---------- progress ----------
-const progressSelect = document.getElementById('progress-select') as HTMLSelectElement;
-const hideFutureCheckbox = document.getElementById('hide-future') as HTMLInputElement;
-const lessonKeys = Array.from(progressSelect.options).map(option => option.value).filter(value => LESSON_KEY_PATTERN.test(value));
-
 /** Book and lesson a link points to: "/base/3a/9/#point-1", or "#point-1" on the current lesson page. */
 function linkTarget(link: HTMLAnchorElement): [string, string] | null {
   const href = link.getAttribute('href') ?? '';
-  if (href.startsWith('#point-') && body.dataset.book) return [body.dataset.book, body.dataset.lesson ?? ''];
+  if (href.startsWith('#point-') && pageData().book) return [pageData().book!, pageData().lesson ?? ''];
   const match = /\/([1-4][ab])\/(\d+)\/(?:#point-\d+)?$/i.exec(href);
   return match ? [match[1].toUpperCase(), match[2]] : null;
 }
@@ -73,7 +106,10 @@ function applyProgress(value: string): void {
   document.querySelectorAll<HTMLElement>('.contents-book li[data-book]').forEach(element => {
     const state = mark(element, element.dataset.book!, element.dataset.lesson!);
     element.classList.toggle('current-lesson', state.isCurrent);
-    if (current !== null) state.isDone ? done++ : future++;
+    if (current !== null) {
+      if (state.isDone) done++;
+      else future++;
+    }
   });
   document.querySelectorAll<HTMLElement>('tr.pronunciation-row[data-book]').forEach(element => mark(element, element.dataset.book!, element.dataset.lesson!));
   document.querySelectorAll<HTMLAnchorElement>('a.cross-reference, a.related-link, a.group-link').forEach(link => {
@@ -92,12 +128,10 @@ function applyProgress(value: string): void {
   if (futureStat) futureStat.textContent = String(future);
   if (current === null) {
     hideFutureCheckbox.checked = false;
-    body.classList.remove('future-hidden');
+    document.body.classList.remove('future-hidden');
   } else {
     hideFutureCheckbox.checked = readStorage('kg-hideFuture') === '1';
-    body.classList.toggle('future-hidden', hideFutureCheckbox.checked);
-    const menuBook = lessonMatch && document.querySelector<HTMLDetailsElement>(`.contents-book[data-book="${lessonMatch[1]}"]`);
-    if (menuBook) menuBook.open = true;
+    document.body.classList.toggle('future-hidden', hideFutureCheckbox.checked);
   }
 }
 
@@ -105,12 +139,15 @@ function setProgress(value: string): void {
   progressSelect.value = value;
   writeStorage('kg-progress', value);
   applyProgress(value);
+  const match = LESSON_KEY_PATTERN.exec(value);
+  const menuBook = match && document.querySelector<HTMLDetailsElement>(`.contents-book[data-book="${match[1]}"]`);
+  if (menuBook) menuBook.open = true;
 }
 
-let savedProgress = readStorage('kg-progress') ?? '';
-if (savedProgress && !Array.from(progressSelect.options).some(option => option.value === savedProgress)) savedProgress = '';
-progressSelect.value = savedProgress;
-applyProgress(savedProgress);
+function savedProgress(): string {
+  const saved = readStorage('kg-progress') ?? '';
+  return Array.from(progressSelect.options).some(option => option.value === saved) ? saved : '';
+}
 
 // Choosing a lesson in "Hol tartasz?" sets the progress and opens that lesson's page.
 progressSelect.addEventListener('change', () => {
@@ -118,7 +155,7 @@ progressSelect.addEventListener('change', () => {
   const match = LESSON_KEY_PATTERN.exec(progressSelect.value);
   if (match) {
     rememberOrigin(lessonUrl(match[1], match[2]));
-    location.href = lessonUrl(match[1], match[2]);
+    navigate(lessonUrl(match[1], match[2]));
   }
 });
 
@@ -131,9 +168,22 @@ document.addEventListener('click', event => {
 });
 
 hideFutureCheckbox.addEventListener('change', () => {
-  body.classList.toggle('future-hidden', hideFutureCheckbox.checked);
+  document.body.classList.toggle('future-hidden', hideFutureCheckbox.checked);
   writeStorage('kg-hideFuture', hideFutureCheckbox.checked ? '1' : '0');
 });
+
+// ---------- the menu follows the page: highlight the shown lesson and open its book ----------
+function highlightMenu(): void {
+  const { book, lesson } = pageData();
+  sidebar.querySelectorAll<HTMLAnchorElement>('.contents-book li[data-book] > a').forEach(link => {
+    const item = link.parentElement!;
+    link.classList.toggle('active', !!book && item.dataset.book === book && item.dataset.lesson === lesson);
+  });
+  if (book) {
+    const menuBook = sidebar.querySelector<HTMLDetailsElement>(`.contents-book[data-book="${book}"]`);
+    if (menuBook) menuBook.open = true;
+  }
+}
 
 // ---------- arriving at an element: open its collapsed parents, flash a grammar point ----------
 function openParents(element: Element): void {
@@ -144,17 +194,18 @@ function openParents(element: Element): void {
   }
 }
 
-function arriveAt(id: string): void {
+/** smooth: true for jumps within the page; arriving from another page lands on the target at once. */
+function arriveAt(id: string, smooth: boolean): void {
   const element = id ? document.getElementById(id) : null;
   if (!element) return;
   // A hidden ("not yet learned") target: switch hiding off, otherwise the link would lead nowhere.
-  if (body.classList.contains('future-hidden') && element.closest('.future')) {
+  if (document.body.classList.contains('future-hidden') && element.closest('.future')) {
     hideFutureCheckbox.checked = false;
-    body.classList.remove('future-hidden');
+    document.body.classList.remove('future-hidden');
     writeStorage('kg-hideFuture', '0');
   }
   openParents(element);
-  element.scrollIntoView();
+  element.scrollIntoView({ behavior: smooth ? 'smooth' : 'instant' });
   if (element.classList.contains('grammar-point')) {
     element.classList.remove('flash');
     void element.offsetWidth; // restart the animation
@@ -163,8 +214,7 @@ function arriveAt(id: string): void {
   }
 }
 
-window.addEventListener('hashchange', () => arriveAt(decodeURIComponent(location.hash.slice(1))));
-if (location.hash) arriveAt(decodeURIComponent(location.hash.slice(1)));
+window.addEventListener('hashchange', () => arriveAt(decodeURIComponent(location.hash.slice(1)), true));
 window.addEventListener('beforeprint', () => document.querySelectorAll('details').forEach(details => { details.open = true; }));
 
 // ---------- "← Vissza" button ----------
@@ -180,20 +230,22 @@ const normalizedUrl = (url: string) => {
 };
 
 function rememberOrigin(target: string): void {
-  const origin: Origin = { target: normalizedUrl(target), label: body.dataset.pageLabel ?? '' };
+  const origin: Origin = { target: normalizedUrl(target), label: pageData().pageLabel ?? '' };
   writeStorage(ORIGIN_KEY, JSON.stringify(origin), sessionStorage);
 }
 
 document.addEventListener('click', event => {
   const link = (event.target as Element).closest<HTMLAnchorElement>('a[href]');
-  if (!link || link.target || event.defaultPrevented) return;
+  // The router's own click handler runs first and cancels the default action, so defaultPrevented is not checked here.
+  if (!link || link.target) return;
   const url = new URL(link.href, location.href);
   if (url.origin !== location.origin || url.pathname === location.pathname) return;
   rememberOrigin(url.href);
 });
 
-const backButton = document.getElementById('back-button') as HTMLButtonElement | null;
-if (backButton) {
+function showBackButton(): void {
+  const backButton = document.getElementById('back-button') as HTMLButtonElement | null;
+  if (!backButton) return;
   let origin: Origin | null = null;
   try {
     origin = JSON.parse(readStorage(ORIGIN_KEY, sessionStorage) ?? 'null');
@@ -208,28 +260,26 @@ if (backButton) {
 }
 
 // ---------- floating "↑" button: visible only on a scrolled page ----------
-const toTopButton = document.getElementById('to-top')!;
 const updateToTop = () => toTopButton.classList.toggle('faded-out', window.scrollY < 400);
 window.addEventListener('scroll', updateToTop, { passive: true });
-updateToTop();
 toTopButton.addEventListener('click', () => {
-  history.pushState(null, '', location.pathname + location.search);
+  history.replaceState(history.state, '', location.pathname + location.search);
   window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
 // ---------- sticky lesson bar ----------
 // Shown once the lesson header has scrolled out while the lesson still continues ("stuck").
 // "scrolling-down": on mobile the bar hides while scrolling down.
-const lessonPage = document.querySelector<HTMLElement>('.lesson-page');
 let lastScrollY = window.scrollY;
 let stickyUpdateQueued = false;
 function updateSticky(): void {
   stickyUpdateQueued = false;
   const y = window.scrollY;
   if (Math.abs(y - lastScrollY) > 8) {
-    body.classList.toggle('scrolling-down', y > lastScrollY);
+    document.body.classList.toggle('scrolling-down', y > lastScrollY);
     lastScrollY = y;
   }
+  const lessonPage = document.querySelector<HTMLElement>('.lesson-page');
   if (!lessonPage) return;
   const header = lessonPage.querySelector('.lesson-header')!.getBoundingClientRect();
   const lesson = lessonPage.getBoundingClientRect();
@@ -241,13 +291,32 @@ window.addEventListener('scroll', () => {
     requestAnimationFrame(updateSticky);
   }
 }, { passive: true });
-lessonPage?.querySelector('.lesson-sticky-bar')?.addEventListener('click', () => {
-  lessonPage.scrollIntoView({ block: 'start' });
+document.addEventListener('click', event => {
+  if (!(event.target as Element).closest('.lesson-sticky-bar')) return;
+  document.querySelector('.lesson-page')?.scrollIntoView({ block: 'start' });
 });
 
 // ---------- mobile menu ----------
-const sidebar = document.getElementById('sidebar')!;
 document.getElementById('sidebar-toggle')?.addEventListener('click', () => sidebar.classList.toggle('open'));
 sidebar.addEventListener('click', event => {
   if ((event.target as Element).closest('a') && innerWidth <= 900) sidebar.classList.remove('open');
+});
+
+// ---------- every page (first load and each page change) ----------
+let firstLoad = true;
+document.addEventListener('astro:page-load', () => {
+  const saved = savedProgress();
+  progressSelect.value = saved;
+  applyProgress(saved);
+  if (firstLoad) {
+    const match = LESSON_KEY_PATTERN.exec(saved);
+    const menuBook = match && document.querySelector<HTMLDetailsElement>(`.contents-book[data-book="${match[1]}"]`);
+    if (menuBook) menuBook.open = true;
+    firstLoad = false;
+  }
+  highlightMenu();
+  showBackButton();
+  updateToTop();
+  updateSticky();
+  if (location.hash && navigationType !== 'traverse') arriveAt(decodeURIComponent(location.hash.slice(1)), false);
 });

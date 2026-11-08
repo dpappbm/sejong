@@ -11,7 +11,7 @@ const { currentLesson } = Astro.props;
 const shortName = (name: string) => stripTags(name).replace(/\s*\(.*\)\s*$/, '').trim();
 const isCurrent = (book: string, lesson: number) => currentLesson?.book === book && currentLesson.lesson === lesson;
 ---
-<aside class="sidebar" id="sidebar">
+<aside class="sidebar" id="sidebar" transition:persist>
   <div class="brand"><a href={withBase('/')}><span class="korean">한국어</span> nyelvtan · 1A–4B</a></div>
   <div class="sub">Sejong Korean (2022) · {POINT_COUNT} nyelvtani pont</div>
   <div class="controls">
@@ -28,9 +28,14 @@ const isCurrent = (book: string, lesson: number) => currentLesson?.book === book
   <button class="button sidebar-toggle" id="sidebar-toggle" type="button">☰ Tartalomjegyzék</button>
   <nav>
     <ul class="table-of-contents">
-      <li class="contents-level"><a href={withBase(CHAPTER_PATHS.basics)}><b style="background:var(--accent)">★</b> Alapszabályok</a></li>
-      <li class="contents-level"><a href={withBase(CHAPTER_PATHS.pronunciation)}><b style="background:var(--accent)">♪</b> Kiejtés</a></li>
-      <li class="contents-level"><a href={withBase(CHAPTER_PATHS.honorifics)}><b style="background:var(--accent)">◆</b> Tiszteleti szavak</a></li>
+      <li class="contents-level contents-general">
+        <span class="level-title">Általános</span>
+        <ul>
+          <li><a href={withBase(CHAPTER_PATHS.basics)}><b>★</b> Alapszabályok</a></li>
+          <li><a href={withBase(CHAPTER_PATHS.pronunciation)}><b>♪</b> Kiejtés</a></li>
+          <li><a href={withBase(CHAPTER_PATHS.honorifics)}><b>◆</b> Tiszteleti szavak</a></li>
+        </ul>
+      </li>
       {LEVELS.map(level => (
         <li class={`contents-level level-${level.color}`}>
           <a class="level-title" href={withBase(`/#level-${level.id}`)}>{level.hungarian} <span class="korean">· {level.korean}</span></a>

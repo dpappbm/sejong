@@ -7,4 +7,6 @@ export default defineConfig({
   // Final base path is decided at deploy time.
   base: '/sejong-astro',
   trailingSlash: 'always',
+  // Pages load in the background when a link is hovered, so most navigations are instant.
+  prefetch: { prefetchAll: true, defaultStrategy: 'hover' },
 });

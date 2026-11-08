@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import BackButton from '../components/BackButton.astro';
+import PageNavigation from '../components/PageNavigation.astro';
 import { CHAPTER_PATHS } from '../lib/content';
 import { getSite, localizeLinks } from '../lib/site';
 
@@ -8,8 +9,10 @@ const html = localizeLinks(getSite().basicsHtml, CHAPTER_PATHS.basics);
 ---
 <BaseLayout title="Alapszabályok – 한국어 문법" pageLabel="Alapszabályok" description="Alapszabályok: szótő, 받침, a -아/어 összevonás, rendhagyó igék, partikulák, jelzői alakok és beszédszintek.">
   <BackButton />
+  <PageNavigation path={CHAPTER_PATHS.basics} />
   <section class="chapter-section">
     <h2><span class="level-badge" style="background:var(--accent)">★</span> Alapszabályok <span class="tag own">＋ Saját összefoglaló</span></h2>
     <Fragment set:html={html} />
   </section>
+  <PageNavigation path={CHAPTER_PATHS.basics} />
 </BaseLayout>

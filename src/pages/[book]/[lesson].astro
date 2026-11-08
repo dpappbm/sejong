@@ -2,7 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import BackButton from '../../components/BackButton.astro';
 import LessonHeader from '../../components/LessonHeader.astro';
-import LessonNavigation from '../../components/LessonNavigation.astro';
+import PageNavigation from '../../components/PageNavigation.astro';
 import { LEVELS, lessonPath } from '../../lib/content';
 import { getSite, localizeLinks, type LessonContent } from '../../lib/site';
 import { stripTags } from '../../lib/html';
@@ -20,7 +20,8 @@ interface Props {
 
 const { lesson } = Astro.props;
 const level = LEVELS.find(item => item.books.includes(lesson.book))!;
-const html = localizeLinks(lesson.html, lessonPath(lesson.book, lesson.lesson));
+const path = lessonPath(lesson.book, lesson.lesson);
+const html = localizeLinks(lesson.html, path);
 const label = `${lesson.book} ${lesson.lesson}. lecke`;
 ---
 <BaseLayout
@@ -30,7 +31,7 @@ const label = `${lesson.book} ${lesson.lesson}. lecke`;
   lesson={lesson}
 >
   <BackButton />
-  <LessonNavigation lesson={lesson} />
+  <PageNavigation path={path} />
   <section class={`lesson lesson-page level-${level.color}`} id="lesson" data-book={lesson.book} data-lesson={lesson.lesson}>
     <LessonHeader lesson={lesson} />
     <div class="lesson-sticky-bar" aria-hidden="true" title="A lecke elejére">
@@ -40,5 +41,5 @@ const label = `${lesson.book} ${lesson.lesson}. lecke`;
     </div>
     <Fragment set:html={html} />
   </section>
-  <LessonNavigation lesson={lesson} />
+  <PageNavigation path={path} />
 </BaseLayout>

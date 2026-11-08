@@ -1,4 +1,5 @@
 ---
+import { ClientRouter } from 'astro:transitions';
 import '../styles/global.css';
 import Sidebar from '../components/Sidebar.astro';
 import type { LessonInfo } from '../lib/content';
@@ -23,12 +24,14 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     <meta name="description" content={description} />
     <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
     <title>{title}</title>
+    <ClientRouter />
     <script is:inline>
       // Apply the saved theme before the first paint.
       try { var savedTheme = localStorage.getItem('kg-theme'); if (savedTheme) document.documentElement.setAttribute('data-theme', savedTheme); } catch (error) {}
     </script>
   </head>
   <body data-base={base} data-page-label={pageLabel} data-book={lesson?.book} data-lesson={lesson?.lesson}>
+    <div class="navigation-progress" id="navigation-progress" aria-hidden="true" transition:persist></div>
     <div class="layout">
       <Sidebar currentLesson={lesson} />
       <main>
@@ -36,7 +39,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         <footer>Készült a 세종한국어 1A–4B (국립국어원, 2022) anyagai alapján, tanulási célra.</footer>
       </main>
     </div>
-    <div class="floating-buttons" aria-label="Gyorsgombok">
+    <div class="floating-buttons" aria-label="Gyorsgombok" transition:persist>
       <button class="floating-button floating-to-top" id="to-top" type="button" title="Az oldal tetejére" aria-label="Az oldal tetejére">↑</button>
       <a class="floating-button floating-current-lesson progress-only progress-current-only progress-current-link" href="#" hidden title="Ugrás a leckéhez, ahol tartasz" aria-label="Itt tartasz: ugrás a leckéhez">◎<span class="floating-label">Itt tartasz</span></a>
     </div>

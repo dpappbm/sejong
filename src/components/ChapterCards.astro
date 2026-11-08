@@ -1,0 +1,23 @@
+---
+// Home page: one card per chapter (basic rules, pronunciation, honorific words) with its cards as link chips.
+import { withBase } from '../lib/content';
+import { chapterOutline } from '../lib/site';
+
+const chapters = chapterOutline();
+---
+<section class="chapter-cards" aria-label="Általános fejezetek">
+  {chapters.map(chapter => (
+    <div class="chapter-card">
+      <div class="chapter-card-title">
+        <span class="level-badge">{chapter.symbol}</span>
+        <a class="chapter-card-link" href={withBase(chapter.path)}>{chapter.title}</a>
+        {chapter.korean && <span class="korean">({chapter.korean})</span>}
+        {chapter.ownTag && <span class="tag own">{chapter.ownTag}</span>}
+      </div>
+      <p class="chapter-card-description">{chapter.description}</p>
+      <div class="lesson-forms">
+        {chapter.items.map(item => <a class="lesson-form" href={item.href}>{item.label}</a>)}
+      </div>
+    </div>
+  ))}
+</section>

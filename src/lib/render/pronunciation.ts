@@ -96,7 +96,7 @@ export function pronunciationChapter(): string {
           `<tr class="pronunciation-row" ${attributes}><td class="korean">${korean}</td><td class="korean${value ? '' : ' empty'}">${value ? notation(value) : '–'}</td><td>${hungarian}${forwardMark(`pronunciation ${book}-${lesson}`, korean)}</td></tr>`).join('');
     }).join('');
     const links = lessons.map(({ book, lesson }) => `<a class="cross-reference" href="#lesson-${book}-${lesson}">${book} ${lesson}</a>`).join(', ');
-    return `<details class="card pronunciation-category"><summary>${disclosureArrow}<h3 id="pronunciation-${category.id}">${index + 1}. ${category.hungarian} <span class="korean">(${category.korean})</span></h3></summary>` +
+    return `<details class="card pronunciation-category" open><summary>${disclosureArrow}<h3 id="pronunciation-${category.id}">${index + 1}. ${category.hungarian} <span class="korean">(${category.korean})</span></h3></summary>` +
       `<p>${category.intro} ${ownTag()}</p><p class="pronunciation-category-lessons">Tankönyvi leckék: ${links}</p>` +
       `<div class="table-wrapper"><table class="plain pronunciation-table"><thead><tr><th>Példa</th><th>Kiejtés</th><th>Magyarul</th></tr></thead><tbody>${rows}</tbody></table></div>${categoryExtra(category.extra)}</details>`;
   }).join('\n');

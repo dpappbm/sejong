@@ -1,7 +1,9 @@
 // Renders the whole content once (cross-references need the full link graph) and serves it page by page.
 import { basicsHtml } from '../data/basics';
 import { lexiconEntry, translatedCell, wordGloss } from './translations';
-import { LESSONS, locate, withBase, type LessonInfo } from './content';
+import honorifics from '../data/honorifics';
+import pronunciation from '../data/pronunciation';
+import { CHAPTER_PATHS, LESSONS, locate, withBase, type LessonInfo } from './content';
 import { fillRelatedBars, indexPoints, linkSegment, linkTargets, relatedPlaceholder } from './crossReferences';
 import { disclosureArrow, stripTags, translationLine } from './html';
 import { problems } from './problems';
@@ -40,7 +42,8 @@ function renderBasics(): string {
     linkTargets.set('rule-' + number, { label: 'Alapszabályok', form: plainTitle, plain: true, title: `Alapszabályok · ${plainTitle}` });
     return `<summary>${disclosureArrow}<h3 id="rule-${number}">${number}. ${title}</h3></summary>`;
   });
-  return html;
+  // On its own page every card starts open.
+  return html.replace(/<details class="card">/g, '<details class="card" open>');
 }
 
 /** Links the references of each rule card and places its "Kapcsolódó pontok" bar before the card's end. */
@@ -99,4 +102,43 @@ export function localizeLinks(html: string, pagePath: string): string {
       const location = locate(id);
       return location && location.path === pagePath && location.anchor ? ` id="${location.anchor}"` : match;
     });
+}
+
+export interface ChapterOutline {
+  path: string;
+  symbol: string;
+  title: string;
+  korean?: string;
+  ownTag?: string;
+  description: string;
+  /** The chapter's cards, each linking to its place on the chapter page. */
+  items: { label: string; href: string }[];
+}
+
+const hrefOf = (id: string) => {
+  const location = locate(id)!;
+  return withBase(location.path) + (location.anchor ? '#' + location.anchor : '');
+};
+
+/** The three chapters for the home page cards. */
+export function chapterOutline(): ChapterOutline[] {
+  getSite(); // registers the rule titles as link targets
+  const rules = [...linkTargets.entries()].filter(([id]) => id.startsWith('rule-')).sort(([a], [b]) => Number(a.slice(5)) - Number(b.slice(5)));
+  return [
+    {
+      path: CHAPTER_PATHS.basics, symbol: '★', title: 'Alapszabályok', ownTag: '＋ Saját összefoglaló',
+      description: 'Szótő és 받침, a -아/어 összevonás, rendhagyó igék, partikulák, jelzői alakok és beszédszintek.',
+      items: rules.map(([id, target]) => ({ label: target.form, href: hrefOf(id) })),
+    },
+    {
+      path: CHAPTER_PATHS.pronunciation, symbol: '♪', title: 'Kiejtés', korean: '발음',
+      description: 'A tankönyvi „발음” dobozok szabálytípus szerint, a leckék példáival.',
+      items: pronunciation.categories.map(category => ({ label: category.hungarian, href: hrefOf('pronunciation-' + category.id) })),
+    },
+    {
+      path: CHAPTER_PATHS.honorifics, symbol: '◆', title: 'Tiszteleti szavak', korean: '높임말', ownTag: '＋ Saját összeállítás',
+      description: 'Tiszteleti és szerény szópárok: partikulák, főnevek, igék, szerény alakok és megszólítás.',
+      items: honorifics.categories.map((category, index) => ({ label: category.hungarian, href: hrefOf(`honorific-category-${index + 1}`) })),
+    },
+  ];
 }
