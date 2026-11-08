@@ -51,7 +51,7 @@ a { color: inherit; }
 :root[data-theme="dark"] .contents-level > a b, :root[data-theme="dark"] .contents-general a b { color: #111; }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .contents-level > a b, :root:not([data-theme="light"]) .contents-general a b { color: #111; } }
 /* "Általános" group: the three chapters under one group title */
-.contents-general > .level-title { display: block; padding: 3px 6px; font-size: .74rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--accent); margin-top: 6px; }
+.contents-general { --level-color: var(--accent); }
 .contents-general a { font-weight: 600; font-size: .88rem; }
 .contents-general a b { background: var(--accent); }
 summary { list-style: none; cursor: pointer; }

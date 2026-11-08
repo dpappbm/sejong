@@ -29,7 +29,7 @@ const isCurrent = (book: string, lesson: number) => currentLesson?.book === book
   <nav>
     <ul class="table-of-contents">
       <li class="contents-level contents-general">
-        <span class="level-title">Általános</span>
+        <a class="level-title" href={withBase('/#general')}>Általános</a>
         <ul>
           <li><a href={withBase(CHAPTER_PATHS.basics)}><b>★</b> Alapszabályok</a></li>
           <li><a href={withBase(CHAPTER_PATHS.pronunciation)}><b>♪</b> Kiejtés</a></li>
