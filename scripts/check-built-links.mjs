@@ -1,9 +1,10 @@
 // After `astro build`: every internal link of every page must point to an existing page and element id.
 import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { join, relative, sep } from 'node:path';
+import config from '../astro.config.mjs';
 
 const DIST = 'dist';
-const BASE = '/sejong-astro';
+const BASE = (config.base ?? '').replace(/\/$/, '');
 
 function htmlFiles(directory) {
   return readdirSync(directory).flatMap(name => {
@@ -13,7 +14,7 @@ function htmlFiles(directory) {
   });
 }
 
-/** "/sejong-astro/3a/9/" for dist/3a/9/index.html */
+/** "<base>/3a/9/" for dist/3a/9/index.html */
 const pagePathOf = file => BASE + '/' + relative(DIST, file).split(sep).join('/').replace(/index\.html$/, '');
 
 const pages = new Map();
