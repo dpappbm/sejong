@@ -1,0 +1,32 @@
+# Claude Code – soha ne kerüljön a repóba
+CLAUDE.md
+CLAUDE.local.md
+**/CLAUDE.md
+**/CLAUDE.local.md
+.claude/
+**/.claude/
+.mcp.json
+AGENTS.md
+
+# Tankönyvi jegyzetek (szerzői jog, személyes jegyzet)
+**/notes_*.txt
+
+# Helyi környezet, titkok
+.env
+.env.*
+!.env.example
+
+# Astro / Node
+node_modules/
+dist/
+.astro/
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# Szerkesztő és rendszer
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
