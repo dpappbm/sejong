@@ -2,10 +2,12 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ChapterCards from '../components/ChapterCards.astro';
 import LessonHeader from '../components/LessonHeader.astro';
+import SiteQrCode from '../components/SiteQrCode.astro';
 import { BOOK_DATA, LESSONS, LEVELS, POINT_COUNT } from '../lib/content';
 ---
 <BaseLayout title="한국어 문법 – a Sejong-tankönyvek teljes nyelvtana" pageLabel="Főoldal">
   <div class="hero">
+    <SiteQrCode />
     <h1><span class="korean">한국어 문법</span> – a Sejong-tankönyvek teljes nyelvtana</h1>
     <p>A 세종한국어 1A–4B (2022-es kiadás) összes nyelvtani pontja szintek, könyvek és leckék szerint. Mindegyiknél van magyar magyarázat, képzési szabály (mássalhangzó / magánhangzó / ㄹ után), rendhagyó alakok és lefordított példamondatok.</p>
     <div class="stats">
