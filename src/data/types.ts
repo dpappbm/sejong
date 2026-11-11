@@ -155,8 +155,6 @@ export type RelatedGroup = ScaleGroup | FormGroup;
 export interface LessonVocabulary {
   /** The textbook's words (flash cards of the lesson). */
   textbook?: KoreanHungarian[];
-  /** Review from earlier levels (1A–2B). */
-  review?: KoreanHungarian[];
   /** Words beyond the textbook list (workbook, texts, class notes), shown with "＋ Saját". */
   own?: KoreanHungarian[];
 }
