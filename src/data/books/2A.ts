@@ -118,7 +118,8 @@ const points: PointSource[] = [
 <ul><li><b>Ige</b>: ${korean('-는데')} (ㄹ kiesik: ${korean('사는데')}); <b>있다/없다</b>: ${korean('-는데')}</li><li><b>Melléknév</b>: 받침 után ${korean('-은데')}, magánhangzó után ${korean('-ㄴ데')} (ㄹ kiesik: ${korean('긴데')})</li><li><b>Főnév</b>: ${korean('-인데')}; múlt: ${korean('-았는데/었는데')}</li></ul>`,
     table: { sampleSet: 'verbsAndAdjectives', columns: [{ header: 'Jelen', conjugate: word => presentModifier(word, '데') }, { header: 'Múlt: -았는데/었는데', conjugate: word => withPast(word, '는데') }] },
     examples: [['잠이 안 오<b>는데</b> 어떻게 해야 돼요?', 'Nem jön álom a szememre, mit csináljak?'], ['배가 고<b>픈데</b> 뭐 먹을까요?', 'Éhes vagyok, mit együnk?', '으-tő: 고프다 → 고픈데'], ['오늘 날씨가 <b>추운데</b> 따뜻하게 입으세요.', 'Ma hideg van, öltözz fel melegen.', 'ㅂ-rendhagyó: 춥다 → 추운데'], ['내일이 친구 생일<b>인데</b> 뭘 선물하면 좋을까요?', 'Holnap lesz a barátom születésnapja – mit ajándékozzak?']],
-    ownNote: `<p>A 2B 8. lecke ugyanezt az alakot <b>ellentétre</b> („de”) is használja, a 2B 9. lecke pedig mondatvégen (${korean('-는데요')}) csodálkozásra. Beszélgetésben a ${korean('-는데요')} puhított válasz is lehet: ${korean('저는 마크인데요')} „Én Mark vagyok (és…?)”.</p>`,
+    ownNote: `<p>A 2B 8. lecke ugyanezt az alakot <b>ellentétre</b> („de”) is használja, a 2B 9. lecke pedig mondatvégen (${korean('-는데요')}) csodálkozásra. Beszélgetésben a ${korean('-는데요')} puhított válasz is lehet: ${korean('저는 마크인데요')} „Én Mark vagyok (és…?)”.</p>
+<p>Kérdés vagy kérés előtt udvarias bevezetés is: ${korean('죄송한데 화장실이 어디예요?')} „Elnézést, hol van a mosdó?” A ${korean('죄송하지만')} formálisabb, és inkább elutasítást, rossz hírt vezet be (${korean('-지만')}, 1B 9. lecke).</p>`,
   },
   {
     lesson: 8, point: 2, form: '-아/어 보다 (시도)', name: '„próbáld meg …” (javaslat, tanács)',
