@@ -33,7 +33,6 @@ const json = JSON.stringify(rows).replace(/</g, '\\u003c');
     <button class="export-close-icon" type="button" data-export-close aria-label="Bezárás" title="Bezárás">✕</button>
   </header>
   <div class="export-dialog-body">
-    <p class="export-hint">Jelöld be, mi kerüljön az exportba. Soronként egy tétel: koreai, tabulátor, magyar.</p>
     <ul class="export-tree">
       {data.points.map(point => (
         <li>
