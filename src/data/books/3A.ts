@@ -671,7 +671,9 @@ const points: PointSource[] = [
         "ㅎ-rendhagyó: 빨갛다 → 빨개져요",
       ],
     ],
-    ownNote: `<p>Mivel a ${korean("-아지다/어지다")} igét képez, a jelzői és egyéb alakok igei szabályt követnek: ${korean("좋아지는 날씨")} (jelen: ${korean("-는")}), ${korean("좋아지고 있어요")} „egyre jobb”.</p>`,
+    ownNote: `<p>Mivel a ${korean("-아지다/어지다")} igét képez, a jelzői és egyéb alakok igei szabályt követnek: ${korean("좋아지는 날씨")} (jelen: ${korean("-는")}), ${korean("좋아지고 있어요")} „egyre jobb”.</p>
+<p><b>Igével</b> szenvedő jelentést ad („magától megtörténik, létrejön”): ${korean("만들다 → 만들어지다")} „elkészül, létrejön”, ${korean("정하다 → 정해지다")} „eldől”, ${korean("이루다 → 이루어지다")} „megvalósul”, ${korean("짓다 → 지어지다")} „felépül” (ㅅ-rendhagyó, 2A 7. lecke). ${korean("회의 날짜가 정해졌어요")} „Eldőlt a megbeszélés időpontja”; ${korean("꿈이 이루어졌어요")} „Megvalósult az álmom”; ${korean("이 건물은 백 년 전에 지어졌어요")} „Ez az épület száz éve épült.” Sok igének saját szenvedő alakja van (4A 8. lecke): ${korean("쓰다 → 쓰이다")}, ${korean("열다 → 열리다")}; ott azt használjuk.</p>
+<p>Ha nem egy tulajdonság, hanem egy <b>cselekvés vagy szokás</b> alakul ki, igével ${korean("-게 되다")} áll (2B 12. lecke): ${korean("한국어 실력이 좋아졌어요")} „Javult a koreaitudásom” (${korean("좋다")}), de ${korean("한국어를 좋아하게 됐어요")} „Megszerettem a koreait” (${korean("좋아하다")}).</p>`,
     correctIncorrect: [
       [1, "날씨가 따뜻해졌어요.", ""],
       [0, "날씨가 따뜻했어졌어요.", ""],

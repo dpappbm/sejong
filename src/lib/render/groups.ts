@@ -40,9 +40,10 @@ function groupBox(group: RelatedGroup, self: string): string {
       (example ? `<div class="group-member-example"><span class="korean">${example[0]}</span> <span class="hungarian">– ${example[1]}</span></div>` : '') + `</li>`).join('');
     return `<details class="own related-group form-group"><summary>${disclosureArrow}${ownTag()} <b>Közös építőelem: <span class="korean">${group.title}</span></b></summary><div class="group-body">${group.explanation}<ul class="group-members">${members}</ul></div></details>`;
   }
-  // The "<" breaks to a new line together with the next degree.
+  // The separator ("<", or "·" in an unordered group) breaks to a new line together with the next member.
+  const separator = group.unordered ? '·' : '&lt;';
   const scale = group.scale.map(([id, label], index) =>
-    `<span class="group-pair">${index ? '<span class="group-less-than" aria-hidden="true">&lt;</span>' : ''}<span class="group-step${id === self ? ' self' : ''}">${item(id)}<small>${label}</small></span></span>`).join('');
+    `<span class="group-pair">${index ? `<span class="group-less-than" aria-hidden="true">${separator}</span>` : ''}<span class="group-step${id === self ? ' self' : ''}">${item(id)}<small>${label}</small></span></span>`).join('');
   const examples = (group.examples ?? []).map(([korean, hungarian]) => `<li><span class="korean">${korean}</span><span class="hungarian">${hungarian}</span></li>`).join('');
   const side = (group.side ?? []).map(([id, text]) => `<li>${item(id)} – ${text}</li>`).join('');
   return `<details class="own related-group"><summary>${disclosureArrow}${ownTag()} <b>Rokon szerkezetek: ${group.title}</b></summary><div class="group-body">` +

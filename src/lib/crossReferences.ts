@@ -52,6 +52,8 @@ const MANUAL_RESOLUTIONS: Record<string, string> = {
   '2A-08-2|2A 12. lecke': '2A-12-1', // -아/어 보다 (experience)
   '2B-08-1|2A 8. lecke': '2A-08-1', // -는데 (background)
   '4A-01-1|3A 12. lecke': '3A-12-1', // 한다체
+  '3A-09-1|2A 7. lecke': '2A-07-2', // ㅅ irregular
+  '3A-09-1|4A 8. lecke': '4A-08-2', // passive verbs
   '4A-09-1|2A 5. lecke': '2A-05-2', // long negation
 };
 

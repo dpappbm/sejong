@@ -135,6 +135,8 @@ export interface ScaleGroup {
   title: string;
   /** Points of the scale in order (x < y < z): [point id, short label]. */
   scale: [PointId, string][];
+  /** true: the members are alternatives, not degrees; they are separated by "·" instead of "<". */
+  unordered?: boolean;
   explanation: string;
   /** The same sentence with each degree of the scale. */
   examples?: KoreanHungarian[];
