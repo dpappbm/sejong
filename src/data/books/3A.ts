@@ -674,12 +674,12 @@ const points: PointSource[] = [
         "ㅎ-rendhagyó: 빨갛다 → 빨개져요",
       ],
       [
-        "감기가 나<b>아지다가</b> 다시 심해졌어요.",
+        "감기가 나<b>아지다가</b> 다시 심<b>해졌어요</b>.",
         "Már javulóban volt a megfázásom, de újra rosszabb lett.",
         "ㅅ-rendhagyó: 낫다 → 나아지다 · -다가: a javulás még tartott",
       ],
       [
-        "감기가 나<b>아졌다가</b> 다시 심해졌어요.",
+        "감기가 나<b>아졌다가</b> 다시 심<b>해졌어요</b>.",
         "Javult a megfázásom, aztán újra rosszabb lett.",
         "-았다가/었다가: a javulás már megtörtént",
       ],

@@ -193,7 +193,7 @@ export interface ForwardReference {
   location: string;
   /** A unique part of the Korean text (without HTML). */
   koreanText: string;
-  /** The later point. */
+  /** The later point; or an earlier point the example builds on (shown with a backward arrow). */
   target: PointId;
 }
 
