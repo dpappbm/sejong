@@ -138,6 +138,8 @@ export interface ScaleGroup {
   explanation: string;
   /** The same sentence with each degree of the scale. */
   examples?: KoreanHungarian[];
+  /** Typical mix-ups between the members: incorrect and correct sentence pairs. */
+  correctIncorrect?: CorrectIncorrect[];
   /** Side branches: [point id, explanation]. */
   side?: [PointId, string][];
 }

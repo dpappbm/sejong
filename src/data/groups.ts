@@ -26,6 +26,32 @@ export default [
       ['4A-12-2', 'a -(으)려고 하다 hivatalos, írott párja'],
     ],
   },
+  {
+    id: 'contrast', title: 'ellentét – „de, viszont, cserébe”',
+    scale: [
+      ['2B-08-1', 'lágy, beszélt'],
+      ['1B-09-1', 'határozott'],
+      ['4B-09-2', 'írott, hivatalos'],
+    ],
+    explanation: '<p>Mindhárom „de”; jobbra haladva az ellentét egyre határozottabb, a stílus egyre írottabb. Beszédben a -는데 a leggyakoribb: inkább bemutatja a helyzetet, mint szembeállít. A -지만 két tényt világosan szembeállít, vagy a várttal ellentétes folytatást hoz. A -(으)나 ugyanez írásban, hivatalos szövegben.</p>' +
+      '<p>Segítő kérdések:</p><ul><li>Mi áll szemben az első állítással? → -지만</li><li>Minek a háttere, előzménye az első tag? → -는데</li><li>Mi helyettesíti vagy ellensúlyozza az első dolgot? → -는/(으)ㄴ 대신에</li></ul>',
+    examples: [
+      ['이 식당은 비싼데 음식이 맛있어요.', 'Ez az étterem drága, viszont finom az étel.'],
+      ['이 식당은 비싸지만 음식이 맛있어요.', 'Ez az étterem drága, de finom az étel.'],
+      ['이 식당은 비싸나 음식이 맛있습니다.', 'Az étterem drága, azonban az étel finom.'],
+      ['이 식당은 비싼 대신에 음식이 정말 맛있어요.', 'Ez az étterem drága, cserébe nagyon finom az étel.'],
+    ],
+    correctIncorrect: [
+      [0, '주말에 부산에 가지만 같이 갈래요?', 'nincs ellentét: az utazás csak a kérdés háttere'],
+      [1, '주말에 부산에 가는데 같이 갈래요?', 'Hétvégén Busanba megyek. Jössz velem?'],
+      [0, '커피를 마시지만 차를 마셨어요.', 'a kávé elmaradt, a tea került a helyére'],
+      [1, '커피를 마시는 대신에 차를 마셨어요.', 'Kávé helyett teát ittam.'],
+    ],
+    side: [
+      ['3A-09-2', 'nem puszta ellentét: a második tag az elsőt helyettesíti („helyett”) vagy ellensúlyozza („cserébe”)'],
+      ['2A-08-1', 'ugyanaz az alak ellentét nélkül: háttér, előzmény a folytatáshoz'],
+    ],
+  },
 
   {
     id: 'gi',

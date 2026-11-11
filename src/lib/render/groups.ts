@@ -4,7 +4,7 @@
 import groups from '../../data/groups';
 import type { RelatedGroup } from '../../data/types';
 import { POINTS_BY_ID } from '../content';
-import { disclosureArrow, ownTag } from '../html';
+import { correctIncorrectList, disclosureArrow, ownTag } from '../html';
 import { reportProblem } from '../problems';
 
 /** All points of a group: scale and side branches, or members. */
@@ -46,7 +46,7 @@ function groupBox(group: RelatedGroup, self: string): string {
   const examples = (group.examples ?? []).map(([korean, hungarian]) => `<li><span class="korean">${korean}</span><span class="hungarian">${hungarian}</span></li>`).join('');
   const side = (group.side ?? []).map(([id, text]) => `<li>${item(id)} – ${text}</li>`).join('');
   return `<details class="own related-group"><summary>${disclosureArrow}${ownTag()} <b>Rokon szerkezetek: ${group.title}</b></summary><div class="group-body">` +
-    `<div class="group-scale">${scale}</div>${group.explanation}${examples ? `<ul class="examples group-examples">${examples}</ul>` : ''}${side ? `<p class="group-side-heading">Mellékágak:</p><ul class="group-side">${side}</ul>` : ''}</div></details>`;
+    `<div class="group-scale">${scale}</div>${group.explanation}${examples ? `<ul class="examples group-examples">${examples}</ul>` : ''}${correctIncorrectList(group.correctIncorrect)}${side ? `<p class="group-side-heading">Mellékágak:</p><ul class="group-side">${side}</ul>` : ''}</div></details>`;
 }
 
 /** The boxes of every group the point belongs to (collapsed by default). */
