@@ -1,0 +1,80 @@
+---
+// The "Export" dialog of a lesson page: a checkbox tree of what to export (rule and examples of each grammar point,
+// vocabulary), a collapsed preview of the selected rows and a copy-to-clipboard button.
+// The rows are embedded as JSON, keyed like the "data-export-rows" of the leaf checkboxes; src/scripts/lessonExport.ts drives it.
+import type { LessonInfo } from '../lib/content';
+import { buildLessonExport } from '../lib/lessonExport';
+
+interface Props {
+  lesson: LessonInfo;
+}
+
+const { lesson } = Astro.props;
+const data = buildLessonExport(lesson);
+const { vocabulary } = data;
+
+const rows: Record<string, [string, string][]> = {};
+for (const point of data.points) {
+  rows[`point-${point.point}-rule`] = [point.rule];
+  rows[`point-${point.point}-examples`] = point.examples;
+}
+if (vocabulary) {
+  rows['vocabulary-textbook'] = vocabulary.textbook;
+  rows['vocabulary-own'] = vocabulary.own;
+}
+// With only one kind of words there is a single "Szókincs" checkbox.
+const singleVocabularyKey = vocabulary && (!vocabulary.own.length ? 'vocabulary-textbook' : !vocabulary.textbook.length ? 'vocabulary-own' : null);
+// "<" must not end the script element early.
+const json = JSON.stringify(rows).replace(/</g, '\\u003c');
+---
+<dialog class="export-dialog" id="lesson-export-dialog" aria-labelledby="lesson-export-title">
+  <header class="export-dialog-header">
+    <h2 id="lesson-export-title">Lecke exportálása <span class="export-dialog-lesson">{lesson.book} · {lesson.lesson}. lecke</span></h2>
+    <button class="export-close-icon" type="button" data-export-close aria-label="Bezárás" title="Bezárás">✕</button>
+  </header>
+  <div class="export-dialog-body">
+    <ul class="export-tree">
+      {data.points.map(point => (
+        <li>
+          <label><input type="checkbox" data-export-parent={`point-${point.point}`} checked /> <b>{point.point}. nyelvtan:</b> <span class="korean">{point.form}</span></label>
+          <ul>
+            <li><label><input type="checkbox" data-export-rows={`point-${point.point}-rule`} data-export-child-of={`point-${point.point}`} checked /> Szabály</label></li>
+            <li>
+              {point.examples.length
+                ? <label><input type="checkbox" data-export-rows={`point-${point.point}-examples`} data-export-child-of={`point-${point.point}`} checked /> Példák <small>({point.examples.length})</small></label>
+                : <label class="disabled"><input type="checkbox" disabled /> Példák <small>– ennél a nyelvtannál nincs példa</small></label>}
+            </li>
+          </ul>
+        </li>
+      ))}
+      <li>
+        {!vocabulary && <label class="disabled"><input type="checkbox" disabled /> <b>Szókincs</b> <small>– ehhez a leckéhez még nincs szókincs</small></label>}
+        {vocabulary && singleVocabularyKey && (
+          <label><input type="checkbox" data-export-rows={singleVocabularyKey} checked /> <b>Szókincs</b> <small>({rows[singleVocabularyKey].length})</small></label>
+        )}
+        {vocabulary && !singleVocabularyKey && (
+          <Fragment>
+            <label><input type="checkbox" data-export-parent="vocabulary" checked /> <b>Szókincs</b></label>
+            <ul>
+              <li><label><input type="checkbox" data-export-rows="vocabulary-textbook" data-export-child-of="vocabulary" checked /> Tankönyv <small>({vocabulary.textbook.length})</small></label></li>
+              <li><label><input type="checkbox" data-export-rows="vocabulary-own" data-export-child-of="vocabulary" checked /> További szavak <small>({vocabulary.own.length})</small></label></li>
+            </ul>
+          </Fragment>
+        )}
+      </li>
+    </ul>
+    <details class="export-preview">
+      <summary><span class="disclosure-arrow" aria-hidden="true"></span>Exportálandó sorok <span class="count">(<span data-export-count>0</span>)</span></summary>
+      <div class="table-wrapper"><table class="plain"><thead><tr><th>Koreai</th><th>Magyarul</th></tr></thead><tbody data-export-preview></tbody></table></div>
+    </details>
+  </div>
+  <footer class="export-dialog-footer">
+    <button class="export-copy-button" type="button" data-export-copy>
+      <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2" /><path d="M5 15V6a2 2 0 0 1 2-2h9" /></svg>
+      Másolás vágólapra
+    </button>
+    <span class="export-status" data-export-status role="status" aria-live="polite"></span>
+    <button class="export-close-button" type="button" data-export-close>Bezárás</button>
+  </footer>
+  <script type="application/json" data-export-data set:html={json} />
+</dialog>
