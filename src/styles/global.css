@@ -327,6 +327,43 @@ table.plain.vocabulary-table td.korean { width: 42%; word-break: keep-all; }
 .set-current-button:hover, .set-current-button:focus-visible { border-color: var(--current); color: var(--current); }
 .contents-book li.done .lesson-label::after { content: " ✓"; color: var(--correct); }
 @media print { .set-current-button { display: none; } }
+/* lesson export: the button in the lesson header and its dialog */
+.export-button { display: inline-flex; align-items: center; gap: 5px; font: inherit; font-size: .74rem; font-weight: 600; text-transform: none; letter-spacing: 0; padding: 3px 10px; border-radius: 999px; border: 1px solid var(--line); background: var(--card); color: var(--muted); cursor: pointer; }
+.export-button:hover, .export-button:focus-visible { border-color: var(--accent); color: var(--accent); }
+@media print { .export-button { display: none; } }
+.export-dialog { width: min(560px, calc(100vw - 24px)); max-height: calc(100vh - 32px); padding: 0; border: 1px solid var(--line); border-radius: 14px; background: var(--card); color: var(--foreground); box-shadow: 0 12px 40px rgba(0, 0, 0, .28); }
+.export-dialog[open] { display: flex; flex-direction: column; }
+.export-dialog::backdrop { background: rgba(15, 17, 22, .5); }
+.export-dialog-header { display: flex; align-items: flex-start; gap: 12px; padding: 14px 16px 10px; border-bottom: 1px solid var(--line); }
+.export-dialog-header h2 { margin: 0; font-size: 1.05rem; line-height: 1.35; }
+.export-dialog-lesson { display: block; font-size: .78rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
+.export-close-icon { margin-left: auto; width: 32px; height: 32px; flex: none; border: 1px solid transparent; border-radius: 8px; background: none; color: var(--muted); font: inherit; font-size: 1rem; cursor: pointer; }
+.export-close-icon:hover, .export-close-icon:focus-visible { border-color: var(--line); color: var(--foreground); background: var(--soft); }
+.export-dialog-body { padding: 12px 16px; overflow-y: auto; }
+.export-hint { margin: 0 0 8px; font-size: .86rem; color: var(--muted); }
+.export-tree, .export-tree ul { list-style: none; margin: 0; padding: 0; }
+.export-tree > li { padding: 6px 0; border-bottom: 1px solid var(--line); }
+.export-tree > li:last-child { border-bottom: none; }
+.export-tree ul { padding-left: 26px; }
+.export-tree label { display: flex; align-items: baseline; flex-wrap: wrap; gap: 0 6px; padding: 3px 0; cursor: pointer; }
+.export-tree label.disabled { color: var(--muted); cursor: default; }
+.export-tree input[type="checkbox"] { width: 16px; height: 16px; margin: 0 2px 0 0; align-self: center; flex: none; accent-color: var(--accent); }
+.export-tree small { color: var(--muted); font-size: .8rem; }
+.export-preview { margin-top: 10px; border: 1px solid var(--line); border-radius: 10px; padding: 6px 10px; }
+.export-preview > summary { display: flex; align-items: center; gap: 6px; font-weight: 600; font-size: .92rem; cursor: pointer; }
+.export-preview > summary .count { color: var(--muted); font-weight: 400; }
+.export-preview[open] > summary { margin-bottom: 6px; }
+.export-preview .table-wrapper { max-height: 40vh; overflow-y: auto; }
+.export-preview td.korean { width: 46%; word-break: keep-all; }
+.export-dialog-footer { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 10px; padding: 10px 16px 14px; border-top: 1px solid var(--line); }
+.export-copy-button, .export-close-button { display: inline-flex; align-items: center; gap: 6px; font: inherit; font-size: .9rem; font-weight: 600; padding: 7px 14px; border-radius: 8px; border: 1px solid var(--line); background: var(--soft); color: var(--foreground); cursor: pointer; }
+.export-copy-button { border-color: var(--accent); background: var(--accent); color: var(--card); }
+.export-copy-button:disabled { opacity: .45; cursor: not-allowed; }
+.export-copy-button:not(:disabled):hover, .export-copy-button:focus-visible { filter: brightness(1.08); }
+.export-close-button { margin-left: auto; }
+.export-close-button:hover, .export-close-button:focus-visible { border-color: var(--accent); }
+.export-status { font-size: .84rem; color: var(--correct); }
+.export-copy-fallback { position: fixed; left: -9999px; top: 0; }
 .floating-buttons { position: fixed; right: 18px; bottom: 18px; display: flex; flex-direction: column; align-items: flex-end; gap: 10px; z-index: 50; }
 .floating-button { display: inline-flex; align-items: center; justify-content: center; min-width: 46px; height: 46px; padding: 0 16px; border-radius: 999px; border: 1px solid var(--line); background: var(--card); color: var(--accent); font: inherit; font-weight: 700; font-size: .9rem; text-decoration: none; cursor: pointer; box-shadow: 0 2px 6px rgba(20,20,30,.12), 0 8px 22px rgba(20,20,30,.12); transition: opacity .2s, transform .2s; }
 .floating-button:hover, .floating-button:focus-visible { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 8%, var(--card)); }
