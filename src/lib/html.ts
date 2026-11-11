@@ -15,6 +15,11 @@ export const ownTag = (label = '＋ Saját') => `<span class="tag own">${label}<
 
 export const disclosureArrow = '<span class="disclosure-arrow" aria-hidden="true"></span>';
 
+/** Example cards (Korean, Hungarian, optional note line) for own notes, in the layout of the "Példák" section. */
+export const exampleList = (examples: [korean: string, hungarian: string, note?: string][]) =>
+  `<ul class="examples">${examples.map(([korean, hungarian, note]) =>
+    `<li>${koreanSpan(korean)}<span class="hungarian">${hungarian}</span>${note ? `<span class="irregular-note">${note}</span>` : ''}</li>`).join('')}</ul>`;
+
 export function correctIncorrectList(items: [number, string, string?][] | undefined): string {
   if (!items) return '';
   const rows = items.map(([isCorrect, korean, hungarian]) =>
