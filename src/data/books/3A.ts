@@ -673,6 +673,16 @@ const points: PointSource[] = [
         "Ősszel a levelek pirosak lesznek.",
         "ㅎ-rendhagyó: 빨갛다 → 빨개져요",
       ],
+      [
+        "감기가 나<b>아지다가</b> 다시 심해졌어요.",
+        "Már javulóban volt a megfázásom, de újra rosszabb lett.",
+        "ㅅ-rendhagyó: 낫다 → 나아지다 · -다가: a javulás még tartott",
+      ],
+      [
+        "감기가 나<b>아졌다가</b> 다시 심해졌어요.",
+        "Javult a megfázásom, aztán újra rosszabb lett.",
+        "-았다가/었다가: a javulás már megtörtént",
+      ],
     ],
     ownNote: `<p>Mivel a ${korean("-아지다/어지다")} igét képez, a jelzői és egyéb alakok igei szabályt követnek: ${korean("좋아지는 날씨")} (jelen: ${korean("-는")}), ${korean("좋아지고 있어요")} „egyre jobb”.</p>
 <p><b>Igével</b> szenvedő jelentést ad: a dolog „magától megtörténik, létrejön”.</p>
