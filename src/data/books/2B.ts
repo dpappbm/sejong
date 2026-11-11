@@ -1,4 +1,5 @@
 import { withAOrEo, withPast, withEu, withPlainStem, type Word } from '../../lib/conjugation';
+import { exampleList } from '../../lib/html';
 import type { BookData, PointSource } from '../types';
 const korean = (text: string) => `<span class="korean">${text}</span>`;
 const koreanWithTranslation = (koreanText: string, hungarianText: string) => `<span class="korean">${koreanText}</span><span class="translation">${hungarianText}</span>`;
@@ -69,7 +70,9 @@ const points: PointSource[] = [
     explanation: `<p>Ige után azt fejezi ki, hogy egy cselekvés vagy állapot <b>megszakad</b>, és átvált egy másikba; vagy hogy valami közben, <b>útközben</b> történik más: ${korean('오다가 친구를 만났어요')} „idefelé jövet összefutottam egy barátommal”. A tő végétől függetlenül ${korean('-다가')}; beszédben ${korean('-다')}.</p>`,
     table: { sampleSet: 'verbs', columns: [{ header: '-다가', conjugate: word => withPlainStem(word, '다가') }] },
     examples: [['세종학당에 오<b>다가</b> 중학교 때 친구를 만났어요.', 'Idefelé jövet összefutottam egy középiskolai barátommal.'], ['공부하<b>다가</b> 잠이 들었어요.', 'Tanulás közben elaludtam.'], ['음악을 듣<b>다가</b> 전화를 받았어요.', 'Zenehallgatás közben felvettem a telefont.', '-다가 előtt nincs ㄷ-változás: 듣다가'], ['밥을 먹<b>다가</b> 갑자기 나갔어요.', 'Evés közben hirtelen kiment.']],
-    ownNote: `<p>A két tagmondat alanya azonos. ${korean('-았다가/었다가')}: az első cselekvés <b>befejeződött</b>, majd jött a másik: ${korean('학교에 갔다가 왔어요')} „elmentem az iskolába és visszajöttem”.</p>`,
+    ownNote: `<p>A két tagmondat alanya azonos. ${korean('-았다가/었다가')}: az első cselekvés <b>befejeződött</b>, majd jött a másik: ${korean('학교에 갔다가 왔어요')} „elmentem az iskolába és visszajöttem”.</p>
+<p>Változást jelentő igével (${korean('-아지다/어지다')}, 3A 9. lecke) jól látszik a különbség:</p>
+${exampleList([['감기가 나아지다가 다시 심해졌어요.', 'Már javulóban volt a megfázásom, de újra rosszabb lett.', 'ㅅ-rendhagyó: 낫다 → 나아지다'], ['감기가 나아졌다가 다시 심해졌어요.', 'Javult a megfázásom, aztán újra rosszabb lett.']])}`,
   },
   {
     lesson: 4, point: 2, form: '-아/어 주다', name: '„megteszi valakinek / valaki kedvéért”',

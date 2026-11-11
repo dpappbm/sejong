@@ -287,6 +287,11 @@ a.related-link:hover, a.related-link:focus-visible { border-color: var(--accent)
 @media (prefers-reduced-motion: reduce) { .grammar-point.flash { animation: none; outline: 3px solid var(--accent); } }
 .own:not(.tag) { margin-top: 12px; background: var(--own-background); border: 1px dashed var(--own-border); border-radius: 12px; padding: 10px 14px; }
 .own-heading { margin-bottom: 4px; }
+/* example cards and small tables inside the own note of a grammar point */
+.grammar-point-body > aside.own ul.examples { margin: 6px 0 10px; padding: 0; }
+.grammar-point-body > aside.own ul.examples li, .grammar-point-body > aside.own .table-wrapper { background: var(--card); }
+.grammar-point-body > aside.own .table-wrapper { margin: 6px 0; }
+.grammar-point-body > aside.own table.plain .korean { white-space: nowrap; }
 .own b { color: var(--own); }
 /* forward mark: the example or word uses a structure taught later */
 a.cross-reference.forward-reference { display: inline-block; margin-left: 4px; padding: 0 7px; font-size: .74rem; line-height: 1.5; border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent); border-radius: 999px; background: color-mix(in srgb, var(--accent) 7%, transparent); white-space: normal; font-style: normal; }

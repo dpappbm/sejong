@@ -7,9 +7,12 @@ import {
   withPlainStem,
   type Word,
 } from "../../lib/conjugation";
+import { exampleList } from "../../lib/html";
 import type { BookData, PointSource } from "../types";
 
 const korean = (text: string) => `<span class="korean">${text}</span>`;
+const simpleTable = (headers: string[], rows: string[][]) =>
+  `<div class="table-wrapper"><table class="plain"><thead><tr>${headers.map((header) => `<th>${header}</th>`).join("")}</tr></thead><tbody>${rows.map((row) => `<tr>${row.map((cell) => `<td>${cell}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
 const vocabularyGrammarPageOf = (lesson: number, point: number) =>
     24 + 2 * (lesson - 1) + (point - 1),
   studentBookPageOf = (lesson: number, point: number) =>
@@ -670,11 +673,31 @@ const points: PointSource[] = [
         "Ősszel a levelek pirosak lesznek.",
         "ㅎ-rendhagyó: 빨갛다 → 빨개져요",
       ],
+      [
+        "감기가 나<b>아지다가</b> 다시 심<b>해졌어요</b>.",
+        "Már javulóban volt a megfázásom, de újra rosszabb lett.",
+        "ㅅ-rendhagyó: 낫다 → 나아지다 · -다가: a javulás még tartott",
+      ],
+      [
+        "감기가 나<b>아졌다가</b> 다시 심<b>해졌어요</b>.",
+        "Javult a megfázásom, aztán újra rosszabb lett.",
+        "-았다가/었다가: a javulás már megtörtént",
+      ],
     ],
-    ownNote: `<p>Mivel a ${korean("-아지다/어지다")} igét képez, a jelzői és egyéb alakok igei szabályt követnek: ${korean("좋아지는 날씨")} (jelen: ${korean("-는")}), ${korean("좋아지고 있어요")} „egyre jobb”.</p>`,
+    ownNote: `<p>Mivel a ${korean("-아지다/어지다")} igét képez, a jelzői és egyéb alakok igei szabályt követnek: ${korean("좋아지는 날씨")} (jelen: ${korean("-는")}), ${korean("좋아지고 있어요")} „egyre jobb”.</p>
+<p><b>Igével</b> szenvedő jelentést ad: a dolog „magától megtörténik, létrejön”.</p>
+${simpleTable(["Ige", "-아/어지다", "Jelentés"], [[korean("만들다"), korean("만들어지다"), "elkészül, létrejön"], [korean("정하다"), korean("정해지다"), "eldől"], [korean("이루다"), korean("이루어지다"), "megvalósul"], [korean("짓다"), korean("지어지다"), "felépül – ㅅ-rendhagyó (2A 7. lecke)"]])}
+${exampleList([["회의 날짜가 정해졌어요.", "Eldőlt a megbeszélés időpontja."], ["꿈이 이루어졌어요.", "Megvalósult az álmom."], ["이 건물은 백 년 전에 지어졌어요.", "Ez az épület száz éve épült.", "ㅅ-rendhagyó: 짓다 → 지어졌어요"]])}
+<p>Sok igének saját szenvedő alakja van (4A 8. lecke): ${korean("쓰다 → 쓰이다")}, ${korean("열다 → 열리다")}; ott azt használjuk.</p>
+<p>Ha nem egy tulajdonság, hanem egy <b>cselekvés vagy szokás</b> alakul ki, igével ${korean("-게 되다")} áll (2B 12. lecke):</p>
+${exampleList([["한국어 실력이 좋아졌어요.", "Javult a koreaitudásom.", "좋다 „jó” → 좋아지다"], ["한국어를 좋아하게 됐어요.", "Megszerettem a koreait.", "좋아하다 „szeret” → 좋아하게 되다"]])}`,
     correctIncorrect: [
-      [1, "날씨가 따뜻해졌어요.", ""],
-      [0, "날씨가 따뜻했어졌어요.", ""],
+      [1, "날씨가 따뜻해졌어요.", "Melegebb lett az idő."],
+      [
+        0,
+        "날씨가 따뜻했어졌어요.",
+        "a múlt idő jele a 지다 végére kerül (-아졌어요/어졌어요), a melléknév töve után nem állhat",
+      ],
     ],
   },
   {
@@ -724,7 +747,10 @@ const points: PointSource[] = [
       [1, "한국어는 어렵지만 공부해요.", "A koreai nehéz, de tanulom."],
     ],
     ownNote: `<p>Az ${korean("에")} elhagyható: ${korean("대신")}. Az ${korean("있다/없다")} igeként ragozódik: ${korean("맛있는 대신에")}.</p>
-<p><b>Helyettesítés</b> – az első elmarad, helyette a második történik: ${korean("버스를 타는 대신에 걸어갔어요")} „Buszozás helyett gyalog mentem.”</p><p><b>Kompenzáció</b> – az egyiket a másik ellensúlyozza, mindkét irányban: ${korean("이 집은 작은 대신에 월세가 싸요")} „Ez a lakás kicsi, viszont olcsó a bérleti díja”; ${korean("월급이 많은 대신에 일이 힘들어요")} „Jó a fizetés, cserébe nehéz a munka.”</p>
+<p><b>Helyettesítés</b> – az első elmarad, helyette a második történik:</p>
+${exampleList([["버스를 타는 대신에 걸어갔어요.", "Buszozás helyett gyalog mentem."]])}
+<p><b>Kompenzáció</b> – az egyiket a másik ellensúlyozza, mindkét irányban:</p>
+${exampleList([["이 집은 작은 대신에 월세가 싸요.", "Ez a lakás kicsi, viszont olcsó a bérleti díja."], ["월급이 많은 대신에 일이 힘들어요.", "Jó a fizetés, cserébe nehéz a munka."]])}
 <p>Nem egy újabb „de”: csak akkor használható, ha a második tag az elsőt <b>helyettesíti vagy ellensúlyozza</b>. Puszta ellentétre a ${korean("-지만")} (1B 9. lecke) vagy a lágyabb ${korean("-는데")} (2B 8. lecke) való; ha az első tag csak a folytatás háttere, szintén a ${korean("-는데")} (2A 8. lecke).</p>`,
   },
   {
