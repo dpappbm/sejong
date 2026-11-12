@@ -4,8 +4,9 @@ import honorifics from '../../data/honorifics';
 import type { KoreanHungarian } from '../../data/types';
 import { isPointId } from '../content';
 import { addEdge, linkTargets } from '../crossReferences';
-import { attributeText, correctIncorrectList, disclosureArrow, escapeHtml } from '../html';
+import { attributeText, disclosureArrow, escapeHtml } from '../html';
 import { reportProblem } from '../problems';
+import { checkCorrectIncorrect, correctIncorrectList } from './correctIncorrect';
 
 export const honorificsIntro = honorifics.intro;
 
@@ -29,6 +30,7 @@ export function honorificsChapter(): string {
     const id = `honorific-category-${index + 1}`;
     const title = `${index + 1}. ${category.hungarian}`;
     linkTargets.set(id, { label: 'Tiszteleti szavak', form: title, plain: true, title: `Tiszteleti szavak · ${title}` });
+    checkCorrectIncorrect(`honorific words ${id}`, category.correctIncorrect);
     const rows = category.rows.map((row, rowIndex) => {
       const where = `${id} row ${rowIndex + 1}`;
       if (!row.honorific || !row.example || !row.example[0] || !row.example[1]) reportProblem(`honorific words ${where}: missing honorific form or example translation`);

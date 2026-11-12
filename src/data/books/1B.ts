@@ -28,13 +28,13 @@ const points: PointSource[] = [
 <p><b>받침</b> után: <b>-으러</b>, magánhangzó után: <b>-러</b>, <b>ㄹ-tő</b> után is <b>-러</b> (${korean('놀다 → 놀러')}).</p>`,
     table: { sampleSet: 'verbs', columns: [{ header: '-(으)러 가요', conjugate: word => withEu(word, '러 가요') }] },
     examples: [['도서관에 책을 빌리<b>러 가요</b>.', 'Könyvtárba megyek könyvet kölcsönözni.'], ['친구 집에 놀<b>러 가요</b>.', 'Átmegyek a barátomhoz játszani/lógni.'], ['점심 먹<b>으러 갈까요</b>?', 'Elmenjünk ebédelni?'], ['동생이 이사해서 도우<b>러 왔어요</b>.', 'Az öcsém költözött, eljöttem segíteni.', 'ㅂ-rendhagyó: 돕다 → 도우러']],
-    correctIncorrect: [[1, '한국어를 배우러 세종학당에 다녀요.', 'Szedzsong Intézetbe járok koreait tanulni.'], [0, '한국어를 배우러 공부해요.', 'a -(으)러 után mozgást jelentő ige kell']],
+    correctIncorrect: [{ correct: '한국어를 배우러 세종학당에 다녀요.', translation: 'Szedzsong Intézetbe járok koreait tanulni.' }, { incorrect: '한국어를 배우러 공부해요.', reason: 'a -(으)러 után mozgást jelentő ige kell' }],
   },
   {
     lesson: 2, point: 2, form: '도', name: '„is”', conjugable: false,
     explanation: `<p>Főnév vagy más partikula után: „is”, azaz a már említett dolog mellé még valami <b>hozzájön</b>. Alany és tárgy után <b>helyettesíti</b> a ${korean('은/는, 이/가, 을/를')} partikulát. Az ${korean('에')} és ${korean('에서')} után megmarad előtte: ${korean('에도, 에서도')}.</p>`,
     examples: [['저<b>도</b> 학생이에요.', 'Én is diák vagyok.'], ['사과를 샀어요. 바나나<b>도</b> 샀어요.', 'Almát vettem. Banánt is vettem.'], ['주말에<b>도</b> 일해요.', 'Hétvégén is dolgozom.'], ['도서관에서<b>도</b> 공부하고 집에서<b>도</b> 공부해요.', 'A könyvtárban is tanulok, és otthon is.']],
-    correctIncorrect: [[1, '저도 가요.', 'Én is megyek.'], [0, '저는도 가요.', ''], [1, '서울에도 가요.', 'Szöulba is megyek.']],
+    correctIncorrect: [{ correct: '저도 가요.', translation: 'Én is megyek.' }, { incorrect: '저는도 가요.', reason: 'a 도 az 은/는 helyére lép, nem mellé: 저도' }, { correct: '서울에도 가요.', translation: 'Szöulba is megyek.' }],
   },
   {
     lesson: 3, point: 1, form: '-아서/어서 (이유)', name: '„mert …, ezért …” (ok)',
@@ -42,7 +42,7 @@ const points: PointSource[] = [
 <p>Megkötések: elé <b>nem kerülhet múlt</b> (-았/었-) és ${korean('-겠-')} (az időt a mondat vége adja), és utána <b>nem állhat felszólítás vagy javaslat</b>.</p>`,
     table: { sampleSet: 'verbsAndAdjectives', columns: [{ header: '-아서/어서', conjugate: word => withAOrEo(word, '서') }] },
     examples: [['배가 고<b>파서</b> 빵을 먹었어요.', 'Éhes voltam, ezért ettem egy kis kenyeret.', '으-kiesés: 고프다 → 고파서'], ['옷이 너무 <b>커서</b> 바꾸고 싶어요.', 'A ruha túl nagy, ezért szeretném kicserélni.'], ['날씨가 <b>추워서</b> 집에 있었어요.', 'Hideg volt, ezért otthon maradtam.', 'ㅂ-rendhagyó: 춥다 → 추워서'], ['오늘은 일이 많<b>아서</b> 바빠요.', 'Ma sok a munka, ezért elfoglalt vagyok.']],
-    correctIncorrect: [[1, '어제 아파서 학교에 못 갔어요.', 'Tegnap beteg voltam, ezért nem mentem iskolába.'], [0, '어제 아팠어서 학교에 못 갔어요.', 'múlt idő nem kerülhet a -아서 elé'], [0, '비가 와서 우산을 가져가세요.', 'felszólítás előtt -(으)니까 kell (1B 12. lecke)']],
+    correctIncorrect: [{ correct: '어제 아파서 학교에 못 갔어요.', translation: 'Tegnap beteg voltam, ezért nem mentem iskolába.' }, { incorrect: '어제 아팠어서 학교에 못 갔어요.', reason: 'múlt idő nem kerülhet a -아서 elé' }, { incorrect: '비가 와서 우산을 가져가세요.', reason: 'felszólítás előtt -(으)니까 kell (1B 12. lecke)' }],
     ownNote: `<p>Főnévvel: ${korean('-이라서 / 라서')} (vagy ${korean('-이어서 / 여서')}): ${korean('휴가라서 여행을 가요')}. Gyakori rövid válasz: ${korean('왜요? – 바빠서요.')} „Miért? – Mert elfoglalt vagyok.”</p>`,
   },
   {
@@ -60,7 +60,7 @@ const points: PointSource[] = [
     table: { sampleSet: 'adjectives', columns: [{ header: '-(으)ㄴ (+ főnév)', conjugate: word => withEu(word, 'ㄴ') }] },
     examples: [['더 <b>큰</b> 사이즈는 없어요?', 'Nincs nagyobb méret?'], ['<b>작은</b> 가방을 사고 싶어요.', 'Egy kis táskát szeretnék venni.'], ['<b>매운</b> 음식을 좋아해요?', 'Szereted a csípős ételeket?', 'ㅂ-rendhagyó: 맵다 → 매운'], ['<b>긴</b> 치마가 예뻐요.', 'A hosszú szoknya szép.', 'ㄹ-tő: 길다 → 긴']],
     ownNote: `<p>A ${korean('있다/없다')} és összetételeik (${korean('맛있다, 재미있다, 멋있다')}) jelzői alakja <b>-는</b>: ${korean('맛있는 음식')}, ${korean('재미없는 영화')}. A ㅎ-rendhagyóknál a ㅎ kiesik: ${korean('빨갛다 → 빨간')} (2A 10. lecke).</p>`,
-    correctIncorrect: [[1, '맛있는 빵', ''], [0, '맛있은 빵', '']],
+    correctIncorrect: [{ correct: '맛있는 빵', translation: 'finom kenyér' }, { incorrect: '맛있은 빵', reason: 'az 있다/없다 végű szavak jelzői alakja -는: 맛있는' }],
   },
   {
     lesson: 4, point: 2, form: '-습니다/ㅂ니다, -습니까?/ㅂ니까?', name: 'formális (hivatalos) stílus',
@@ -92,7 +92,7 @@ const points: PointSource[] = [
 <ul><li><b>eszköz, módszer</b> („-val/-vel, -ul/-ül”): ${korean('지하철로 가요')} „metróval megyek”, ${korean('버스로')} „busszal”, ${korean('한국어로 말해요')} „koreaiul beszélek”, ${korean('손으로 먹어요')} „kézzel eszem”;</li>
 <li><b>szerep, minőség</b> („-ként, valaminek”), főleg személyekkel: ${korean('친구로 지내다')} „barátként érintkezni, barátok lenni”, ${korean('친구로 생각하다')} „barátjának tartja”, ${korean('선생님으로 일하다')} „tanárként dolgozik”. Ennek hivatalosabb, nyomatékosabb párja a ${korean('(으)로서')} (4A 11. lecke).</li></ul>
 <p><b>Vigyázat:</b> személy <b>felé</b> mozgásnál nem ${korean('(으)로')} kell, hanem ${korean('에게/한테')} („hozzá”) vagy ${korean('N 쪽으로')} („felé”).</p>`,
-    correctIncorrect: [[1, '친구한테 가요.', 'A barátomhoz megyek.'], [1, '친구 쪽으로 걸어가요.', 'A barátom felé sétálok.'], [0, '친구로 가요.', 'irányként rossz; így azt jelentené: „barátként megyek”']],
+    correctIncorrect: [{ correct: '친구한테 가요.', translation: 'A barátomhoz megyek.' }, { correct: '친구 쪽으로 걸어가요.', translation: 'A barátom felé sétálok.' }, { incorrect: '친구로 가요.', reason: 'irányként rossz; így azt jelentené: „barátként megyek”' }],
   },
   {
     lesson: 6, point: 1, form: '○에서 ○까지', name: '„-tól/-től … -ig” (helyek között)', conjugable: false,
@@ -191,7 +191,7 @@ const points: PointSource[] = [
     explanation: `<p>Személy (vagy állat) után azt jelöli, <b>akire a cselekvés irányul</b>: kinek adunk, kinek szólunk, kinek telefonálunk. A ${korean('한테')} beszélt nyelvi, az ${korean('에게')} kicsit írottabb. Minden főnév után ugyanaz.</p>`,
     examples: [['저는 지니 씨<b>에게</b> 펜을 선물할 거예요.', 'Tollat fogok ajándékozni Dzsininek.'], ['친구<b>한테</b> 전화했어요.', 'Felhívtam a barátomat.'], ['동생<b>에게</b> 이메일을 보냈어요.', 'E-mailt küldtem az öcsémnek.'], ['고양이<b>한테</b> 밥을 줬어요.', 'Megetettem a macskát.']],
     ownNote: `<p>Tárgyra, helyre (pl. intézményre) nem ${korean('에게')}, hanem ${korean('에')}: ${korean('꽃에 물을 줘요')}, ${korean('회사에 전화해요')}. Az ellenkező irány („-tól/-től”): ${korean('에게서 / 한테서')}.</p>`,
-    correctIncorrect: [[1, '나무에 물을 줘요.', 'Meglocsolom a fát.'], [0, '나무에게 물을 줘요.', '']],
+    correctIncorrect: [{ correct: '나무에 물을 줘요.', translation: 'Meglocsolom a fát.' }, { incorrect: '나무에게 물을 줘요.', reason: 'az 에게 csak élőlény (ember, állat) után áll; növény, tárgy után 에' }],
     honorific: {
       rows: [['에게 / 한테', '-nak/-nek', '께', '-nak/-nek (tiszteleti)'], ['주다', 'ad', '드리다', 'ad (tiszteleti)']],
       note: `<p>Tisztelt személynek (szülő, nagyszülő, tanár) a ${korean('에게/한테')} helyett ${korean('께')} jár, és ilyenkor az „ad” sem ${korean('주다')}, hanem ${korean('드리다')}. Részletesen a 2B 7. lecke tanítja.</p>`,
@@ -204,7 +204,7 @@ const points: PointSource[] = [
 <p><b>받침</b> után: <b>-으니까</b>, magánhangzó után: <b>-니까</b>, <b>ㄹ-tőnél</b> az ㄹ kiesik: ${korean('사니까, 머니까')}.</p>`,
     table: { sampleSet: 'verbsAndAdjectives', columns: [{ header: '-(으)니까', conjugate: word => withEu(word, '니까') }, { header: 'Múlt: -았으니까/었으니까', conjugate: word => withPast(word, '으니까') }] },
     examples: [['비가 오<b>니까</b> 우산을 가져가세요.', 'Esik az eső, vigyél esernyőt.'], ['지니 씨가 그림을 좋아하<b>니까</b> 그림책을 선물할 거예요.', 'Dzsini szereti a képeket, ezért képeskönyvet fogok neki adni.'], ['오늘은 날씨가 <b>더우니까</b> 집에 있어요.', 'Ma meleg van, maradjunk itthon.', 'ㅂ-rendhagyó: 덥다 → 더우니까'], ['어제 많이 걸<b>었으니까</b> 오늘은 쉴까요?', 'Tegnap sokat gyalogoltunk, pihenjünk ma?']],
-    correctIncorrect: [[1, '시간이 없으니까 택시를 탑시다.', 'Nincs időnk, fogjunk taxit.'], [0, '시간이 없어서 택시를 탑시다.', 'javaslat előtt nem állhat -아서']],
+    correctIncorrect: [{ correct: '시간이 없으니까 택시를 탑시다.', translation: 'Nincs időnk, fogjunk taxit.' }, { incorrect: '시간이 없어서 택시를 탑시다.', reason: 'javaslat előtt nem állhat -아서' }],
     ownNote: `<p>Köszönésben, bocsánatkérésben viszont a ${korean('-아서/어서')} a természetes: ${korean('늦어서 죄송합니다')} (nem ${korean('늦었으니까')}). A 2B 7. lecke a ${korean('-(으)니까')} másik jelentését tanítja: „amikor …, rájöttem, hogy…” (felfedezés).</p>`,
   },
 ];

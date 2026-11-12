@@ -42,10 +42,10 @@ export default [
       ['이 식당은 비싼 대신에 음식이 정말 맛있어요.', 'Ez az étterem drága, cserébe nagyon finom az étel.'],
     ],
     correctIncorrect: [
-      [0, '주말에 부산에 가지만 같이 갈래요?', 'nincs ellentét: az utazás csak a kérdés háttere'],
-      [1, '주말에 부산에 가는데 같이 갈래요?', 'Hétvégén Busanba megyek. Jössz velem?'],
-      [0, '커피를 마시지만 차를 마셨어요.', 'a kávé elmaradt, a tea került a helyére'],
-      [1, '커피를 마시는 대신에 차를 마셨어요.', 'Kávé helyett teát ittam.'],
+      { incorrect: '주말에 부산에 가지만 같이 갈래요?', reason: 'nincs ellentét: az utazás csak a kérdés háttere' },
+      { correct: '주말에 부산에 가는데 같이 갈래요?', translation: 'Hétvégén Busanba megyek. Jössz velem?' },
+      { incorrect: '커피를 마시지만 차를 마셨어요.', reason: 'a kávé elmaradt, a tea került a helyére' },
+      { correct: '커피를 마시는 대신에 차를 마셨어요.', translation: 'Kávé helyett teát ittam.' },
     ],
     side: [
       ['3A-09-2', 'nem puszta ellentét: a második tag az elsőt helyettesíti („helyett”) vagy ellensúlyozza („cserébe”)'],
@@ -67,12 +67,12 @@ export default [
       ['한국어 실력이 좋아져 가요.', 'Egyre jobb a koreaitudásom.'],
     ],
     correctIncorrect: [
-      [0, '한국어 실력이 좋아하게 됐어요.', 'a 좋다 („jó”) állapota változik, nem a 좋아하다'],
-      [1, '한국어 실력이 좋아졌어요.', 'Javult a koreaitudásom.'],
-      [0, '한국어를 좋아졌어요.', 'a 좋아지다 mellett nem állhat 을/를'],
-      [1, '한국어를 좋아하게 됐어요.', 'Megszerettem a koreait. (Ugyanígy helyes: 한국어가 좋아졌어요.)'],
-      [0, '매일 운동해졌어요.', 'az 운동하다 ige: új szokásra -게 되다'],
-      [1, '매일 운동하게 됐어요.', 'Úgy alakult, hogy mindennap edzek.'],
+      { incorrect: '한국어 실력이 좋아하게 됐어요.', reason: 'a 좋다 („jó”) állapota változik, nem a 좋아하다' },
+      { correct: '한국어 실력이 좋아졌어요.', translation: 'Javult a koreaitudásom.' },
+      { incorrect: '한국어를 좋아졌어요.', reason: 'a 좋아지다 mellett nem állhat 을/를' },
+      { correct: '한국어를 좋아하게 됐어요.', translation: 'Megszerettem a koreait.', note: 'ugyanígy helyes: 한국어가 좋아졌어요.' },
+      { incorrect: '매일 운동해졌어요.', reason: 'az 운동하다 ige: új szokásra -게 되다' },
+      { correct: '매일 운동하게 됐어요.', translation: 'Úgy alakult, hogy mindennap edzek.' },
     ],
   },
 

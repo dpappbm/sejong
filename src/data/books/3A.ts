@@ -179,8 +179,8 @@ const points: PointSource[] = [
     ],
     ownNote: `<p>A ${korean("-는/(으)ㄴ/(으)ㄹ 것 같다")} (2A 9. lecke) a beszélő benyomását is kifejezheti, a ${korean("-나/(으)ㄴ가 보다")} viszont mindig <b>külső jelből</b> (láttam, hallottam) következtet.</p>`,
     correctIncorrect: [
-      [1, "마크 씨가 배가 고픈가 봐요.", "Mark biztos éhes."],
-      [0, "제가 배가 고픈가 봐요.", "első személyre nem"],
+      { correct: "마크 씨가 배가 고픈가 봐요.", translation: "Mark biztos éhes." },
+      { incorrect: "제가 배가 고픈가 봐요.", reason: "első személyre nem" },
     ],
   },
   {
@@ -411,12 +411,8 @@ const points: PointSource[] = [
     ],
     ownNote: `<p>A ${korean("-(으)면")} egyszerű feltétel, a ${korean("-(으)려면")} = ${korean("-(으)려고 하면")} a szándékot teszi feltétellé.</p>`,
     correctIncorrect: [
-      [
-        1,
-        "학교에 가려면 버스를 타야 돼요.",
-        "Ha iskolába akarsz menni, buszra kell szállnod.",
-      ],
-      [0, "학교에 가면 버스를 타야 돼요.", "így azt jelenti: „ha (már) mész”"],
+      { correct: "학교에 가려면 버스를 타야 돼요.", translation: "Ha iskolába akarsz menni, buszra kell szállnod." },
+      { incorrect: "학교에 가면 버스를 타야 돼요.", reason: "így azt jelenti: „ha (már) mész”" },
     ],
   },
   {
@@ -692,12 +688,8 @@ ${exampleList([["회의 날짜가 정해졌어요.", "Eldőlt a megbeszélés id
 <p>Ha nem egy tulajdonság, hanem egy <b>cselekvés vagy szokás</b> alakul ki, igével ${korean("-게 되다")} áll (2B 12. lecke):</p>
 ${exampleList([["한국어 실력이 좋아졌어요.", "Javult a koreaitudásom.", "좋다 „jó” → 좋아지다"], ["한국어를 좋아하게 됐어요.", "Megszerettem a koreait.", "좋아하다 „szeret” → 좋아하게 되다"]])}`,
     correctIncorrect: [
-      [1, "날씨가 따뜻해졌어요.", "Melegebb lett az idő."],
-      [
-        0,
-        "날씨가 따뜻했어졌어요.",
-        "a múlt idő jele a 지다 végére kerül (-아졌어요/어졌어요), a melléknév töve után nem állhat",
-      ],
+      { correct: "날씨가 따뜻해졌어요.", translation: "Melegebb lett az idő." },
+      { incorrect: "날씨가 따뜻했어졌어요.", reason: "a múlt idő jele a 지다 végére kerül (-아졌어요/어졌어요), a melléknév töve után nem állhat" },
     ],
   },
   {
@@ -733,18 +725,10 @@ ${exampleList([["한국어 실력이 좋아졌어요.", "Javult a koreaitudásom
       ["커피 <b>대신에</b> 차를 마셨어요.", "Kávé helyett teát ittam."],
     ],
     correctIncorrect: [
-      [
-        0,
-        "비가 오는 대신에 우산을 가져가세요.",
-        "az esernyő nem helyettesíti az esőt",
-      ],
-      [1, "비가 오는데 우산을 가져가세요.", "Esik az eső, vigyél esernyőt."],
-      [
-        0,
-        "한국어는 어려운 대신에 공부해요.",
-        "a tanulás nem ellensúlyozza, hogy nehéz",
-      ],
-      [1, "한국어는 어렵지만 공부해요.", "A koreai nehéz, de tanulom."],
+      { incorrect: "비가 오는 대신에 우산을 가져가세요.", reason: "az esernyő nem helyettesíti az esőt" },
+      { correct: "비가 오는데 우산을 가져가세요.", translation: "Esik az eső, vigyél esernyőt." },
+      { incorrect: "한국어는 어려운 대신에 공부해요.", reason: "a tanulás nem ellensúlyozza, hogy nehéz" },
+      { correct: "한국어는 어렵지만 공부해요.", translation: "A koreai nehéz, de tanulom." },
     ],
     ownNote: `<p>Az ${korean("에")} elhagyható: ${korean("대신")}. Az ${korean("있다/없다")} igeként ragozódik: ${korean("맛있는 대신에")}.</p>
 <p><b>Helyettesítés</b> – az első elmarad, helyette a második történik:</p>
