@@ -324,7 +324,7 @@ export default {
       ['눈이 충혈되다', 'véreres, vörös a szeme'],
       ['두통이 생기다', 'megfájdul a feje'],
       ['충치가 생기다', 'lyukas lesz a foga (fogszuvasodás)'],
-      ['피부가 간지럽다', 'viszket a bőre'],
+      ['피부가 간지럽다', 'csiklandós, bizsereg a bőre (enyhe viszketés; csiklandozásra is)'],
       ['손목을 삐다', 'kificamítja a csuklóját'],
       ['발목을 삐다', 'kificamítja a bokáját'],
       ['연고를 바르다', 'kenőcsöt ken rá'],
@@ -332,6 +332,9 @@ export default {
       ['냉찜질을 하다', 'hideg borogatást tesz rá, jegeli'],
       ['온찜질을 하다', 'meleg borogatást tesz rá'],
       ['붕대를 감다', 'bekötözi (kötszert teker rá)'],
+    ],
+    own: [
+      ['피부가 가렵다', 'viszket a bőre (erősen, vakarózni kell)'],
     ],
   },
   11: {
