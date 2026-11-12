@@ -1,7 +1,8 @@
-import type { LessonVocabulary } from './types';
+// Vocabulary of book 3A, keyed by lesson number.
+import type { LessonVocabulary } from '../types';
 
 export default {
-  '3A-1': {
+  1: {
     textbook: [
       ['오랜만이야', 'rég láttalak! (tegező)'],
       ['웬일이야', 'hát te? mi szél hozott? (tegező)'],
@@ -65,7 +66,7 @@ export default {
       ['그냥저냥 지냈어요', 'megvagyok, elvagyok (úgy-ahogy)'],
     ],
   },
-  '3A-2': {
+  2: {
     textbook: [
       ['입학을 하다', 'bekerül (iskolába, egyetemre), beiratkozik'],
       ['졸업을 하다', 'elvégzi az iskolát, lediplomázik'],
@@ -111,7 +112,7 @@ export default {
       ['사고가 나다', 'baleset történik'],
     ],
   },
-  '3A-3': {
+  3: {
     textbook: [
       ['부동산', 'ingatlaniroda (ingatlanközvetítő)'],
       ['이삿짐 센터', 'költöztető cég'],
@@ -130,7 +131,7 @@ export default {
       ['주변 환경이 조용하다', 'csendes a környék'],
     ],
   },
-  '3A-4': {
+  4: {
     textbook: [
       ['청소기', 'porszívó'],
       ['세탁기', 'mosógép'],
@@ -155,7 +156,7 @@ export default {
       ['먼지를 털다', 'leporol'],
     ],
   },
-  '3A-5': {
+  5: {
     textbook: [
       ['구입하다', 'vásárol, beszerez'],
       ['결제하다', 'fizet, kiegyenlíti (pl. kártyával, online)'],
@@ -189,7 +190,7 @@ export default {
       ['바가지 쓰다', 'megvágják, lehúzzák (túl sokat fizet)'],
     ],
   },
-  '3A-6': {
+  6: {
     textbook: [
       ['고장이 나다', 'elromlik'],
       ['수리를 맡기다', 'beadja javításra'],
@@ -219,7 +220,7 @@ export default {
       ['달러', 'dollár'],
     ],
   },
-  '3A-7': {
+  7: {
     textbook: [
       ['밸런타인데이 (2. 14.)', 'Valentin-nap'],
       ['어린이날 (5. 5.)', 'gyereknap'],
@@ -244,7 +245,7 @@ export default {
       ['재료', 'hozzávaló, alapanyag'],
     ],
   },
-  '3A-8': {
+  8: {
     textbook: [
       ['국경일', 'nemzeti ünnep'],
       ['3·1절 (3. 1.)', 'a március 1-jei függetlenségi mozgalom napja'],
@@ -267,7 +268,7 @@ export default {
       ['기념품을 주다', 'emléktárgyat ad'],
     ],
   },
-  '3A-9': {
+  9: {
     textbook: [
       ['한여름', 'a nyár dereka, kánikula'],
       ['한겨울', 'a tél dereka'],
@@ -312,7 +313,7 @@ export default {
       ['사라지다', 'eltűnik, megszűnik'],
     ],
   },
-  '3A-10': {
+  10: {
     textbook: [
       ['열이 나다', 'lázas'],
       ['열이 심하다', 'magas a láza'],
@@ -333,7 +334,7 @@ export default {
       ['붕대를 감다', 'bekötözi (kötszert teker rá)'],
     ],
   },
-  '3A-11': {
+  11: {
     textbook: [
       ['스트레스가 풀리다', 'oldódik a stressz, kikapcsolódik'],
       ['뿌듯한 기분이 들다', 'büszke, elégedett érzés tölti el'],
@@ -346,7 +347,7 @@ export default {
       ['자기 계발을 하다', 'fejleszti önmagát'],
     ],
   },
-  '3A-12': {
+  12: {
     textbook: [
       ['액션', 'akciófilm'],
       ['멜로', 'romantikus film (dráma)'],
@@ -378,4 +379,4 @@ export default {
       ['뻔하다', 'kiszámítható, előre látható'],
     ],
   },
-} satisfies Record<string, LessonVocabulary>;
+} satisfies Record<number, LessonVocabulary>;
