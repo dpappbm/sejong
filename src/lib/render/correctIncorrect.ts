@@ -14,10 +14,10 @@ export function checkCorrectIncorrect(where: string, items: CorrectIncorrect[] |
 
 export function correctIncorrectList(items: CorrectIncorrect[] | undefined): string {
   if (!items?.length) return '';
-  const note = (text: string | undefined) => text ? `<span class="correct-incorrect-note">${text}</span>` : '';
-  const translation = (text: string | undefined) => text ? ` <span class="hungarian">${text}</span>` : '';
+  // Everything goes under the Korean sentence: translation, then the reason (❌) or the note (✅).
+  const line = (className: string, text: string | undefined) => text ? `<span class="${className}">${text}</span>` : '';
   const rows = items.map(item => 'correct' in item
-    ? `<li class="correct">${koreanSpan(item.correct)}${translation(item.translation)}${note(item.note)}</li>`
-    : `<li class="incorrect">${koreanSpan(item.incorrect)}${translation(item.translation)}${note(item.reason)}</li>`);
+    ? `<li class="correct">${koreanSpan(item.correct)}${line('hungarian', item.translation)}${line('correct-incorrect-note', item.note)}</li>`
+    : `<li class="incorrect">${koreanSpan(item.incorrect)}${line('hungarian', item.translation)}${line('correct-incorrect-reason', item.reason)}</li>`);
   return `<ul class="correct-incorrect">${rows.join('')}</ul>`;
 }
