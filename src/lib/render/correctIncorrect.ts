@@ -18,6 +18,6 @@ export function correctIncorrectList(items: CorrectIncorrect[] | undefined): str
   const line = (className: string, text: string | undefined) => text ? `<span class="${className}">${text}</span>` : '';
   const rows = items.map(item => 'correct' in item
     ? `<li class="correct">${koreanSpan(item.correct)}${line('hungarian', item.translation)}${line('correct-incorrect-note', item.note)}</li>`
-    : `<li class="incorrect">${koreanSpan(item.incorrect)}${line('hungarian', item.translation)}${line('correct-incorrect-reason', item.reason)}</li>`);
+    : `<li class="incorrect">${koreanSpan(item.incorrect)}${line('hungarian', item.translation)}${line('correct-incorrect-note', item.reason)}</li>`);
   return `<ul class="correct-incorrect">${rows.join('')}</ul>`;
 }

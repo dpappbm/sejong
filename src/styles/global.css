@@ -245,7 +245,7 @@ ul.examples .irregular-note { grid-column: 1 / -1; font-size: .78rem; color: var
 .correct-incorrect li > * { grid-column: 2; }
 .correct-incorrect li::before { content: "✅"; grid-row: 1 / span 3; } .correct-incorrect li.incorrect::before { content: "❌"; }
 .correct-incorrect li.incorrect .korean { text-decoration: line-through; text-decoration-color: var(--incorrect); }
-.correct-incorrect .hungarian, .correct-incorrect-reason { color: var(--muted); font-size: .9rem; }
+.correct-incorrect .hungarian { color: var(--muted); font-size: .9rem; }
 .correct-incorrect-note { font-size: .82rem; font-style: italic; color: var(--muted); }
 .honorific { margin-top: 4px; }
 .honorific h5 .tag { margin-left: 6px; text-transform: none; letter-spacing: 0; }
