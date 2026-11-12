@@ -1,13 +1,12 @@
 // The collapsed "Szókincs" bar at the end of a lesson (after the pronunciation box).
-import vocabulary from '../../data/vocabulary';
-import type { KoreanHungarian, LessonVocabulary } from '../../data/types';
+import entries from '../../data/vocabulary';
+import type { KoreanHungarian } from '../../data/types';
 import { BOOK_DATA, type BookCode } from '../content';
 import { disclosureArrow, escapeHtml, ownTag } from '../html';
 import { reportProblem } from '../problems';
 import { forwardMark } from './forwardReferences';
 
 const PARTS = ['textbook', 'own'] as const;
-const entries = vocabulary as Record<string, LessonVocabulary>;
 
 export function checkVocabulary(): void {
   for (const [key, lessonVocabulary] of Object.entries(entries)) {
