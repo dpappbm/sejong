@@ -115,7 +115,7 @@ const points: PointSource[] = [
     explanation: `<p>Ige után azt fejezi ki, hogy az első cselekvés <b>miatt</b> lett egy <b>negatív következmény</b> (nem tudtam, késtem, fáradt lettem…). A két cselekvés <b>egy időben</b> zajlik, és az alanyuk azonos. A tő végétől függetlenül ${korean('-느라고')}; ㄹ-tőnél az ㄹ kiesik (${korean('노느라고')}).</p>`,
     table: { sampleSet: 'verbs', columns: [{ header: '-느라고', conjugate: word => withPlainStem(word, '느라고') }] },
     examples: [['일하<b>느라고</b> 바빠서 오랫동안 못 갔어요.', 'A munka miatt annyira elfoglalt voltam, hogy sokáig nem tudtam elmenni.'], ['게임을 하<b>느라고</b> 숙제를 못 했어요.', 'Játszottam, ezért nem csináltam meg a házit.'], ['음악을 듣<b>느라고</b> 전화 소리를 못 들었어요.', 'Zenét hallgattam, ezért nem hallottam a telefont.', '-느라고 előtt nincs ㄷ-változás: 듣느라고'], ['친구들과 노<b>느라고</b> 늦었어요.', 'A barátaimmal lógtam, ezért késtem el.', 'ㄹ-tő: 놀다 → 노느라고']],
-    correctIncorrect: [[1, '공부하느라고 못 잤어요.', ''], [0, '공부했느라고 못 잤어요.', 'elé nem kerül múlt idő'], [0, '비가 오느라고 못 갔어요.', 'csak szándékos cselekvés lehet, nem időjárás']],
+    correctIncorrect: [{ correct: '공부하느라고 못 잤어요.', translation: 'Tanultam, ezért nem tudtam aludni.' }, { incorrect: '공부했느라고 못 잤어요.', reason: 'elé nem kerül múlt idő' }, { incorrect: '비가 오느라고 못 갔어요.', reason: 'csak szándékos cselekvés lehet, nem időjárás' }],
     ownNote: `<p>Melléknévvel nem áll, és utána nem jöhet felszólítás vagy javaslat. Bocsánatkérésben gyakori: ${korean('준비하느라고 늦었어요. 죄송해요.')}</p>`,
   },
   {

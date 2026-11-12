@@ -30,7 +30,7 @@ const points: PointSource[] = [
     table: { sampleSet: 'verbs', columns: [{ header: '-(으)ㄹ게요', conjugate: word => withEu(word, 'ㄹ게요') }] },
     examples: [['제가 음식을 준비<b>할게요</b>.', 'Az ételt majd én készítem el.'], ['내일 꼭 일찍 <b>올게요</b>.', 'Megígérem, hogy holnap korán jövök.'], ['이사할 때 제가 도<b>울게요</b>.', 'Ha költözöl, segítek.', 'ㅂ-rendhagyó: 돕다 → 도울게요'], ['다음부터는 선생님 말씀을 잘 들<b>을게요</b>.', 'Mostantól jól oda fogok figyelni a tanárra.', 'ㄷ-rendhagyó: 듣다 → 들을게요']],
     ownNote: `<p><b>-(으)ㄹ게요 vagy -(으)ㄹ 거예요?</b> Az ${korean('-(으)ㄹ 거예요')} semleges terv („ezt fogom csinálni”), a ${korean('-(으)ㄹ게요')} a hallgatónak szóló vállalás, ígéret („rendben, majd én…”). Kiejtése: [-ㄹ께요].</p>`,
-    correctIncorrect: [[1, '제가 갈게요.', 'Majd én megyek.'], [0, '마크 씨가 갈게요.', 'csak a beszélő szándéka lehet'], [0, '뭐 먹을게요?', 'kérdésben -(으)ㄹ래요? kell']],
+    correctIncorrect: [{ correct: '제가 갈게요.', translation: 'Majd én megyek.' }, { incorrect: '마크 씨가 갈게요.', reason: 'csak a beszélő szándéka lehet' }, { incorrect: '뭐 먹을게요?', reason: 'kérdésben -(으)ㄹ래요? kell' }],
   },
   {
     lesson: 2, point: 1, form: '에서부터', name: '„-tól/-től (kezdve)” (kiinduló hely hangsúlyozva)', conjugable: false,
@@ -141,7 +141,7 @@ ${exampleList([['감기가 나아지다가 다시 심해졌어요.', 'Már javul
     lesson: 8, point: 2, form: '밖에', name: '„csak, nem más, mint …” (tagadással)', conjugable: false,
     explanation: `<p>Főnév után azt fejezi ki, hogy <b>nincs más lehetőség</b>, csak ez az egy. Mindig <b>tagadó</b> állítmánnyal áll (${korean('없다, 안, 못, 모르다')}). Minden főnév után ugyanaz.</p>`,
     examples: [['지갑에 천 원<b>밖에</b> 없어요.', 'Csak ezer von van a pénztárcámban.'], ['저는 한국어<b>밖에</b> 몰라요.', 'Csak koreaiul tudok.', '르-rendhagyó: 모르다 → 몰라요'], ['어제 세 시간<b>밖에</b> 못 잤어요.', 'Tegnap csak három órát tudtam aludni.'], ['우리 반에는 남학생이 한 명<b>밖에</b> 없어요.', 'Az osztályunkban csak egy fiú van.']],
-    correctIncorrect: [[1, '천 원밖에 없어요.', ''], [0, '천 원밖에 있어요.', 'a 밖에 után tagadás kell'], [1, '천 원만 있어요.', 'állító mondatban: 만 „csak”']],
+    correctIncorrect: [{ correct: '천 원밖에 없어요.', translation: 'Csak ezer wonom van.' }, { incorrect: '천 원밖에 있어요.', reason: 'a 밖에 után tagadás kell' }, { correct: '천 원만 있어요.', translation: 'Csak ezer wonom van.', note: 'állító mondatban: 만 „csak”' }],
     ownNote: `<p>A ${korean('만')} („csak”) semleges, a ${korean('밖에')} hangsúlyozza, hogy <b>kevés</b>, és sajnáljuk. Igével: ${korean('-(으)ㄹ 수밖에 없다')} „nem tehetek mást, mint…”.</p>`,
   },
   {

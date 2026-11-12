@@ -2,9 +2,10 @@
 import type { Honorific } from '../../data/types';
 import type { PointInfo } from '../content';
 import { relatedPlaceholder } from '../crossReferences';
-import { correctIncorrectList, escapeHtml, ownTag } from '../html';
+import { escapeHtml, ownTag } from '../html';
 import { reportProblem } from '../problems';
 import { checkCustomTableTranslations } from '../translations';
+import { checkCorrectIncorrect, correctIncorrectList } from './correctIncorrect';
 import { forwardMark } from './forwardReferences';
 import { groupBoxesFor } from './groups';
 import { renderConjugationTable } from './table';
@@ -17,6 +18,7 @@ function renderHonorificSection(honorific: Honorific | undefined, key: string): 
   }
   if (!honorific.examples || honorific.examples.length < 2) reportProblem(`${key}: honorific section with fewer than 2 examples`);
   for (const [korean, hungarian] of honorific.examples ?? []) if (!hungarian) reportProblem(`${key}: honorific example without translation: ${korean}`);
+  checkCorrectIncorrect(`${key} honorific`, honorific.correctIncorrect);
   const koreanWithTranslation = (korean: string, hungarian: string) => `<span class="korean">${korean}</span><span class="translation">${escapeHtml(hungarian)}</span>`;
   const table = honorific.rows?.length
     ? `<div class="table-wrapper"><table class="conjugation-table honorific-table"><thead><tr><th>Alap</th><th aria-hidden="true"></th><th>Tiszteleti</th></tr></thead><tbody>${honorific.rows.map(([baseKorean, baseHungarian, honorificKorean, honorificHungarian]) =>
@@ -33,6 +35,7 @@ function checkPoint(point: PointInfo): void {
   if (!point.studentBookPage || !point.vocabularyGrammarPage) reportProblem(`${where}: no source page`);
   if (!point.examples || point.examples.length < 3) reportProblem(`${where}: fewer than 3 examples`);
   if (point.examples?.some(example => !example[1])) reportProblem(`${where}: example without translation`);
+  checkCorrectIncorrect(where, point.correctIncorrect);
   if (point.conjugable !== false && point.table && point.table.kind !== 'noun' && point.table.irregular === false && !point.irregularRowsOptional) {
     reportProblem(`${where}: conjugable but no irregular rows`);
   }

@@ -27,6 +27,13 @@ describe('lesson export', () => {
     expect(koreanTexts).not.toContain('비가 오는 대신에 우산을 가져가세요.');
   });
 
+  it('exports a correct sample with its translation, never with its note', () => {
+    const rows = [...lessonExport('1A-8').points, ...lessonExport('2B-8').points].flatMap(point => point.examples);
+    expect(rows).toContainEqual(['피곤하지 않아요 / 안 피곤해요.', 'Nem vagyok fáradt.']);
+    expect(rows).toContainEqual(['천 원만 있어요.', 'Csak ezer wonom van.']);
+    expect(rows.map(row => row[1])).not.toContain('állító mondatban: 만 „csak”');
+  });
+
   it('gives every lesson one export entry per point', () => {
     for (const lesson of LESSONS) expect(buildLessonExport(lesson).points.map(point => point.point)).toEqual(lesson.points.map(point => point.point));
   });

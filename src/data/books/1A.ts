@@ -49,7 +49,7 @@ export default {
       examples: [['전화번호<b>가</b> 뭐예요?', 'Mi a telefonszámod?'], ['이메일 주소<b>가</b> 뭐예요?', 'Mi az e-mail címed?'], ['가방<b>이</b> 어디에 있어요?', 'Hol van a táska?'], ['날씨<b>가</b> 좋아요.', 'Jó idő van.']],
       ownNote: `<p><b>은/는 vagy 이/가?</b> A ${korean('은/는')} a már ismert témát vagy a szembeállítást jelöli („én pedig…”), a ${korean('이/가')} az új információt, az alanyt hangsúlyozza. Kérdőszó (${korean('누가, 뭐가')}) és a rá adott válasz mindig ${korean('이/가')}-t kap: ${korean('누가 왔어요? – 마크 씨가 왔어요.')}</p>
 <p>Különleges alakok: ${korean('저 + 가 → 제가')}, ${korean('나 + 가 → 내가')}, ${korean('누구 + 가 → 누가')}.</p>`,
-      correctIncorrect: [[1, '제가 할게요.', 'Én megcsinálom.'], [0, '저가 할게요.', '']],
+      correctIncorrect: [{ correct: '제가 할게요.', translation: 'Én megcsinálom.' }, { incorrect: '저가 할게요.', reason: 'a 저 („én”) a 가 előtt 제-vé változik: 제가' }],
       honorific: {
         rows: [['이/가', 'alanyjelölő', '께서', 'alanyjelölő (tiszteleti)']],
         note: `<p>Tisztelt személy alanyként ${korean('께서')}-t kaphat, az állítmány ilyenkor ${korean('-(으)시-')} alakú (2B 3. lecke). A ${korean('께서')} ünnepélyesebb; beszélt nyelvben gyakran elég a ${korean('이/가')} + tiszteleti ige: ${korean('선생님이 오셨어요')}.</p>`,
@@ -81,7 +81,7 @@ export default {
         rows: [['있다 (személy)', 'ott van, tartózkodik', '계시다', 'ott van (tiszteleti)'], ['없다 (személy)', 'nincs ott', '안 계시다', 'nincs ott (tiszteleti)'], ['있다 (birtoklás)', 'van neki', '있으시다', 'van neki (tiszteleti)']],
         note: `<p>Ha egy <b>tisztelt személy</b> tartózkodási helyéről beszélünk, a ${korean('있다')} helyett ${korean('계시다')} áll. Ha viszont a tisztelt személynek <b>van valamije</b> (idő, gyerek, kérdés), a szabályos ${korean('있으시다')} a helyes, nem a ${korean('계시다')}.</p>`,
         examples: [['선생님이 교실에 <b>계세요</b>.', 'A tanár úr az osztályteremben van.'], ['아버지는 지금 집에 <b>안 계세요</b>.', 'Édesapám most nincs otthon.'], ['내일 시간 <b>있으세요</b>?', 'Holnap van ideje?']],
-        correctIncorrect: [[1, '할머니가 방에 계세요.', 'A nagymama a szobában van.'], [0, '할머니가 방에 있으세요.', 'helynél 계시다 kell']],
+        correctIncorrect: [{ correct: '할머니가 방에 계세요.', translation: 'A nagymama a szobában van.' }, { incorrect: '할머니가 방에 있으세요.', reason: 'helynél 계시다 kell' }],
       },
     },
     {
@@ -128,7 +128,7 @@ export default {
         rows: [['먹다 / 마시다', 'eszik / iszik', '드세요', 'egyen / igyon'], ['자다', 'alszik', '주무세요', 'aludjon'], ['있다', 'ott van, marad', '계세요', 'maradjon'], ['말하다', 'mond, beszél', '말씀하세요', 'mondja']],
         note: `<p>A ${korean('-(으)세요')} maga is udvarias, tiszteleti alak. Néhány igének azonban <b>külön tiszteleti szava</b> van, és ezeknél nem a sima ${korean('-(으)세요')}-t, hanem a külön szót használjuk.</p>`,
         examples: [['맛있게 <b>드세요</b>.', 'Jó étvágyat!'], ['안녕히 <b>주무세요</b>.', 'Jó éjszakát! (tiszteleti)'], ['안녕히 <b>계세요</b>.', 'Viszontlátásra! (annak mondjuk, aki marad)'], ['천천히 <b>말씀하세요</b>.', 'Mondja nyugodtan, lassan.']],
-        correctIncorrect: [[1, '맛있게 드세요.', 'Jó étvágyat! (tiszteleti)'], [0, '맛있게 먹으세요.', 'nyelvtanilag képezhető, de idősebbnek nem így mondjuk']],
+        correctIncorrect: [{ correct: '맛있게 드세요.', translation: 'Jó étvágyat!', note: 'tiszteleti alak' }, { incorrect: '맛있게 먹으세요.', reason: 'nyelvtanilag képezhető, de idősebbnek nem így mondjuk' }],
       },
     },
     {
@@ -136,7 +136,7 @@ export default {
       explanation: `<p>Időt jelölő főnév után azt mondja meg, <b>mikor</b> történik valami: ${korean('세 시에')} „háromkor”, ${korean('월요일에')} „hétfőn”. Minden főnév után ugyanaz.</p>
 <p><b>Nem kap ${korean('에')}-t:</b> ${korean('오늘, 내일, 어제, 언제, 지금, 매일, 요즘')}. A ${korean('이에요/예요')} elé sem tesszük: ${korean('몇 시예요?')}</p>`,
       examples: [['일곱 시<b>에</b> 시작해요.', 'Hétkor kezdődik.'], ['토요일<b>에</b> 친구를 만나요.', 'Szombaton találkozom a barátommal.'], ['3월 15일<b>에</b> 한국에 가요.', 'Március 15-én Koreába megyek.'], ['내일 뭐 해요?', 'Mit csinálsz holnap? (a 내일 nem kap 에-t)']],
-      correctIncorrect: [[1, '오늘 공부해요.', 'Ma tanulok.'], [0, '오늘에 공부해요.', '']],
+      correctIncorrect: [{ correct: '오늘 공부해요.', translation: 'Ma tanulok.' }, { incorrect: '오늘에 공부해요.', reason: 'az 오늘 („ma”) nem kap 에-t' }],
     },
     {
       lesson: 7, point: 2, form: '○시 ○분', name: 'az idő kifejezése (óra, perc)', studentBookPage: 87, vocabularyGrammarPage: 43,
@@ -150,7 +150,7 @@ export default {
       explanation: `<p>Az ige vagy melléknév <b>elé</b> téve tagad: ${korean('안 가요')} „nem megyek”. <b>Főnév + 하다</b> igéknél a ${korean('안')} a ${korean('하다')} elé kerül: ${korean('공부 안 해요')}. A ${korean('있다, 없다')} nem kap ${korean('안')}-t (${korean('있다')} tagadása: ${korean('없다')}).</p>`,
       table: { sampleSet: 'verbsAndAdjectives', columns: [{ header: '안 + -아요/어요', conjugate: negateWithAn }] },
       examples: [['오늘은 날씨가 <b>안</b> 추워요.', 'Ma nincs hideg.', 'ㅂ-rendhagyó: 춥다 → 추워요'], ['저는 커피를 <b>안</b> 마셔요.', 'Nem iszom kávét.'], ['주말에 공부 <b>안</b> 해요.', 'Hétvégén nem tanulok.'], ['이 김치는 <b>안</b> 매워요.', 'Ez a kimcsi nem csípős.', 'ㅂ-rendhagyó: 맵다 → 매워요']],
-      correctIncorrect: [[1, '운동 안 해요.', ''], [0, '안 운동해요.', 'főnév + 하다 igénél a 안 középre kerül'], [1, '피곤하지 않아요 / 안 피곤해요.', 'a 하다 melléknév nem bomlik szét']],
+      correctIncorrect: [{ correct: '운동 안 해요.', translation: 'Nem sportolok.' }, { incorrect: '안 운동해요.', reason: 'főnév + 하다 igénél a 안 középre kerül' }, { correct: '피곤하지 않아요 / 안 피곤해요.', translation: 'Nem vagyok fáradt.', note: 'a 하다 melléknév nem bomlik szét (nem: 피곤 안 해요)' }],
       ownNote: `<p>A hosszú tagadás ${korean('-지 않다')} (2A 5. lecke) ugyanazt jelenti, csak kicsit írottabb. A „nem tudom megcsinálni” jelentésű tagadás ${korean('못')} (1B 1. lecke).</p>`,
     },
     {
@@ -167,7 +167,7 @@ export default {
       explanation: `<p>Hely után azt jelöli, <b>hol történik</b> egy cselekvés: ${korean('공원에서 산책해요')}. Minden főnév után ugyanaz.</p>`,
       examples: [['공원<b>에서</b> 산책했어요.', 'A parkban sétáltam.'], ['도서관<b>에서</b> 책을 읽어요.', 'A könyvtárban olvasok.'], ['어디<b>에서</b> 일해요?', 'Hol dolgozol?'], ['카페<b>에서</b> 친구를 만나요.', 'A kávézóban találkozom a barátommal.']],
       ownNote: `<p><b>에 vagy 에서?</b> Létige (${korean('있다/없다')}) és mozgás célja (${korean('가다, 오다')}) mellett ${korean('에')}: ${korean('집에 있어요, 집에 가요')}. Ha a helyen <b>csinálunk valamit</b>: ${korean('에서')}: ${korean('집에서 쉬어요')}. Az ${korean('에서')} „-ból/-ből, -tól/-től” (kiindulópont) is lehet: ${korean('어디에서 왔어요?')} „Honnan jöttél?”</p>`,
-      correctIncorrect: [[1, '도서관에서 공부해요.', ''], [0, '도서관에 공부해요.', '']],
+      correctIncorrect: [{ correct: '도서관에서 공부해요.', translation: 'A könyvtárban tanulok.' }, { incorrect: '도서관에 공부해요.', reason: 'a cselekvés helyét 에서 jelöli; az 에 létezésnél és a mozgás céljánál áll' }],
     },
     {
       lesson: 9, point: 2, form: '-았/었-', name: 'múlt idő', studentBookPage: 103, vocabularyGrammarPage: 47,

@@ -4,8 +4,19 @@ import type { SampleSetName, Word, WordClass } from '../lib/conjugation';
 
 /** A Korean example sentence with its Hungarian translation and an optional note (e.g. an irregular form). */
 export type Example = [korean: string, hungarian: string, note?: string];
-/** A correct (1) or incorrect (0) usage sample with an optional Hungarian explanation. */
-export type CorrectIncorrect = [isCorrect: number, korean: string, hungarian?: string];
+/** A correct usage sample: the Korean sentence, its translation and an optional remark. */
+export interface CorrectSample {
+  correct: string;
+  translation: string;
+  note?: string;
+}
+/** An incorrect usage sample: the Korean sentence, why it is wrong, and optionally what it meant to say. */
+export interface IncorrectSample {
+  incorrect: string;
+  reason: string;
+  translation?: string;
+}
+export type CorrectIncorrect = CorrectSample | IncorrectSample;
 export type KoreanHungarian = [korean: string, hungarian: string];
 
 /** Global id of a grammar point: book, two-digit lesson, point number, e.g. "3A-09-1". */

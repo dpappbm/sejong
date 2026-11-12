@@ -19,10 +19,3 @@ export const disclosureArrow = '<span class="disclosure-arrow" aria-hidden="true
 export const exampleList = (examples: [korean: string, hungarian: string, note?: string][]) =>
   `<ul class="examples">${examples.map(([korean, hungarian, note]) =>
     `<li>${koreanSpan(korean)}<span class="hungarian">${hungarian}</span>${note ? `<span class="irregular-note">${note}</span>` : ''}</li>`).join('')}</ul>`;
-
-export function correctIncorrectList(items: [number, string, string?][] | undefined): string {
-  if (!items) return '';
-  const rows = items.map(([isCorrect, korean, hungarian]) =>
-    `<li class="${isCorrect ? 'correct' : 'incorrect'}">${koreanSpan(korean)}${hungarian ? ` <span class="hungarian">${hungarian}</span>` : ''}</li>`);
-  return `<ul class="correct-incorrect">${rows.join('')}</ul>`;
-}

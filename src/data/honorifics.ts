@@ -70,7 +70,7 @@ export default {
         { base: null, honorific: ['당신', '⚠ „Ön/maga”: csak házastársak között („drágám”), írásban, dalban, reklámban; szemtől szemben idegennek sértő'], example: ['여보, 당신도 커피 마실래요?', 'Drágám, te is kérsz kávét? (házastársak között)'], references: [] },
       ],
       note: `<p>Koreaiul nincs olyan „Ön”, amit bárkinek mondhatunk. Udvariasan a megszólított <b>címét vagy nevét</b> ismételjük, vagy egyszerűen elhagyjuk a „te/Ön”-t.</p>`,
-      correctIncorrect: [[1, '선생님, 이거 선생님 가방이세요?', 'Tanár úr, ez az Ön táskája?'], [0, '당신 가방이에요?', 'idegennek, tanárnak sértő']],
+      correctIncorrect: [{ correct: '선생님, 이거 선생님 가방이세요?', translation: 'Tanár úr, ez az Ön táskája?' }, { incorrect: '당신 가방이에요?', reason: 'idegennek, tanárnak sértő' }],
     },
   ],
 } satisfies HonorificsData;

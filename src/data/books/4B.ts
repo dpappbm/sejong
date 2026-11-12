@@ -175,7 +175,7 @@ const points: PointSource[] = [
     explanation: `<p>Ige vagy melléknév után <b>kívánságot, reményt</b> fejez ki, gyakran jókívánságként, hivatalos beszédben, üdvözlőlapon. A tő végétől függetlenül ${korean('-기를 바라다')}; ragozva: ${korean('바라요, 바랍니다')}.</p>`,
     table: { sampleSet: 'verbsAndAdjectives', columns: [{ header: '-기를 바라요', conjugate: word => withPlainStem(word, '기를 바라요') }, { header: '-기를 바랍니다', conjugate: word => withPlainStem(word, '기를 바랍니다') }] },
     examples: [['모두 행복하<b>기를 바랍니다</b>.', 'Kívánom, hogy mindenki boldog legyen.'], ['좋은 결과가 있<b>기를 바라요</b>.', 'Remélem, jó eredmény lesz.'], ['새해에는 건강하<b>시기를 바랍니다</b>.', 'Jó egészséget kívánok az új évre.'], ['앞으로도 우리 노래를 많이 들어 주시<b>기를 바랍니다</b>.', 'Reméljük, a jövőben is sokat hallgatják majd a dalainkat.', 'ㄷ-rendhagyó: 듣다 → 들어 주시다']],
-    correctIncorrect: [[1, '행복하기를 바라요.', ''], [0, '행복하기를 바래요.', 'gyakran hallani, de a helyes alak 바라요 (바라다 → 바라 + 요)']],
+    correctIncorrect: [{ correct: '행복하기를 바라요.', translation: 'Remélem, boldog leszel.' }, { incorrect: '행복하기를 바래요.', reason: 'gyakran hallani, de a helyes alak 바라요 (바라다 → 바라 + 요)' }],
     ownNote: `<p>A ${korean('바라다')} szabályos: ${korean('바라 + 요 → 바라요')} (az ㅏ összevonódik). A ${korean('바래요')} a beszédben elterjedt, de helytelen alak; a tankönyv is külön kiemeli.</p>`,
   },
 ];

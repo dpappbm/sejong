@@ -4,8 +4,9 @@
 import groups from '../../data/groups';
 import type { RelatedGroup } from '../../data/types';
 import { POINTS_BY_ID } from '../content';
-import { correctIncorrectList, disclosureArrow, ownTag } from '../html';
+import { disclosureArrow, ownTag } from '../html';
 import { reportProblem } from '../problems';
+import { checkCorrectIncorrect, correctIncorrectList } from './correctIncorrect';
 
 /** All points of a group: scale and side branches, or members. */
 const groupPointIds = (group: RelatedGroup) =>
@@ -20,6 +21,7 @@ export function checkGroups(): void {
       }
     } else {
       for (const [korean, hungarian] of group.examples ?? []) if (!korean || !hungarian) reportProblem(`related structures ${group.id}: example without translation: ${korean}`);
+      checkCorrectIncorrect(`related structures ${group.id}`, group.correctIncorrect);
     }
     for (const id of groupPointIds(group)) if (!POINTS_BY_ID.has(id)) reportProblem(`related structures ${group.id}: point does not exist: ${id}`);
   }

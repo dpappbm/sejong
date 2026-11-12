@@ -157,7 +157,7 @@ ${simpleTable(['Eredeti', 'Teljes függő beszéd', 'Rövid alak'], [['kérdés'
 <ul><li><b>Ige</b>: jelen ${korean('-는 것이다')}, múlt ${korean('-(으)ㄴ 것이다')}</li><li><b>Melléknév</b>: ${korean('-(으)ㄴ 것이다')}</li></ul>`,
     table: { sampleSet: 'verbsAndAdjectives', columns: [{ header: 'Jelen', conjugate: word => presentModifier(word, ' 거예요') }, { header: 'Múlt (ige)', conjugate: word => word.wordClass === 'verb' ? withEu(word, 'ㄴ 거예요') : null }] },
     examples: [['주인공이 깜짝 놀라서 무엇인가를 찾기 시작하<b>는 거야</b>.', 'És akkor a főszereplő megdöbben, és elkezd keresni valamit.'], ['그래서 늦<b>은 거예요</b>.', 'Szóval ezért késtem el.'], ['한국어를 배우는 이유는 한국 친구와 이야기하고 싶기 때문<b>인 거예요</b>.', 'Azért tanulok koreaiul, mert koreai barátaimmal szeretnék beszélgetni.'], ['그 노래를 듣고 <b>운 거예요</b>?', 'Szóval attól a daltól sírtál el?', 'ㄹ-tő: 울다 → 운']],
-    correctIncorrect: [[1, '그 노래를 듣고 운 거예요?', 'Szóval attól a daltól sírtál el?'], [0, '그 노래를 듣고 울은 거예요?', 'ㄹ-tőnél az ㄹ kiesik: 울다 → 운']],
+    correctIncorrect: [{ correct: '그 노래를 듣고 운 거예요?', translation: 'Szóval attól a daltól sírtál el?' }, { incorrect: '그 노래를 듣고 울은 거예요?', reason: 'ㄹ-tőnél az ㄹ kiesik: 울다 → 운' }],
     ownNote: `<p>Történetmesélésben a ${korean('-는 거야')} jelen idő élénkebbé teszi az elbeszélést („és akkor odamegy…”).</p>`,
   },
   {

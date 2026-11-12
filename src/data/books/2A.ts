@@ -51,7 +51,7 @@ const points: PointSource[] = [
 <p><b>받침</b> után: <b>-을 때</b>, magánhangzó után: <b>-ㄹ 때</b>, <b>ㄹ-tőnél</b> az ㄹ kiesik és <b>-ㄹ 때</b>: ${korean('만들 때')}. Múltra: ${korean('-았을/었을 때')}. Főnévvel: ${korean('N 때')} (${korean('방학 때')}).</p>`,
     table: { sampleSet: 'verbsAndAdjectives', columns: [{ header: '-(으)ㄹ 때', conjugate: word => withEu(word, 'ㄹ 때') }, { header: 'Múlt: -았을/었을 때', conjugate: word => withPast(word, '을 때') }] },
     examples: [['시간이 있<b>을 때</b> 뭐 해요?', 'Mit csinálsz, amikor van időd?'], ['날씨가 <b>추울 때</b> 따뜻한 차를 마셔요.', 'Amikor hideg van, meleg teát iszom.', 'ㅂ-rendhagyó: 춥다 → 추울 때'], ['한국에 처음 <b>왔을 때</b> 한국어를 잘 못했어요.', 'Amikor először jöttem Koreába, nem beszéltem jól koreaiul.'], ['어렸<b>을 때</b> 피아노를 배웠어요.', 'Gyerekkoromban zongorázni tanultam.']],
-    correctIncorrect: [[1, '방학 때 여행을 가요.', ''], [0, '방학할 때에 여행을 가요.', 'főnévnél egyszerűen N 때'], [0, '아침 때 운동해요.', 'az 아침, 오후, 저녁 után nem kell 때: 아침에']],
+    correctIncorrect: [{ correct: '방학 때 여행을 가요.', translation: 'A szünetben elutazom.' }, { incorrect: '방학할 때에 여행을 가요.', reason: 'főnévnél egyszerűen N 때' }, { incorrect: '아침 때 운동해요.', reason: 'az 아침, 오후, 저녁 után nem kell 때: 아침에' }],
   },
   {
     lesson: 4, point: 1, form: '-기로 하다', name: '„elhatároztam / megbeszéltük, hogy …”',
@@ -86,7 +86,7 @@ const points: PointSource[] = [
 <p><b>받침</b> után: <b>-으면서</b>, magánhangzó után: <b>-면서</b>, <b>ㄹ-tő</b> után is <b>-면서</b> (${korean('놀면서')}).</p>`,
     table: { sampleSet: 'verbs', columns: [{ header: '-(으)면서', conjugate: word => withEu(word, '면서') }] },
     examples: [['커피를 마시<b>면서</b> 음악을 들어요.', 'Kávézás közben zenét hallgatok.'], ['음악을 들<b>으면서</b> 공부해요.', 'Zenehallgatás közben tanulok.', 'ㄷ-rendhagyó: 듣다 → 들으면서'], ['밥을 먹<b>으면서</b> 텔레비전을 봐요.', 'Evés közben tévézem.'], ['아르바이트를 하<b>면서</b> 학교에 다녀요.', 'Diákmunka mellett járok iskolába.']],
-    correctIncorrect: [[1, '저는 노래하면서 춤을 춰요.', ''], [0, '저는 노래하면서 동생은 춤을 춰요.', 'a két cselekvés alanya azonos kell legyen']],
+    correctIncorrect: [{ correct: '저는 노래하면서 춤을 춰요.', translation: 'Éneklés közben táncolok.' }, { incorrect: '저는 노래하면서 동생은 춤을 춰요.', reason: 'a két cselekvés alanya azonos kell legyen' }],
   },
   {
     lesson: 6, point: 2, form: '-지요?', name: '„…, ugye?” (megerősítő kérdés)',
