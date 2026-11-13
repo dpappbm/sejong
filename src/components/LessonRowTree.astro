@@ -1,0 +1,50 @@
+---
+// The checkbox tree of a lesson's rows (rule and examples of each grammar point, vocabulary), shared by the export and
+// the flash-card dialogs. The rows are embedded as JSON, keyed like the "data-tree-rows" of the leaf checkboxes;
+// src/scripts/rowTree.ts reads the selection.
+import type { LessonInfo } from '../lib/content';
+import { buildLessonExport, rowGroups } from '../lib/lessonExport';
+
+interface Props {
+  lesson: LessonInfo;
+}
+
+const data = buildLessonExport(Astro.props.lesson);
+const { vocabulary } = data;
+const rows = rowGroups(data);
+// With only one kind of words there is a single "Szókincs" checkbox.
+const singleVocabularyKey = vocabulary && (!vocabulary.own.length ? 'vocabulary-textbook' : !vocabulary.textbook.length ? 'vocabulary-own' : null);
+// "<" must not end the script element early.
+const json = JSON.stringify(rows).replace(/</g, '\\u003c');
+---
+<ul class="row-tree">
+  {data.points.map(point => (
+    <li>
+      <label><input type="checkbox" data-tree-parent={`point-${point.point}`} checked /> <b>{point.point}. nyelvtan:</b> <span class="korean">{point.form}</span></label>
+      <ul>
+        <li><label><input type="checkbox" data-tree-rows={`point-${point.point}-rule`} data-tree-child-of={`point-${point.point}`} checked /> Szabály</label></li>
+        <li>
+          {point.examples.length
+            ? <label><input type="checkbox" data-tree-rows={`point-${point.point}-examples`} data-tree-child-of={`point-${point.point}`} checked /> Példák <small>({point.examples.length})</small></label>
+            : <label class="disabled"><input type="checkbox" disabled /> Példák <small>– ennél a nyelvtannál nincs példa</small></label>}
+        </li>
+      </ul>
+    </li>
+  ))}
+  <li>
+    {!vocabulary && <label class="disabled"><input type="checkbox" disabled /> <b>Szókincs</b> <small>– ehhez a leckéhez még nincs szókincs</small></label>}
+    {vocabulary && singleVocabularyKey && (
+      <label><input type="checkbox" data-tree-rows={singleVocabularyKey} checked /> <b>Szókincs</b> <small>({rows[singleVocabularyKey].length})</small></label>
+    )}
+    {vocabulary && !singleVocabularyKey && (
+      <Fragment>
+        <label><input type="checkbox" data-tree-parent="vocabulary" checked /> <b>Szókincs</b></label>
+        <ul>
+          <li><label><input type="checkbox" data-tree-rows="vocabulary-textbook" data-tree-child-of="vocabulary" checked /> Tankönyv <small>({vocabulary.textbook.length})</small></label></li>
+          <li><label><input type="checkbox" data-tree-rows="vocabulary-own" data-tree-child-of="vocabulary" checked /> További szavak <small>({vocabulary.own.length})</small></label></li>
+        </ul>
+      </Fragment>
+    )}
+  </li>
+</ul>
+<script type="application/json" data-tree-data set:html={json} />

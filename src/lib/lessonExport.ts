@@ -47,6 +47,20 @@ function pointExport(point: PointInfo): PointExport {
   return { point: point.point, form, rule: [form, plainText(point.name)], examples: uniqueRows([...examples, ...correctSamples]) };
 }
 
+/** The rows behind the leaf checkboxes of the row tree, keyed like their "data-tree-rows". */
+export function rowGroups(data: LessonExport): Record<string, KoreanHungarian[]> {
+  const groups: Record<string, KoreanHungarian[]> = {};
+  for (const point of data.points) {
+    groups[`point-${point.point}-rule`] = [point.rule];
+    groups[`point-${point.point}-examples`] = point.examples;
+  }
+  if (data.vocabulary) {
+    groups['vocabulary-textbook'] = data.vocabulary.textbook;
+    groups['vocabulary-own'] = data.vocabulary.own;
+  }
+  return groups;
+}
+
 export function buildLessonExport(lesson: LessonInfo): LessonExport {
   const lessonVocabulary = vocabulary[lesson.key];
   const rows = (part: KoreanHungarian[] | undefined) => uniqueRows((part ?? []).map(([korean, hungarian]): KoreanHungarian => [plainText(korean), plainText(hungarian)]));

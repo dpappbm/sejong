@@ -6,6 +6,7 @@
 // the body is swapped. Listeners on document and window are set once; per-page work runs on "astro:page-load".
 import { navigate } from 'astro:transitions/client';
 import './lessonExport';
+import './flashcards';
 
 const BOOKS = ['1A', '1B', '2A', '2B', '3A', '3B', '4A', '4B'];
 const LESSON_KEY_PATTERN = /^([1-4][AB])-(\d+)$/;
