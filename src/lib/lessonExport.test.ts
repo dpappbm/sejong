@@ -60,8 +60,9 @@ describe('lesson export', () => {
     expect(vocabulary?.own).toEqual([]);
   });
 
-  it('has no vocabulary where the lesson has none', () => {
-    expect(lessonExport('1A-1').vocabulary).toBeNull();
+  it('exports the vocabulary of every lesson', () => {
+    expect(lessonExport('1A-1').vocabulary?.textbook).toContainEqual(['나라', 'ország']);
+    for (const lesson of LESSONS) expect(buildLessonExport(lesson).vocabulary?.textbook.length, lesson.key).toBeGreaterThan(0);
   });
 
   it('writes one tab-separated line per row, each closed by a line break', () => {
