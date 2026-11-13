@@ -23,7 +23,8 @@ export function checkVocabulary(): void {
       if (!Array.isArray(row) || row.length !== 2 || !row[0] || !row[1]) reportProblem(`vocabulary ${key}: incomplete row (${index + 1}.): ${row?.[0]}`);
       else if (seen.has(row[0])) reportProblem(`vocabulary ${key}: listed twice: ${row[0]}`);
       else seen.add(row[0]);
-      if (row?.[0] && /[A-Za-z]/.test(row[0].replace(/\([^)]*\)/g, ''))) reportProblem(`vocabulary ${key}: Latin letter in the Korean column: ${row[0]}`);
+      // Upper-case abbreviations are part of Korean words (PC방); any other Latin letter means a swapped column.
+      if (row?.[0] && /[A-Za-z]/.test(row[0].replace(/\([^)]*\)/g, '').replace(/[A-Z]{2,}/g, ''))) reportProblem(`vocabulary ${key}: Latin letter in the Korean column: ${row[0]}`);
     });
   }
 }
