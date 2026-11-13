@@ -331,10 +331,10 @@ table.plain.vocabulary-table td.korean { width: 42%; word-break: keep-all; }
 .set-current-button:hover, .set-current-button:focus-visible { border-color: var(--current); color: var(--current); }
 .contents-book li.done .lesson-label::after { content: " ✓"; color: var(--correct); }
 @media print { .set-current-button { display: none; } }
-/* lesson export: the button in the lesson header and its dialog */
-.export-button { display: inline-flex; align-items: center; gap: 5px; font: inherit; font-size: .74rem; font-weight: 600; text-transform: none; letter-spacing: 0; padding: 3px 10px; border-radius: 999px; border: 1px solid var(--line); background: var(--card); color: var(--muted); cursor: pointer; }
-.export-button:hover, .export-button:focus-visible { border-color: var(--accent); color: var(--accent); }
-@media print { .export-button { display: none; } }
+/* lesson tools: the Export and Szókártyák buttons in the lesson header and their dialogs */
+.lesson-tool-button { display: inline-flex; align-items: center; gap: 5px; font: inherit; font-size: .74rem; font-weight: 600; text-transform: none; letter-spacing: 0; padding: 3px 10px; border-radius: 999px; border: 1px solid var(--line); background: var(--card); color: var(--muted); cursor: pointer; }
+.lesson-tool-button:hover, .lesson-tool-button:focus-visible { border-color: var(--accent); color: var(--accent); }
+@media print { .lesson-tool-button { display: none; } }
 .export-dialog { width: min(560px, calc(100vw - 24px)); max-height: calc(100vh - 32px); padding: 0; border: 1px solid var(--line); border-radius: 14px; background: var(--card); color: var(--foreground); box-shadow: 0 12px 40px rgba(0, 0, 0, .28); }
 .export-dialog[open] { display: flex; flex-direction: column; }
 .export-dialog::backdrop { background: rgba(15, 17, 22, .5); }
@@ -347,28 +347,67 @@ table.plain.vocabulary-table td.korean { width: 42%; word-break: keep-all; }
 /* while the dialog is open the page behind it does not scroll (the scrollbar's place is kept, so nothing shifts) */
 html:has(.export-dialog[open]) { overflow: hidden; scrollbar-gutter: stable; }
 .export-dialog-body { overscroll-behavior: contain; }
-.export-tree, .export-tree ul { list-style: none; margin: 0; padding: 0; }
-.export-tree > li { padding: 6px 0; border-bottom: 1px solid var(--line); }
-.export-tree > li:last-child { border-bottom: none; }
-.export-tree ul { padding-left: 26px; }
-.export-tree label { display: flex; align-items: baseline; flex-wrap: wrap; gap: 0 6px; padding: 3px 0; cursor: pointer; }
-.export-tree label.disabled { color: var(--muted); cursor: default; }
-.export-tree input[type="checkbox"] { width: 16px; height: 16px; margin: 0 2px 0 0; align-self: center; flex: none; accent-color: var(--accent); }
-.export-tree small { color: var(--muted); font-size: .8rem; }
+.row-tree, .row-tree ul { list-style: none; margin: 0; padding: 0; }
+.row-tree > li { padding: 6px 0; border-bottom: 1px solid var(--line); }
+.row-tree > li:last-child { border-bottom: none; }
+.row-tree ul { padding-left: 26px; }
+.row-tree label { display: flex; align-items: baseline; flex-wrap: wrap; gap: 0 6px; padding: 3px 0; cursor: pointer; }
+.row-tree label.disabled { color: var(--muted); cursor: default; }
+.row-tree input[type="checkbox"] { width: 16px; height: 16px; margin: 0 2px 0 0; align-self: center; flex: none; accent-color: var(--accent); }
+.row-tree small { color: var(--muted); font-size: .8rem; }
 .export-preview { margin-top: 10px; border: 1px solid var(--line); border-radius: 10px; padding: 6px 10px; }
 .export-preview > summary { display: flex; align-items: center; gap: 6px; font-weight: 600; font-size: .92rem; cursor: pointer; }
 .export-preview > summary .count { color: var(--muted); font-weight: 400; }
 .export-preview[open] > summary { margin-bottom: 6px; }
 .export-preview .table-wrapper { max-height: 40vh; overflow-y: auto; }
 .export-preview td.korean { width: 46%; word-break: keep-all; }
-.export-dialog-footer { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 10px; padding: 10px 16px 14px; border-top: 1px solid var(--line); }
-.export-copy-button, .export-close-button { display: inline-flex; align-items: center; gap: 6px; font: inherit; font-size: .9rem; font-weight: 600; padding: 7px 14px; border-radius: 8px; border: 1px solid var(--line); background: var(--soft); color: var(--foreground); cursor: pointer; }
-.export-copy-button { border-color: var(--accent); background: var(--accent); color: var(--card); }
-.export-copy-button:disabled { opacity: .45; cursor: not-allowed; }
-.export-copy-button:not(:disabled):hover, .export-copy-button:focus-visible { filter: brightness(1.08); }
-.export-close-button { margin-left: auto; }
-.export-close-button:hover, .export-close-button:focus-visible { border-color: var(--accent); }
+/* not the page footer: none of its margin, font size or colour */
+.export-dialog-footer { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 10px; margin: 0; padding: 10px 16px 14px; border-top: 1px solid var(--line); font-size: 1rem; color: var(--foreground); }
+.dialog-button { display: inline-flex; align-items: center; gap: 6px; font: inherit; font-size: .9rem; font-weight: 600; padding: 7px 14px; border-radius: 8px; border: 1px solid var(--line); background: var(--soft); color: var(--foreground); cursor: pointer; }
+.dialog-button:hover, .dialog-button:focus-visible { border-color: var(--accent); }
+.dialog-primary-button { border-color: var(--accent); background: var(--accent); color: var(--card); }
+.dialog-primary-button:disabled { opacity: .45; cursor: not-allowed; }
+.dialog-primary-button:not(:disabled):hover, .dialog-primary-button:focus-visible { filter: brightness(1.08); }
+.dialog-close-button { margin-left: auto; }
 .export-status { font-size: .84rem; color: var(--correct); }
+/* flash-card game: selection, rounds, summary */
+.flashcard-dialog[open] .flashcard-screen { display: flex; flex-direction: column; min-height: 0; flex: 1 1 auto; }
+.flashcard-intro { margin: 4px 0 8px; color: var(--muted); font-size: .9rem; }
+.flashcard-selection-status { font-size: .84rem; color: var(--muted); }
+.flashcard-selection-status.is-warning { color: var(--incorrect); }
+.flashcard-progress { margin: 6px 0 0; font-size: .8rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
+.flashcard-question { margin: 10px 0 16px; font-size: 1.35rem; font-weight: 700; line-height: 1.4; overflow-wrap: anywhere; }
+.flashcard-question.korean { font-size: 1.6rem; word-break: keep-all; }
+.flashcard-answers { display: flex; flex-direction: column; gap: 8px; }
+.flashcard-answer { display: flex; align-items: center; gap: 10px; width: 100%; min-height: 46px; padding: 8px 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--card); color: var(--foreground); font: inherit; font-size: 1rem; text-align: left; cursor: pointer; }
+.flashcard-answer:not(:disabled):hover, .flashcard-answer:focus-visible { border-color: var(--accent); background: var(--soft); }
+.flashcard-answer:disabled { cursor: default; }
+.flashcard-answer-letter { flex: none; display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; border-radius: 50%; background: var(--soft); color: var(--muted); font-size: .8rem; font-weight: 700; }
+.flashcard-answer-text { flex: 1; overflow-wrap: anywhere; }
+.flashcard-answer-text.korean { font-size: 1.1rem; word-break: keep-all; }
+.flashcard-answer-mark { flex: none; font-weight: 700; }
+.flashcard-answer.is-correct { border-color: var(--correct); box-shadow: inset 0 0 0 1px var(--correct); }
+.flashcard-answer.is-correct .flashcard-answer-letter { background: var(--correct); color: var(--card); }
+.flashcard-answer.is-correct .flashcard-answer-mark { color: var(--correct); }
+.flashcard-answer.is-incorrect { border-color: var(--incorrect); box-shadow: inset 0 0 0 1px var(--incorrect); }
+.flashcard-answer.is-incorrect .flashcard-answer-letter { background: var(--incorrect); color: var(--card); }
+.flashcard-answer.is-incorrect .flashcard-answer-mark { color: var(--incorrect); }
+.flashcard-feedback { font-size: .9rem; font-weight: 600; }
+.flashcard-feedback.is-correct { color: var(--correct); }
+.flashcard-feedback.is-incorrect { color: var(--incorrect); }
+.flashcard-next-button { margin-left: auto; }
+.flashcard-score { margin: 10px 0 12px; font-size: 1.4rem; font-weight: 700; }
+.flashcard-perfect { margin: 0 0 8px; color: var(--correct); font-weight: 600; }
+.flashcard-mistakes-heading { margin: 4px 0 6px; font-size: .95rem; }
+.flashcard-mistakes { list-style: none; margin: 0; padding: 0; }
+.flashcard-mistakes li { display: flex; flex-direction: column; gap: 2px; padding: 8px 0; border-bottom: 1px solid var(--line); }
+.flashcard-mistakes li:last-child { border-bottom: none; }
+.flashcard-mistake-question { font-weight: 700; overflow-wrap: anywhere; }
+.flashcard-mistake-correct, .flashcard-mistake-chosen { display: flex; gap: 6px; font-size: .92rem; overflow-wrap: anywhere; }
+.flashcard-mistake-label { flex: none; font-weight: 600; }
+.flashcard-mistake-correct .flashcard-mistake-label { color: var(--correct); }
+.flashcard-mistake-chosen { color: var(--muted); }
+.flashcard-mistake-chosen .flashcard-mistake-label { color: var(--incorrect); }
 .export-copy-fallback { position: fixed; left: -9999px; top: 0; }
 .floating-buttons { position: fixed; right: 18px; bottom: 18px; display: flex; flex-direction: column; align-items: flex-end; gap: 10px; z-index: 50; }
 .floating-button { display: inline-flex; align-items: center; justify-content: center; min-width: 46px; height: 46px; padding: 0 16px; border-radius: 999px; border: 1px solid var(--line); background: var(--card); color: var(--accent); font: inherit; font-weight: 700; font-size: .9rem; text-decoration: none; cursor: pointer; box-shadow: 0 2px 6px rgba(20,20,30,.12), 0 8px 22px rgba(20,20,30,.12); transition: opacity .2s, transform .2s; }

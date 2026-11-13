@@ -1,37 +1,9 @@
-// The lesson export dialog (src/components/LessonExportDialog.astro): checkbox tree, live preview, copy to clipboard.
+// The lesson export dialog (src/components/LessonExportDialog.astro): row tree, live preview, copy to clipboard.
 // The dialog is part of the swapped page content, so it is looked up on every event; the listeners are bound once.
 import { exportText } from '../lib/exportFormat';
-
-type Row = [korean: string, hungarian: string];
+import { applyTreeChange, isTreeCheckbox, resetTree, selectedRows } from './rowTree';
 
 const exportDialog = () => document.getElementById('lesson-export-dialog') as HTMLDialogElement | null;
-const checkboxes = (dialog: HTMLDialogElement, selector: string) => Array.from(dialog.querySelectorAll<HTMLInputElement>(`input[type="checkbox"]${selector}`));
-
-/** The rows of the checked leaf checkboxes in page order; a row that occurs twice is exported once. */
-function selectedRows(dialog: HTMLDialogElement): Row[] {
-  const data = JSON.parse(dialog.querySelector('[data-export-data]')?.textContent || '{}') as Record<string, Row[]>;
-  const seen = new Set<string>();
-  const rows: Row[] = [];
-  for (const checkbox of checkboxes(dialog, '[data-export-rows]:checked')) {
-    for (const row of data[checkbox.dataset.exportRows!] ?? []) {
-      const key = row.join('\t');
-      if (seen.has(key)) continue;
-      seen.add(key);
-      rows.push(row);
-    }
-  }
-  return rows;
-}
-
-/** A parent is checked if all of its children are, and indeterminate if only some are. */
-function updateParents(dialog: HTMLDialogElement): void {
-  for (const parent of checkboxes(dialog, '[data-export-parent]')) {
-    const children = checkboxes(dialog, `[data-export-child-of="${parent.dataset.exportParent}"]`);
-    const checkedCount = children.filter(child => child.checked).length;
-    parent.checked = checkedCount > 0 && checkedCount === children.length;
-    parent.indeterminate = checkedCount > 0 && checkedCount < children.length;
-  }
-}
 
 function setStatus(dialog: HTMLDialogElement, text: string): void {
   const status = dialog.querySelector('[data-export-status]');
@@ -61,10 +33,7 @@ function updatePreview(dialog: HTMLDialogElement): void {
 
 /** Every opening starts with everything selected and the preview collapsed. */
 function openExportDialog(dialog: HTMLDialogElement): void {
-  for (const checkbox of checkboxes(dialog, ':not(:disabled)')) {
-    checkbox.checked = true;
-    checkbox.indeterminate = false;
-  }
+  resetTree(dialog);
   const preview = dialog.querySelector<HTMLDetailsElement>('details.export-preview');
   if (preview) preview.open = false;
   setStatus(dialog, '');
@@ -113,13 +82,9 @@ document.addEventListener('click', event => {
 });
 
 document.addEventListener('change', event => {
-  const checkbox = event.target as HTMLInputElement;
   const dialog = exportDialog();
-  if (!dialog || !dialog.contains(checkbox) || checkbox.type !== 'checkbox') return;
-  if (checkbox.dataset.exportParent) {
-    for (const child of checkboxes(dialog, `[data-export-child-of="${checkbox.dataset.exportParent}"]`)) child.checked = checkbox.checked;
-  }
-  updateParents(dialog);
+  if (!dialog || !isTreeCheckbox(dialog, event.target)) return;
+  applyTreeChange(dialog, event.target);
   setStatus(dialog, '');
   updatePreview(dialog);
 });
