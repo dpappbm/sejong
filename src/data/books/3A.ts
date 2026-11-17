@@ -809,7 +809,39 @@ ${exampleList([["이 집은 작은 대신에 월세가 싸요.", "Ez a lakás ki
         "ㄷ-rendhagyó: 듣다 → 들어야",
       ],
     ],
-    ownNote: `<p>A ${korean("-아야/어야 되다")} („kell”, 1B 9. lecke) is erre épül. Gyakori fordulat: ${korean("-아야/어야지요")} („hát persze, hogy …”).</p>`,
+    ownNote: `<p>A ${korean("-아야/어야 되다")} („kell”, 1B 9. lecke) is erre épül: „csak akkor lesz rendben, ha …”.</p>
+<p>A ${korean("-(으)면")} (2A 7. lecke) elégséges feltétel („ha”), a ${korean("-아야/어야")} szükséges („csak ha”): ${korean("매일 들으면 / 들어야 잘할 수 있어요")}. Céllal kezdve ugyanez ${korean("-(으)려면")}-nel (3A 5. lecke): ${korean("잘하려면 매일 들어야 돼요")}.</p>
+<p>Gyakori fordulat: ${korean("-아야/어야지요")} („hát persze, hogy … kell”): ${korean("아프면 병원에 가야지요.")} – Ha beteg vagy, persze hogy orvoshoz kell menni.</p>`,
+    correctIncorrect: [
+      {
+        correct: "빨리 나으려면 약을 먹어야 해요.",
+        translation: "Ha gyorsan meg akarsz gyógyulni, be kell venned a gyógyszert.",
+        note: "elöl a cél, a „kell” a végén",
+      },
+      {
+        correct: "약을 먹어야 빨리 나을 수 있어요.",
+        translation: "Csak ha beveszed a gyógyszert, gyógyulhatsz meg gyorsan.",
+        note: "ugyanez fordítva: elöl a feltétel (ㅅ-rendhagyó: 낫다 → 나을)",
+      },
+      {
+        correct: "시험에 합격하려면 열심히 공부해야 돼요.",
+        translation: "Ha át akarsz menni a vizsgán, keményen kell tanulnod.",
+      },
+      {
+        correct: "열심히 공부해야 시험에 합격할 수 있어요.",
+        translation: "Csak ha keményen tanulsz, mehetsz át a vizsgán.",
+      },
+      {
+        incorrect: "시간이 있어야 같이 영화 봅시다.",
+        reason: "a -아야/어야 után nem állhat felszólítás vagy javaslat (-(으)세요, -ㅂ시다, -(으)ㄹ까요?)",
+        translation: "Ha van időd, nézzünk meg együtt egy filmet.",
+      },
+      {
+        correct: "시간이 있으면 같이 영화 봅시다.",
+        translation: "Ha van időd, nézzünk meg együtt egy filmet.",
+        note: "kéréshez, javaslathoz -(으)면",
+      },
+    ],
   },
   {
     lesson: 11,
