@@ -97,7 +97,7 @@ export default {
   '3A-8-1': [{ verb: 'azért, hogy {subjunctiveFirstSingular}' }],
   '3A-8-2': [{ verb: 'mindenképp {infinitive} fogok!' }],
   '3A-9-1': [{ adjective: 'egyre {comparative} lesz' }, { adjective: 'egyre {comparative} lett' }],
-  '3A-9-2': [{ verb: '{verbalNoun} helyett', adjective: '{base}, de cserébe …' }],
+  '3A-9-2': [{ verb: '{verbalNoun} helyett', adjective: '{base}, de cserébe …' }, { verb: '{pastFirstSingular}, cserébe …' }],
   '3A-10-1': [{ verb: 'kérem, {imperativeFormal}' }, { verb: 'igyekszem {infinitive}' }],
   '3A-10-2': [{ verb: 'csak ha {presentFirstSingular}, (akkor) …', adjective: 'csak ha {base}, (akkor) …' }],
   '3A-11-1': [{ verb: 'ha sokat {presentFirstSingular}, (idővel) …' }, { verb: 'ahogy sokat {pastFirstSingular}, (rájöttem) …' }],
