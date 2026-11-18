@@ -60,7 +60,7 @@ export default [
       ['2B-12-2', 'ige: úgy alakul, hogy …'],
       ['3B-11-1', 'a változás halad előre'],
     ],
-    explanation: '<p>Mindhárom változást fejez ki, de mást változtat. Ha egy <b>tulajdonság, állapot</b> lesz más, a melléknévhez -아지다/어지다 járul. Ha egy <b>cselekvés, szokás, helyzet</b> alakul ki (nem csak a saját döntésünkből), az igéhez -게 되다. Melléknévvel a -게 되다 egyszerű változásra nem természetes: 날씨가 추워졌어요, nem 춥게 됐어요. Az -아/어 가다 azt teszi hozzá, hogy a folyamat még tart, egy végpont felé halad; az -아지다-val össze is kapcsolható: 추워져 가요.</p>',
+    explanation: '<p>Mindhárom változást fejez ki, de mást változtat. Ha egy <b>tulajdonság, állapot</b> lesz más, a melléknévhez -아지다/어지다 járul. Ha egy <b>cselekvés, szokás, helyzet</b> alakul ki (nem csak a saját döntésünkből), az igéhez -게 되다. Melléknévvel a -게 되다 egyszerű változásra nem természetes: 날씨가 추워졌어요, nem 춥게 됐어요. Ha viszont egy körülmény következménye, mindkettő jó: 시험을 못 봐서 합격이 어렵게 됐어요 / 어려워졌어요 („nem sikerült a vizsga, így nehéz lesz átmenni”); a -게 되다 az eredményt, az -아지다/어지다 inkább a folyamatot emeli ki (날씨가 점점 추워져요). Az -아/어 가다 azt teszi hozzá, hogy a folyamat még tart, egy végpont felé halad; az -아지다-val össze is kapcsolható: 추워져 가요.</p>',
     examples: [
       ['한국어 실력이 좋아졌어요.', 'Javult a koreaitudásom.'],
       ['한국어를 좋아하게 됐어요.', 'Megszerettem a koreai nyelvet.'],
