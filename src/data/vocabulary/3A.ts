@@ -78,6 +78,7 @@ export default {
       ['일을/업무를 맡다', 'elvállal egy feladatot, rábíznak egy feladatot'],
       ['승진하다', 'előléptetik'],
       ['일을 그만두다', 'felmond, otthagyja a munkáját'],
+      ['직장을 옮기다', 'munkahelyet vált, másik munkahelyre megy'],
       ['운전면허를 따다', 'megszerzi a jogosítványt'],
       ['청혼을 하다', 'megkéri valakinek a kezét'],
       ['청혼을 받다', 'megkérik a kezét'],
