@@ -6,6 +6,7 @@ import LessonFlashcardDialog from '../../components/LessonFlashcardDialog.astro'
 import LessonHeader from '../../components/LessonHeader.astro';
 import PageNavigation from '../../components/PageNavigation.astro';
 import { LEVELS, lessonPath } from '../../lib/content';
+import { lessonExportEnabled } from '../../lib/features';
 import { getSite, localizeLinks, type LessonContent } from '../../lib/site';
 import { stripTags } from '../../lib/html';
 
@@ -43,7 +44,7 @@ const label = `${lesson.book} ${lesson.lesson}. lecke`;
     </div>
     <Fragment set:html={html} />
   </section>
-  <LessonExportDialog lesson={lesson} />
+  {lessonExportEnabled && <LessonExportDialog lesson={lesson} />}
   <LessonFlashcardDialog lesson={lesson} />
   <PageNavigation path={path} />
 </BaseLayout>

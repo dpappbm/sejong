@@ -1,5 +1,5 @@
 ---
-// The "Szókártyák" dialog of a lesson page: choose rows in the row tree, answer a multiple-choice round per row, see
+// The "Gyakorlás" (practice) dialog of a lesson page: choose rows in the row tree, answer a multiple-choice round per row, see
 // the summary. Three screens (selection, round, summary) toggled with "hidden"; src/scripts/flashcards.ts drives it.
 // A click beside the dialog does not close it, and neither does Esc during a round: only ✕ does.
 import type { LessonInfo } from '../lib/content';
@@ -13,7 +13,7 @@ const { lesson } = Astro.props;
 ---
 <dialog class="export-dialog flashcard-dialog" id="lesson-flashcard-dialog" aria-labelledby="lesson-flashcard-title" data-flashcard-screen="selection">
   <header class="export-dialog-header">
-    <h2 id="lesson-flashcard-title">Szókártyák <span class="export-dialog-lesson">{lesson.book} · {lesson.lesson}. lecke</span></h2>
+    <h2 id="lesson-flashcard-title">Gyakorlás <span class="export-dialog-lesson">{lesson.book} · {lesson.lesson}. lecke</span></h2>
     <button class="export-close-icon" type="button" data-flashcard-close aria-label="Bezárás" title="Bezárás">✕</button>
   </header>
 
