@@ -55,7 +55,7 @@ describe('lesson export', () => {
   });
 
   it('has only textbook words where the lesson has no own words', () => {
-    const { vocabulary } = lessonExport('3A-4');
+    const { vocabulary } = lessonExport('1A-1');
     expect(vocabulary?.textbook.length).toBeGreaterThan(0);
     expect(vocabulary?.own).toEqual([]);
   });
