@@ -331,7 +331,7 @@ table.plain.vocabulary-table td.korean { width: 42%; word-break: keep-all; }
 .set-current-button:hover, .set-current-button:focus-visible { border-color: var(--current); color: var(--current); }
 .contents-book li.done .lesson-label::after { content: " ✓"; color: var(--correct); }
 @media print { .set-current-button { display: none; } }
-/* lesson tools: the Export and Szókártyák buttons in the lesson header and their dialogs */
+/* lesson tools: the Export (hidden for now) and Gyakorlás buttons in the lesson header and their dialogs */
 .lesson-tool-button { display: inline-flex; align-items: center; gap: 5px; font: inherit; font-size: .74rem; font-weight: 600; text-transform: none; letter-spacing: 0; padding: 3px 10px; border-radius: 999px; border: 1px solid var(--line); background: var(--card); color: var(--muted); cursor: pointer; }
 .lesson-tool-button:hover, .lesson-tool-button:focus-visible { border-color: var(--accent); color: var(--accent); }
 @media print { .lesson-tool-button { display: none; } }
