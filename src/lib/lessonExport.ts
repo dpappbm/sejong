@@ -1,6 +1,6 @@
 // Export data of a lesson: Korean–Hungarian rows for flash-card tools (one "korean<TAB>hungarian" line per row).
 import vocabulary from '../data/vocabulary';
-import type { CorrectSample, KoreanHungarian } from '../data/types';
+import type { CorrectSample, KoreanHungarian, VocabularyRow } from '../data/types';
 import type { LessonInfo, PointInfo } from './content';
 import { stripTags } from './html';
 
@@ -63,7 +63,7 @@ export function rowGroups(data: LessonExport): Record<string, KoreanHungarian[]>
 
 export function buildLessonExport(lesson: LessonInfo): LessonExport {
   const lessonVocabulary = vocabulary[lesson.key];
-  const rows = (part: KoreanHungarian[] | undefined) => uniqueRows((part ?? []).map(([korean, hungarian]): KoreanHungarian => [plainText(korean), plainText(hungarian)]));
+  const rows = (part: VocabularyRow[] | undefined) => uniqueRows((part ?? []).map(([korean, hungarian]): KoreanHungarian => [plainText(korean), plainText(hungarian)]));
   const textbook = rows(lessonVocabulary?.textbook);
   const own = rows(lessonVocabulary?.own);
   return {

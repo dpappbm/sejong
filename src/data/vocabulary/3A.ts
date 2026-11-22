@@ -259,6 +259,18 @@ export default {
       ['태그', 'címke (a ruhán)'],
       ['바가지 쓰다', 'megvágják, lehúzzák (túl sokat fizet)'],
     ],
+    own: [
+      ['적응하다', 'hozzászokik, alkalmazkodik, beilleszkedik', 'classNotes'],
+      ['생긴 (생기다)', 'keletkezik, lesz valami (pl. 얼룩이 생기다: folt lesz rajta)', 'classNotes'],
+      ['외국인 등록증', 'külföldi regisztrációs kártya (tartózkodási igazolvány Koreában)', 'classNotes'],
+      ['유의하다', 'figyel rá, ügyel rá, szem előtt tartja', 'classNotes'],
+      ['사항', 'pont, tétel, tudnivaló (유의 사항: tudnivalók)', 'classNotes'],
+      ['불가능(하다)', 'lehetetlen, nem lehetséges (pl. 환불 불가능: nem váltható vissza)', 'classNotes'],
+      ['상태', 'állapot', 'classNotes'],
+      ['궁금하다', 'kíváncsi (valamire), szeretné tudni', 'classNotes'],
+      ['게시판', 'hirdetőtábla; (online) üzenőfal, fórum', 'classNotes'],
+      ['이용하다', 'használ, igénybe vesz', 'classNotes'],
+    ],
   },
   6: {
     textbook: [
