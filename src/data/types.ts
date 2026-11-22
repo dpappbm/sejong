@@ -167,11 +167,20 @@ export interface FormGroup {
 export type RelatedGroup = ScaleGroup | FormGroup;
 
 // ---------- vocabulary ----------
+/**
+ * Where an own word comes from (not shown yet): classNotes "órai jegyzet", textbook "tankönyv" (beyond its word list),
+ * workbook "munkafüzet", extraActivityBook "extra activity füzet".
+ */
+export const VOCABULARY_SOURCES = ['classNotes', 'textbook', 'workbook', 'extraActivityBook'] as const;
+export type VocabularySource = (typeof VOCABULARY_SOURCES)[number];
+/** A row of the own words; the source is given for rows added since the sources are tracked. */
+export type VocabularyRow = [korean: string, hungarian: string, source?: VocabularySource];
+
 export interface LessonVocabulary {
   /** The textbook's words (flash cards of the lesson). */
   textbook?: KoreanHungarian[];
   /** Words beyond the textbook list (workbook, texts, class notes), shown with "＋ Saját". */
-  own?: KoreanHungarian[];
+  own?: VocabularyRow[];
 }
 
 // ---------- honorific words chapter ----------

@@ -1,6 +1,6 @@
 // The collapsed "Szókincs" bar at the end of a lesson (after the pronunciation box).
 import entries from '../../data/vocabulary';
-import type { KoreanHungarian } from '../../data/types';
+import { VOCABULARY_SOURCES, type VocabularyRow } from '../../data/types';
 import { BOOK_DATA, type BookCode } from '../content';
 import { disclosureArrow, escapeHtml, ownTag } from '../html';
 import { reportProblem } from '../problems';
@@ -16,11 +16,12 @@ export function checkVocabulary(): void {
       continue;
     }
     for (const part of Object.keys(lessonVocabulary)) if (!(PARTS as readonly string[]).includes(part)) reportProblem(`vocabulary ${key}: unknown part: ${part}`);
-    const rows = PARTS.flatMap(part => lessonVocabulary[part] ?? []);
+    const rows: VocabularyRow[] = PARTS.flatMap(part => lessonVocabulary[part] ?? []);
     if (!rows.length) reportProblem(`vocabulary ${key}: empty`);
     const seen = new Set<string>();
     rows.forEach((row, index) => {
-      if (!Array.isArray(row) || row.length !== 2 || !row[0] || !row[1]) reportProblem(`vocabulary ${key}: incomplete row (${index + 1}.): ${row?.[0]}`);
+      if (!Array.isArray(row) || row.length < 2 || row.length > 3 || !row[0] || !row[1]) reportProblem(`vocabulary ${key}: incomplete row (${index + 1}.): ${row?.[0]}`);
+      else if (row.length === 3 && !(VOCABULARY_SOURCES as readonly string[]).includes(row[2] as string)) reportProblem(`vocabulary ${key}: unknown source: ${row[0]}: ${row[2]}`);
       else if (seen.has(row[0])) reportProblem(`vocabulary ${key}: listed twice: ${row[0]}`);
       else seen.add(row[0]);
       // Upper-case abbreviations are part of Korean words (PC방); any other Latin letter means a swapped column.
@@ -33,7 +34,7 @@ export function vocabularyBox(book: string, lesson: number): string {
   const lessonVocabulary = entries[`${book}-${lesson}`];
   if (!lessonVocabulary) return '';
   const count = PARTS.reduce((sum, part) => sum + (lessonVocabulary[part] ?? []).length, 0);
-  const table = (rows: KoreanHungarian[]) => `<div class="table-wrapper"><table class="plain vocabulary-table"><thead><tr><th>Koreai</th><th>Magyarul</th></tr></thead><tbody>` +
+  const table = (rows: VocabularyRow[]) => `<div class="table-wrapper"><table class="plain vocabulary-table"><thead><tr><th>Koreai</th><th>Magyarul</th></tr></thead><tbody>` +
     rows.map(([korean, hungarian]) => `<tr class="vocabulary-row"><td class="korean">${escapeHtml(korean)}</td><td>${escapeHtml(hungarian)}${forwardMark(`vocabulary ${book}-${lesson}`, korean)}</td></tr>`).join('') + `</tbody></table></div>`;
   const { textbook, own } = lessonVocabulary;
   return `<details class="vocabulary"><summary>${disclosureArrow}<b>Szókincs</b><span class="count">${count} szó</span></summary><div class="vocabulary-body">` +
