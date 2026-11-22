@@ -404,7 +404,7 @@ export default {
       ['소나기', 'zápor'],
       ['참다', 'eltűr, kibír, visszatart'],
       ['파전에 막걸리', 'újhagymás lepény (pajeon) mellé makgeolli (esős napi párosítás)'],
-      ['상쾌하다', 'frissítő, üde, kellemesen friss'],
+      ['상쾌하다', 'frissítő, üde, kellemesen friss (기분이 상쾌하다: felfrissült)'],
       ['점점', 'egyre (inkább), fokozatosan'],
       ['문장 예시', 'példamondat'],
       ['가만히', 'nyugodtan, mozdulatlanul, csendben'],
@@ -422,6 +422,9 @@ export default {
       ['해소되다', 'megszűnik, feloldódik (választékos, írott)'],
       ['신나는 (신나다)', 'pörgős, lelkesítő'],
       ['사라지다', 'eltűnik, megszűnik'],
+      ['감정', 'érzelem, érzés', 'classNotes'],
+      ['차분하다', 'nyugodt, higgadt, csendes (ember, hangulat)', 'classNotes'],
+      ['바람을 쐬다', 'friss levegőt szív, kimegy levegőzni', 'classNotes'],
     ],
   },
   10: {
