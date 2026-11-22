@@ -166,6 +166,7 @@ export default {
       ['충분하다', 'elég, elegendő'],
       ['무엇보다', 'mindenekelőtt, legfőképpen'],
       ['조건', 'feltétel, kikötés (pl. a bérlés feltételei)'],
+      ['포장 상자', 'csomagoló doboz'],
     ],
   },
   4: {
