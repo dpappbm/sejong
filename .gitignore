@@ -30,3 +30,7 @@ pnpm-debug.log*
 .DS_Store
 Thumbs.db
 desktop.ini
+
+# Hangfájlok és munkafájljaik (scripts/audio/README.md)
+public/audio/
+scripts/audio/work/

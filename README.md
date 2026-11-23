@@ -15,3 +15,7 @@ npm test         # tests only
 ```
 
 Content lives in `src/data/`, rendering and checks in `src/lib/`, pages in `src/pages/`.
+
+## Sound files
+
+The Korean texts can be read aloud by a text-to-speech model that runs locally in Docker. The tools, their settings and the reasons behind them are described in [scripts/audio/README.md](scripts/audio/README.md); the generated files in `public/audio/` are not part of the repository.

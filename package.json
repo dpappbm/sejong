@@ -13,7 +13,11 @@
     "test": "vitest run",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "astro": "astro"
+    "astro": "astro",
+    "audio:setup": "node scripts/audio/docker.mjs setup",
+    "audio:collect": "node scripts/audio/collect-texts.mjs",
+    "audio:generate": "node scripts/audio/docker.mjs generate",
+    "audio:review": "node scripts/audio/build-review.mjs"
   },
   "dependencies": {
     "astro": "^7.4.7",
