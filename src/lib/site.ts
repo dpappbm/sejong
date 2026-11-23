@@ -1,6 +1,5 @@
 // Renders the whole content once (cross-references need the full link graph) and serves it page by page.
 import { basicsHtml } from '../data/basics';
-import { lexiconEntry, translatedCell, wordGloss } from './translations';
 import honorifics from '../data/honorifics';
 import pronunciation from '../data/pronunciation';
 import { CHAPTER_PATHS, LESSONS, locate, withBase, type LessonInfo } from './content';
@@ -12,10 +11,11 @@ import { checkGroups } from './render/groups';
 import { honorificsChapter, honorificsIntro } from './render/honorifics';
 import { renderPoint } from './render/point';
 import { pronunciationBox, pronunciationChapter } from './render/pronunciation';
-import { checkVocabulary, vocabularyBox } from './render/vocabulary';
+import { checkVocabulary, registerVocabularyForwardReferences } from './render/vocabulary';
+import { lexiconEntry, translatedCell, wordGloss } from './translations';
 
 export interface LessonContent extends LessonInfo {
-  /** Grammar points, pronunciation box and vocabulary bar of the lesson. */
+  /** Grammar points and pronunciation box of the lesson. */
   html: string;
 }
 
@@ -81,11 +81,12 @@ export function getSite(): SiteContent {
   const lessonParts = LESSONS.map(lesson => ({
     lesson,
     points: lesson.points.map(renderPoint).join(''),
-    rest: pronunciationBox(lesson.book, lesson.lesson, lesson.title) + vocabularyBox(lesson.book, lesson.lesson),
+    rest: pronunciationBox(lesson.book, lesson.lesson, lesson.title),
   }));
   checkGroups();
   const pronunciationHtml = pronunciationChapter();
   const honorificsHtml = honorificsIntro + honorificsChapter();
+  registerVocabularyForwardReferences();
   checkForwardReferences();
   checkVocabulary();
   const basics = linkBasics(renderBasics());

@@ -1,14 +1,15 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
 import BackButton from '../../components/BackButton.astro';
 import LessonExportDialog from '../../components/LessonExportDialog.astro';
 import LessonFlashcardDialog from '../../components/LessonFlashcardDialog.astro';
 import LessonHeader from '../../components/LessonHeader.astro';
 import PageNavigation from '../../components/PageNavigation.astro';
+import Vocabulary from '../../components/Vocabulary.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
 import { LEVELS, lessonPath } from '../../lib/content';
 import { lessonExportEnabled } from '../../lib/features';
-import { getSite, localizeLinks, type LessonContent } from '../../lib/site';
 import { stripTags } from '../../lib/html';
+import { getSite, localizeLinks, type LessonContent } from '../../lib/site';
 
 export function getStaticPaths() {
   return getSite().lessons.map(lesson => ({
@@ -51,6 +52,7 @@ const label = `${lesson.book} ${lesson.lesson}. lecke`;
       <span class="korean">{lesson.title.korean}</span>
     </div>
     <Fragment set:html={html} />
+    <Vocabulary book={lesson.book} lesson={lesson.lesson} path={path} />
   </section>
   {lessonExportEnabled && <LessonExportDialog lesson={lesson} />}
   <LessonFlashcardDialog lesson={lesson} />
