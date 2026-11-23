@@ -23,8 +23,8 @@ const VOCABULARY_BY_BOOK: Record<string, Record<number, LessonVocabulary>> = {
 
 const vocabulary: Record<string, LessonVocabulary> = Object.fromEntries(
   Object.entries(VOCABULARY_BY_BOOK).flatMap(([book, lessons]) =>
-    Object.entries(lessons).map(([lesson, lessonVocabulary]) => [`${book}-${lesson}`, lessonVocabulary]),
-  ),
+    Object.entries(lessons).map(([lesson, lessonVocabulary]) => [`${book}-${lesson}`, lessonVocabulary])
+  )
 );
 
 export default vocabulary;

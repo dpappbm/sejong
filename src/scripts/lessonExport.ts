@@ -16,16 +16,18 @@ function updatePreview(dialog: HTMLDialogElement): void {
   if (count) count.textContent = String(rows.length);
   const body = dialog.querySelector('[data-export-preview]');
   if (body) {
-    body.replaceChildren(...rows.map(([korean, hungarian]) => {
-      const row = document.createElement('tr');
-      const koreanCell = document.createElement('td');
-      koreanCell.className = 'korean';
-      koreanCell.textContent = korean;
-      const hungarianCell = document.createElement('td');
-      hungarianCell.textContent = hungarian;
-      row.append(koreanCell, hungarianCell);
-      return row;
-    }));
+    body.replaceChildren(
+      ...rows.map(([korean, hungarian]) => {
+        const row = document.createElement('tr');
+        const koreanCell = document.createElement('td');
+        koreanCell.className = 'korean';
+        koreanCell.textContent = korean;
+        const hungarianCell = document.createElement('td');
+        hungarianCell.textContent = hungarian;
+        row.append(koreanCell, hungarianCell);
+        return row;
+      })
+    );
   }
   const copyButton = dialog.querySelector<HTMLButtonElement>('[data-export-copy]');
   if (copyButton) copyButton.disabled = rows.length === 0;
@@ -76,7 +78,10 @@ document.addEventListener('click', event => {
   } else if (target.closest('[data-export-copy]')) {
     const rows = selectedRows(dialog);
     void copyText(exportText(rows), dialog).then(copied => {
-      setStatus(dialog, copied ? `Kimásolva: ${rows.length} sor` : 'A másolás nem sikerült – nyisd ki a sorokat, és jelöld ki kézzel.');
+      setStatus(
+        dialog,
+        copied ? `Kimásolva: ${rows.length} sor` : 'A másolás nem sikerült – nyisd ki a sorokat, és jelöld ki kézzel.'
+      );
     });
   }
 });

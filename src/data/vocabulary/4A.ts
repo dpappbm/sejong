@@ -145,7 +145,10 @@ export default {
   },
   11: {
     textbook: [
-      ['정치/경제/사회/문화의 중심지 역할을 하다', 'politikai / gazdasági / társadalmi / kulturális központként működik'],
+      [
+        '정치/경제/사회/문화의 중심지 역할을 하다',
+        'politikai / gazdasági / társadalmi / kulturális központként működik',
+      ],
       ['교통의 요충지이다', 'közlekedési csomópont'],
       ['공장이 모여 있다', 'sok gyár van egy helyen'],
       ['자원이 풍부하다', 'gazdag nyersanyagokban'],

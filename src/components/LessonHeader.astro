@@ -12,32 +12,91 @@ const { lesson, linked = false } = Astro.props;
 const pageUrl = withBase(lessonPath(lesson.book, lesson.lesson));
 const pointHref = (point: number) => (linked ? `${pageUrl}#point-${point}` : `#point-${point}`);
 ---
+
 <header class="lesson-header">
   <div class="lesson-number">
-    {linked ? <a class="lesson-title-link" href={pageUrl}>{lesson.book} · {lesson.lesson}. lecke</a> : <span>{lesson.book} · {lesson.lesson}. lecke</span>}
+    {linked ? (
+      <a class="lesson-title-link" href={pageUrl}>
+        {lesson.book} · {lesson.lesson}. lecke
+      </a>
+    ) : (
+      <span>
+        {lesson.book} · {lesson.lesson}. lecke
+      </span>
+    )}
     <span class="tag current-lesson progress-tag">itt tartasz</span>
     <span class="tag future-tag progress-tag">még nem vettük</span>
-    <button class="set-current-button" type="button" data-lesson-key={lesson.key} title="Ezt a leckét tanulom most – az „itt tartasz” erre a leckére áll">◎ Itt tartok</button>
+    <button
+      class="set-current-button"
+      type="button"
+      data-lesson-key={lesson.key}
+      title="Ezt a leckét tanulom most – az „itt tartasz” erre a leckére áll"
+    >
+      ◎ Itt tartok
+    </button>
     {!linked && lessonExportEnabled && (
-      <button class="lesson-tool-button export-button" type="button" aria-haspopup="dialog" title="A lecke exportálása: szabályok, példák, szókincs">
-        <svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3" /><path d="m7 8 5-5 5 5" /><path d="M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6" /></svg>
+      <button
+        class="lesson-tool-button export-button"
+        type="button"
+        aria-haspopup="dialog"
+        title="A lecke exportálása: szabályok, példák, szókincs"
+      >
+        <svg
+          viewBox="0 0 24 24"
+          width="13"
+          height="13"
+          aria-hidden="true"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2.2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M12 15V3" />
+          <path d="m7 8 5-5 5 5" />
+          <path d="M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6" />
+        </svg>
         Export
       </button>
     )}
     {!linked && (
-      <button class="lesson-tool-button flashcard-open-button" type="button" aria-haspopup="dialog" title="Gyakorlás: többválasztós kérdések a lecke soraiból">
-        <svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="3" width="14" height="18" rx="2" /><path d="M3 7v12a2 2 0 0 0 2 2" /></svg>
+      <button
+        class="lesson-tool-button flashcard-open-button"
+        type="button"
+        aria-haspopup="dialog"
+        title="Gyakorlás: többválasztós kérdések a lecke soraiból"
+      >
+        <svg
+          viewBox="0 0 24 24"
+          width="13"
+          height="13"
+          aria-hidden="true"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2.2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <rect x="7" y="3" width="14" height="18" rx="2" />
+          <path d="M3 7v12a2 2 0 0 0 2 2" />
+        </svg>
         Gyakorlás
       </button>
     )}
   </div>
   <div class="lesson-title">
-    {linked
-      ? <a class="lesson-title-link" href={pageUrl}><span class="korean">{lesson.title.korean}</span></a>
-      : <span class="korean">{lesson.title.korean}</span>}
+    {linked ? (
+      <a class="lesson-title-link" href={pageUrl}>
+        <span class="korean">{lesson.title.korean}</span>
+      </a>
+    ) : (
+      <span class="korean">{lesson.title.korean}</span>
+    )}
     {lesson.title.hungarian && <span class="hungarian">{lesson.title.hungarian}</span>}
   </div>
   <div class="lesson-forms">
-    {lesson.points.map(point => <a class="lesson-form korean" href={pointHref(point.point)} set:html={point.form} />)}
+    {lesson.points.map(point => (
+      <a class="lesson-form korean" href={pointHref(point.point)} set:html={point.form} />
+    ))}
   </div>
 </header>

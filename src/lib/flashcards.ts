@@ -40,12 +40,16 @@ export function cardKind(key: string): CardKind {
 
 /** Drops the parenthesised parts that contain Korean ("hálás (고마워요 = köszönöm)" → "hálás"): they would give the answer away. */
 export function hideKoreanHints(hungarian: string): string {
-  const hidden = hungarian.replace(/\s*\([^()]*\)/g, part => (HANGUL.test(part) ? '' : part)).replace(/\s+/g, ' ').trim();
+  const hidden = hungarian
+    .replace(/\s*\([^()]*\)/g, part => (HANGUL.test(part) ? '' : part))
+    .replace(/\s+/g, ' ')
+    .trim();
   return hidden || hungarian;
 }
 
 /** The text of a card as it is shown in the game. */
-export const cardText = (card: Card, language: Language) => (language === 'korean' ? card.korean : hideKoreanHints(card.hungarian));
+export const cardText = (card: Card, language: Language) =>
+  language === 'korean' ? card.korean : hideKoreanHints(card.hungarian);
 
 export const otherLanguage = (language: Language): Language => (language === 'korean' ? 'hungarian' : 'korean');
 
@@ -84,7 +88,9 @@ export function distractorCandidates(card: Card, questionLanguage: Language, poo
 
 /** The languages a card can be asked in: those with enough distinct wrong answers in the pool. */
 const playableLanguages = (card: Card, pool: readonly Card[]) =>
-  (['korean', 'hungarian'] as const).filter(language => distractorCandidates(card, language, pool).length >= OPTION_COUNT - 1);
+  (['korean', 'hungarian'] as const).filter(
+    language => distractorCandidates(card, language, pool).length >= OPTION_COUNT - 1
+  );
 
 /** Every card has four distinct answers in at least one language. */
 export const canPlay = (cards: readonly Card[], pool: readonly Card[]) =>
@@ -100,12 +106,27 @@ export function buildRound(card: Card, pool: readonly Card[], random: Random = M
     const candidates = distractorCandidates(card, questionLanguage, pool);
     if (candidates.length < OPTION_COUNT - 1) continue;
     const distractors = [
-      ...shuffle(candidates.filter(other => other.kind === card.kind), random),
-      ...shuffle(candidates.filter(other => other.kind !== card.kind), random),
+      ...shuffle(
+        candidates.filter(other => other.kind === card.kind),
+        random
+      ),
+      ...shuffle(
+        candidates.filter(other => other.kind !== card.kind),
+        random
+      ),
     ].slice(0, OPTION_COUNT - 1);
     const answerLanguage = otherLanguage(questionLanguage);
-    const options = shuffle([card, ...distractors], random).map(option => ({ card: option, text: cardText(option, answerLanguage) }));
-    return { card, questionLanguage, question: cardText(card, questionLanguage), options, correctIndex: options.findIndex(option => option.card === card) };
+    const options = shuffle([card, ...distractors], random).map(option => ({
+      card: option,
+      text: cardText(option, answerLanguage),
+    }));
+    return {
+      card,
+      questionLanguage,
+      question: cardText(card, questionLanguage),
+      options,
+      correctIndex: options.findIndex(option => option.card === card),
+    };
   }
   return null;
 }

@@ -40,7 +40,9 @@ const hideFutureCheckbox = document.getElementById('hide-future') as HTMLInputEl
 const sidebar = document.getElementById('sidebar')!;
 const toTopButton = document.getElementById('to-top')!;
 const loadingBar = document.getElementById('navigation-progress')!;
-const lessonKeys = Array.from(progressSelect.options).map(option => option.value).filter(value => LESSON_KEY_PATTERN.test(value));
+const lessonKeys = Array.from(progressSelect.options)
+  .map(option => option.value)
+  .filter(value => LESSON_KEY_PATTERN.test(value));
 
 // ---------- theme ----------
 document.getElementById('theme-toggle')?.addEventListener('click', () => {
@@ -72,8 +74,12 @@ document.addEventListener('astro:after-swap', () => {
 
 // The persisted menu is moved into the new body, which resets its scroll position: keep it.
 let sidebarScrollTop = 0;
-document.addEventListener('astro:before-swap', () => { sidebarScrollTop = sidebar.scrollTop; });
-document.addEventListener('astro:after-swap', () => { sidebar.scrollTop = sidebarScrollTop; });
+document.addEventListener('astro:before-swap', () => {
+  sidebarScrollTop = sidebar.scrollTop;
+});
+document.addEventListener('astro:after-swap', () => {
+  sidebar.scrollTop = sidebarScrollTop;
+});
 
 // ---------- progress ----------
 /** Book and lesson a link points to: "/base/3a/9/#point-1", or "#point-1" on the current lesson page. */
@@ -98,7 +104,9 @@ function applyProgress(value: string): void {
     element.classList.toggle('done', isDone);
     return { isFuture, isDone, isCurrent: current !== null && position === current };
   };
-  document.querySelectorAll<HTMLElement>('.grammar-point[data-book]').forEach(element => mark(element, element.dataset.book!, element.dataset.lesson!));
+  document
+    .querySelectorAll<HTMLElement>('.grammar-point[data-book]')
+    .forEach(element => mark(element, element.dataset.book!, element.dataset.lesson!));
   document.querySelectorAll<HTMLElement>('.lesson[data-book]').forEach(element => {
     const state = mark(element, element.dataset.book!, element.dataset.lesson!);
     element.classList.toggle('current', state.isCurrent);
@@ -113,17 +121,29 @@ function applyProgress(value: string): void {
       else future++;
     }
   });
-  document.querySelectorAll<HTMLElement>('tr.pronunciation-row[data-book]').forEach(element => mark(element, element.dataset.book!, element.dataset.lesson!));
+  document
+    .querySelectorAll<HTMLElement>('tr.pronunciation-row[data-book]')
+    .forEach(element => mark(element, element.dataset.book!, element.dataset.lesson!));
   document.querySelectorAll<HTMLAnchorElement>('a.cross-reference, a.related-link, a.group-link').forEach(link => {
     const target = linkTarget(link);
     link.classList.toggle('future', !!target && current !== null && positionOf(target[0], target[1]) > current);
   });
-  document.querySelectorAll<HTMLElement>('.progress-only').forEach(element => { element.hidden = current === null; });
-  document.querySelectorAll<HTMLElement>('.progress-none-only').forEach(element => { element.hidden = current !== null; });
-  document.querySelectorAll<HTMLElement>('.progress-current-label').forEach(element => { element.textContent = lessonMatch ? `${lessonMatch[1]} ${lessonMatch[2]}` : ''; });
-  document.querySelectorAll<HTMLAnchorElement>('.progress-current-link').forEach(link => link.setAttribute('href', lessonMatch ? lessonUrl(lessonMatch[1], lessonMatch[2]) : '#'));
+  document.querySelectorAll<HTMLElement>('.progress-only').forEach(element => {
+    element.hidden = current === null;
+  });
+  document.querySelectorAll<HTMLElement>('.progress-none-only').forEach(element => {
+    element.hidden = current !== null;
+  });
+  document.querySelectorAll<HTMLElement>('.progress-current-label').forEach(element => {
+    element.textContent = lessonMatch ? `${lessonMatch[1]} ${lessonMatch[2]}` : '';
+  });
+  document
+    .querySelectorAll<HTMLAnchorElement>('.progress-current-link')
+    .forEach(link => link.setAttribute('href', lessonMatch ? lessonUrl(lessonMatch[1], lessonMatch[2]) : '#'));
   // "Mindet vettük": no current lesson, so the "itt tartasz" link and button disappear.
-  document.querySelectorAll<HTMLElement>('.progress-current-only').forEach(element => { element.hidden = !lessonMatch; });
+  document.querySelectorAll<HTMLElement>('.progress-current-only').forEach(element => {
+    element.hidden = !lessonMatch;
+  });
   const doneStat = document.getElementById('stat-done');
   const futureStat = document.getElementById('stat-future');
   if (doneStat) doneStat.textContent = String(done);
@@ -217,7 +237,11 @@ function arriveAt(id: string, smooth: boolean): void {
 }
 
 window.addEventListener('hashchange', () => arriveAt(decodeURIComponent(location.hash.slice(1)), true));
-window.addEventListener('beforeprint', () => document.querySelectorAll('details').forEach(details => { details.open = true; }));
+window.addEventListener('beforeprint', () =>
+  document.querySelectorAll('details').forEach(details => {
+    details.open = true;
+  })
+);
 
 // ---------- "← Vissza" button ----------
 // A link click on the site records where it came from; the next page shows the button only if it is that link's target.
@@ -287,12 +311,16 @@ function updateSticky(): void {
   const lesson = lessonPage.getBoundingClientRect();
   lessonPage.classList.toggle('stuck', header.bottom < 0 && lesson.bottom > 36);
 }
-window.addEventListener('scroll', () => {
-  if (!stickyUpdateQueued) {
-    stickyUpdateQueued = true;
-    requestAnimationFrame(updateSticky);
-  }
-}, { passive: true });
+window.addEventListener(
+  'scroll',
+  () => {
+    if (!stickyUpdateQueued) {
+      stickyUpdateQueued = true;
+      requestAnimationFrame(updateSticky);
+    }
+  },
+  { passive: true }
+);
 document.addEventListener('click', event => {
   if (!(event.target as Element).closest('.lesson-sticky-bar')) return;
   document.querySelector('.lesson-page')?.scrollIntoView({ block: 'start' });
