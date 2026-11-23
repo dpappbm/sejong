@@ -24,7 +24,7 @@ const json = JSON.stringify(rows).replace(/</g, '\\u003c');
   {data.points.map(point => (
     <li>
       <label>
-        <input type="checkbox" data-tree-parent={`point-${point.point}`} checked /> <b>{point.point}. nyelvtan:</b>{' '}
+        <input type="checkbox" data-tree-parent={`point-${point.point}`} checked /> <b>{point.point}. nyelvtan:</b>
         <span class="korean">{point.form}</span>
       </label>
       <ul>
@@ -35,7 +35,7 @@ const json = JSON.stringify(rows).replace(/</g, '\\u003c');
               data-tree-rows={`point-${point.point}-rule`}
               data-tree-child-of={`point-${point.point}`}
               checked
-            />{' '}
+            />
             Szabály
           </label>
         </li>
@@ -47,7 +47,7 @@ const json = JSON.stringify(rows).replace(/</g, '\\u003c');
                 data-tree-rows={`point-${point.point}-examples`}
                 data-tree-child-of={`point-${point.point}`}
                 checked
-              />{' '}
+              />
               Példák <small>({point.examples.length})</small>
             </label>
           ) : (
@@ -67,7 +67,7 @@ const json = JSON.stringify(rows).replace(/</g, '\\u003c');
     )}
     {vocabulary && singleVocabularyKey && (
       <label>
-        <input type="checkbox" data-tree-rows={singleVocabularyKey} checked /> <b>Szókincs</b>{' '}
+        <input type="checkbox" data-tree-rows={singleVocabularyKey} checked /> <b>Szókincs</b>
         <small>({rows[singleVocabularyKey].length})</small>
       </label>
     )}
@@ -79,7 +79,7 @@ const json = JSON.stringify(rows).replace(/</g, '\\u003c');
         <ul>
           <li>
             <label>
-              <input type="checkbox" data-tree-rows="vocabulary-textbook" data-tree-child-of="vocabulary" checked />{' '}
+              <input type="checkbox" data-tree-rows="vocabulary-textbook" data-tree-child-of="vocabulary" checked />
               Tankönyv <small>({vocabulary.textbook.length})</small>
             </label>
           </li>

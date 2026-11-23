@@ -471,6 +471,9 @@ main {
   border-color: color-mix(in srgb, var(--current) 40%, transparent);
   background: var(--current-background);
 }
+.legend .progress-current-only .tag {
+  margin-right: 8px;
+}
 h2 {
   font-size: 1.55rem;
   margin: 46px 0 14px;

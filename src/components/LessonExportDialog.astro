@@ -14,7 +14,7 @@ const { lesson } = Astro.props;
 <dialog class="export-dialog" id="lesson-export-dialog" aria-labelledby="lesson-export-title">
   <header class="export-dialog-header">
     <h2 id="lesson-export-title">
-      Lecke exportálása{' '}
+      Lecke exportálása
       <span class="export-dialog-lesson">
         {lesson.book} · {lesson.lesson}. lecke
       </span>
@@ -27,7 +27,7 @@ const { lesson } = Astro.props;
     <LessonRowTree lesson={lesson} />
     <details class="export-preview">
       <summary>
-        <span class="disclosure-arrow" aria-hidden="true"></span>Exportálandó sorok{' '}
+        <span class="disclosure-arrow" aria-hidden="true"></span>Exportálandó sorok
         <span class="count">
           (<span data-export-count>0</span>)
         </span>
