@@ -7,7 +7,7 @@ import {
   withPlainStem,
   type Word,
 } from '../../lib/conjugation';
-import { exampleList } from '../../lib/html';
+import { comparisonTable, exampleList } from '../../lib/html';
 import type { BookData, PointSource } from '../types';
 
 const korean = (text: string) => `<span class="korean">${text}</span>`;
@@ -851,26 +851,39 @@ ${simpleTable(
   ]
 )}
 <p><b>Ugyanaz az ige, más jelentés:</b></p>
-${exampleList([
+${comparisonTable(
+  ['-아/어 보니까', '-다 보니까'],
   [
-    '김치를 먹어 보니까 생각보다 안 매웠어요.',
-    'Megkóstoltam a kimcsit, és kevésbé volt csípős, mint gondoltam.',
-    'próba → benyomás',
-  ],
-  ['김치를 매일 먹다 보니까 좋아하게 됐어요.', 'Ahogy minden nap kimcsit ettem, megszerettem.', 'folyamat → változás'],
-  [
-    '부산에서 살아 보니까 정말 편해요.',
-    'Most, hogy Busanban élek, látom, hogy nagyon kényelmes.',
-    'kipróbáltam, milyen',
-  ],
-  [
-    '부산에서 오래 살다 보니까 사투리를 쓰게 됐어요.',
-    'Ahogy sokáig Busanban éltem, rászoktam a tájszólásra.',
-    'magától alakult így',
-  ],
-  ['그 사람을 직접 만나 보니까 아주 친절했어요.', 'Személyesen találkoztam vele, és nagyon kedves volt.'],
-  ['그 사람을 자주 만나다 보니까 친해졌어요.', 'Ahogy gyakran találkoztunk, összebarátkoztunk.'],
-])}
+    [
+      [
+        '김치를 먹어 보니까 생각보다 안 매웠어요.',
+        'Megkóstoltam a kimcsit, és kevésbé volt csípős, mint gondoltam.',
+        'próba → benyomás',
+      ],
+      [
+        '김치를 매일 먹다 보니까 좋아하게 됐어요.',
+        'Ahogy minden nap kimcsit ettem, megszerettem.',
+        'folyamat → változás',
+      ],
+    ],
+    [
+      [
+        '부산에서 살아 보니까 정말 편해요.',
+        'Most, hogy Busanban élek, látom, hogy nagyon kényelmes.',
+        'kipróbáltam, milyen',
+      ],
+      [
+        '부산에서 오래 살다 보니까 사투리를 쓰게 됐어요.',
+        'Ahogy sokáig Busanban éltem, rászoktam a tájszólásra.',
+        'magától alakult így',
+      ],
+    ],
+    [
+      ['그 사람을 직접 만나 보니까 아주 친절했어요.', 'Személyesen találkoztam vele, és nagyon kedves volt.'],
+      ['그 사람을 자주 만나다 보니까 친해졌어요.', 'Ahogy gyakran találkoztunk, összebarátkoztunk.'],
+    ],
+  ]
+)}
 <p><b>Közös:</b> mindkettő tapasztalatból levont felismerés. A második tagmondat megtörtént vagy most is fennálló tény, ezért <b>jövő idő, felszólítás, javaslat nem</b> állhat utána; jövőre a ${korean('-다 보면')} való. Múlt idő jele egyik előtt sincs: ${korean('먹어 보니까, 먹다 보니까')}. (A ${korean('먹어 봤으니까')} már ok: „mivel ettem már ilyet”.)</p>
 <p><b>A ${korean('보다')} ige:</b> próbaként csak ${korean('보니까')} (nem ${korean('봐 보니까')}), folyamatként viszont szabályos a ${korean('보다 보니까')}:</p>
 ${exampleList([['드라마를 보다 보니까 한국어가 늘었어요.', 'Ahogy sorozatokat néztem, fejlődött a koreaim.']])}
