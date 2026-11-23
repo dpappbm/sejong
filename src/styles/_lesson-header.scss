@@ -1,4 +1,4 @@
-/* lesson header: on the home page as a list row, on the lesson page at the top of the lesson frame */
+// lesson header: on the home page as a list row, on the lesson page at the top of the lesson frame
 .lesson-header {
   background: var(--level-soft);
   border-radius: 12px;
@@ -6,6 +6,7 @@
   margin-bottom: 12px;
   border-left: 5px solid var(--level-color);
 }
+
 .lesson-number {
   display: flex;
   flex-wrap: wrap;
@@ -17,6 +18,7 @@
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
+
 .lesson-title {
   font-size: 1.1rem;
   font-weight: 600;
@@ -24,19 +26,22 @@
   flex-wrap: wrap;
   gap: 4px 12px;
   align-items: baseline;
+
+  .hungarian {
+    font-weight: 400;
+    color: var(--muted);
+    font-size: 0.95rem;
+    font-style: italic;
+  }
 }
-.lesson-title .hungarian {
-  font-weight: 400;
-  color: var(--muted);
-  font-size: 0.95rem;
-  font-style: italic;
-}
+
 .lesson-forms {
   display: flex;
   flex-wrap: wrap;
   gap: 4px 6px;
   margin-top: 6px;
 }
+
 a.lesson-form {
   font-size: 0.82rem;
   font-weight: 600;
@@ -46,8 +51,9 @@ a.lesson-form {
   border-radius: 999px;
   padding: 1px 9px;
   text-decoration: none;
-}
-a.lesson-form:hover,
-a.lesson-form:focus-visible {
-  border-color: var(--level-color);
+
+  &:hover,
+  &:focus-visible {
+    border-color: var(--level-color);
+  }
 }

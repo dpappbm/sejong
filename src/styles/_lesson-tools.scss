@@ -1,4 +1,4 @@
-/* lesson tools: the Export (hidden for now) and Gyakorlás buttons in the lesson header and their dialogs */
+// lesson tools: the Export (hidden for now) and Gyakorlás buttons in the lesson header and their dialogs
 .lesson-tool-button {
   display: inline-flex;
   align-items: center;
@@ -14,14 +14,14 @@
   background: var(--card);
   color: var(--muted);
   cursor: pointer;
-}
-.lesson-tool-button:hover,
-.lesson-tool-button:focus-visible {
-  border-color: var(--accent);
-  color: var(--accent);
-}
-@media print {
-  .lesson-tool-button {
+
+  &:hover,
+  &:focus-visible {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  @media print {
     display: none;
   }
 }

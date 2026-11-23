@@ -1,4 +1,4 @@
-/* forward mark: the example or word uses a structure taught later */
+// forward mark: the example or word uses a structure taught later
 a.cross-reference.forward-reference {
   display: inline-block;
   margin-left: 4px;
@@ -10,11 +10,13 @@ a.cross-reference.forward-reference {
   background: color-mix(in srgb, var(--accent) 7%, transparent);
   white-space: normal;
   font-style: normal;
-}
-a.cross-reference.forward-reference:hover,
-a.cross-reference.forward-reference:focus-visible {
-  border-color: var(--accent);
-}
-a.cross-reference.forward-reference.future {
-  border-style: dashed;
+
+  &:hover,
+  &:focus-visible {
+    border-color: var(--accent);
+  }
+
+  &.future {
+    border-style: dashed;
+  }
 }

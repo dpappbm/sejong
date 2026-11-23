@@ -8,6 +8,7 @@
   gap: 10px;
   z-index: 50;
 }
+
 .floating-button {
   display: inline-flex;
   align-items: center;
@@ -30,46 +31,56 @@
   transition:
     opacity 0.2s,
     transform 0.2s;
+
+  &:hover,
+  &:focus-visible {
+    border-color: var(--accent);
+    background: color-mix(in srgb, var(--accent) 8%, var(--card));
+  }
 }
-.floating-button:hover,
-.floating-button:focus-visible {
-  border-color: var(--accent);
-  background: color-mix(in srgb, var(--accent) 8%, var(--card));
-}
+
 .floating-to-top {
   width: 46px;
   padding: 0;
   font-size: 1.25rem;
 }
+
 .floating-current-lesson {
   gap: 0.4em;
 }
+
 .floating-to-top.faded-out {
   opacity: 0;
   transform: translateY(8px);
   pointer-events: none;
 }
+
 @media (max-width: 600px) {
   .floating-buttons {
     right: 12px;
     bottom: 12px;
   }
+
   .floating-button {
     height: 42px;
     min-width: 42px;
   }
+
   .floating-to-top {
     width: 42px;
   }
+
   .floating-current-lesson {
     width: 42px;
     padding: 0;
     font-size: 1.2rem;
   }
+
   .floating-label {
     display: none;
   }
 }
+
 @media print {
   .floating-buttons {
     display: none;

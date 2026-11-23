@@ -1,4 +1,4 @@
-/* sidebar */
+// sidebar
 .sidebar {
   position: sticky;
   top: 0;
@@ -7,50 +7,59 @@
   background: var(--card);
   border-right: 1px solid var(--line);
   padding: 18px 14px 40px;
+
+  .brand {
+    font-weight: 700;
+    font-size: 1.05rem;
+    margin: 0 4px 2px;
+
+    .korean {
+      color: var(--accent);
+    }
+
+    a {
+      text-decoration: none;
+    }
+  }
+
+  .subheading-row {
+    color: var(--muted);
+    font-size: 0.82rem;
+    margin: 0 4px 14px;
+  }
 }
-.sidebar .brand {
-  font-weight: 700;
-  font-size: 1.05rem;
-  margin: 0 4px 2px;
-}
-.sidebar .brand .korean {
-  color: var(--accent);
-}
-.sidebar .brand a {
-  text-decoration: none;
-}
-.sidebar .subheading-row {
-  color: var(--muted);
-  font-size: 0.82rem;
-  margin: 0 4px 14px;
-}
+
 .controls {
   display: grid;
   gap: 8px;
   margin-bottom: 14px;
+
+  input[type="search"] {
+    width: 100%;
+    padding: 9px 11px;
+    border: 1px solid var(--line);
+    border-radius: 9px;
+    background: var(--background);
+    color: var(--foreground);
+    font: inherit;
+    font-size: 0.92rem;
+  }
+
+  label {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    font-size: 0.86rem;
+    color: var(--muted);
+    cursor: pointer;
+  }
+
+  .row {
+    display: flex;
+    gap: 6px;
+  }
 }
-.controls input[type="search"] {
-  width: 100%;
-  padding: 9px 11px;
-  border: 1px solid var(--line);
-  border-radius: 9px;
-  background: var(--background);
-  color: var(--foreground);
-  font: inherit;
-  font-size: 0.92rem;
-}
-.controls label {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-  font-size: 0.86rem;
-  color: var(--muted);
-  cursor: pointer;
-}
-.controls .row {
-  display: flex;
-  gap: 6px;
-}
+
 .button {
   flex: 1;
   border: 1px solid var(--line);
@@ -63,33 +72,42 @@
   cursor: pointer;
   text-decoration: none;
   text-align: center;
+
+  &:hover {
+    border-color: var(--accent);
+  }
 }
-.button:hover {
-  border-color: var(--accent);
+
+.table-of-contents {
+  &,
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  a {
+    text-decoration: none;
+    display: block;
+    padding: 3px 6px;
+    border-radius: 6px;
+    font-size: 0.86rem;
+
+    &:hover {
+      background: var(--soft);
+    }
+  }
+
+  > li {
+    margin-bottom: 10px;
+  }
 }
-.table-of-contents,
-.table-of-contents ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-.table-of-contents a {
-  text-decoration: none;
-  display: block;
-  padding: 3px 6px;
-  border-radius: 6px;
-  font-size: 0.86rem;
-}
-.table-of-contents a:hover {
-  background: var(--soft);
-}
-.table-of-contents > li {
-  margin-bottom: 10px;
-}
+
 .contents-level > a {
   font-weight: 600;
   font-size: 0.9rem;
 }
+
 .contents-level > a b,
 .contents-general a b {
   display: inline-flex;
@@ -103,7 +121,8 @@
   color: #fff;
   margin-right: 6px;
 }
-/* levels in the menu: group title without a badge */
+
+// levels in the menu: group title without a badge
 .table-of-contents .contents-level > a.level-title {
   font-size: 0.74rem;
   font-weight: 700;
@@ -111,31 +130,37 @@
   letter-spacing: 0.06em;
   color: var(--level-color);
   margin-top: 6px;
+
+  .korean {
+    text-transform: none;
+    letter-spacing: 0;
+    font-weight: 600;
+    opacity: 0.85;
+  }
 }
-.table-of-contents .contents-level > a.level-title .korean {
-  text-transform: none;
-  letter-spacing: 0;
-  font-weight: 600;
-  opacity: 0.85;
-}
+
 :root[data-theme="dark"] .contents-level > a b,
 :root[data-theme="dark"] .contents-general a b {
   color: #111;
 }
+
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) .contents-level > a b,
   :root:not([data-theme="light"]) .contents-general a b {
     color: #111;
   }
 }
-/* "Általános" group: the three chapters under one group title */
+
+// "Általános" group: the three chapters under one group title
 .contents-general {
   --level-color: var(--accent);
-}
-.contents-general a {
-  font-weight: 600;
-  font-size: 0.88rem;
-}
-.contents-general a b {
-  background: var(--accent);
+
+  a {
+    font-weight: 600;
+    font-size: 0.88rem;
+
+    b {
+      background: var(--accent);
+    }
+  }
 }

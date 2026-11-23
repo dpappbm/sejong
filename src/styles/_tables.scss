@@ -5,43 +5,52 @@
   border: 1px solid var(--line);
   border-radius: 10px;
 }
+
 table.conjugation-table,
 table.plain {
   width: 100%;
   border-collapse: collapse;
   font-size: 0.9rem;
+
+  th,
+  td {
+    padding: 6px 10px;
+    text-align: left;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+
+  th {
+    background: var(--level-soft, var(--soft));
+    font-weight: 600;
+    font-size: 0.8rem;
+    white-space: nowrap;
+  }
 }
-table.conjugation-table th,
-table.conjugation-table td,
-table.plain th,
-table.plain td {
-  padding: 6px 10px;
-  text-align: left;
-  border-bottom: 1px solid var(--line);
-  vertical-align: top;
+
+table.conjugation-table {
+  td:first-child {
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  td:nth-child(2) {
+    color: var(--muted);
+    font-size: 0.8rem;
+  }
+
+  td {
+    white-space: nowrap;
+  }
 }
-table.conjugation-table th,
-table.plain th {
-  background: var(--level-soft, var(--soft));
-  font-weight: 600;
-  font-size: 0.8rem;
-  white-space: nowrap;
+
+table.conjugation-table,
+table.plain {
+  tr:last-child td {
+    border-bottom: none;
+  }
 }
-table.conjugation-table td:first-child {
-  font-weight: 600;
-  white-space: nowrap;
-}
-table.conjugation-table td:nth-child(2) {
-  color: var(--muted);
-  font-size: 0.8rem;
-}
-table.conjugation-table td {
-  white-space: nowrap;
-}
-table.conjugation-table tr:last-child td,
-table.plain tr:last-child td {
-  border-bottom: none;
-}
+
 table.conjugation-table tr.subheading-row td {
   background: var(--soft);
   font-size: 0.78rem;
@@ -49,9 +58,11 @@ table.conjugation-table tr.subheading-row td {
   color: var(--muted);
   white-space: normal;
 }
+
 .not-applicable {
   color: var(--muted);
 }
+
 .translation {
   display: block;
   font-family: "Segoe UI", system-ui, sans-serif;
@@ -63,10 +74,14 @@ table.conjugation-table tr.subheading-row td {
   max-width: 15em;
   margin-top: 1px;
 }
-table.conjugation-table td:first-child .translation {
-  font-weight: 400;
-  min-width: 0;
-}
-table.conjugation-table td {
-  vertical-align: top;
+
+table.conjugation-table {
+  td:first-child .translation {
+    font-weight: 400;
+    min-width: 0;
+  }
+
+  td {
+    vertical-align: top;
+  }
 }

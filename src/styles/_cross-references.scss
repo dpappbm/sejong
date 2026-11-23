@@ -3,14 +3,16 @@ a.cross-reference {
   text-decoration: none;
   border-bottom: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
   white-space: nowrap;
-}
-a.cross-reference:hover,
-a.cross-reference:focus-visible {
-  border-bottom-color: var(--accent);
-  background: color-mix(in srgb, var(--accent) 10%, transparent);
-  border-radius: 3px;
-}
-a.cross-reference.future {
-  color: var(--future);
-  border-bottom: 1px dashed var(--future);
+
+  &:hover,
+  &:focus-visible {
+    border-bottom-color: var(--accent);
+    background: color-mix(in srgb, var(--accent) 10%, transparent);
+    border-radius: 3px;
+  }
+
+  &.future {
+    color: var(--future);
+    border-bottom: 1px dashed var(--future);
+  }
 }

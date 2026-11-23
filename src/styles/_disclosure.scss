@@ -1,10 +1,12 @@
 summary {
   list-style: none;
   cursor: pointer;
+
+  &::-webkit-details-marker {
+    display: none;
+  }
 }
-summary::-webkit-details-marker {
-  display: none;
-}
+
 .disclosure-arrow::before {
   content: "▸";
   display: inline-block;
@@ -13,10 +15,12 @@ summary::-webkit-details-marker {
   color: var(--muted);
   font-size: 1.7em;
 }
+
 h2 .disclosure-arrow::before,
 h3 .disclosure-arrow::before {
   font-size: 1.15em;
 }
+
 details[open] > summary .disclosure-arrow::before {
   content: "▾";
 }

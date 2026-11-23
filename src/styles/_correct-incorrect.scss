@@ -4,31 +4,40 @@
   margin: 8px 0;
   display: grid;
   gap: 8px;
+
+  // The mark in its own column; the sentence, its translation and its reason or note stacked beside it.
+  li {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    column-gap: 6px;
+
+    > * {
+      grid-column: 2;
+    }
+
+    &::before {
+      content: "✅";
+      grid-row: 1 / span 3;
+    }
+
+    &.incorrect {
+      &::before {
+        content: "❌";
+      }
+
+      .korean {
+        text-decoration: line-through;
+        text-decoration-color: var(--incorrect);
+      }
+    }
+  }
+
+  .hungarian {
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
 }
-/* The mark in its own column; the sentence, its translation and its reason or note stacked beside it. */
-.correct-incorrect li {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  column-gap: 6px;
-}
-.correct-incorrect li > * {
-  grid-column: 2;
-}
-.correct-incorrect li::before {
-  content: "✅";
-  grid-row: 1 / span 3;
-}
-.correct-incorrect li.incorrect::before {
-  content: "❌";
-}
-.correct-incorrect li.incorrect .korean {
-  text-decoration: line-through;
-  text-decoration-color: var(--incorrect);
-}
-.correct-incorrect .hungarian {
-  color: var(--muted);
-  font-size: 0.9rem;
-}
+
 .correct-incorrect-note {
   font-size: 0.82rem;
   font-style: italic;

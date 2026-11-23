@@ -1,10 +1,12 @@
 * {
   box-sizing: border-box;
 }
+
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 16px;
 }
+
 body {
   margin: 0;
   background: var(--background);
@@ -18,12 +20,15 @@ body {
     "Noto Sans KR",
     sans-serif;
 }
+
 .korean {
   font-family: "Malgun Gothic", "Apple SD Gothic Neo", "Noto Sans KR", "Segoe UI", sans-serif;
 }
+
 a {
   color: inherit;
 }
+
 .layout {
   display: grid;
   grid-template-columns: 310px minmax(0, 1fr);

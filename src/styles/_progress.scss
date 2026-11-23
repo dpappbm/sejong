@@ -1,10 +1,12 @@
 .future-hidden .future {
   display: none !important;
 }
-/* progress marks: only when a progress is set (the browser script adds the future / current / current-lesson classes) */
+
+// progress marks: only when a progress is set (the browser script adds the future / current / current-lesson classes)
 [hidden] {
   display: none !important;
 }
+
 .set-current-button {
   margin-left: auto;
   font: inherit;
@@ -18,16 +20,19 @@
   background: var(--card);
   color: var(--muted);
   cursor: pointer;
+
+  &:hover,
+  &:focus-visible {
+    border-color: var(--current);
+    color: var(--current);
+  }
 }
-.set-current-button:hover,
-.set-current-button:focus-visible {
-  border-color: var(--current);
-  color: var(--current);
-}
+
 .contents-book li.done .lesson-label::after {
   content: " ✓";
   color: var(--correct);
 }
+
 @media print {
   .set-current-button {
     display: none;

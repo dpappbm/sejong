@@ -1,25 +1,30 @@
 .honorific {
   margin-top: 4px;
-}
-.honorific h5 .tag {
-  margin-left: 6px;
-  text-transform: none;
-  letter-spacing: 0;
-}
-.honorific table.honorific-table {
-  width: 100%;
-}
-.honorific table.honorific-table td:first-child,
-.honorific table.honorific-table th:first-child {
-  width: 45%;
-}
-.honorific td.arrow {
-  color: var(--muted);
-  text-align: center;
-  width: 2.5em;
-  padding-left: 0;
-  padding-right: 0;
-}
-.honorific > p {
-  margin: 10px 0;
+
+  h5 .tag {
+    margin-left: 6px;
+    text-transform: none;
+    letter-spacing: 0;
+  }
+
+  table.honorific-table {
+    width: 100%;
+
+    td:first-child,
+    th:first-child {
+      width: 45%;
+    }
+  }
+
+  td.arrow {
+    color: var(--muted);
+    text-align: center;
+    width: 2.5em;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  > p {
+    margin: 10px 0;
+  }
 }

@@ -11,27 +11,32 @@
   vertical-align: middle;
   margin-right: 4px;
   white-space: nowrap;
+
+  &.textbook {
+    color: var(--accent);
+    border-color: color-mix(in srgb, var(--accent) 35%, transparent);
+    background: color-mix(in srgb, var(--accent) 10%, transparent);
+  }
+
+  &.own {
+    color: var(--own);
+    border-color: var(--own-border);
+    background: var(--own-background);
+  }
+
+  &.future-tag {
+    color: var(--future);
+    border-color: color-mix(in srgb, var(--future) 40%, transparent);
+    background: var(--future-background);
+  }
+
+  &.current-lesson {
+    color: var(--current);
+    border-color: color-mix(in srgb, var(--current) 40%, transparent);
+    background: var(--current-background);
+  }
 }
-.tag.textbook {
-  color: var(--accent);
-  border-color: color-mix(in srgb, var(--accent) 35%, transparent);
-  background: color-mix(in srgb, var(--accent) 10%, transparent);
-}
-.tag.own {
-  color: var(--own);
-  border-color: var(--own-border);
-  background: var(--own-background);
-}
-.tag.future-tag {
-  color: var(--future);
-  border-color: color-mix(in srgb, var(--future) 40%, transparent);
-  background: var(--future-background);
-}
-.tag.current-lesson {
-  color: var(--current);
-  border-color: color-mix(in srgb, var(--current) 40%, transparent);
-  background: var(--current-background);
-}
+
 .legend .progress-current-only .tag {
   margin-right: 8px;
 }

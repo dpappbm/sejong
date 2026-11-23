@@ -1,41 +1,51 @@
-.chapter-section .card {
-  background: var(--card);
-  border: 1px solid var(--line);
-  border-radius: 14px;
-  padding: 16px 20px;
-  margin-bottom: 16px;
-  box-shadow: var(--shadow);
-  --level-color: var(--accent);
-  --level-soft: var(--soft);
-}
-.chapter-section h3 {
-  margin: 0 0 8px;
-  font-size: 1.15rem;
-}
-/* collapsible cards of the chapters (basic rules, pronunciation, honorific words) */
-.chapter-section details.card {
-  padding: 10px 16px;
-  margin-bottom: 8px;
-}
-.chapter-section details.card[open] {
-  padding: 14px 20px 16px;
-  margin-bottom: 16px;
-}
-.chapter-section details.card > summary {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  border-radius: 8px;
-}
-.chapter-section details.card > summary h3 {
-  margin: 0;
-}
-.chapter-section details.card[open] > summary {
-  margin-bottom: 8px;
-}
-.chapter-section details.card > summary:hover h3 {
-  color: var(--accent);
-}
-.chapter-section p {
-  margin: 6px 0;
+.chapter-section {
+  .card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 16px 20px;
+    margin-bottom: 16px;
+    box-shadow: var(--shadow);
+    --level-color: var(--accent);
+    --level-soft: var(--soft);
+  }
+
+  h3 {
+    margin: 0 0 8px;
+    font-size: 1.15rem;
+  }
+
+  // collapsible cards of the chapters (basic rules, pronunciation, honorific words)
+  details.card {
+    padding: 10px 16px;
+    margin-bottom: 8px;
+
+    &[open] {
+      padding: 14px 20px 16px;
+      margin-bottom: 16px;
+    }
+
+    > summary {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      border-radius: 8px;
+
+      h3 {
+        margin: 0;
+      }
+    }
+
+    &[open] > summary {
+      margin-bottom: 8px;
+    }
+
+    > summary:hover h3 {
+      color: var(--accent);
+    }
+  }
+
+  p {
+    margin: 6px 0;
+  }
 }
