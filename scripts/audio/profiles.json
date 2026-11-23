@@ -1,0 +1,32 @@
+{
+  "steps": 8,
+  "seeds": 5,
+  "carrier": "그래요.",
+  "fallback": { "method": "period", "speeds": [0.9, 1.05] },
+  "voices": {
+    "F1": {
+      "short": { "method": "plain", "speeds": [1.05, 1.2], "length": 0.96 },
+      "stop": { "method": "carrier", "speeds": [0.8, 0.9], "length": 1 },
+      "medium": { "method": "plain", "speeds": [0.7], "length": 0.92 },
+      "long": { "method": "plain", "speeds": [0.75], "length": 1 }
+    },
+    "F5": {
+      "short": { "method": "plain", "speeds": [0.9, 1.05], "length": 0.92 },
+      "stop": { "method": "carrier", "speeds": [0.8, 0.9], "length": 1 },
+      "medium": { "method": "plain", "speeds": [0.7], "length": 0.92 },
+      "long": { "method": "plain", "speeds": [0.75], "length": 1 }
+    },
+    "M4": {
+      "short": { "method": "plain", "speeds": [0.9, 1.05], "length": 0.98 },
+      "stop": { "method": "carrier", "speeds": [0.8, 0.9], "length": 1 },
+      "medium": { "method": "plain", "speeds": [0.7], "length": 0.93 },
+      "long": { "method": "plain", "speeds": [0.77], "length": 1 }
+    },
+    "M2": {
+      "short": { "method": "plain", "speeds": [0.9, 1.05], "length": 0.92 },
+      "stop": { "method": "period", "speeds": [0.9, 1.05], "length": 1 },
+      "medium": { "method": "plain", "speeds": [0.7], "length": 0.87 },
+      "long": { "method": "plain", "speeds": [0.75], "length": 1 }
+    }
+  }
+}
