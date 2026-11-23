@@ -1,0 +1,31 @@
+.tag.progress-tag {
+  display: none;
+}
+.grammar-point.future .tag.future-tag.progress-tag,
+.lesson.future > .lesson-header .tag.future-tag.progress-tag,
+.lesson.current > .lesson-header .tag.current-lesson.progress-tag {
+  display: inline-block;
+}
+.lesson-number .tag.progress-tag {
+  margin-left: 6px;
+}
+#progress-select {
+  flex: 1;
+  min-width: 0;
+  font: inherit;
+  font-size: 0.85rem;
+  padding: 7px 8px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--foreground);
+}
+.progress-none-only {
+  flex-basis: 100%;
+}
+a.related-link.future {
+  border-style: dashed;
+}
+a.related-link.future b {
+  color: var(--future);
+}

@@ -1,0 +1,77 @@
+.floating-buttons {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+  z-index: 50;
+}
+.floating-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 46px;
+  height: 46px;
+  padding: 0 16px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--accent);
+  font: inherit;
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow:
+    0 2px 6px rgba(20, 20, 30, 0.12),
+    0 8px 22px rgba(20, 20, 30, 0.12);
+  transition:
+    opacity 0.2s,
+    transform 0.2s;
+}
+.floating-button:hover,
+.floating-button:focus-visible {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 8%, var(--card));
+}
+.floating-to-top {
+  width: 46px;
+  padding: 0;
+  font-size: 1.25rem;
+}
+.floating-current-lesson {
+  gap: 0.4em;
+}
+.floating-to-top.faded-out {
+  opacity: 0;
+  transform: translateY(8px);
+  pointer-events: none;
+}
+@media (max-width: 600px) {
+  .floating-buttons {
+    right: 12px;
+    bottom: 12px;
+  }
+  .floating-button {
+    height: 42px;
+    min-width: 42px;
+  }
+  .floating-to-top {
+    width: 42px;
+  }
+  .floating-current-lesson {
+    width: 42px;
+    padding: 0;
+    font-size: 1.2rem;
+  }
+  .floating-label {
+    display: none;
+  }
+}
+@media print {
+  .floating-buttons {
+    display: none;
+  }
+}

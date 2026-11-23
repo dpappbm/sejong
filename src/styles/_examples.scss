@@ -1,0 +1,26 @@
+ul.examples {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 6px;
+}
+ul.examples li {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  gap: 4px 16px;
+  padding: 8px 12px;
+  background: var(--soft);
+  border-radius: 10px;
+}
+ul.examples .korean b {
+  color: var(--level-color);
+}
+ul.examples .hungarian {
+  color: var(--muted);
+}
+ul.examples .irregular-note {
+  grid-column: 1 / -1;
+  font-size: 0.78rem;
+  color: var(--own);
+}

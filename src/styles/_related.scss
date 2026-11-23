@@ -1,0 +1,167 @@
+details.related-group > summary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 8px;
+  margin: -4px -8px;
+  padding: 4px 8px;
+  border-radius: 8px;
+}
+details.related-group > summary:hover {
+  background: color-mix(in srgb, var(--own) 8%, transparent);
+}
+details.related-group:not([open]) {
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+details.related-group[open] > summary {
+  margin-bottom: 4px;
+}
+.related-group .group-scale {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 6px 8px;
+  margin: 8px 0 6px;
+}
+.group-step {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 4px 8px;
+  border-radius: 8px;
+  background: var(--card);
+  border: 1px solid var(--own-border);
+}
+.group-step small {
+  font-size: 0.72rem;
+  color: var(--muted);
+  margin-top: 2px;
+}
+.group-step.self {
+  border-color: var(--own);
+  box-shadow: 0 0 0 1px var(--own);
+}
+.related-group b.group-self {
+  color: var(--own);
+}
+.group-pair {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.group-less-than {
+  color: var(--muted);
+  font-weight: 700;
+}
+a.group-link {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+}
+a.group-link:hover,
+a.group-link:focus-visible {
+  border-bottom-color: var(--accent);
+}
+a.group-link.future {
+  color: var(--future);
+  border-bottom: 1px dashed var(--future);
+}
+.related-group ul.group-examples {
+  margin: 6px 0;
+}
+.related-group ul.group-examples li {
+  background: var(--card);
+}
+.related-group .group-side-heading {
+  margin: 8px 0 2px;
+  font-weight: 600;
+}
+.related-group ul.group-side {
+  margin: 0;
+  padding-left: 20px;
+}
+.related-group ul.group-members {
+  list-style: none;
+  padding: 0;
+  margin: 8px 0 0;
+  display: grid;
+  gap: 4px;
+}
+.related-group ul.group-members li {
+  background: var(--card);
+  border: 1px solid transparent;
+  border-radius: 8px;
+  padding: 5px 10px;
+}
+.related-group ul.group-members li.self {
+  border-color: var(--own);
+}
+.related-group .group-breakdown {
+  font-family: "Malgun Gothic", "Apple SD Gothic Neo", "Noto Sans KR", "Segoe UI", sans-serif;
+}
+.related-group ul.group-members .hungarian {
+  color: var(--muted);
+}
+.related-group .group-member-example {
+  margin: 3px 0 1px 14px;
+  padding-left: 8px;
+  border-left: 2px solid var(--own-border);
+  font-size: 0.9rem;
+}
+.related-group .group-member-example .hungarian {
+  font-size: 0.86rem;
+}
+.related {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid var(--line);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+  font-size: 0.82rem;
+}
+.related-heading {
+  color: var(--muted);
+  font-weight: 600;
+  margin-right: 2px;
+}
+a.related-link {
+  display: inline-flex;
+  gap: 5px;
+  align-items: baseline;
+  padding: 3px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--soft);
+  color: var(--foreground);
+  text-decoration: none;
+}
+a.related-link b {
+  color: var(--accent);
+  font-weight: 700;
+}
+a.related-link:hover,
+a.related-link:focus-visible {
+  border-color: var(--accent);
+}
+.grammar-point.flash {
+  animation: grammar-point-flash 1.6s ease-out;
+}
+@keyframes grammar-point-flash {
+  0%,
+  30% {
+    box-shadow: 0 0 0 3px var(--accent);
+  }
+  100% {
+    box-shadow: var(--shadow);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .grammar-point.flash {
+    animation: none;
+    outline: 3px solid var(--accent);
+  }
+}

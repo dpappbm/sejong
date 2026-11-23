@@ -1,0 +1,28 @@
+.own:not(.tag) {
+  margin-top: 12px;
+  background: var(--own-background);
+  border: 1px dashed var(--own-border);
+  border-radius: 12px;
+  padding: 10px 14px;
+}
+.own-heading {
+  margin-bottom: 4px;
+}
+/* example cards and small tables inside the own note of a grammar point */
+.grammar-point-body > aside.own ul.examples {
+  margin: 6px 0 10px;
+  padding: 0;
+}
+.grammar-point-body > aside.own ul.examples li,
+.grammar-point-body > aside.own .table-wrapper {
+  background: var(--card);
+}
+.grammar-point-body > aside.own .table-wrapper {
+  margin: 6px 0;
+}
+.grammar-point-body > aside.own table.plain .korean {
+  white-space: nowrap;
+}
+.own b {
+  color: var(--own);
+}

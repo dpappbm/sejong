@@ -1,0 +1,94 @@
+/* main */
+main {
+  padding: 34px 40px 80px;
+  max-width: 980px;
+  width: 100%;
+}
+.hero {
+  background: linear-gradient(135deg, var(--purple-soft), var(--blue-soft) 55%, var(--green-soft));
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 28px 30px;
+  margin-bottom: 28px;
+  box-shadow: var(--shadow);
+}
+.hero h1 {
+  margin: 0 0 4px;
+  font-size: 1.9rem;
+  line-height: 1.25;
+}
+.hero h1 .korean {
+  color: var(--accent);
+  font-weight: 700;
+}
+.hero p {
+  margin: 6px 0;
+  color: var(--muted);
+}
+/* QR code of the public address: always dark modules on white, so phones can scan it in the dark theme too */
+.site-qr {
+  float: right;
+  margin: 0 0 12px 20px;
+  padding: 10px 10px 8px;
+  width: 156px;
+  background: #fff;
+  color: #1d2127;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: var(--shadow);
+}
+.site-qr-code svg {
+  display: block;
+  width: 132px;
+  height: 132px;
+  margin: 0 auto;
+}
+.site-qr-caption {
+  margin-top: 4px;
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: #626a75;
+}
+.site-qr-address {
+  display: block;
+  font-size: 0.7rem;
+  color: #6b4fbb;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+.site-qr-address:hover,
+.site-qr-address:focus-visible {
+  text-decoration: underline;
+}
+.stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 16px 0 6px;
+}
+.stat {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 8px 14px;
+  min-width: 120px;
+}
+.stat b {
+  display: block;
+  font-size: 1.35rem;
+  line-height: 1.2;
+}
+.stat span {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  margin-top: 14px;
+  font-size: 0.85rem;
+  color: var(--muted);
+  align-items: center;
+}

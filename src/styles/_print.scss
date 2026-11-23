@@ -1,0 +1,19 @@
+@media print {
+  .sidebar {
+    display: none;
+  }
+  .layout {
+    display: block;
+  }
+  main {
+    max-width: none;
+    padding: 0;
+  }
+  .grammar-point {
+    break-inside: avoid;
+    box-shadow: none;
+  }
+  .hero {
+    box-shadow: none;
+  }
+}

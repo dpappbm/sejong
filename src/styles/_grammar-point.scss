@@ -1,0 +1,76 @@
+.grammar-point {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-top: 4px solid var(--level-color);
+  border-radius: 14px;
+  margin: 0 0 16px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+.grammar-point-header {
+  padding: 14px 18px 10px;
+  border-bottom: 1px solid var(--line);
+}
+.grammar-point-number {
+  font-size: 0.74rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+.grammar-point h4 {
+  margin: 2px 0 6px;
+  font-size: 1.35rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 14px;
+}
+.grammar-point h4 .form {
+  color: var(--level-color);
+}
+.grammar-point-name {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--foreground);
+}
+.grammar-point-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  align-items: center;
+}
+.source-reference {
+  font-size: 0.76rem;
+  color: var(--muted);
+  margin-left: auto;
+}
+.grammar-point-body {
+  padding: 12px 18px 16px;
+}
+.grammar-point-body p {
+  margin: 6px 0;
+}
+.explanation ul,
+.own ul {
+  margin: 6px 0;
+  padding-left: 20px;
+}
+.explanation b,
+.own b {
+  color: var(--level-color);
+}
+h5 {
+  margin: 14px 0 6px;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+.form-box {
+  background: var(--soft);
+  border-radius: 10px;
+  padding: 8px 12px;
+  margin: 8px 0;
+  font-size: 0.95rem;
+}

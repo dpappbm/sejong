@@ -1,0 +1,68 @@
+.contents-book > summary {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 6px;
+  margin: 2px 0 0 6px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.88rem;
+}
+.contents-book > summary:hover {
+  background: var(--soft);
+}
+.table-of-contents .book-code {
+  background: var(--level-soft);
+  color: var(--level-color);
+  border-radius: 5px;
+  padding: 0 6px;
+  font-size: 0.78rem;
+}
+.table-of-contents .count {
+  margin-left: auto;
+  color: var(--muted);
+  font-weight: 400;
+  font-size: 0.74rem;
+}
+.contents-book ul {
+  margin: 2px 0 6px;
+}
+.contents-book ul a {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 3px 6px 3px 30px;
+  font-size: 0.84rem;
+}
+.contents-book .contents-form {
+  white-space: nowrap;
+  font-weight: 600;
+}
+.contents-book .contents-name {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--muted);
+  font-size: 0.75rem;
+}
+.contents-book .lesson-label {
+  color: var(--muted);
+  font-size: 0.68rem;
+  opacity: 0.7;
+}
+.contents-book li.future a {
+  opacity: 0.6;
+}
+.contents-book li.current-lesson .contents-form {
+  color: var(--current);
+}
+.table-of-contents a.active {
+  background: var(--soft);
+  color: var(--foreground);
+  font-weight: 600;
+}
+.sidebar-toggle {
+  display: none;
+}
