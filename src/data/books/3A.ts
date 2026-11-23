@@ -886,7 +886,7 @@ ${comparisonTable(
 )}
 <p><b>Közös:</b> mindkettő tapasztalatból levont felismerés. A második tagmondat megtörtént vagy most is fennálló tény, ezért <b>jövő idő, felszólítás, javaslat nem</b> állhat utána; jövőre a ${korean('-다 보면')} való. Múlt idő jele egyik előtt sincs: ${korean('먹어 보니까, 먹다 보니까')}. (A ${korean('먹어 봤으니까')} már ok: „mivel ettem már ilyet”.)</p>
 <p><b>A ${korean('보다')} ige:</b> próbaként csak ${korean('보니까')} (nem ${korean('봐 보니까')}), folyamatként viszont szabályos a ${korean('보다 보니까')}:</p>
-${exampleList([['드라마를 보다 보니까 한국어가 늘었어요.', 'Ahogy sorozatokat néztem, fejlődött a koreaim.']])}
+${exampleList([['드라마를 보다 보니까 한국어 실력이 늘었어요.', 'Ahogy sorozatokat néztem, fejlődött a koreaim.']])}
 <p><b>Melléknév és ${korean('이다')}:</b> a ${korean('-다 보니까')} itt okot ad, gyakran mentegetőzve; az ${korean('-아/어 보니까')} ide nem jó:</p>
 ${exampleList([
   ['요즘 바쁘다 보니까 연락을 못 했어요.', 'Mostanában annyi a dolgom, hogy nem tudtam jelentkezni.'],
