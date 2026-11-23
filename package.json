@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro check && vitest run && astro build && node scripts/check-built-links.mjs",
+    "build": "npm run format:check && astro check && vitest run && astro build && node scripts/check-built-links.mjs",
     "preview": "astro preview",
     "test": "vitest run",
     "format": "prettier --write .",

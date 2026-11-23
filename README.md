@@ -9,7 +9,8 @@ Built with [Astro](https://astro.build); every push to `main` is built and publi
 ```
 npm install
 npm run dev      # local preview at http://localhost:4321/sejong/
-npm run build    # type check, tests, build and internal link check
+npm run format   # format the code with Prettier
+npm run build    # format check, type check, tests, build and internal link check
 npm test         # tests only
 ```
 
