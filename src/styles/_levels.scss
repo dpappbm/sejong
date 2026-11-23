@@ -1,0 +1,88 @@
+// Level headings and colours, book headings.
+@use "sass:map";
+@use "mixins" as *;
+@use "tokens";
+
+h2 {
+  font-size: 1.55rem;
+  margin: 46px 0 14px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+
+  .level-badge {
+    min-height: 1.75em;
+    line-height: 1;
+    border-radius: 10px;
+    padding: 0 12px;
+    font-size: 1.2rem;
+    @include badge;
+  }
+
+  .korean {
+    color: var(--muted);
+    font-weight: 500;
+    font-size: 1.05rem;
+  }
+}
+
+h2 .count,
+.book-heading .count {
+  color: var(--muted);
+  font-weight: 500;
+  font-size: 0.85rem;
+}
+
+details.level > summary h2,
+details.book > summary h3 {
+  user-select: none;
+}
+
+details.level > summary:hover .level-badge,
+details.book > summary:hover .book-code {
+  filter: brightness(1.08);
+}
+
+details.level:not([open]) > summary h2 {
+  margin-bottom: 4px;
+}
+
+details.book:not([open]) > summary h3 {
+  margin-bottom: 6px;
+}
+
+@each $name in map.keys(tokens.$level-colors) {
+  .level-#{$name} {
+    --level-color: var(--#{$name});
+    --level-soft: var(--#{$name}-soft);
+  }
+}
+
+.level h2 .level-badge {
+  background: var(--level-color);
+}
+
+.book-heading {
+  font-size: 1.3rem;
+  margin: 30px 0 12px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--level-color);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+
+  .count {
+    margin-left: auto;
+  }
+
+  .book-code {
+    display: inline-block;
+    background: var(--level-soft);
+    color: var(--level-color);
+    border-radius: 8px;
+    padding: 0 9px;
+    margin-right: 6px;
+  }
+}

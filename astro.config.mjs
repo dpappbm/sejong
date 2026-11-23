@@ -9,4 +9,5 @@ export default defineConfig({
   trailingSlash: 'always',
   // Pages load in the background when a link is hovered, so most navigations are instant.
   prefetch: { prefetchAll: true, defaultStrategy: 'hover' },
+  vite: { css: { devSourcemap: true } },
 });

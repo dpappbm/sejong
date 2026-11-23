@@ -1,0 +1,116 @@
+// Pronunciation boxes of the lessons and the pronunciation chapter.
+@use "mixins" as *;
+
+.pronunciation-box {
+  margin-top: 10px;
+  padding: 10px 12px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  font-size: 0.92rem;
+}
+
+.pronunciation-heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 2px 12px;
+  font-size: 0.8rem;
+  color: var(--muted);
+
+  .korean {
+    color: var(--level-color);
+    font-weight: 600;
+  }
+}
+
+.source-page {
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.pronunciation-sample {
+  font-size: 1.08rem;
+  margin: 6px 0 2px;
+
+  .hungarian {
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+}
+
+.pronunciation-rule {
+  margin: 4px 0 8px;
+}
+
+.pronunciation-box .pronunciation-note {
+  margin-top: 8px;
+  padding: 6px 10px;
+  font-size: 0.86rem;
+}
+
+ul.examples.pronunciation-examples li {
+  background: var(--soft);
+}
+
+.pronunciation-notation {
+  color: var(--level-color);
+  font-weight: 600;
+  word-break: keep-all;
+}
+
+.pronunciation-chapter {
+  .pronunciation-chapter-intro {
+    color: var(--muted);
+    font-size: 0.92rem;
+  }
+
+  .pronunciation-category-lessons {
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+}
+
+table.plain.pronunciation-table {
+  tr.pronunciation-row-first td {
+    background: var(--soft);
+    font-size: 0.84rem;
+  }
+
+  td {
+    &.korean {
+      word-break: keep-all;
+    }
+
+    &:first-child {
+      width: 42%;
+    }
+  }
+
+  // the "még nem vettük" mark stays readable in a faded row
+  tr.pronunciation-row.future .tag.future-tag.progress-tag {
+    display: inline-block;
+    opacity: 1;
+  }
+
+  @include mobile {
+    @include stacked-table($row-padding: 4px 0);
+
+    tr.pronunciation-row-first {
+      padding: 0;
+
+      td {
+        padding: 6px 10px;
+      }
+    }
+
+    td:first-child {
+      width: auto;
+    }
+
+    td:nth-child(3) {
+      color: var(--muted);
+      font-size: 0.86rem;
+    }
+  }
+}

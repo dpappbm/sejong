@@ -1,0 +1,45 @@
+@use "mixins" as *;
+
+// honorific words: base | honorific | example | lessons; one row per line on mobile
+table.plain.honorifics-table {
+  td {
+    .translation {
+      display: block;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .korean {
+      word-break: keep-all;
+    }
+
+    &:nth-child(2) .korean {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    &.honorific-lessons {
+      white-space: nowrap;
+      font-size: 0.84rem;
+    }
+
+    &.empty {
+      color: var(--muted);
+    }
+  }
+
+  @include mobile {
+    @include stacked-table($row-padding: 6px 0);
+
+    td.honorific-lessons {
+      white-space: normal;
+    }
+  }
+}
+
+.honorifics-chapter details.card {
+  > p,
+  > ul {
+    margin: 6px 0;
+  }
+}

@@ -1,0 +1,157 @@
+// Table of contents in the sidebar.
+@use "mixins" as *;
+
+.table-of-contents {
+  &,
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  a {
+    text-decoration: none;
+    display: block;
+    padding: 3px 6px;
+    border-radius: 6px;
+    font-size: 0.86rem;
+
+    &:hover {
+      background: var(--soft);
+    }
+  }
+
+  > li {
+    margin-bottom: 10px;
+  }
+}
+
+.contents-level > a {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.contents-level > a b,
+.contents-general a b {
+  vertical-align: middle;
+  width: 1.6em;
+  height: 1.6em;
+  line-height: 1;
+  border-radius: 5px;
+  margin-right: 6px;
+  @include badge;
+}
+
+// levels in the menu: group title without a badge
+.table-of-contents .contents-level > a.level-title {
+  font-size: 0.74rem;
+  font-weight: 700;
+  @include uppercase-label(0.06em);
+  color: var(--level-color);
+  margin-top: 6px;
+
+  .korean {
+    text-transform: none;
+    letter-spacing: 0;
+    font-weight: 600;
+    opacity: 0.85;
+  }
+}
+
+// "Általános" group: the three chapters under one group title
+.contents-general {
+  --level-color: var(--accent);
+
+  a {
+    font-weight: 600;
+    font-size: 0.88rem;
+
+    b {
+      background: var(--accent);
+    }
+  }
+}
+
+.contents-book > summary {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 6px;
+  margin: 2px 0 0 6px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.88rem;
+
+  &:hover {
+    background: var(--soft);
+  }
+}
+
+.table-of-contents {
+  .book-code {
+    background: var(--level-soft);
+    color: var(--level-color);
+    border-radius: 5px;
+    padding: 0 6px;
+    font-size: 0.78rem;
+  }
+
+  .count {
+    margin-left: auto;
+    color: var(--muted);
+    font-weight: 400;
+    font-size: 0.74rem;
+  }
+}
+
+.contents-book {
+  ul {
+    margin: 2px 0 6px;
+
+    a {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      padding: 3px 6px 3px 30px;
+      font-size: 0.84rem;
+    }
+  }
+
+  .contents-form {
+    white-space: nowrap;
+    font-weight: 600;
+  }
+
+  .contents-name {
+    @include ellipsis-fill;
+    color: var(--muted);
+    font-size: 0.75rem;
+  }
+
+  .lesson-label {
+    color: var(--muted);
+    font-size: 0.68rem;
+    opacity: 0.7;
+  }
+
+  li {
+    &.future a {
+      opacity: 0.6;
+    }
+
+    &.current-lesson .contents-form {
+      color: var(--current);
+    }
+
+    &.done .lesson-label::after {
+      content: " ✓";
+      color: var(--correct);
+    }
+  }
+}
+
+.table-of-contents a.active {
+  background: var(--soft);
+  color: var(--foreground);
+  font-weight: 600;
+}

@@ -1,0 +1,44 @@
+// Small tags: textbook, own content, future lesson, current lesson.
+
+.tag {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--soft);
+  color: var(--muted);
+  vertical-align: middle;
+  margin-right: 4px;
+  white-space: nowrap;
+
+  &.textbook {
+    color: var(--accent);
+    border-color: color-mix(in srgb, var(--accent) 35%, transparent);
+    background: color-mix(in srgb, var(--accent) 10%, transparent);
+  }
+
+  &.own {
+    color: var(--own);
+    border-color: var(--own-border);
+    background: var(--own-background);
+  }
+
+  &.future-tag {
+    color: var(--future);
+    border-color: color-mix(in srgb, var(--future) 40%, transparent);
+    background: var(--future-background);
+  }
+
+  &.current-lesson {
+    color: var(--current);
+    border-color: color-mix(in srgb, var(--current) 40%, transparent);
+    background: var(--current-background);
+  }
+}
+
+.legend .progress-current-only .tag {
+  margin-right: 8px;
+}

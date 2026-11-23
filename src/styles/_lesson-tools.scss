@@ -1,0 +1,9 @@
+@use "mixins" as *;
+
+// lesson tools: the Export (hidden for now) and Gyakorlás buttons in the lesson header and their dialogs
+.lesson-tool-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  @include pill-button(var(--accent));
+}

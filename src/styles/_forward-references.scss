@@ -1,0 +1,23 @@
+@use "mixins" as *;
+
+// forward mark: the example or word uses a structure taught later
+a.cross-reference.forward-reference {
+  display: inline-block;
+  margin-left: 4px;
+  padding: 0 7px;
+  font-size: 0.74rem;
+  line-height: 1.5;
+  border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--accent) 7%, transparent);
+  white-space: normal;
+  font-style: normal;
+
+  @include hover-focus {
+    border-color: var(--accent);
+  }
+
+  &.future {
+    border-style: dashed;
+  }
+}

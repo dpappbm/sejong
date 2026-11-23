@@ -1,0 +1,28 @@
+// The arrow of everything that can be opened and closed.
+
+summary {
+  list-style: none;
+  cursor: pointer;
+
+  &::-webkit-details-marker {
+    display: none;
+  }
+}
+
+.disclosure-arrow::before {
+  content: "▸";
+  display: inline-block;
+  width: 0.9em;
+  line-height: 1;
+  color: var(--muted);
+  font-size: 1.7em;
+}
+
+h2 .disclosure-arrow::before,
+h3 .disclosure-arrow::before {
+  font-size: 1.15em;
+}
+
+details[open] > summary .disclosure-arrow::before {
+  content: "▾";
+}

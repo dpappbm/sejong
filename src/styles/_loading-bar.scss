@@ -1,0 +1,37 @@
+// loading bar of page changes: shown only if the new page takes longer than a moment
+.navigation-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  height: 3px;
+  width: 0;
+  background: var(--accent);
+  opacity: 0;
+  pointer-events: none;
+
+  &.loading {
+    opacity: 1;
+    animation: navigation-progress 8s cubic-bezier(0.1, 0.7, 0.2, 1) forwards;
+  }
+}
+
+@keyframes navigation-progress {
+  from {
+    width: 0;
+  }
+  20% {
+    width: 55%;
+  }
+  to {
+    width: 92%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .navigation-progress.loading {
+    animation: none;
+    width: 100%;
+    opacity: 0.7;
+  }
+}

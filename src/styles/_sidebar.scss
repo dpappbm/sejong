@@ -1,0 +1,99 @@
+// The sidebar: site name, progress and theme controls.
+@use "mixins" as *;
+
+.sidebar {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  background: var(--card);
+  border-right: 1px solid var(--line);
+  padding: 18px 14px 40px;
+
+  .brand {
+    font-weight: 700;
+    font-size: 1.05rem;
+    margin: 0 4px 2px;
+
+    .korean {
+      color: var(--accent);
+    }
+
+    a {
+      text-decoration: none;
+    }
+  }
+
+  .sidebar-subtitle {
+    color: var(--muted);
+    font-size: 0.82rem;
+    margin: 0 4px 14px;
+  }
+}
+
+.controls {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 14px;
+
+  input[type="search"] {
+    width: 100%;
+    padding: 9px 11px;
+    border: 1px solid var(--line);
+    border-radius: 9px;
+    background: var(--background);
+    color: var(--foreground);
+    font: inherit;
+    font-size: 0.92rem;
+  }
+
+  label {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    font-size: 0.86rem;
+    color: var(--muted);
+    cursor: pointer;
+  }
+
+  .row {
+    display: flex;
+    gap: 6px;
+
+    .button small {
+      color: var(--muted);
+    }
+  }
+}
+
+.button {
+  @include button-base;
+  flex: 1;
+  background: var(--soft);
+  color: var(--foreground);
+  padding: 7px 9px;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  text-decoration: none;
+  text-align: center;
+
+  &:hover {
+    border-color: var(--accent);
+  }
+}
+
+.sidebar-toggle {
+  display: none;
+}
+
+#progress-select {
+  flex: 1;
+  min-width: 0;
+  font: inherit;
+  font-size: 0.85rem;
+  padding: 7px 8px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--foreground);
+}

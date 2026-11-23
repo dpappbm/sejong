@@ -1,0 +1,77 @@
+@use "mixins" as *;
+
+// home page: one row per lesson; the current lesson gets a teal ring
+.lesson-row {
+  margin: 8px 0;
+
+  &.current > .lesson-header {
+    box-shadow: 0 0 0 2px var(--current);
+  }
+}
+
+// home page: one card per chapter, chips link into the chapter page
+.chapter-cards {
+  display: grid;
+  gap: 10px;
+  margin: 0 0 8px;
+}
+
+.chapter-card {
+  --level-color: var(--accent);
+  --level-soft: var(--soft);
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-left: 5px solid var(--accent);
+  border-radius: 12px;
+  padding: 12px 16px;
+  box-shadow: var(--shadow);
+}
+
+.chapter-card-title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 10px;
+  font-size: 1.1rem;
+  font-weight: 600;
+
+  .level-badge {
+    width: 1.7em;
+    height: 1.7em;
+    border-radius: 7px;
+    background: var(--accent);
+    font-size: 0.9rem;
+    @include badge;
+  }
+
+  > .korean {
+    color: var(--muted);
+    font-weight: 500;
+    font-size: 0.95rem;
+  }
+}
+
+a.chapter-card-link {
+  text-decoration: none;
+
+  @include hover-focus {
+    color: var(--accent);
+  }
+}
+
+.chapter-card-description {
+  margin: 2px 0 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+a.lesson-title-link {
+  text-decoration: none;
+
+  @include hover-focus {
+    .korean {
+      text-decoration: underline;
+      text-decoration-color: var(--level-color);
+    }
+  }
+}

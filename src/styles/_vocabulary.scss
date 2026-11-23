@@ -1,0 +1,77 @@
+@use "mixins" as *;
+
+// vocabulary: collapsible bar at the end of the lesson
+details.vocabulary {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--level-color);
+  border-radius: 12px;
+  padding: 8px 14px;
+  margin: 0 0 16px;
+  box-shadow: var(--shadow);
+
+  > summary {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 1.02rem;
+    border-radius: 8px;
+    margin: -4px -8px;
+    padding: 4px 8px;
+
+    b {
+      color: var(--level-color);
+    }
+
+    .count {
+      margin-left: auto;
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    &:hover {
+      background: var(--soft);
+    }
+  }
+
+  &[open] {
+    padding-bottom: 14px;
+
+    > summary {
+      margin-bottom: 8px;
+    }
+  }
+}
+
+.vocabulary-part + .vocabulary-part {
+  margin-top: 12px;
+}
+
+.vocabulary-heading {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--muted);
+  @include uppercase-label;
+  margin: 0 0 4px 2px;
+}
+
+.vocabulary-own .table-wrapper {
+  background: var(--card);
+}
+
+table.plain.vocabulary-table {
+  td.korean {
+    width: 42%;
+    word-break: keep-all;
+  }
+
+  @include mobile {
+    td.korean {
+      width: 46%;
+    }
+
+    td {
+      padding: 5px 8px;
+    }
+  }
+}

@@ -1,0 +1,139 @@
+// Shared patterns of the style files. This file itself produces no CSS.
+
+$mobile: 600px;
+$tablet: 900px;
+$korean-fonts: "Malgun Gothic", "Apple SD Gothic Neo", "Noto Sans KR", "Segoe UI", sans-serif;
+
+@mixin mobile {
+  @media (max-width: $mobile) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (max-width: $tablet) {
+    @content;
+  }
+}
+
+// Styles of the dark theme, whether it comes from the system or from the theme button.
+@mixin dark-theme {
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) & {
+      @content;
+    }
+  }
+
+  :root[data-theme="dark"] & {
+    @content;
+  }
+}
+
+@mixin hover-focus {
+  &:hover,
+  &:focus-visible {
+    @content;
+  }
+}
+
+@mixin inline-center {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// A coloured badge with a centred symbol or short text; the colours of the dark theme are lighter, so its text is dark.
+@mixin badge {
+  @include inline-center;
+  color: #fff;
+
+  @include dark-theme {
+    color: #111;
+  }
+}
+
+@mixin button-base {
+  border: 1px solid var(--line);
+  font: inherit;
+  cursor: pointer;
+}
+
+// The small buttons of the lesson header; not printed.
+@mixin pill-button($highlight) {
+  @include button-base;
+  font-size: 0.74rem;
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: 0;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: var(--card);
+  color: var(--muted);
+
+  @include hover-focus {
+    border-color: $highlight;
+    color: $highlight;
+  }
+
+  @media print {
+    display: none;
+  }
+}
+
+// A link with a thin accent underline, dashed if it leads to a later lesson. The content block extends the hover style.
+@mixin reference-link {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+
+  @include hover-focus {
+    border-bottom-color: var(--accent);
+    @content;
+  }
+
+  &.future {
+    color: var(--future);
+    border-bottom: 1px dashed var(--future);
+  }
+}
+
+@mixin uppercase-label($letter-spacing: 0.04em) {
+  text-transform: uppercase;
+  letter-spacing: $letter-spacing;
+}
+
+// Fills the free width of a flex row; a longer text is cut with an ellipsis.
+@mixin ellipsis-fill {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// The cells of a table row under each other, for narrow screens.
+@mixin stacked-table($row-padding) {
+  thead {
+    display: none;
+  }
+
+  tr,
+  td {
+    display: block;
+    width: auto;
+  }
+
+  td {
+    border-bottom: none;
+    padding: 2px 10px;
+  }
+
+  tr {
+    border-bottom: 1px solid var(--line);
+    padding: $row-padding;
+  }
+
+  td.empty {
+    display: none;
+  }
+}

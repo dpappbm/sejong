@@ -1,0 +1,182 @@
+// Groups of related structures and the links to related points.
+@use "mixins" as *;
+
+details.related-group {
+  > summary {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px 8px;
+    margin: -4px -8px;
+    padding: 4px 8px;
+    border-radius: 8px;
+
+    &:hover {
+      background: color-mix(in srgb, var(--own) 8%, transparent);
+    }
+  }
+
+  &:not([open]) {
+    padding-top: 6px;
+    padding-bottom: 6px;
+  }
+
+  &[open] > summary {
+    margin-bottom: 4px;
+  }
+}
+
+.related-group .group-scale {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 6px 8px;
+  margin: 8px 0 6px;
+}
+
+.group-step {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 4px 8px;
+  border-radius: 8px;
+  background: var(--card);
+  border: 1px solid var(--own-border);
+
+  small {
+    font-size: 0.72rem;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  &.self {
+    border-color: var(--own);
+    box-shadow: 0 0 0 1px var(--own);
+  }
+}
+
+.related-group b.group-self {
+  color: var(--own);
+}
+
+.group-pair {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.group-less-than {
+  color: var(--muted);
+  font-weight: 700;
+}
+
+a.group-link {
+  @include reference-link;
+}
+
+.related-group {
+  ul.group-examples {
+    margin: 6px 0;
+
+    li {
+      background: var(--card);
+    }
+  }
+
+  .group-side-heading {
+    margin: 8px 0 2px;
+    font-weight: 600;
+  }
+
+  ul {
+    &.group-side {
+      margin: 0;
+      padding-left: 20px;
+    }
+
+    &.group-members {
+      list-style: none;
+      padding: 0;
+      margin: 8px 0 0;
+      display: grid;
+      gap: 4px;
+
+      li {
+        background: var(--card);
+        border: 1px solid transparent;
+        border-radius: 8px;
+        padding: 5px 10px;
+
+        &.self {
+          border-color: var(--own);
+        }
+      }
+    }
+  }
+
+  .group-breakdown {
+    font-family: $korean-fonts;
+  }
+
+  ul.group-members .hungarian {
+    color: var(--muted);
+  }
+
+  .group-member-example {
+    margin: 3px 0 1px 14px;
+    padding-left: 8px;
+    border-left: 2px solid var(--own-border);
+    font-size: 0.9rem;
+
+    .hungarian {
+      font-size: 0.86rem;
+    }
+  }
+}
+
+.related {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid var(--line);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+  font-size: 0.82rem;
+}
+
+.related-heading {
+  color: var(--muted);
+  font-weight: 600;
+  margin-right: 2px;
+}
+
+a.related-link {
+  display: inline-flex;
+  gap: 5px;
+  align-items: baseline;
+  padding: 3px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--soft);
+  color: var(--foreground);
+  text-decoration: none;
+
+  b {
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  @include hover-focus {
+    border-color: var(--accent);
+  }
+
+  &.future {
+    border-style: dashed;
+
+    b {
+      color: var(--future);
+    }
+  }
+}

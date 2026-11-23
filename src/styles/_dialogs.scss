@@ -1,0 +1,222 @@
+// Export and practice dialogs: frame, row tree, preview, buttons.
+@use "mixins" as *;
+
+.export-dialog {
+  width: min(560px, calc(100vw - 24px));
+  max-height: calc(100vh - 32px);
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--card);
+  color: var(--foreground);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.28);
+
+  &[open] {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &::backdrop {
+    background: rgba(15, 17, 22, 0.5);
+  }
+}
+
+.export-dialog-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 16px 10px;
+  border-bottom: 1px solid var(--line);
+
+  h2 {
+    margin: 0;
+    font-size: 1.05rem;
+    line-height: 1.35;
+  }
+}
+
+.export-dialog-lesson {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--muted);
+  @include uppercase-label;
+}
+
+.export-close-icon {
+  margin-left: auto;
+  width: 32px;
+  height: 32px;
+  flex: none;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: none;
+  color: var(--muted);
+  font: inherit;
+  font-size: 1rem;
+  cursor: pointer;
+
+  @include hover-focus {
+    border-color: var(--line);
+    color: var(--foreground);
+    background: var(--soft);
+  }
+}
+
+.export-dialog-body {
+  padding: 8px 16px 12px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+// while the dialog is open the page behind it does not scroll (the scrollbar's place is kept, so nothing shifts)
+html:has(.export-dialog[open]) {
+  overflow: hidden;
+  scrollbar-gutter: stable;
+}
+
+.row-tree {
+  &,
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  > li {
+    padding: 6px 0;
+    border-bottom: 1px solid var(--line);
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  ul {
+    padding-left: 26px;
+  }
+
+  label {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0 6px;
+    padding: 3px 0;
+    cursor: pointer;
+
+    &.disabled {
+      color: var(--muted);
+      cursor: default;
+    }
+  }
+
+  input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    margin: 0 2px 0 0;
+    align-self: center;
+    flex: none;
+    accent-color: var(--accent);
+  }
+
+  small {
+    color: var(--muted);
+    font-size: 0.8rem;
+  }
+}
+
+.export-preview {
+  margin-top: 10px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 6px 10px;
+
+  > summary {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 600;
+    font-size: 0.92rem;
+    cursor: pointer;
+
+    .count {
+      color: var(--muted);
+      font-weight: 400;
+    }
+  }
+
+  &[open] > summary {
+    margin-bottom: 6px;
+  }
+
+  .table-wrapper {
+    max-height: 40vh;
+    overflow-y: auto;
+  }
+
+  td.korean {
+    width: 46%;
+    word-break: keep-all;
+  }
+}
+
+// not the page footer: none of its margin, font size or colour
+.export-dialog-footer {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 10px;
+  margin: 0;
+  padding: 10px 16px 14px;
+  border-top: 1px solid var(--line);
+  font-size: 1rem;
+  color: var(--foreground);
+}
+
+.dialog-button {
+  @include button-base;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 7px 14px;
+  border-radius: 8px;
+  background: var(--soft);
+  color: var(--foreground);
+
+  @include hover-focus {
+    border-color: var(--accent);
+  }
+}
+
+.dialog-primary-button {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--card);
+
+  &:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+
+  &:not(:disabled):hover,
+  &:focus-visible {
+    filter: brightness(1.08);
+  }
+}
+
+.dialog-close-button {
+  margin-left: auto;
+}
+
+.export-status {
+  font-size: 0.84rem;
+  color: var(--correct);
+}
+
+.export-copy-fallback {
+  position: fixed;
+  left: -9999px;
+  top: 0;
+}
