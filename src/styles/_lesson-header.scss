@@ -1,3 +1,5 @@
+@use "mixins" as *;
+
 // lesson header: on the home page as a list row, on the lesson page at the top of the lesson frame
 .lesson-header {
   background: var(--level-soft);
@@ -15,8 +17,7 @@
   font-size: 0.78rem;
   font-weight: 700;
   color: var(--level-color);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
+  @include uppercase-label;
 }
 
 .lesson-title {
@@ -52,8 +53,7 @@ a.lesson-form {
   padding: 1px 9px;
   text-decoration: none;
 
-  &:hover,
-  &:focus-visible {
+  @include hover-focus {
     border-color: var(--level-color);
   }
 }

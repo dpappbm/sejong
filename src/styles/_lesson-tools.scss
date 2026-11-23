@@ -1,27 +1,9 @@
+@use "mixins" as *;
+
 // lesson tools: the Export (hidden for now) and Gyakorlás buttons in the lesson header and their dialogs
 .lesson-tool-button {
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  font: inherit;
-  font-size: 0.74rem;
-  font-weight: 600;
-  text-transform: none;
-  letter-spacing: 0;
-  padding: 3px 10px;
-  border-radius: 999px;
-  border: 1px solid var(--line);
-  background: var(--card);
-  color: var(--muted);
-  cursor: pointer;
-
-  &:hover,
-  &:focus-visible {
-    border-color: var(--accent);
-    color: var(--accent);
-  }
-
-  @media print {
-    display: none;
-  }
+  @include pill-button(var(--accent));
 }

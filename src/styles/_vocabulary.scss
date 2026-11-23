@@ -1,3 +1,5 @@
+@use "mixins" as *;
+
 // vocabulary: collapsible bar at the end of the lesson
 details.vocabulary {
   background: var(--card);
@@ -49,8 +51,7 @@ details.vocabulary {
   font-size: 0.78rem;
   font-weight: 700;
   color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
+  @include uppercase-label;
   margin: 0 0 4px 2px;
 }
 
@@ -64,7 +65,7 @@ table.plain.vocabulary-table {
     word-break: keep-all;
   }
 
-  @media (max-width: 600px) {
+  @include mobile {
     td.korean {
       width: 46%;
     }

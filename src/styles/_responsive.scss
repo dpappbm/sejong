@@ -1,4 +1,7 @@
-@media (max-width: 900px) {
+// Narrow screens; after all the rules it overrides.
+@use "mixins" as *;
+
+@include tablet {
   .layout {
     display: block;
   }
@@ -9,15 +12,7 @@
     border-right: none;
     border-bottom: 1px solid var(--line);
     padding: 12px 16px;
-  }
 
-  .sidebar-toggle {
-    display: block;
-    width: 100%;
-    margin-top: 8px;
-  }
-
-  .sidebar {
     nav {
       display: none;
       margin-top: 10px;
@@ -28,21 +23,24 @@
     }
   }
 
+  .sidebar-toggle {
+    display: block;
+    width: 100%;
+    margin-top: 8px;
+  }
+
   main {
     padding: 20px 16px 60px;
   }
 
   .hero {
+    display: flex;
+    flex-direction: column;
     padding: 20px 18px;
 
     h1 {
       font-size: 1.5rem;
     }
-  }
-
-  .hero {
-    display: flex;
-    flex-direction: column;
   }
 
   .site-qr {
@@ -66,7 +64,7 @@
   }
 }
 
-@media (max-width: 600px) {
+@include mobile {
   table.conjugation-table {
     th:nth-child(2),
     td:nth-child(2) {

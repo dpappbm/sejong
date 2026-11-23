@@ -1,4 +1,6 @@
-// sidebar
+// The sidebar: site name, progress and theme controls.
+@use "mixins" as *;
+
 .sidebar {
   position: sticky;
   top: 0;
@@ -57,19 +59,21 @@
   .row {
     display: flex;
     gap: 6px;
+
+    .button small {
+      color: var(--muted);
+    }
   }
 }
 
 .button {
+  @include button-base;
   flex: 1;
-  border: 1px solid var(--line);
   background: var(--soft);
   color: var(--foreground);
   padding: 7px 9px;
   border-radius: 8px;
-  font: inherit;
   font-size: 0.82rem;
-  cursor: pointer;
   text-decoration: none;
   text-align: center;
 
@@ -78,89 +82,18 @@
   }
 }
 
-.table-of-contents {
-  &,
-  ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-
-  a {
-    text-decoration: none;
-    display: block;
-    padding: 3px 6px;
-    border-radius: 6px;
-    font-size: 0.86rem;
-
-    &:hover {
-      background: var(--soft);
-    }
-  }
-
-  > li {
-    margin-bottom: 10px;
-  }
+.sidebar-toggle {
+  display: none;
 }
 
-.contents-level > a {
-  font-weight: 600;
-  font-size: 0.9rem;
-}
-
-.contents-level > a b,
-.contents-general a b {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  vertical-align: middle;
-  width: 1.6em;
-  height: 1.6em;
-  line-height: 1;
-  border-radius: 5px;
-  color: #fff;
-  margin-right: 6px;
-}
-
-// levels in the menu: group title without a badge
-.table-of-contents .contents-level > a.level-title {
-  font-size: 0.74rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--level-color);
-  margin-top: 6px;
-
-  .korean {
-    text-transform: none;
-    letter-spacing: 0;
-    font-weight: 600;
-    opacity: 0.85;
-  }
-}
-
-:root[data-theme="dark"] .contents-level > a b,
-:root[data-theme="dark"] .contents-general a b {
-  color: #111;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .contents-level > a b,
-  :root:not([data-theme="light"]) .contents-general a b {
-    color: #111;
-  }
-}
-
-// "Általános" group: the three chapters under one group title
-.contents-general {
-  --level-color: var(--accent);
-
-  a {
-    font-weight: 600;
-    font-size: 0.88rem;
-
-    b {
-      background: var(--accent);
-    }
-  }
+#progress-select {
+  flex: 1;
+  min-width: 0;
+  font: inherit;
+  font-size: 0.85rem;
+  padding: 7px 8px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--foreground);
 }

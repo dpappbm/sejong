@@ -1,3 +1,6 @@
+// Groups of related structures and the links to related points.
+@use "mixins" as *;
+
 details.related-group {
   > summary {
     display: flex;
@@ -69,19 +72,7 @@ details.related-group {
 }
 
 a.group-link {
-  color: var(--accent);
-  text-decoration: none;
-  border-bottom: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
-
-  &:hover,
-  &:focus-visible {
-    border-bottom-color: var(--accent);
-  }
-
-  &.future {
-    color: var(--future);
-    border-bottom: 1px dashed var(--future);
-  }
+  @include reference-link;
 }
 
 .related-group {
@@ -125,7 +116,7 @@ a.group-link {
   }
 
   .group-breakdown {
-    font-family: "Malgun Gothic", "Apple SD Gothic Neo", "Noto Sans KR", "Segoe UI", sans-serif;
+    font-family: $korean-fonts;
   }
 
   ul.group-members .hungarian {
@@ -177,29 +168,15 @@ a.related-link {
     font-weight: 700;
   }
 
-  &:hover,
-  &:focus-visible {
+  @include hover-focus {
     border-color: var(--accent);
   }
-}
 
-.grammar-point.flash {
-  animation: grammar-point-flash 1.6s ease-out;
-}
+  &.future {
+    border-style: dashed;
 
-@keyframes grammar-point-flash {
-  0%,
-  30% {
-    box-shadow: 0 0 0 3px var(--accent);
-  }
-  100% {
-    box-shadow: var(--shadow);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .grammar-point.flash {
-    animation: none;
-    outline: 3px solid var(--accent);
+    b {
+      color: var(--future);
+    }
   }
 }

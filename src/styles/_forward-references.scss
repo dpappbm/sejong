@@ -1,3 +1,5 @@
+@use "mixins" as *;
+
 // forward mark: the example or word uses a structure taught later
 a.cross-reference.forward-reference {
   display: inline-block;
@@ -11,8 +13,7 @@ a.cross-reference.forward-reference {
   white-space: normal;
   font-style: normal;
 
-  &:hover,
-  &:focus-visible {
+  @include hover-focus {
     border-color: var(--accent);
   }
 

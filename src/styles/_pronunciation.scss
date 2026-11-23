@@ -1,3 +1,6 @@
+// Pronunciation boxes of the lessons and the pronunciation chapter.
+@use "mixins" as *;
+
 .pronunciation-box {
   margin-top: 10px;
   padding: 10px 12px;
@@ -84,45 +87,30 @@ table.plain.pronunciation-table {
     }
   }
 
-  @media (max-width: 600px) {
-    thead {
-      display: none;
+  // the "még nem vettük" mark stays readable in a faded row
+  tr.pronunciation-row.future .tag.future-tag.progress-tag {
+    display: inline-block;
+    opacity: 1;
+  }
+
+  @include mobile {
+    @include stacked-table($row-padding: 4px 0);
+
+    tr.pronunciation-row-first {
+      padding: 0;
+
+      td {
+        padding: 6px 10px;
+      }
     }
 
-    tr,
-    td,
     td:first-child {
-      display: block;
       width: auto;
     }
 
-    td {
-      border-bottom: none;
-      padding: 2px 10px;
-    }
-
-    tr {
-      border-bottom: 1px solid var(--line);
-      padding: 4px 0;
-
-      &.pronunciation-row-first {
-        padding: 0;
-
-        td {
-          padding: 6px 10px;
-        }
-      }
-    }
-
-    td {
-      &:nth-child(3) {
-        color: var(--muted);
-        font-size: 0.86rem;
-      }
-
-      &.empty {
-        display: none;
-      }
+    td:nth-child(3) {
+      color: var(--muted);
+      font-size: 0.86rem;
     }
   }
 }

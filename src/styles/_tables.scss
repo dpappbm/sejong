@@ -1,3 +1,5 @@
+// Conjugation tables and plain tables.
+
 .table-wrapper {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
@@ -26,37 +28,33 @@ table.plain {
     font-size: 0.8rem;
     white-space: nowrap;
   }
-}
 
-table.conjugation-table {
-  td:first-child {
-    font-weight: 600;
-    white-space: nowrap;
-  }
-
-  td:nth-child(2) {
-    color: var(--muted);
-    font-size: 0.8rem;
-  }
-
-  td {
-    white-space: nowrap;
-  }
-}
-
-table.conjugation-table,
-table.plain {
   tr:last-child td {
     border-bottom: none;
   }
 }
 
-table.conjugation-table tr.subheading-row td {
-  background: var(--soft);
-  font-size: 0.78rem;
-  font-weight: 600;
-  color: var(--muted);
-  white-space: normal;
+table.conjugation-table {
+  td {
+    white-space: nowrap;
+
+    &:first-child {
+      font-weight: 600;
+    }
+
+    &:nth-child(2) {
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+  }
+
+  tr.subheading-row td {
+    background: var(--soft);
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--muted);
+    white-space: normal;
+  }
 }
 
 .not-applicable {
@@ -75,13 +73,7 @@ table.conjugation-table tr.subheading-row td {
   margin-top: 1px;
 }
 
-table.conjugation-table {
-  td:first-child .translation {
-    font-weight: 400;
-    min-width: 0;
-  }
-
-  td {
-    vertical-align: top;
-  }
+table.conjugation-table td:first-child .translation {
+  font-weight: 400;
+  min-width: 0;
 }

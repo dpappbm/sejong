@@ -1,40 +1,33 @@
+// Progress marks: only when a progress is set (the browser script adds the future / current / current-lesson classes).
+@use "mixins" as *;
+
 .future-hidden .future {
   display: none !important;
 }
 
-// progress marks: only when a progress is set (the browser script adds the future / current / current-lesson classes)
 [hidden] {
   display: none !important;
 }
 
 .set-current-button {
   margin-left: auto;
-  font: inherit;
-  font-size: 0.74rem;
-  font-weight: 600;
-  text-transform: none;
-  letter-spacing: 0;
-  padding: 3px 10px;
-  border-radius: 999px;
-  border: 1px solid var(--line);
-  background: var(--card);
-  color: var(--muted);
-  cursor: pointer;
-
-  &:hover,
-  &:focus-visible {
-    border-color: var(--current);
-    color: var(--current);
-  }
+  @include pill-button(var(--current));
 }
 
-.contents-book li.done .lesson-label::after {
-  content: " ✓";
-  color: var(--correct);
+.tag.progress-tag {
+  display: none;
 }
 
-@media print {
-  .set-current-button {
-    display: none;
-  }
+.grammar-point.future .tag.future-tag.progress-tag,
+.lesson.future > .lesson-header .tag.future-tag.progress-tag,
+.lesson.current > .lesson-header .tag.current-lesson.progress-tag {
+  display: inline-block;
+}
+
+.lesson-number .tag.progress-tag {
+  margin-left: 6px;
+}
+
+.progress-none-only {
+  flex-basis: 100%;
 }

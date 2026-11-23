@@ -1,3 +1,6 @@
+// Page-wide basics: fonts, links and the two-column layout.
+@use "mixins" as *;
+
 * {
   box-sizing: border-box;
 }
@@ -22,7 +25,7 @@ body {
 }
 
 .korean {
-  font-family: "Malgun Gothic", "Apple SD Gothic Neo", "Noto Sans KR", "Segoe UI", sans-serif;
+  font-family: $korean-fonts;
 }
 
 a {

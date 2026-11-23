@@ -1,4 +1,6 @@
-// main
+// Main column and the top of the home page: introduction, QR code, numbers, legend.
+@use "mixins" as *;
+
 main {
   padding: 34px 40px 80px;
   max-width: 980px;
@@ -65,8 +67,7 @@ main {
   text-decoration: none;
   overflow-wrap: anywhere;
 
-  &:hover,
-  &:focus-visible {
+  @include hover-focus {
     text-decoration: underline;
   }
 }

@@ -1,3 +1,6 @@
+// Card of a grammar point.
+@use "mixins" as *;
+
 .grammar-point {
   background: var(--card);
   border: 1px solid var(--line);
@@ -16,8 +19,7 @@
 .grammar-point-number {
   font-size: 0.74rem;
   color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  @include uppercase-label(0.05em);
   font-weight: 600;
 }
 
@@ -76,8 +78,7 @@
 h5 {
   margin: 14px 0 6px;
   font-size: 0.78rem;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
+  @include uppercase-label(0.06em);
   color: var(--muted);
 }
 
@@ -87,4 +88,24 @@ h5 {
   padding: 8px 12px;
   margin: 8px 0;
   font-size: 0.95rem;
+}
+
+// the point a link jumped to flashes
+.grammar-point.flash {
+  animation: grammar-point-flash 1.6s ease-out;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+    outline: 3px solid var(--accent);
+  }
+}
+
+@keyframes grammar-point-flash {
+  0%,
+  30% {
+    box-shadow: 0 0 0 3px var(--accent);
+  }
+  100% {
+    box-shadow: var(--shadow);
+  }
 }

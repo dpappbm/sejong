@@ -1,3 +1,6 @@
+// Export and practice dialogs: frame, row tree, preview, buttons.
+@use "mixins" as *;
+
 .export-dialog {
   width: min(560px, calc(100vw - 24px));
   max-height: calc(100vh - 32px);
@@ -37,8 +40,7 @@
   font-size: 0.78rem;
   font-weight: 600;
   color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
+  @include uppercase-label;
 }
 
 .export-close-icon {
@@ -54,8 +56,7 @@
   font-size: 1rem;
   cursor: pointer;
 
-  &:hover,
-  &:focus-visible {
+  @include hover-focus {
     border-color: var(--line);
     color: var(--foreground);
     background: var(--soft);
@@ -65,16 +66,13 @@
 .export-dialog-body {
   padding: 8px 16px 12px;
   overflow-y: auto;
+  overscroll-behavior: contain;
 }
 
 // while the dialog is open the page behind it does not scroll (the scrollbar's place is kept, so nothing shifts)
 html:has(.export-dialog[open]) {
   overflow: hidden;
   scrollbar-gutter: stable;
-}
-
-.export-dialog-body {
-  overscroll-behavior: contain;
 }
 
 .row-tree {
@@ -176,21 +174,18 @@ html:has(.export-dialog[open]) {
 }
 
 .dialog-button {
+  @include button-base;
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font: inherit;
   font-size: 0.9rem;
   font-weight: 600;
   padding: 7px 14px;
   border-radius: 8px;
-  border: 1px solid var(--line);
   background: var(--soft);
   color: var(--foreground);
-  cursor: pointer;
 
-  &:hover,
-  &:focus-visible {
+  @include hover-focus {
     border-color: var(--accent);
   }
 }
@@ -218,4 +213,10 @@ html:has(.export-dialog[open]) {
 .export-status {
   font-size: 0.84rem;
   color: var(--correct);
+}
+
+.export-copy-fallback {
+  position: fixed;
+  left: -9999px;
+  top: 0;
 }
