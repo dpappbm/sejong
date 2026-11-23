@@ -7,6 +7,6 @@
   "plugins": ["prettier-plugin-astro"],
   "overrides": [
     { "files": "*.astro", "options": { "parser": "astro" } },
-    { "files": "*.css", "options": { "singleQuote": false } }
+    { "files": "*.{css,scss}", "options": { "singleQuote": false } }
   ]
 }
