@@ -1,0 +1,38 @@
+---
+// One word list of the "Szókincs" bar: Korean, Hungarian and the mark of a structure taught later.
+import type { VocabularyRow } from '../data/types';
+import { forwardMark } from '../lib/render/forwardReferences';
+import { localizeLinks } from '../lib/site';
+
+interface Props {
+  rows: VocabularyRow[];
+  book: string;
+  lesson: number;
+  path: string;
+}
+
+const { rows, book, lesson, path } = Astro.props;
+const mark = (korean: string) => localizeLinks(forwardMark(`vocabulary ${book}-${lesson}`, korean), path);
+---
+
+<div class="table-wrapper">
+  <table class="plain vocabulary-table">
+    <thead>
+      <tr>
+        <th>Koreai</th>
+        <th>Magyarul</th>
+      </tr>
+    </thead>
+    <tbody>
+      {rows.map(([korean, hungarian]) => (
+        <tr class="vocabulary-row">
+          <td class="korean">{korean}</td>
+          <td>
+            {hungarian}
+            <Fragment set:html={mark(korean)} />
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
