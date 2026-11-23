@@ -90,6 +90,7 @@ They come from listening tests in which every take was rated good, acceptable or
 
 - **Short words need a faster setting.** The model plans about 1.6 seconds even for one syllable. Slowed down, it may say the word twice or stretch it.
 - **Sentences: 0.75.** 11 of 12 sentences were rated good at 0.75, 4 of 12 at 0.8 and at 0.85. F5 and M4 sound rushed above that; F1 and M2 bear it better. The take of typical length is kept.
+- **M4 says words of 3–7 syllables a little fast.** In a comparison 0.65 sounded better, but the package accepts nothing below 0.7, so the words stayed at 0.7.
 - **Final stops: a carrier sentence.** `밥. 그래요.` is synthesized and cut at the pause: 11 of 24 good, none bad. With a comma or `...` at the end 4 of 24 were good. The carrier starts with ㄱ, because a ㄴ would nasalize the final stop and a vowel would link to it. Without a clear pause the word is read alone (`fallback`).
 - **More steps do not help.** 16 steps sound nearly the same as 8 and take twice as long.
 - **The measurements only catch failures** (repeated, cut off, rushed). They cannot tell a good take from an acceptable one, and cannot judge the pronunciation. That needs listening.
