@@ -17,7 +17,7 @@ npm run audio:generate -- --write    # generate them
 npm run audio:review -- --book 3A    # build the two listening pages
 ```
 
-Generating takes about 4 seconds per file on a four-core laptop, uses all its cores and about 2 GB of memory. The run can be stopped at any time: the next one continues with the missing files.
+Generating takes about 4 seconds per file on a four-core laptop, uses all its cores and about 2 GB of memory (less with `--workers 2`). The run can be stopped at any time: the next one continues with the missing files.
 
 To listen, open `scripts/audio/work/index.html` (every text) or `scripts/audio/work/review.html` (only the files the measurements find suspicious). Both work from the disk, remember your ratings in the browser and copy them with one button.
 
@@ -35,12 +35,13 @@ To listen, open `scripts/audio/work/index.html` (every text) or `scripts/audio/w
 
 Markup is dropped, and the same text gets one file. Some texts are read differently than written (`spoken-text.mjs`): the speakers of a dialogue (`가:`, `나:`) are left out, and `하나/한` is read as `하나, 한`.
 
-Numbers, Latin letters and parentheses are never guessed. A text with any of them needs its spoken form in `overrides.json`, otherwise the collector stops and lists the texts:
+Numbers, Latin letters, parentheses and alternatives inside a phrase are never guessed: `놓고/두고 오다` and `다치다/부상을 당하다` look alike, but share different parts. A text with any of them needs its spoken form in `overrides.json`, otherwise the collector stops and lists the texts:
 
 ```json
 "spokenForms": {
   "서울에 산 지 5년이 됐어요.": "서울에 산 지 오 년이 됐어요.",
-  "한글날 (10. 9.)": "한글날"
+  "한글날 (10. 9.)": "한글날",
+  "상을 타다/받다": "상을 타다, 상을 받다"
 }
 ```
 
@@ -98,15 +99,16 @@ Silence is trimmed to 50 ms before and 250 ms after the speech, the loudness is 
 ## Fixing a bad file
 
 1. If the text is read wrongly, give its spoken form in `spokenForms` and run `audio:collect` again.
-2. If only the take is bad, pick another one for that voice in `takes`, keyed by the spoken text. `method` is `plain`, `period` (both read the text alone) or `carrier`; any seed can be tried:
+2. If only the take is bad, set another one for that voice in `takes`, keyed by the spoken text. With `speed` (0.7–2.0, the limits of the package) alone the best of the 5 seeds at that speed is kept; with `seed` exactly that take is used, and the review page no longer calls it suspicious. `method` is `plain`, `period` (both read the text alone) or `carrier`, by default the one of the profile:
 
    ```json
    "takes": {
+     "마크 씨가 요즘 바쁜가 봐요. 연락이 없어요.": { "F5": { "speed": 0.8 } },
      "꽃": { "F1": { "method": "carrier", "speed": 0.8, "seed": 7 } }
    }
    ```
 
-3. Run `npm run audio:generate -- --write`. Only the files whose entry changed are generated again.
+3. Run `npm run audio:generate -- --write`. Only the files whose entry changed are generated again. The file of a text that no longer exists is not deleted.
 
 ## Adding a book
 

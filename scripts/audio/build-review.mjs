@@ -34,13 +34,14 @@ const RATINGS = [
 ];
 const escape = text => text.replace(/[&<>"]/g, c => `&#${c.charCodeAt(0)};`);
 
-/** Why a take deserves a listen (empty: nothing found). */
+/** Why a take deserves a listen (empty: nothing found). A take picked by its seed has been listened to. */
 function suspicions(entry) {
+  if (entry.peak < 0.05) return ['néma'];
+  if (entry.override?.seed) return [];
   const found = entry.problems.map(problem => PROBLEMS[problem] ?? problem);
   if (entry.fallback) found.push('tartalék módszer');
-  else if (!entry.override && entry.usable / entry.takes < 0.3 && !entry.problems.length)
+  else if (entry.usable / entry.takes < 0.3 && !entry.problems.length)
     found.push(`kevés jó próba (${entry.usable}/${entry.takes})`);
-  if (entry.peak < 0.05) found.push('néma');
   return found;
 }
 

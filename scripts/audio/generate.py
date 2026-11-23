@@ -118,9 +118,10 @@ def generate(job):
     override = TAKES.get(text, {}).get(voice)
     started = time.time()
     if override:
-        method, speeds, seeds = override["method"], [override["speed"]], [override["seed"]]
+        method, speeds = override.get("method", profile["method"]), [override["speed"]]
     else:
-        method, speeds, seeds = profile["method"], profile["speeds"], range(1, PROFILES["seeds"] + 1)
+        method, speeds = profile["method"], profile["speeds"]
+    seeds = [override["seed"]] if override and "seed" in override else range(1, PROFILES["seeds"] + 1)
     takes = make_takes(text, voice, method, speeds, seeds, factor)
     fallback = False
     if not takes:

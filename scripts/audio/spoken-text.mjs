@@ -14,10 +14,13 @@ export const plainText = html =>
 
 /**
  * The text to read. `spokenForms` (from overrides.json) gives the form of texts no rule can settle: numbers, Latin
- * letters and parentheses, which are sometimes read and sometimes not. Throws if anything unreadable is left.
+ * letters and parentheses, which are sometimes read and sometimes not, and alternatives inside a phrase. Throws if
+ * anything unreadable is left.
  */
 export function spokenText(html, spokenForms = {}) {
   const text = plainText(html);
+  // 놓고/두고 오다 and 다치다/부상을 당하다 look alike, but share different parts
+  const isAmbiguous = text.includes(' ') && /[^ ][/][^ ]/.test(text) && !spokenForms[text];
   const spoken =
     spokenForms[text] ??
     text
@@ -28,7 +31,7 @@ export function spokenText(html, spokenForms = {}) {
       .replace(/\s*\/\s*/g, ', ') // alternatives, with a short pause
       .replace(/\s+/g, ' ')
       .trim();
-  if (!/^[가-힣 .,?!]+$/.test(spoken) || !/[가-힣]/.test(spoken))
+  if (isAmbiguous || !/^[가-힣 .,?!]+$/.test(spoken) || !/[가-힣]/.test(spoken))
     throw new Error(`No spoken form for "${text}": add it to "spokenForms" in scripts/audio/overrides.json`);
   return spoken;
 }

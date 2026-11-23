@@ -27,12 +27,17 @@ describe('spokenText', () => {
     ).toBe('서울에 산 지 오 년이 됐어요.');
   });
 
-  it.each(['3월 15일에 한국에 가요.', '케이팝(K-POP)', '(옷을) 입다', '-와/과 관련되다', '…'])(
-    'refuses to guess the form of %s',
-    text => {
-      expect(() => spokenText(text)).toThrow('spokenForms');
-    }
-  );
+  it.each([
+    '3월 15일에 한국에 가요.',
+    '케이팝(K-POP)',
+    '(옷을) 입다',
+    '-와/과 관련되다',
+    '일을/업무를 맡다',
+    '놓고/두고 오다',
+    '…',
+  ])('refuses to guess the form of %s', text => {
+    expect(() => spokenText(text)).toThrow('spokenForms');
+  });
 });
 
 describe('audioId', () => {
