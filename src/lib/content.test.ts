@@ -3,7 +3,7 @@ import { POINT_COUNT } from './content';
 import { getSite } from './site';
 
 const site = getSite();
-const allHtml = [site.basicsHtml, site.pronunciationHtml, site.honorificsHtml, ...site.lessons.map(lesson => lesson.html)].join('\n');
+const allHtml = [site.basicsHtml, site.pronunciationHtml, site.honorificsHtml, ...site.lessons.map(lesson => lesson.html),].join('\n');
 const ids = new Set([...allHtml.matchAll(/\sid="([^"]+)"/g)].map(match => match[1]));
 
 /** Link sources: grammar point cards, basic rule cards and honorific word cards. */

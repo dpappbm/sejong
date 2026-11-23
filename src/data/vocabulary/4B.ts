@@ -81,7 +81,7 @@ export default {
       ['‘나’보다 ‘우리’를 중요하게 생각하다', 'a „mi” fontosabb, mint az „én”'],
       ['집 안에서 신발을 벗고 생활하다', 'otthon cipő nélkül járnak'],
       ['숟가락과 젓가락을 사용하다', 'kanalat és pálcikát használnak'],
-      ['어른이 먼저 수저를 드신 후에 식사를 시작하고 식사 속도를 맞추다', 'csak az idősebb után kezdenek enni, és az ő tempójához igazodnak'],
+      ['어른이 먼저 수저를 드신 후에 식사를 시작하고 식사 속도를 맞추다', 'csak az idősebb után kezdenek enni, és az ő tempójához igazodnak',],
       ['반말과 높임말이 있다', 'van bizalmas és tiszteleti beszédmód'],
       ['가족을 부르는 말이 다양하다', 'sokféle szó van a családtagok megszólítására'],
       ['소리나 모양을 나타내는 표현이 많다', 'sok a hangutánzó és alakfestő kifejezés'],

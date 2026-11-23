@@ -1,7 +1,7 @@
 // The flash-card game of a lesson (src/components/LessonFlashcardDialog.astro): choose rows, answer a multiple-choice
 // round per row, see the summary. The dialog is part of the swapped page content, so it is looked up on every event;
 // the listeners are bound once.
-import { buildRound, canPlay, cardKind, OPTION_COUNT, otherLanguage, retryPool, shuffle, type Card, type Language, type Round } from '../lib/flashcards';
+import { buildRound, canPlay, cardKind, OPTION_COUNT, otherLanguage, retryPool, shuffle, type Card, type Language, type Round, } from '../lib/flashcards';
 import { applyTreeChange, isTreeCheckbox, resetTree, selectedGroups } from './rowTree';
 
 type Screen = 'selection' | 'round' | 'summary';
@@ -64,7 +64,7 @@ function updateSelection(dialog: HTMLDialogElement): void {
 }
 
 function startGame(dialog: HTMLDialogElement, questions: Card[], pool: Card[], selection: Card[]): void {
-  game = { questions: shuffle(questions), pool, selection, index: 0, round: null, answered: false, correctCount: 0, mistakes: [] };
+  game = { questions: shuffle(questions), pool, selection, index: 0, round: null, answered: false, correctCount: 0, mistakes: [], };
   showScreen(dialog, 'round');
   showRound(dialog);
 }
@@ -199,7 +199,7 @@ function showSummary(dialog: HTMLDialogElement): void {
         item.append(
           question,
           mistakeLine('flashcard-mistake-correct', '✓ helyes:', fullText(round.card, answerLanguage), answerLanguage),
-          mistakeLine('flashcard-mistake-chosen', '✗ a válaszod:', fullText(round.options[chosenIndex].card, answerLanguage), answerLanguage),
+          mistakeLine('flashcard-mistake-chosen', '✗ a válaszod:', fullText(round.options[chosenIndex].card, answerLanguage), answerLanguage)
         );
         return item;
       }));

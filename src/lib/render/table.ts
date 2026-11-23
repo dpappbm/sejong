@@ -46,7 +46,7 @@ export function renderConjugationTable(table: WordTable | NounTable | undefined,
     }
     return translatedCell(form, word.dictionaryForm, specs[index], `${key} [${column.header}] ${word.dictionaryForm}`);
   };
-  const wordClassNote = (word: Word) => (word.wordClass === 'adjective' ? ' <small>(mn.)</small>' : word.wordClass === 'verb' ? ' <small>(ige)</small>' : '');
+  const wordClassNote = (word: Word) => word.wordClass === 'adjective' ? ' <small>(mn.)</small>' : word.wordClass === 'verb' ? ' <small>(ige)</small>' : '';
   const row = (word: Word) =>
     `<tr><td>${koreanSpan(word.dictionaryForm)}${wordGloss(word.dictionaryForm, key)}</td><td>${stemTypeLabel(word)}${wordClassNote(word)}</td>${table.columns.map((_column, index) => `<td>${cell(word, index)}</td>`).join('')}</tr>`;
   let body = regularWords.map(row).join('');

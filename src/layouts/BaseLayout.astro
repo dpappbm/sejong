@@ -13,7 +13,7 @@ interface Props {
   lesson?: LessonInfo;
 }
 
-const { title, description = 'A Sejong-tankönyvek (세종한국어 1A–4B) teljes nyelvtana magyarul.', pageLabel, lesson } = Astro.props;
+const { title, description = 'A Sejong-tankönyvek (세종한국어 1A–4B) teljes nyelvtana magyarul.', pageLabel, lesson, } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 <!doctype html>

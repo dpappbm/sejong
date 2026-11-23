@@ -8,7 +8,7 @@ import { reportProblem } from '../problems';
 import { forwardMark } from './forwardReferences';
 
 const categories = new Map<string, PronunciationCategory & { number: number }>(
-  pronunciation.categories.map((category, index) => [category.id, { ...category, number: index + 1 }]),
+  pronunciation.categories.map((category, index) => [category.id, { ...category, number: index + 1 }])
 );
 
 /** Pronunciation in square brackets; an array lists steps (→), " · " separates alternatives. */
@@ -65,12 +65,12 @@ export function pronunciationBox(book: string, lesson: number, title: Lesson): s
   const label = `Kiejtés: <span class="korean">${title.pronunciation}</span>${title.pronunciationHungarian ? ` – ${title.pronunciationHungarian.replace(/\s*\([^)]*\)\s*$/, '')}` : ''}`;
   if (!entry) return `<div class="pronunciation-box"><div class="pronunciation-heading">${label}</div></div>`;
   const category = categories.get(entry.category) ?? { number: '?', hungarian: '' };
-  return `<div class="pronunciation-box"><div class="pronunciation-heading"><span>${label}</span><span class="source-page">SB ${entry.studentBookPage}. o.</span><a class="cross-reference" href="#pronunciation-${entry.category}">→ Kiejtés ${category.number}. ${category.hungarian}</a></div>` +
+  return (`<div class="pronunciation-box"><div class="pronunciation-heading"><span>${label}</span><span class="source-page">SB ${entry.studentBookPage}. o.</span><a class="cross-reference" href="#pronunciation-${entry.category}">→ Kiejtés ${category.number}. ${category.hungarian}</a></div>` +
     (entry.sampleWord ? `<div class="pronunciation-sample">${sampleWithPronunciation(entry.sampleWord, entry.samplePronunciation)}${entry.hungarian ? ` <span class="hungarian">– ${entry.hungarian}</span>` : ''}</div>` : '') +
     `<p class="pronunciation-rule">${entry.rule}</p>` +
     `<ul class="examples pronunciation-examples">${entry.examples.map(([korean, value, hungarian]) =>
       `<li><span class="korean">${korean}${value ? ' ' + notation(value) : ''}</span><span class="hungarian">${hungarian}${forwardMark(`pronunciation ${book}-${lesson}`, korean)}</span></li>`).join('')}</ul>` +
-    (entry.note ? `<aside class="own pronunciation-note">${ownTag()} ${entry.note}</aside>` : '') + `</div>`;
+    (entry.note ? `<aside class="own pronunciation-note">${ownTag()} ${entry.note}</aside>` : '') + `</div>`);
 }
 
 /** Own supplementary table of a category (e.g. the four cases of ㅢ): position | pronunciation | examples. */
@@ -90,14 +90,14 @@ export function pronunciationChapter(): string {
     const rows = lessons.map(({ book, lesson }) => {
       const entry = pronunciation.lessons[lessonKey(book, lesson)];
       const attributes = `data-book="${book}" data-lesson="${lesson}"`;
-      return `<tr class="pronunciation-row pronunciation-row-first" ${attributes}><td colspan="3"><a class="cross-reference" href="#lesson-${book}-${lesson}">${book} ${lesson}. lecke</a> <span class="source-page">SB ${entry.studentBookPage}. o.</span> <span class="tag future-tag progress-tag">még nem vettük</span><br>${entry.rule}</td></tr>` +
+      return (`<tr class="pronunciation-row pronunciation-row-first" ${attributes}><td colspan="3"><a class="cross-reference" href="#lesson-${book}-${lesson}">${book} ${lesson}. lecke</a> <span class="source-page">SB ${entry.studentBookPage}. o.</span> <span class="tag future-tag progress-tag">még nem vettük</span><br>${entry.rule}</td></tr>` +
         (entry.sampleWord ? `<tr class="pronunciation-row" ${attributes}><td class="korean"><b>${entry.sampleWord}</b></td><td class="korean${notation(entry.samplePronunciation) ? '' : ' empty'}">${notation(entry.samplePronunciation) || '–'}</td><td>${entry.hungarian}</td></tr>` : '') +
         entry.examples.map(([korean, value, hungarian]) =>
-          `<tr class="pronunciation-row" ${attributes}><td class="korean">${korean}</td><td class="korean${value ? '' : ' empty'}">${value ? notation(value) : '–'}</td><td>${hungarian}${forwardMark(`pronunciation ${book}-${lesson}`, korean)}</td></tr>`).join('');
+          `<tr class="pronunciation-row" ${attributes}><td class="korean">${korean}</td><td class="korean${value ? '' : ' empty'}">${value ? notation(value) : '–'}</td><td>${hungarian}${forwardMark(`pronunciation ${book}-${lesson}`, korean)}</td></tr>`).join(''));
     }).join('');
     const links = lessons.map(({ book, lesson }) => `<a class="cross-reference" href="#lesson-${book}-${lesson}">${book} ${lesson}</a>`).join(', ');
-    return `<details class="card pronunciation-category" open><summary>${disclosureArrow}<h3 id="pronunciation-${category.id}">${index + 1}. ${category.hungarian} <span class="korean">(${category.korean})</span></h3></summary>` +
+    return (`<details class="card pronunciation-category" open><summary>${disclosureArrow}<h3 id="pronunciation-${category.id}">${index + 1}. ${category.hungarian} <span class="korean">(${category.korean})</span></h3></summary>` +
       `<p>${category.intro} ${ownTag()}</p><p class="pronunciation-category-lessons">Tankönyvi leckék: ${links}</p>` +
-      `<div class="table-wrapper"><table class="plain pronunciation-table"><thead><tr><th>Példa</th><th>Kiejtés</th><th>Magyarul</th></tr></thead><tbody>${rows}</tbody></table></div>${categoryExtra(category.extra)}</details>`;
+      `<div class="table-wrapper"><table class="plain pronunciation-table"><thead><tr><th>Példa</th><th>Kiejtés</th><th>Magyarul</th></tr></thead><tbody>${rows}</tbody></table></div>${categoryExtra(category.extra)}</details>`);
   }).join('\n');
 }

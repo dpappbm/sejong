@@ -48,8 +48,8 @@ function groupBox(group: RelatedGroup, self: string): string {
     `<span class="group-pair">${index ? `<span class="group-less-than" aria-hidden="true">${separator}</span>` : ''}<span class="group-step${id === self ? ' self' : ''}">${item(id)}<small>${label}</small></span></span>`).join('');
   const examples = (group.examples ?? []).map(([korean, hungarian]) => `<li><span class="korean">${korean}</span><span class="hungarian">${hungarian}</span></li>`).join('');
   const side = (group.side ?? []).map(([id, text]) => `<li>${item(id)} – ${text}</li>`).join('');
-  return `<details class="own related-group"><summary>${disclosureArrow}${ownTag()} <b>Rokon szerkezetek: ${group.title}</b></summary><div class="group-body">` +
-    `<div class="group-scale">${scale}</div>${group.explanation}${examples ? `<ul class="examples group-examples">${examples}</ul>` : ''}${correctIncorrectList(group.correctIncorrect)}${side ? `<p class="group-side-heading">Mellékágak:</p><ul class="group-side">${side}</ul>` : ''}</div></details>`;
+  return (`<details class="own related-group"><summary>${disclosureArrow}${ownTag()} <b>Rokon szerkezetek: ${group.title}</b></summary><div class="group-body">` +
+    `<div class="group-scale">${scale}</div>${group.explanation}${examples ? `<ul class="examples group-examples">${examples}</ul>` : ''}${correctIncorrectList(group.correctIncorrect)}${side ? `<p class="group-side-heading">Mellékágak:</p><ul class="group-side">${side}</ul>` : ''}</div></details>`);
 }
 
 /** The boxes of every group the point belongs to (collapsed by default). */

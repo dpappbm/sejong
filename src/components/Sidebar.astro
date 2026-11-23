@@ -1,5 +1,5 @@
 ---
-import { BOOK_DATA, CHAPTER_PATHS, LESSONS, LEVELS, POINT_COUNT, lessonPath, withBase, type LessonInfo } from '../lib/content';
+import { BOOK_DATA, CHAPTER_PATHS, LESSONS, LEVELS, POINT_COUNT, lessonPath, withBase, type LessonInfo, } from '../lib/content';
 import { stripTags } from '../lib/html';
 
 interface Props {
@@ -18,7 +18,7 @@ const isCurrent = (book: string, lesson: number) => currentLesson?.book === book
     <div class="row">
       <select id="progress-select" aria-label="Hol tartasz? (lecke)" title="Hol tartasz? A böngésződ megjegyzi.">
         <option value="">Hol tartasz? –</option>
-        {LESSONS.map(lesson => <option value={lesson.key}>{lesson.book} · {lesson.lesson}. lecke</option>)}
+        {LESSONS.map(lesson => (<option value={lesson.key}>{lesson.book} · {lesson.lesson}. lecke</option>))}
         <option value="ALL">Mindet vettük ✓</option>
       </select>
       <button class="button" id="theme-toggle" type="button">◐ Téma</button>
@@ -45,7 +45,7 @@ const isCurrent = (book: string, lesson: number) => currentLesson?.book === book
               return (
                 <li>
                   <details class="contents-book" data-book={book} open={currentLesson?.book === book}>
-                    <summary><span class="disclosure-arrow" aria-hidden="true"></span><span class="book-code">{book}</span> 세종한국어 {book} <span class="count">{BOOK_DATA[book].points.length}</span></summary>
+                    <summary><span class="disclosure-arrow" aria-hidden="true"></span><span class="book-code">{book}</span> 세종한국어 {book}{' '}<span class="count">{BOOK_DATA[book].points.length}</span></summary>
                     <ul>
                       {points.map(point => (
                         <li data-book={book} data-lesson={point.lesson}>

@@ -20,7 +20,7 @@ export function fillHungarianPattern(pattern: string, entry: LexiconEntry, where
     values.afterClause = entry.timeNoun ? `${entry.timeNoun} után (= miután ${entry.pastFirstSingular})` : `miután ${entry.pastFirstSingular}`;
     values.beforeClause = entry.timeNoun ? `${entry.timeNoun} előtt (= mielőtt ${entry.presentFirstSingular})` : `mielőtt ${entry.presentFirstSingular}`;
   }
-  const filled = pattern.replace(/\{(\w+)\}/g, (match, key: string) => (values[key] != null ? String(values[key]) : match));
+  const filled = pattern.replace(/\{(\w+)\}/g, (match, key: string) => values[key] != null ? String(values[key]) : match);
   if (/\{\w+\}/.test(filled)) reportProblem(`${where}: unfilled placeholder: ${filled}`);
   return filled;
 }

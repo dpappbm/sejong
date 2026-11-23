@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { createWord, formalEnding, modifierForm, plainStyleStatement, withAOrEo, withEu, withPast, withPlainStem } from './conjugation';
+import { createWord, formalEnding, modifierForm, plainStyleStatement, withAOrEo, withEu, withPast, withPlainStem, } from './conjugation';
 
 const verb = (dictionaryForm: string) => createWord(dictionaryForm, 'verb');
 const adjective = (dictionaryForm: string) => createWord(dictionaryForm, 'adjective');

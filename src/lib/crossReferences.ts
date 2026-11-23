@@ -214,7 +214,7 @@ function linkBlock(block: string, from: string): string {
       });
       // The connecting words (", és ") stay.
       const glue = match.slice((book + ' ' + firstLesson + '.').length, match.length - (' ' + lessonWord).length).match(/,? és /g) ?? [];
-      return pieces.reduce((text, piece, n) => text + (n ? glue[n - 1] ?? ' és ' : '') + piece, '');
+      return pieces.reduce((text, piece, n) => text + (n ? (glue[n - 1] ?? ' és ') : '') + piece, '');
     });
   }
   return tokens.join('');

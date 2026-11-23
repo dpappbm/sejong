@@ -16,7 +16,7 @@ const chapters = chapterOutline();
       </div>
       <p class="chapter-card-description">{chapter.description}</p>
       <div class="lesson-forms">
-        {chapter.items.map(item => <a class="lesson-form" href={item.href}>{item.label}</a>)}
+        {chapter.items.map(item => (<a class="lesson-form" href={item.href}>{item.label}</a>))}
       </div>
     </div>
   ))}

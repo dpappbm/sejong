@@ -37,8 +37,8 @@ export function vocabularyBox(book: string, lesson: number): string {
   const table = (rows: VocabularyRow[]) => `<div class="table-wrapper"><table class="plain vocabulary-table"><thead><tr><th>Koreai</th><th>Magyarul</th></tr></thead><tbody>` +
     rows.map(([korean, hungarian]) => `<tr class="vocabulary-row"><td class="korean">${escapeHtml(korean)}</td><td>${escapeHtml(hungarian)}${forwardMark(`vocabulary ${book}-${lesson}`, korean)}</td></tr>`).join('') + `</tbody></table></div>`;
   const { textbook, own } = lessonVocabulary;
-  return `<details class="vocabulary"><summary>${disclosureArrow}<b>Szókincs</b><span class="count">${count} szó</span></summary><div class="vocabulary-body">` +
+  return (`<details class="vocabulary"><summary>${disclosureArrow}<b>Szókincs</b><span class="count">${count} szó</span></summary><div class="vocabulary-body">` +
     (textbook?.length ? `<div class="vocabulary-part"><div class="vocabulary-heading">Tankönyv</div>${table(textbook)}</div>` : '') +
     (own?.length ? `<aside class="own vocabulary-part vocabulary-own"><div class="own-heading">${ownTag()} <b>További szavak</b></div>${table(own)}</aside>` : '') +
-    `</div></details>`;
+    `</div></details>`);
 }

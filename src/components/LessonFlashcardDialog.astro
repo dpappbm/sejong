@@ -13,7 +13,7 @@ const { lesson } = Astro.props;
 ---
 <dialog class="export-dialog flashcard-dialog" id="lesson-flashcard-dialog" aria-labelledby="lesson-flashcard-title" data-flashcard-screen="selection">
   <header class="export-dialog-header">
-    <h2 id="lesson-flashcard-title">Gyakorlás <span class="export-dialog-lesson">{lesson.book} · {lesson.lesson}. lecke</span></h2>
+    <h2 id="lesson-flashcard-title">Gyakorlás{' '}<span class="export-dialog-lesson">{lesson.book} · {lesson.lesson}. lecke</span></h2>
     <button class="export-close-icon" type="button" data-flashcard-close aria-label="Bezárás" title="Bezárás">✕</button>
   </header>
 

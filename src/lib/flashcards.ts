@@ -45,7 +45,7 @@ export function hideKoreanHints(hungarian: string): string {
 }
 
 /** The text of a card as it is shown in the game. */
-export const cardText = (card: Card, language: Language) => (language === 'korean' ? card.korean : hideKoreanHints(card.hungarian));
+export const cardText = (card: Card, language: Language) => language === 'korean' ? card.korean : hideKoreanHints(card.hungarian);
 
 export const otherLanguage = (language: Language): Language => (language === 'korean' ? 'hungarian' : 'korean');
 
@@ -104,8 +104,8 @@ export function buildRound(card: Card, pool: readonly Card[], random: Random = M
       ...shuffle(candidates.filter(other => other.kind !== card.kind), random),
     ].slice(0, OPTION_COUNT - 1);
     const answerLanguage = otherLanguage(questionLanguage);
-    const options = shuffle([card, ...distractors], random).map(option => ({ card: option, text: cardText(option, answerLanguage) }));
-    return { card, questionLanguage, question: cardText(card, questionLanguage), options, correctIndex: options.findIndex(option => option.card === card) };
+    const options = shuffle([card, ...distractors], random).map(option => ({ card: option, text: cardText(option, answerLanguage), }));
+    return { card, questionLanguage, question: cardText(card, questionLanguage), options, correctIndex: options.findIndex(option => option.card === card), };
   }
   return null;
 }

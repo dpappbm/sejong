@@ -39,7 +39,7 @@ function renderBasics(): string {
   // Every rule card gets an id and becomes a link target.
   html = html.replace(/<h3>(\d+)\. ([\s\S]*?)<\/h3>/g, (_match, number: string, title: string) => {
     const plainTitle = `${number}. ${stripTags(title)}`;
-    linkTargets.set('rule-' + number, { label: 'Alapszabályok', form: plainTitle, plain: true, title: `Alapszabályok · ${plainTitle}` });
+    linkTargets.set('rule-' + number, { label: 'Alapszabályok', form: plainTitle, plain: true, title: `Alapszabályok · ${plainTitle}`, });
     return `<summary>${disclosureArrow}<h3 id="rule-${number}">${number}. ${title}</h3></summary>`;
   });
   // On its own page every card starts open.
@@ -56,7 +56,7 @@ const linkBasics = (html: string) => html.replace(/(<h3 id="(rule-\d+)"[\s\S]*?)
 /** Links the references inside each grammar point's body (up to its related-bar placeholder). */
 const linkPoints = (html: string) => html.replace(
   /(<article class="grammar-point[^"]*" id="([^"]+)"[\s\S]*?<div class="grammar-point-body">)([\s\S]*?)(<!--related:\2-->)/g,
-  (_match, head: string, id: string, body: string, placeholder: string) => head + linkSegment(body, id) + placeholder,
+  (_match, head: string, id: string, body: string, placeholder: string) => head + linkSegment(body, id) + placeholder
 );
 
 let site: SiteContent | null = null;
@@ -133,12 +133,12 @@ export function chapterOutline(): ChapterOutline[] {
     {
       path: CHAPTER_PATHS.pronunciation, symbol: '♪', title: 'Kiejtés', korean: '발음',
       description: 'A tankönyvi „발음” dobozok szabálytípus szerint, a leckék példáival.',
-      items: pronunciation.categories.map(category => ({ label: category.hungarian, href: hrefOf('pronunciation-' + category.id) })),
+      items: pronunciation.categories.map(category => ({ label: category.hungarian, href: hrefOf('pronunciation-' + category.id), })),
     },
     {
       path: CHAPTER_PATHS.honorifics, symbol: '◆', title: 'Tiszteleti szavak', korean: '높임말', ownTag: '＋ Saját összeállítás',
       description: 'Tiszteleti és szerény szópárok: partikulák, főnevek, igék, szerény alakok és megszólítás.',
-      items: honorifics.categories.map((category, index) => ({ label: category.hungarian, href: hrefOf(`honorific-category-${index + 1}`) })),
+      items: honorifics.categories.map((category, index) => ({ label: category.hungarian, href: hrefOf(`honorific-category-${index + 1}`), })),
     },
   ];
 }

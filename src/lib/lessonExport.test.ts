@@ -6,7 +6,7 @@ import { buildLessonExport } from './lessonExport';
 const lessonExport = (key: string) => buildLessonExport(LESSONS.find(lesson => lesson.key === key)!);
 const allRows = (key: string) => {
   const data = lessonExport(key);
-  return [...data.points.flatMap(point => [point.rule, ...point.examples]), ...(data.vocabulary?.textbook ?? []), ...(data.vocabulary?.own ?? [])];
+  return [...data.points.flatMap(point => [point.rule, ...point.examples]), ...(data.vocabulary?.textbook ?? []), ...(data.vocabulary?.own ?? []),];
 };
 
 describe('lesson export', () => {
@@ -66,7 +66,7 @@ describe('lesson export', () => {
   });
 
   it('writes one tab-separated line per row, each closed by a line break', () => {
-    expect(exportText([['가다', 'megy'], ['먹다', 'eszik']])).toBe('가다\tmegy\n먹다\teszik\n');
+    expect(exportText([['가다', 'megy'], ['먹다', 'eszik'],])).toBe('가다\tmegy\n먹다\teszik\n');
     expect(exportText([])).toBe('');
   });
 });

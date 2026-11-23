@@ -14,7 +14,7 @@ export const PAGE_SEQUENCE: PageLink[] = [
   { path: CHAPTER_PATHS.basics, label: 'Alapszabályok' },
   { path: CHAPTER_PATHS.pronunciation, label: 'Kiejtés' },
   { path: CHAPTER_PATHS.honorifics, label: 'Tiszteleti szavak' },
-  ...LESSONS.map(lesson => ({ path: lessonPath(lesson.book, lesson.lesson), label: `${lesson.book} · ${lesson.lesson}. lecke`, korean: lesson.title.korean })),
+  ...LESSONS.map(lesson => ({ path: lessonPath(lesson.book, lesson.lesson), label: `${lesson.book} · ${lesson.lesson}. lecke`, korean: lesson.title.korean, })),
 ];
 
 /** The previous and next page of a page in the chain; both ends lead to the home page. */

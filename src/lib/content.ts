@@ -59,7 +59,7 @@ const byLessonAndPoint = (a: Point, b: Point) => a.lesson - b.lesson || a.point 
 
 export const POINTS_BY_ID = new Map<string, PointInfo>();
 for (const book of BOOKS) {
-  for (const point of BOOK_DATA[book].points) POINTS_BY_ID.set(pointId(book, point.lesson, point.point), { ...point, book, id: pointId(book, point.lesson, point.point) });
+  for (const point of BOOK_DATA[book].points) POINTS_BY_ID.set(pointId(book, point.lesson, point.point), { ...point, book, id: pointId(book, point.lesson, point.point), });
 }
 
 /** Lessons that have grammar points, in textbook order. */
@@ -79,7 +79,7 @@ export const POINT_COUNT = POINTS_BY_ID.size;
 
 // ---------- page locations ----------
 export const lessonPath = (book: string, lesson: number | string) => `/${book.toLowerCase()}/${lesson}/`;
-export const CHAPTER_PATHS = { basics: '/basics/', pronunciation: '/pronunciation/', honorifics: '/honorifics/' } as const;
+export const CHAPTER_PATHS = { basics: '/basics/', pronunciation: '/pronunciation/', honorifics: '/honorifics/', } as const;
 
 export interface Location {
   path: string;

@@ -8,7 +8,7 @@ const SYLLABLES_PER_INITIAL = 588;
 const SYLLABLES_PER_VOWEL = 28;
 
 const INITIAL_CONSONANTS = 'ㄱㄲㄴㄷㄸㄹㅁㅂㅃㅅㅆㅇㅈㅉㅊㅋㅌㅍㅎ';
-const FINAL_CONSONANTS = ['', 'ㄱ', 'ㄲ', 'ㄳ', 'ㄴ', 'ㄵ', 'ㄶ', 'ㄷ', 'ㄹ', 'ㄺ', 'ㄻ', 'ㄼ', 'ㄽ', 'ㄾ', 'ㄿ', 'ㅀ', 'ㅁ', 'ㅂ', 'ㅄ', 'ㅅ', 'ㅆ', 'ㅇ', 'ㅈ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ'];
+const FINAL_CONSONANTS = ['', 'ㄱ', 'ㄲ', 'ㄳ', 'ㄴ', 'ㄵ', 'ㄶ', 'ㄷ', 'ㄹ', 'ㄺ', 'ㄻ', 'ㄼ', 'ㄽ', 'ㄾ', 'ㄿ', 'ㅀ', 'ㅁ', 'ㅂ', 'ㅄ', 'ㅅ', 'ㅆ', 'ㅇ', 'ㅈ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ',];
 const VOWELS = 'ㅏㅐㅑㅒㅓㅔㅕㅖㅗㅘㅙㅚㅛㅜㅝㅞㅟㅠㅡㅢㅣ';
 
 export type WordClass = 'verb' | 'adjective' | 'noun';
@@ -64,10 +64,10 @@ export function hasFinalConsonant(text: string): boolean {
 // ---- irregular classes ----
 const IRREGULAR_WORDS: Record<Exclude<Irregularity, '으' | 'ㄹ' | ''>, string[]> = {
   'ㄷ': ['듣다', '걷다', '묻다', '싣다', '깨닫다'],
-  'ㅂ': ['덥다', '춥다', '맵다', '쉽다', '어렵다', '무겁다', '가볍다', '돕다', '곱다', '귀엽다', '가깝다', '아름답다', '즐겁다', '반갑다', '고맙다', '시끄럽다', '부럽다', '뜨겁다', '차갑다', '더럽다', '눕다', '굽다'],
+  'ㅂ': ['덥다', '춥다', '맵다', '쉽다', '어렵다', '무겁다', '가볍다', '돕다', '곱다', '귀엽다', '가깝다', '아름답다', '즐겁다', '반갑다', '고맙다', '시끄럽다', '부럽다', '뜨겁다', '차갑다', '더럽다', '눕다', '굽다',],
   'ㅅ': ['짓다', '붓다', '젓다', '낫다', '긋다'],
   'ㅎ': ['그렇다', '이렇다', '저렇다', '어떻다', '빨갛다', '노랗다', '파랗다', '하얗다', '까맣다'],
-  '르': ['모르다', '부르다', '빠르다', '다르다', '고르다', '자르다', '마르다', '흐르다', '오르다', '서두르다', '누르다', '기르다'],
+  '르': ['모르다', '부르다', '빠르다', '다르다', '고르다', '자르다', '마르다', '흐르다', '오르다', '서두르다', '누르다', '기르다',],
 };
 
 export function irregularityOf(dictionaryForm: string): Irregularity {
@@ -98,16 +98,16 @@ export function aOrEoStem(word: Word): string {
   if (last === '하') return beforeLast + '해';
   switch (word.irregularity) {
     case 'ㄷ':
-      return beforeLast + composeSyllable(parts.initial, parts.vowel, finalIndex('ㄹ')) + (isBrightVowel(parts.vowel) ? '아' : '어');
+      return (beforeLast + composeSyllable(parts.initial, parts.vowel, finalIndex('ㄹ')) + (isBrightVowel(parts.vowel) ? '아' : '어'));
     case 'ㅂ':
-      return beforeLast + composeSyllable(parts.initial, parts.vowel, 0) + (word.dictionaryForm === '돕다' || word.dictionaryForm === '곱다' ? '와' : '워');
+      return (beforeLast + composeSyllable(parts.initial, parts.vowel, 0) + (word.dictionaryForm === '돕다' || word.dictionaryForm === '곱다' ? '와' : '워'));
     case 'ㅅ':
       return beforeLast + composeSyllable(parts.initial, parts.vowel, 0) + (isBrightVowel(parts.vowel) ? '아' : '어');
     case 'ㅎ':
-      return beforeLast + composeSyllable(parts.initial, parts.vowel === vowelIndex('ㅑ') ? vowelIndex('ㅒ') : vowelIndex('ㅐ'), 0);
+      return (beforeLast + composeSyllable(parts.initial, parts.vowel === vowelIndex('ㅑ') ? vowelIndex('ㅒ') : vowelIndex('ㅐ'), 0));
     case '르': {
       const previous = decomposeSyllable(beforeLast.slice(-1));
-      return beforeLast.slice(0, -1) + composeSyllable(previous.initial, previous.vowel, finalIndex('ㄹ')) + (isBrightVowel(previous.vowel) ? '라' : '러');
+      return (beforeLast.slice(0, -1) + composeSyllable(previous.initial, previous.vowel, finalIndex('ㄹ')) + (isBrightVowel(previous.vowel) ? '라' : '러'));
     }
     case '으': {
       const bright = beforeLast.length ? isBrightVowel(decomposeSyllable(beforeLast.slice(-1)).vowel) : false;
@@ -115,7 +115,7 @@ export function aOrEoStem(word: Word): string {
     }
   }
   if (parts.final !== 0) return stem + (isBrightVowel(parts.vowel) ? '아' : '어');
-  const contractions: Record<string, string> = { 'ㅏ': 'ㅏ', 'ㅓ': 'ㅓ', 'ㅕ': 'ㅕ', 'ㅐ': 'ㅐ', 'ㅔ': 'ㅔ', 'ㅗ': 'ㅘ', 'ㅜ': 'ㅝ', 'ㅣ': 'ㅕ', 'ㅚ': 'ㅙ' };
+  const contractions: Record<string, string> = { 'ㅏ': 'ㅏ', 'ㅓ': 'ㅓ', 'ㅕ': 'ㅕ', 'ㅐ': 'ㅐ', 'ㅔ': 'ㅔ', 'ㅗ': 'ㅘ', 'ㅜ': 'ㅝ', 'ㅣ': 'ㅕ', 'ㅚ': 'ㅙ', };
   const contracted = contractions[VOWELS[parts.vowel]];
   if (contracted) return beforeLast + composeSyllable(parts.initial, vowelIndex(contracted), 0);
   return stem + '어'; // ㅟ, ㅢ etc. do not contract
@@ -209,12 +209,12 @@ export function nounWithCopula(noun: string, ending: string): string {
 
 // ---- sample word sets shown in the conjugation tables ----
 export const SAMPLE_WORD_SETS = {
-  verbs: [createWord('가다', 'verb'), createWord('먹다', 'verb'), createWord('공부하다', 'verb'), createWord('만들다', 'verb')],
-  irregularVerbs: [createWord('듣다', 'verb'), createWord('돕다', 'verb'), createWord('짓다', 'verb'), createWord('부르다', 'verb'), createWord('쓰다', 'verb')],
-  adjectives: [createWord('싸다', 'adjective'), createWord('작다', 'adjective'), createWord('피곤하다', 'adjective'), createWord('길다', 'adjective')],
-  irregularAdjectives: [createWord('덥다', 'adjective'), createWord('낫다', 'adjective'), createWord('빨갛다', 'adjective'), createWord('다르다', 'adjective'), createWord('바쁘다', 'adjective')],
-  verbsAndAdjectives: [createWord('가다', 'verb'), createWord('먹다', 'verb'), createWord('공부하다', 'verb'), createWord('만들다', 'verb'), createWord('작다', 'adjective'), createWord('바쁘다', 'adjective')],
-  irregularVerbsAndAdjectives: [createWord('듣다', 'verb'), createWord('덥다', 'adjective'), createWord('돕다', 'verb'), createWord('짓다', 'verb'), createWord('그렇다', 'adjective'), createWord('부르다', 'verb'), createWord('쓰다', 'verb')],
+  verbs: [createWord('가다', 'verb'), createWord('먹다', 'verb'), createWord('공부하다', 'verb'), createWord('만들다', 'verb'),],
+  irregularVerbs: [createWord('듣다', 'verb'), createWord('돕다', 'verb'), createWord('짓다', 'verb'), createWord('부르다', 'verb'), createWord('쓰다', 'verb'),],
+  adjectives: [createWord('싸다', 'adjective'), createWord('작다', 'adjective'), createWord('피곤하다', 'adjective'), createWord('길다', 'adjective'),],
+  irregularAdjectives: [createWord('덥다', 'adjective'), createWord('낫다', 'adjective'), createWord('빨갛다', 'adjective'), createWord('다르다', 'adjective'), createWord('바쁘다', 'adjective'),],
+  verbsAndAdjectives: [createWord('가다', 'verb'), createWord('먹다', 'verb'), createWord('공부하다', 'verb'), createWord('만들다', 'verb'), createWord('작다', 'adjective'), createWord('바쁘다', 'adjective'),],
+  irregularVerbsAndAdjectives: [createWord('듣다', 'verb'), createWord('덥다', 'adjective'), createWord('돕다', 'verb'), createWord('짓다', 'verb'), createWord('그렇다', 'adjective'), createWord('부르다', 'verb'), createWord('쓰다', 'verb'),],
 } satisfies Record<string, Word[]>;
 
 export type SampleSetName = 'verbs' | 'adjectives' | 'verbsAndAdjectives';

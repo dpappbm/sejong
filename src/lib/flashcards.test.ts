@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { LESSONS } from './content';
-import { buildRound, canPlay, cardKind, cardText, distractorCandidates, hideKoreanHints, otherLanguage, retryPool, shuffle, type Card, type CardKind, type Random } from './flashcards';
+import { buildRound, canPlay, cardKind, cardText, distractorCandidates, hideKoreanHints, otherLanguage, retryPool, shuffle, type Card, type CardKind, type Random, } from './flashcards';
 import { buildLessonExport, rowGroups } from './lessonExport';
 
 /** A seeded random source (mulberry32), so every run draws the same rounds. */
@@ -77,7 +77,7 @@ describe('flash cards', () => {
     // 3B 9: two Korean words with the same Hungarian.
     const hall = card('결혼식장', 'esküvői terem');
     const weddingHall = card('웨딩 홀', 'esküvői terem');
-    const pool = [hall, weddingHall, card('신랑', 'vőlegény'), card('신부', 'menyasszony'), card('하객', 'esküvői vendég'), card('주례', 'esketést vezető személy')];
+    const pool = [hall, weddingHall, card('신랑', 'vőlegény'), card('신부', 'menyasszony'), card('하객', 'esküvői vendég'), card('주례', 'esketést vezető személy'),];
     expect(distractorCandidates(hall, 'hungarian', pool)).not.toContain(weddingHall);
     expect(distractorCandidates(hall, 'korean', pool)).not.toContain(weddingHall);
     for (let seed = 0; seed < 20; seed++) {
@@ -89,18 +89,18 @@ describe('flash cards', () => {
   it('draws wrong answers from the same kind of rows first, then from the others', () => {
     const asked = card('가다', 'megy');
     const pool = [asked, card('오다', 'jön'), card('먹다', 'eszik'), card('자다', 'alszik'), card('보다', 'néz'),
-      card('-아요/어요', 'jelen idő', 'rule'), card('학교에 가요.', 'Iskolába megyek.', 'example')];
+      card('-아요/어요', 'jelen idő', 'rule'), card('학교에 가요.', 'Iskolába megyek.', 'example'),];
     for (let seed = 0; seed < 20; seed++) {
       const round = buildRound(asked, pool, seededRandom(seed))!;
       expect(round.options.every(option => option.card.kind === 'vocabulary')).toBe(true);
     }
-    const fewWords = [asked, card('오다', 'jön'), card('-아요/어요', 'jelen idő', 'rule'), card('학교에 가요.', 'Iskolába megyek.', 'example')];
+    const fewWords = [asked, card('오다', 'jön'), card('-아요/어요', 'jelen idő', 'rule'), card('학교에 가요.', 'Iskolába megyek.', 'example'),];
     const round = buildRound(asked, fewWords, seededRandom(4))!;
-    expect(round.options.map(option => option.card.kind).sort()).toEqual(['example', 'rule', 'vocabulary', 'vocabulary']);
+    expect(round.options.map(option => option.card.kind).sort()).toEqual(['example', 'rule', 'vocabulary', 'vocabulary',]);
   });
 
   it('cannot play when the rows have too few distinct answers', () => {
-    const cards = [card('결혼식장', 'esküvői terem'), card('웨딩 홀', 'esküvői terem'), card('신랑', 'vőlegény'), card('신부', 'menyasszony')];
+    const cards = [card('결혼식장', 'esküvői terem'), card('웨딩 홀', 'esküvői terem'), card('신랑', 'vőlegény'), card('신부', 'menyasszony'),];
     expect(canPlay(cards, cards)).toBe(false);
     expect(canPlay(cards.slice(2), cards.slice(2))).toBe(false);
     const enough = [...cards, card('하객', 'esküvői vendég')];

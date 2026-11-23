@@ -1,6 +1,6 @@
 import type { AdjectiveEntry, NounEntry, VerbEntry } from './types';
 
-const VERB_FORM_FIELDS = ['infinitive', 'personalInfinitiveFirstSingular', 'presentFirstSingular', 'presentSecondSingular', 'presentThirdSingular', 'pastFirstSingular', 'pastSecondSingular', 'pastThirdSingular', 'imperativeInformal', 'imperativeFormal', 'subjunctiveFirstSingular', 'subjunctiveFirstPlural', 'conditionalFirstSingular', 'conditionalThirdSingular', 'verbalNoun', 'relativePronoun', 'pastParticiple'];
+const VERB_FORM_FIELDS = ['infinitive', 'personalInfinitiveFirstSingular', 'presentFirstSingular', 'presentSecondSingular', 'presentThirdSingular', 'pastFirstSingular', 'pastSecondSingular', 'pastThirdSingular', 'imperativeInformal', 'imperativeFormal', 'subjunctiveFirstSingular', 'subjunctiveFirstPlural', 'conditionalFirstSingular', 'conditionalThirdSingular', 'verbalNoun', 'relativePronoun', 'pastParticiple',];
 // Hungarian dictionary for the conjugation tables: meanings and inflected Hungarian forms.
 // A verb is given as one |-separated string in the order of VERB_FORM_FIELDS, e.g. írni|írnom|írok|írsz|ír|…
 function createVerb(hungarian: string, forms: string, extra: Partial<VerbEntry> = {}): VerbEntry {
@@ -9,7 +9,7 @@ function createVerb(hungarian: string, forms: string, extra: Partial<VerbEntry> 
   const entry = Object.fromEntries(VERB_FORM_FIELDS.map((field, index) => [field, values[index]]));
   return { wordClass: 'verb', hungarian, ...entry, ...extra } as VerbEntry;
 }
-const createAdjective = (hungarian: string, base: string, comparative: string): AdjectiveEntry => ({ wordClass: 'adjective', hungarian, base, comparative });
+const createAdjective = (hungarian: string, base: string, comparative: string): AdjectiveEntry => ({ wordClass: 'adjective', hungarian, base, comparative, });
 
 export const words: Record<string, VerbEntry | AdjectiveEntry> = {
   '가다': createVerb('megy', 'menni|mennem|megyek|mész|megy|mentem|mentél|ment|menj|menjen|menjek|menjünk|mennék|menne|menés|ahová|ment', { perfectiveFirstSingular: 'elmentem' }),
