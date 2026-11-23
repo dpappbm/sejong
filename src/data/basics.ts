@@ -1,6 +1,16 @@
 // The "Alapszabályok" (basic rules) chapter. Its tables are computed by the conjugation engine;
 // every Korean cell gets a Hungarian line through the helpers (the lexicon and the table patterns).
-import { createWord, formalEnding, modifierForm, withAOrEo, withEu, withPast, withPlainStem, type Word, type WordClass, } from '../lib/conjugation';
+import {
+  createWord,
+  formalEnding,
+  modifierForm,
+  withAOrEo,
+  withEu,
+  withPast,
+  withPlainStem,
+  type Word,
+  type WordClass,
+} from '../lib/conjugation';
 
 export interface BasicsHelpers {
   /** Korean form with its Hungarian line, built from a {placeholder} pattern and the lexicon entry of dictionaryForm. */
@@ -13,17 +23,56 @@ export interface BasicsHelpers {
 
 export function basicsHtml(helpers: BasicsHelpers): string {
   const korean = (text: string) => `<span class="korean">${text}</span>`;
-  const simpleTable = (headers: string[], rows: string[][]) => `<div class="table-wrapper"><table class="plain"><thead><tr>${headers.map(header => `<th>${header}</th>`).join('')}</tr></thead><tbody>${rows.map(row => `<tr>${row.map(cell => `<td>${cell}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
-  const verb = (dictionaryForm: string) => createWord(dictionaryForm, 'verb'), adjective = (dictionaryForm: string) => createWord(dictionaryForm, 'adjective');
+  const simpleTable = (headers: string[], rows: string[][]) =>
+    `<div class="table-wrapper"><table class="plain"><thead><tr>${headers.map(header => `<th>${header}</th>`).join('')}</tr></thead><tbody>${rows.map(row => `<tr>${row.map(cell => `<td>${cell}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+  const verb = (dictionaryForm: string) => createWord(dictionaryForm, 'verb'),
+    adjective = (dictionaryForm: string) => createWord(dictionaryForm, 'adjective');
   const koreanWithGloss = (dictionaryForm: string) => korean(dictionaryForm) + helpers.wordGloss(dictionaryForm);
-  const byWordClass = (word: Word, verbValue: string, adjectiveValue: string) => word.wordClass === 'verb' ? verbValue : adjectiveValue;
+  const byWordClass = (word: Word, verbValue: string, adjectiveValue: string) =>
+    word.wordClass === 'verb' ? verbValue : adjectiveValue;
 
-  const aOrEoRows = [['가다', 'ㅏ + 아 → ㅏ'], ['서다', 'ㅓ + 어 → ㅓ'], ['보다', 'ㅗ + 아 → ㅘ'], ['주다', 'ㅜ + 어 → ㅝ'], ['마시다', 'ㅣ + 어 → ㅕ'], ['되다', 'ㅚ + 어 → ㅙ'], ['보내다', 'ㅐ + 어 → ㅐ'], ['켜다', 'ㅕ + 어 → ㅕ'], ['쉬다', 'ㅟ + 어 → nincs összevonás'], ['받다', 'ㅏ, 받침 → +아'], ['먹다', 'egyéb, 받침 → +어'], ['공부하다', '하다 → 해'],]
-    .map(([dictionaryForm, rule]) => [koreanWithGloss(dictionaryForm), rule, helpers.translatedCell(withAOrEo(verb(dictionaryForm), '요'), dictionaryForm, '{presentFirstSingular}'), helpers.translatedCell(withPast(verb(dictionaryForm), '어요'), dictionaryForm, '{pastFirstSingular}'),]);
+  const aOrEoRows = [
+    ['가다', 'ㅏ + 아 → ㅏ'],
+    ['서다', 'ㅓ + 어 → ㅓ'],
+    ['보다', 'ㅗ + 아 → ㅘ'],
+    ['주다', 'ㅜ + 어 → ㅝ'],
+    ['마시다', 'ㅣ + 어 → ㅕ'],
+    ['되다', 'ㅚ + 어 → ㅙ'],
+    ['보내다', 'ㅐ + 어 → ㅐ'],
+    ['켜다', 'ㅕ + 어 → ㅕ'],
+    ['쉬다', 'ㅟ + 어 → nincs összevonás'],
+    ['받다', 'ㅏ, 받침 → +아'],
+    ['먹다', 'egyéb, 받침 → +어'],
+    ['공부하다', '하다 → 해'],
+  ].map(([dictionaryForm, rule]) => [
+    koreanWithGloss(dictionaryForm),
+    rule,
+    helpers.translatedCell(withAOrEo(verb(dictionaryForm), '요'), dictionaryForm, '{presentFirstSingular}'),
+    helpers.translatedCell(withPast(verb(dictionaryForm), '어요'), dictionaryForm, '{pastFirstSingular}'),
+  ]);
 
-  const rieulStemRows = ['만들다', '살다', '알다'].map(dictionaryForm => { const word = verb(dictionaryForm); return [koreanWithGloss(dictionaryForm), helpers.translatedCell(withAOrEo(word, '요'), dictionaryForm, '{presentFirstSingular}'), helpers.translatedCell(withEu(word, '면'), dictionaryForm, 'ha {presentFirstSingular}'), helpers.translatedCell(withEu(word, '세요'), dictionaryForm, 'Ön {presentThirdSingular} / {imperativeFormal}!'), helpers.translatedCell(withEu(word, '니까'), dictionaryForm, 'mert {presentFirstSingular}, …'), helpers.translatedCell(withPlainStem(word, '는'), dictionaryForm, 'aki {presentThirdSingular}'), helpers.translatedCell(withEu(word, 'ㄴ'), dictionaryForm, 'aki {pastThirdSingular}'), helpers.translatedCell(withEu(word, 'ㄹ 거예요'), dictionaryForm, '{infinitive} fogok'), helpers.translatedCell(formalEnding(word), dictionaryForm, '{presentFirstSingular} (formális)'),]; });
+  const rieulStemRows = ['만들다', '살다', '알다'].map(dictionaryForm => {
+    const word = verb(dictionaryForm);
+    return [
+      koreanWithGloss(dictionaryForm),
+      helpers.translatedCell(withAOrEo(word, '요'), dictionaryForm, '{presentFirstSingular}'),
+      helpers.translatedCell(withEu(word, '면'), dictionaryForm, 'ha {presentFirstSingular}'),
+      helpers.translatedCell(withEu(word, '세요'), dictionaryForm, 'Ön {presentThirdSingular} / {imperativeFormal}!'),
+      helpers.translatedCell(withEu(word, '니까'), dictionaryForm, 'mert {presentFirstSingular}, …'),
+      helpers.translatedCell(withPlainStem(word, '는'), dictionaryForm, 'aki {presentThirdSingular}'),
+      helpers.translatedCell(withEu(word, 'ㄴ'), dictionaryForm, 'aki {pastThirdSingular}'),
+      helpers.translatedCell(withEu(word, 'ㄹ 거예요'), dictionaryForm, '{infinitive} fogok'),
+      helpers.translatedCell(formalEnding(word), dictionaryForm, '{presentFirstSingular} (formális)'),
+    ];
+  });
 
-  const REGULAR_PAIR_HUNGARIAN: Record<string, string> = { '받다, 닫다, 믿다': 'kap, bezár, hisz', '입다, 잡다, 좁다': 'visel, megfog, szűk', '씻다, 웃다, 벗다': 'mos, nevet, levesz', '좋다, 놓다, 넣다': 'jó, tesz, betesz', '따르다 (→ 따라요)': 'követ, tölt (italt)', };
+  const REGULAR_PAIR_HUNGARIAN: Record<string, string> = {
+    '받다, 닫다, 믿다': 'kap, bezár, hisz',
+    '입다, 잡다, 좁다': 'visel, megfog, szűk',
+    '씻다, 웃다, 벗다': 'mos, nevet, levesz',
+    '좋다, 놓다, 넣다': 'jó, tesz, betesz',
+    '따르다 (→ 따라요)': 'követ, tölt (italt)',
+  };
   const irregularRows = (<[string, string, WordClass, string, string][]>[
     ['ㄷ', '듣다', 'verb', '1A 4. lecke (들어요) – külön szabályként nem', '받다, 닫다, 믿다'],
     ['ㄷ', '걷다', 'verb', '', ''],
@@ -40,7 +89,49 @@ export function basicsHtml(helpers: BasicsHelpers): string {
     ['ㄹ', '만들다', 'verb', 'minden képzési szabálynál (ㄹ-kiesés)', '–'],
   ]).map(([irregularity, dictionaryForm, wordClass, whereTaught, regularPair]) => {
     const word = createWord(dictionaryForm, wordClass);
-    return [`<b>${irregularity}</b>`, koreanWithGloss(dictionaryForm), helpers.translatedCell(withAOrEo(word, '요'), dictionaryForm, byWordClass(word, '{presentFirstSingular}', '{base}')), helpers.translatedCell(withPast(word, '어요'), dictionaryForm, byWordClass(word, '{pastFirstSingular}', '{base} volt')), helpers.translatedCell(withEu(word, '면'), dictionaryForm, byWordClass(word, 'ha {presentFirstSingular}', 'ha {base}')), helpers.translatedCell(wordClass === 'verb' ? modifierForm(word, 'past') : modifierForm(word, 'present'), dictionaryForm, byWordClass(word, 'aki {pastThirdSingular}', '{base} …')), helpers.translatedCell(withEu(word, '니까'), dictionaryForm, byWordClass(word, 'mert {presentFirstSingular}, …', 'mert {base}, …')), helpers.translatedCell(withPlainStem(word, '고'), dictionaryForm, byWordClass(word, '{presentFirstSingular} és …', '{base} és …')), helpers.translatedCell(formalEnding(word), dictionaryForm, byWordClass(word, '{presentFirstSingular} (formális)', '{base} (formális)')), whereTaught, regularPair && regularPair !== '–' ? korean(regularPair) + helpers.translation(REGULAR_PAIR_HUNGARIAN[regularPair]) : regularPair,];
+    return [
+      `<b>${irregularity}</b>`,
+      koreanWithGloss(dictionaryForm),
+      helpers.translatedCell(
+        withAOrEo(word, '요'),
+        dictionaryForm,
+        byWordClass(word, '{presentFirstSingular}', '{base}')
+      ),
+      helpers.translatedCell(
+        withPast(word, '어요'),
+        dictionaryForm,
+        byWordClass(word, '{pastFirstSingular}', '{base} volt')
+      ),
+      helpers.translatedCell(
+        withEu(word, '면'),
+        dictionaryForm,
+        byWordClass(word, 'ha {presentFirstSingular}', 'ha {base}')
+      ),
+      helpers.translatedCell(
+        wordClass === 'verb' ? modifierForm(word, 'past') : modifierForm(word, 'present'),
+        dictionaryForm,
+        byWordClass(word, 'aki {pastThirdSingular}', '{base} …')
+      ),
+      helpers.translatedCell(
+        withEu(word, '니까'),
+        dictionaryForm,
+        byWordClass(word, 'mert {presentFirstSingular}, …', 'mert {base}, …')
+      ),
+      helpers.translatedCell(
+        withPlainStem(word, '고'),
+        dictionaryForm,
+        byWordClass(word, '{presentFirstSingular} és …', '{base} és …')
+      ),
+      helpers.translatedCell(
+        formalEnding(word),
+        dictionaryForm,
+        byWordClass(word, '{presentFirstSingular} (formális)', '{base} (formális)')
+      ),
+      whereTaught,
+      regularPair && regularPair !== '–'
+        ? korean(regularPair) + helpers.translation(REGULAR_PAIR_HUNGARIAN[regularPair])
+        : regularPair,
+    ];
   });
 
   const particleRows = [
@@ -49,19 +140,100 @@ export function basicsHtml(helpers: BasicsHelpers): string {
     ['tárgy', '을 / 를', '책<b>을</b>', '친구<b>를</b>', '1A 4. lecke', 'a könyvet', 'a barátot'],
     ['„és” (főnevek)', '과 / 와 · 하고', '책<b>과</b>', '친구<b>와</b>', '1A 5. lecke', 'könyv és …', 'barát és …'],
     ['„vagy”', '이나 / 나', '책<b>이나</b>', '친구<b>나</b>', '2A 2. lecke', 'könyv vagy …', 'barát vagy …'],
-    ['irány, eszköz', '으로 / 로 (ㄹ után: 로)', '책<b>으로</b>', '친구<b>로</b> · 지하철<b>로</b>', '1B 5. lecke', 'könyvvel (eszköz)', 'barátként · metróval',],
-    ['„-nak hívják”', '이라고 / 라고', '책<b>이라고</b>', '친구<b>라고</b>', '2A 1. lecke', '„könyvnek” hívják', '„barátnak” hívják',],
-    ['„az … -vagyok”', '이에요 / 예요', '책<b>이에요</b>', '친구<b>예요</b>', '1A 1. lecke', '(ez egy) könyv', '(ő egy) barát',],
-    ['„ő nem …”', '이 아니에요 / 가 아니에요', '책<b>이 아니에요</b>', '친구<b>가 아니에요</b>', '1A 2. lecke', '(ez) nem könyv', '(ő) nem barát',],
-  ].map(([role, particle, afterConsonant, afterVowel, taught, consonantHungarian, vowelHungarian]) => [role, korean(particle), korean(afterConsonant) + helpers.translation(consonantHungarian), korean(afterVowel) + helpers.translation(vowelHungarian), taught,]);
-  const otherParticleRows = [['에', 'hely (van), idő, irány'], ['에서', 'cselekvés helye, „-ból/-ből” (hely)'], ['에게 / 한테', '„-nak/-nek” (személy)'], ['에게서 / 한테서', '„-tól/-től” (személy)'], ['도', '„is”'], ['만', '„csak”'], ['보다', '„-nál/-nél” (összehasonlítás)'], ['까지 · 부터', '„-ig” · „-tól/-től”'], ['마다', '„minden”'], ['처럼 · 같이', '„mint”, „-ként”'],]
-    .map(([particle, meaning]) => [korean(particle), meaning]);
+    [
+      'irány, eszköz',
+      '으로 / 로 (ㄹ után: 로)',
+      '책<b>으로</b>',
+      '친구<b>로</b> · 지하철<b>로</b>',
+      '1B 5. lecke',
+      'könyvvel (eszköz)',
+      'barátként · metróval',
+    ],
+    [
+      '„-nak hívják”',
+      '이라고 / 라고',
+      '책<b>이라고</b>',
+      '친구<b>라고</b>',
+      '2A 1. lecke',
+      '„könyvnek” hívják',
+      '„barátnak” hívják',
+    ],
+    [
+      '„az … -vagyok”',
+      '이에요 / 예요',
+      '책<b>이에요</b>',
+      '친구<b>예요</b>',
+      '1A 1. lecke',
+      '(ez egy) könyv',
+      '(ő egy) barát',
+    ],
+    [
+      '„ő nem …”',
+      '이 아니에요 / 가 아니에요',
+      '책<b>이 아니에요</b>',
+      '친구<b>가 아니에요</b>',
+      '1A 2. lecke',
+      '(ez) nem könyv',
+      '(ő) nem barát',
+    ],
+  ].map(([role, particle, afterConsonant, afterVowel, taught, consonantHungarian, vowelHungarian]) => [
+    role,
+    korean(particle),
+    korean(afterConsonant) + helpers.translation(consonantHungarian),
+    korean(afterVowel) + helpers.translation(vowelHungarian),
+    taught,
+  ]);
+  const otherParticleRows = [
+    ['에', 'hely (van), idő, irány'],
+    ['에서', 'cselekvés helye, „-ból/-ből” (hely)'],
+    ['에게 / 한테', '„-nak/-nek” (személy)'],
+    ['에게서 / 한테서', '„-tól/-től” (személy)'],
+    ['도', '„is”'],
+    ['만', '„csak”'],
+    ['보다', '„-nál/-nél” (összehasonlítás)'],
+    ['까지 · 부터', '„-ig” · „-tól/-től”'],
+    ['마다', '„minden”'],
+    ['처럼 · 같이', '„mint”, „-ként”'],
+  ].map(([particle, meaning]) => [korean(particle), meaning]);
 
-  const modifierRows = [verb('가다'), verb('먹다'), verb('만들다'), verb('듣다'), adjective('크다'), adjective('작다'), adjective('길다'), adjective('덥다'), createWord('맛있다', 'adjective'),].map(word => [koreanWithGloss(word.dictionaryForm), word.wordClass === 'verb' ? 'ige' : 'melléknév',
-    word.wordClass === 'verb' ? helpers.translatedCell(modifierForm(word, 'past') + ' 사람', word.dictionaryForm, 'az ember, aki {pastThirdSingular}') : '—',
-    helpers.translatedCell(modifierForm(word, 'present') + (word.wordClass === 'verb' ? ' 사람' : ' 것'), word.dictionaryForm, byWordClass(word, 'az ember, aki {presentThirdSingular}', '{base} dolog')),
-    helpers.translatedCell(modifierForm(word, 'future') + (word.wordClass === 'verb' ? ' 사람' : ' 것'), word.dictionaryForm, byWordClass(word, 'az ember, aki {infinitive} fog', 'ami {base} lesz')),]);
-  modifierRows.push([korean('학생이다') + helpers.translation('diák (valaki)'), 'főnév + 이다', '—', korean('학생인 사람') + helpers.translation('az ember, aki diák'), korean('학생일 때') + helpers.translation('amikor diák (lesz / volt)'),]);
+  const modifierRows = [
+    verb('가다'),
+    verb('먹다'),
+    verb('만들다'),
+    verb('듣다'),
+    adjective('크다'),
+    adjective('작다'),
+    adjective('길다'),
+    adjective('덥다'),
+    createWord('맛있다', 'adjective'),
+  ].map(word => [
+    koreanWithGloss(word.dictionaryForm),
+    word.wordClass === 'verb' ? 'ige' : 'melléknév',
+    word.wordClass === 'verb'
+      ? helpers.translatedCell(
+          modifierForm(word, 'past') + ' 사람',
+          word.dictionaryForm,
+          'az ember, aki {pastThirdSingular}'
+        )
+      : '—',
+    helpers.translatedCell(
+      modifierForm(word, 'present') + (word.wordClass === 'verb' ? ' 사람' : ' 것'),
+      word.dictionaryForm,
+      byWordClass(word, 'az ember, aki {presentThirdSingular}', '{base} dolog')
+    ),
+    helpers.translatedCell(
+      modifierForm(word, 'future') + (word.wordClass === 'verb' ? ' 사람' : ' 것'),
+      word.dictionaryForm,
+      byWordClass(word, 'az ember, aki {infinitive} fog', 'ami {base} lesz')
+    ),
+  ]);
+  modifierRows.push([
+    korean('학생이다') + helpers.translation('diák (valaki)'),
+    'főnév + 이다',
+    '—',
+    korean('학생인 사람') + helpers.translation('az ember, aki diák'),
+    korean('학생일 때') + helpers.translation('amikor diák (lesz / volt)'),
+  ]);
 
   return `
 <details class="card">
@@ -113,11 +285,38 @@ export function basicsHtml(helpers: BasicsHelpers): string {
 </details>
 <details class="card">
   <h3>8. Beszédszintek, amelyekkel a könyv dolgozik</h3>
-  ${simpleTable(['Stílus', 'Kijelentés', 'Kérdés', 'Mikor', 'Tanultuk'], [
-    [korean('해요체'), korean('가요 · 먹어요') + helpers.translation('megyek · eszem'), korean('가요? · 먹어요?') + helpers.translation('mész? · eszel?'), 'udvarias, hétköznapi', '1A 4. lecke',],
-    [korean('합쇼체 (격식체)'), korean('갑니다 · 먹습니다') + helpers.translation('megyek · eszem (formális)'), korean('갑니까? · 먹습니까?') + helpers.translation('megy? · eszik? (Ön, formális)'), 'hivatalos, formális', '1B 4. lecke',],
-    [korean('반말 (해체)'), korean('가 · 먹어') + helpers.translation('megyek · eszem (tegező)'), korean('가? · 먹어? · 가니? · 먹니?') + helpers.translation('mész? · eszel? (tegező)'), 'barátok, fiatalabbak', '2B 11. lecke · 3A 1. lecke',],
-    [korean('한다체 (írott)'), korean('간다 · 먹는다 · 작다') + helpers.translation('megy · eszik · kicsi (írott)'), '—', 'újság, jelentés, napló', '3A 12. lecke',],
-  ])}
+  ${simpleTable(
+    ['Stílus', 'Kijelentés', 'Kérdés', 'Mikor', 'Tanultuk'],
+    [
+      [
+        korean('해요체'),
+        korean('가요 · 먹어요') + helpers.translation('megyek · eszem'),
+        korean('가요? · 먹어요?') + helpers.translation('mész? · eszel?'),
+        'udvarias, hétköznapi',
+        '1A 4. lecke',
+      ],
+      [
+        korean('합쇼체 (격식체)'),
+        korean('갑니다 · 먹습니다') + helpers.translation('megyek · eszem (formális)'),
+        korean('갑니까? · 먹습니까?') + helpers.translation('megy? · eszik? (Ön, formális)'),
+        'hivatalos, formális',
+        '1B 4. lecke',
+      ],
+      [
+        korean('반말 (해체)'),
+        korean('가 · 먹어') + helpers.translation('megyek · eszem (tegező)'),
+        korean('가? · 먹어? · 가니? · 먹니?') + helpers.translation('mész? · eszel? (tegező)'),
+        'barátok, fiatalabbak',
+        '2B 11. lecke · 3A 1. lecke',
+      ],
+      [
+        korean('한다체 (írott)'),
+        korean('간다 · 먹는다 · 작다') + helpers.translation('megy · eszik · kicsi (írott)'),
+        '—',
+        'újság, jelentés, napló',
+        '3A 12. lecke',
+      ],
+    ]
+  )}
 </details>`;
 }

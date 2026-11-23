@@ -3,15 +3,25 @@ import { POINT_COUNT } from './content';
 import { getSite } from './site';
 
 const site = getSite();
-const allHtml = [site.basicsHtml, site.pronunciationHtml, site.honorificsHtml, ...site.lessons.map(lesson => lesson.html),].join('\n');
+const allHtml = [
+  site.basicsHtml,
+  site.pronunciationHtml,
+  site.honorificsHtml,
+  ...site.lessons.map(lesson => lesson.html),
+].join('\n');
 const ids = new Set([...allHtml.matchAll(/\sid="([^"]+)"/g)].map(match => match[1]));
 
 /** Link sources: grammar point cards, basic rule cards and honorific word cards. */
 function sections(): { id: string; html: string }[] {
   const found: { id: string; html: string }[] = [];
-  for (const match of allHtml.matchAll(/<article class="grammar-point[^"]*" id="([^"]+)"[\s\S]*?<\/article>/g)) found.push({ id: match[1], html: match[0] });
-  for (const match of site.basicsHtml.matchAll(/<h3 id="(rule-\d+)"[\s\S]*?(?=<h3 id="rule-|$)/g)) found.push({ id: match[1], html: match[0] });
-  for (const match of site.honorificsHtml.matchAll(/<h3 id="(honorific-category-\d+)"[\s\S]*?(?=<h3 id="honorific-category-|$)/g)) found.push({ id: match[1], html: match[0] });
+  for (const match of allHtml.matchAll(/<article class="grammar-point[^"]*" id="([^"]+)"[\s\S]*?<\/article>/g))
+    found.push({ id: match[1], html: match[0] });
+  for (const match of site.basicsHtml.matchAll(/<h3 id="(rule-\d+)"[\s\S]*?(?=<h3 id="rule-|$)/g))
+    found.push({ id: match[1], html: match[0] });
+  for (const match of site.honorificsHtml.matchAll(
+    /<h3 id="(honorific-category-\d+)"[\s\S]*?(?=<h3 id="honorific-category-|$)/g
+  ))
+    found.push({ id: match[1], html: match[0] });
   return found;
 }
 
@@ -58,10 +68,14 @@ describe('content', () => {
       const section = article[0].match(/<section class="honorific">[\s\S]*?<\/section>/);
       if (!section) continue;
       // Incorrect samples need a reason, not a translation (checked by checkCorrectIncorrect).
-      const withoutParagraphs = section[0].replace(/<p>[\s\S]*?<\/p>/g, '').replace(/<li class="incorrect">[\s\S]*?<\/li>/g, '');
+      const withoutParagraphs = section[0]
+        .replace(/<p>[\s\S]*?<\/p>/g, '')
+        .replace(/<li class="incorrect">[\s\S]*?<\/li>/g, '');
       const examples = (withoutParagraphs.match(/<ul class="examples">[\s\S]*?<\/ul>/) ?? [''])[0];
       if ((examples.match(/<li>/g) ?? []).length < 2) errors.push(`${article[1]}: fewer than 2 examples`);
-      for (const korean of withoutParagraphs.matchAll(/<span class="korean">([\s\S]*?)<\/span>(\s*<span class="(?:translation|hungarian)">)?/g)) {
+      for (const korean of withoutParagraphs.matchAll(
+        /<span class="korean">([\s\S]*?)<\/span>(\s*<span class="(?:translation|hungarian)">)?/g
+      )) {
         if (!korean[2]) errors.push(`${article[1]}: without translation: ${korean[1]}`);
       }
     }

@@ -1,7 +1,18 @@
 // The flash-card game of a lesson (src/components/LessonFlashcardDialog.astro): choose rows, answer a multiple-choice
 // round per row, see the summary. The dialog is part of the swapped page content, so it is looked up on every event;
 // the listeners are bound once.
-import { buildRound, canPlay, cardKind, OPTION_COUNT, otherLanguage, retryPool, shuffle, type Card, type Language, type Round, } from '../lib/flashcards';
+import {
+  buildRound,
+  canPlay,
+  cardKind,
+  OPTION_COUNT,
+  otherLanguage,
+  retryPool,
+  shuffle,
+  type Card,
+  type Language,
+  type Round,
+} from '../lib/flashcards';
 import { applyTreeChange, isTreeCheckbox, resetTree, selectedGroups } from './rowTree';
 
 type Screen = 'selection' | 'round' | 'summary';
@@ -31,15 +42,19 @@ const MINIMUM_ROWS = OPTION_COUNT;
 let game: Game | null = null;
 
 const flashcardDialog = () => document.getElementById('lesson-flashcard-dialog') as HTMLDialogElement | null;
-const part = <T extends Element = HTMLElement>(dialog: HTMLDialogElement, name: string) => dialog.querySelector<T>(`[data-flashcard-${name}]`);
+const part = <T extends Element = HTMLElement>(dialog: HTMLDialogElement, name: string) =>
+  dialog.querySelector<T>(`[data-flashcard-${name}]`);
 
 function selectedCards(dialog: HTMLDialogElement): Card[] {
-  return selectedGroups(dialog).flatMap(group => group.rows.map(([korean, hungarian]): Card => ({ korean, hungarian, kind: cardKind(group.key) })));
+  return selectedGroups(dialog).flatMap(group =>
+    group.rows.map(([korean, hungarian]): Card => ({ korean, hungarian, kind: cardKind(group.key) }))
+  );
 }
 
 function showScreen(dialog: HTMLDialogElement, screen: Screen): void {
   dialog.dataset.flashcardScreen = screen;
-  for (const section of dialog.querySelectorAll<HTMLElement>('[data-flashcard-section]')) section.hidden = section.dataset.flashcardSection !== screen;
+  for (const section of dialog.querySelectorAll<HTMLElement>('[data-flashcard-section]'))
+    section.hidden = section.dataset.flashcardSection !== screen;
 }
 
 /** Korean text gets the Korean font and language. */
@@ -54,9 +69,12 @@ function updateSelection(dialog: HTMLDialogElement): void {
   const playable = cards.length >= MINIMUM_ROWS && canPlay(cards, cards);
   const status = part(dialog, 'selection-status');
   if (status) {
-    status.textContent = cards.length < MINIMUM_ROWS ? `${cards.length} sor – legalább ${MINIMUM_ROWS} sor kell`
-      : !playable ? `${cards.length} sor – túl sok az azonos jelentésű sor, jelölj ki többet`
-      : `${cards.length} sor, ${cards.length} kör`;
+    status.textContent =
+      cards.length < MINIMUM_ROWS
+        ? `${cards.length} sor – legalább ${MINIMUM_ROWS} sor kell`
+        : !playable
+          ? `${cards.length} sor – túl sok az azonos jelentésű sor, jelölj ki többet`
+          : `${cards.length} sor, ${cards.length} kör`;
     status.classList.toggle('is-warning', !playable);
   }
   const start = part<HTMLButtonElement>(dialog, 'start');
@@ -64,7 +82,16 @@ function updateSelection(dialog: HTMLDialogElement): void {
 }
 
 function startGame(dialog: HTMLDialogElement, questions: Card[], pool: Card[], selection: Card[]): void {
-  game = { questions: shuffle(questions), pool, selection, index: 0, round: null, answered: false, correctCount: 0, mistakes: [], };
+  game = {
+    questions: shuffle(questions),
+    pool,
+    selection,
+    index: 0,
+    round: null,
+    answered: false,
+    correctCount: 0,
+    mistakes: [],
+  };
   showScreen(dialog, 'round');
   showRound(dialog);
 }
@@ -91,23 +118,25 @@ function showRound(dialog: HTMLDialogElement): void {
   const answers = part(dialog, 'answers');
   if (answers) {
     const answerLanguage = otherLanguage(round.questionLanguage);
-    answers.replaceChildren(...round.options.map((option, index) => {
-      const button = document.createElement('button');
-      button.type = 'button';
-      button.className = 'flashcard-answer';
-      button.dataset.flashcardAnswer = String(index);
-      const letter = document.createElement('span');
-      letter.className = 'flashcard-answer-letter';
-      letter.textContent = ANSWER_LETTERS[index];
-      const text = document.createElement('span');
-      text.className = 'flashcard-answer-text';
-      setText(text, option.text, answerLanguage);
-      const mark = document.createElement('span');
-      mark.className = 'flashcard-answer-mark';
-      mark.setAttribute('aria-hidden', 'true');
-      button.append(letter, text, mark);
-      return button;
-    }));
+    answers.replaceChildren(
+      ...round.options.map((option, index) => {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'flashcard-answer';
+        button.dataset.flashcardAnswer = String(index);
+        const letter = document.createElement('span');
+        letter.className = 'flashcard-answer-letter';
+        letter.textContent = ANSWER_LETTERS[index];
+        const text = document.createElement('span');
+        text.className = 'flashcard-answer-text';
+        setText(text, option.text, answerLanguage);
+        const mark = document.createElement('span');
+        mark.className = 'flashcard-answer-mark';
+        mark.setAttribute('aria-hidden', 'true');
+        button.append(letter, text, mark);
+        return button;
+      })
+    );
     answers.querySelector<HTMLButtonElement>('button')?.focus();
   }
   const feedback = part(dialog, 'feedback');
@@ -176,7 +205,8 @@ function showSummary(dialog: HTMLDialogElement): void {
   showScreen(dialog, 'summary');
   const total = game.questions.length;
   const score = part(dialog, 'score');
-  if (score) score.textContent = `${game.correctCount} / ${total} helyes (${Math.round((game.correctCount / total) * 100)}%)`;
+  if (score)
+    score.textContent = `${game.correctCount} / ${total} helyes (${Math.round((game.correctCount / total) * 100)}%)`;
   const mistakes = part(dialog, 'mistakes');
   if (mistakes) {
     if (!game.mistakes.length) {
@@ -190,19 +220,26 @@ function showSummary(dialog: HTMLDialogElement): void {
       heading.textContent = `Elrontott sorok (${game.mistakes.length})`;
       const list = document.createElement('ul');
       list.className = 'flashcard-mistakes';
-      list.append(...game.mistakes.map(({ round, chosenIndex }) => {
-        const answerLanguage = otherLanguage(round.questionLanguage);
-        const item = document.createElement('li');
-        const question = document.createElement('span');
-        question.className = 'flashcard-mistake-question';
-        setText(question, fullText(round.card, round.questionLanguage), round.questionLanguage);
-        item.append(
-          question,
-          mistakeLine('flashcard-mistake-correct', '✓ helyes:', fullText(round.card, answerLanguage), answerLanguage),
-          mistakeLine('flashcard-mistake-chosen', '✗ a válaszod:', fullText(round.options[chosenIndex].card, answerLanguage), answerLanguage)
-        );
-        return item;
-      }));
+      list.append(
+        ...game.mistakes.map(({ round, chosenIndex }) => {
+          const answerLanguage = otherLanguage(round.questionLanguage);
+          const item = document.createElement('li');
+          const question = document.createElement('span');
+          question.className = 'flashcard-mistake-question';
+          setText(question, fullText(round.card, round.questionLanguage), round.questionLanguage);
+          item.append(
+            question,
+            mistakeLine('flashcard-mistake-correct', '✓ helyes:', fullText(round.card, answerLanguage), answerLanguage),
+            mistakeLine(
+              'flashcard-mistake-chosen',
+              '✗ a válaszod:',
+              fullText(round.options[chosenIndex].card, answerLanguage),
+              answerLanguage
+            )
+          );
+          return item;
+        })
+      );
       mistakes.replaceChildren(heading, list);
     }
   }
@@ -238,7 +275,8 @@ document.addEventListener('click', event => {
   } else if (target.closest('[data-flashcard-answer]')) {
     answer(dialog, Number(target.closest<HTMLElement>('[data-flashcard-answer]')!.dataset.flashcardAnswer));
   } else if (target.closest('[data-flashcard-next]')) nextRound(dialog);
-  else if (game && target.closest('[data-flashcard-restart]')) startGame(dialog, game.questions, game.pool, game.selection);
+  else if (game && target.closest('[data-flashcard-restart]'))
+    startGame(dialog, game.questions, game.pool, game.selection);
   else if (game && target.closest('[data-flashcard-retry-mistakes]')) {
     const mistakes = game.mistakes.map(mistake => mistake.round.card);
     startGame(dialog, mistakes, retryPool(mistakes, game.selection), game.selection);
@@ -281,14 +319,22 @@ document.addEventListener('keydown', event => {
 });
 
 // "cancel" (Esc) does not bubble, so it is caught on the way down.
-document.addEventListener('cancel', event => {
-  const dialog = flashcardDialog();
-  if (event.target === dialog && dialog?.dataset.flashcardScreen === 'round') event.preventDefault();
-}, true);
+document.addEventListener(
+  'cancel',
+  event => {
+    const dialog = flashcardDialog();
+    if (event.target === dialog && dialog?.dataset.flashcardScreen === 'round') event.preventDefault();
+  },
+  true
+);
 
-document.addEventListener('close', event => {
-  if (event.target === flashcardDialog()) game = null;
-}, true);
+document.addEventListener(
+  'close',
+  event => {
+    if (event.target === flashcardDialog()) game = null;
+  },
+  true
+);
 
 // A page change swaps the dialog away; close it first so the modal state does not linger.
 document.addEventListener('astro:before-swap', () => {

@@ -1,4 +1,5 @@
-export const escapeHtml = (text: unknown) => String(text).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+export const escapeHtml = (text: unknown) =>
+  String(text).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
 export const stripTags = (html: unknown) => String(html).replace(/<[^>]+>/g, '');
 
@@ -17,5 +18,9 @@ export const disclosureArrow = '<span class="disclosure-arrow" aria-hidden="true
 
 /** Example cards (Korean, Hungarian, optional note line) for own notes, in the layout of the "Példák" section. */
 export const exampleList = (examples: [korean: string, hungarian: string, note?: string][]) =>
-  `<ul class="examples">${examples.map(([korean, hungarian, note]) =>
-    `<li>${koreanSpan(korean)}<span class="hungarian">${hungarian}</span>${note ? `<span class="irregular-note">${note}</span>` : ''}</li>`).join('')}</ul>`;
+  `<ul class="examples">${examples
+    .map(
+      ([korean, hungarian, note]) =>
+        `<li>${koreanSpan(korean)}<span class="hungarian">${hungarian}</span>${note ? `<span class="irregular-note">${note}</span>` : ''}</li>`
+    )
+    .join('')}</ul>`;

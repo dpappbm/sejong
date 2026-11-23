@@ -13,9 +13,15 @@ interface Props {
   lesson?: LessonInfo;
 }
 
-const { title, description = 'A Sejong-tankönyvek (세종한국어 1A–4B) teljes nyelvtana magyarul.', pageLabel, lesson, } = Astro.props;
+const {
+  title,
+  description = 'A Sejong-tankönyvek (세종한국어 1A–4B) teljes nyelvtana magyarul.',
+  pageLabel,
+  lesson,
+} = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
+
 <!doctype html>
 <html lang="hu">
   <head>
@@ -31,7 +37,10 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     <ClientRouter />
     <script is:inline>
       // Apply the saved theme before the first paint.
-      try { var savedTheme = localStorage.getItem('kg-theme'); if (savedTheme) document.documentElement.setAttribute('data-theme', savedTheme); } catch (error) {}
+      try {
+        var savedTheme = localStorage.getItem('kg-theme');
+        if (savedTheme) document.documentElement.setAttribute('data-theme', savedTheme);
+      } catch (error) {}
     </script>
   </head>
   <body data-base={base} data-page-label={pageLabel} data-book={lesson?.book} data-lesson={lesson?.lesson}>
@@ -44,8 +53,24 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       </main>
     </div>
     <div class="floating-buttons" aria-label="Gyorsgombok" transition:persist>
-      <button class="floating-button floating-to-top" id="to-top" type="button" title="Az oldal tetejére" aria-label="Az oldal tetejére">↑</button>
-      <a class="floating-button floating-current-lesson progress-only progress-current-only progress-current-link" href="#" hidden title="Ugrás a leckéhez, ahol tartasz" aria-label="Itt tartasz: ugrás a leckéhez">◎<span class="floating-label">Itt tartasz</span></a>
+      <button
+        class="floating-button floating-to-top"
+        id="to-top"
+        type="button"
+        title="Az oldal tetejére"
+        aria-label="Az oldal tetejére"
+      >
+        ↑
+      </button>
+      <a
+        class="floating-button floating-current-lesson progress-only progress-current-only progress-current-link"
+        href="#"
+        hidden
+        title="Ugrás a leckéhez, ahol tartasz"
+        aria-label="Itt tartasz: ugrás a leckéhez"
+      >
+        ◎<span class="floating-label">Itt tartasz</span>
+      </a>
     </div>
     <script>
       import '../scripts/site';

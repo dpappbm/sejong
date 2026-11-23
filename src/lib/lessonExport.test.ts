@@ -6,7 +6,11 @@ import { buildLessonExport } from './lessonExport';
 const lessonExport = (key: string) => buildLessonExport(LESSONS.find(lesson => lesson.key === key)!);
 const allRows = (key: string) => {
   const data = lessonExport(key);
-  return [...data.points.flatMap(point => [point.rule, ...point.examples]), ...(data.vocabulary?.textbook ?? []), ...(data.vocabulary?.own ?? []),];
+  return [
+    ...data.points.flatMap(point => [point.rule, ...point.examples]),
+    ...(data.vocabulary?.textbook ?? []),
+    ...(data.vocabulary?.own ?? []),
+  ];
 };
 
 describe('lesson export', () => {
@@ -20,7 +24,9 @@ describe('lesson export', () => {
   });
 
   it('exports correct usage samples, never incorrect ones', () => {
-    const koreanTexts = lessonExport('3A-9').points.flatMap(point => point.examples).map(row => row[0]);
+    const koreanTexts = lessonExport('3A-9')
+      .points.flatMap(point => point.examples)
+      .map(row => row[0]);
     expect(koreanTexts).toContain('날씨가 따뜻해졌어요.');
     expect(koreanTexts).not.toContain('날씨가 따뜻했어졌어요.');
     expect(koreanTexts).toContain('비가 오는데 우산을 가져가세요.');
@@ -35,7 +41,10 @@ describe('lesson export', () => {
   });
 
   it('gives every lesson one export entry per point', () => {
-    for (const lesson of LESSONS) expect(buildLessonExport(lesson).points.map(point => point.point)).toEqual(lesson.points.map(point => point.point));
+    for (const lesson of LESSONS)
+      expect(buildLessonExport(lesson).points.map(point => point.point)).toEqual(
+        lesson.points.map(point => point.point)
+      );
   });
 
   it('has no HTML, tab, line break or empty side in any row', () => {
@@ -62,11 +71,17 @@ describe('lesson export', () => {
 
   it('exports the vocabulary of every lesson', () => {
     expect(lessonExport('1A-1').vocabulary?.textbook).toContainEqual(['나라', 'ország']);
-    for (const lesson of LESSONS) expect(buildLessonExport(lesson).vocabulary?.textbook.length, lesson.key).toBeGreaterThan(0);
+    for (const lesson of LESSONS)
+      expect(buildLessonExport(lesson).vocabulary?.textbook.length, lesson.key).toBeGreaterThan(0);
   });
 
   it('writes one tab-separated line per row, each closed by a line break', () => {
-    expect(exportText([['가다', 'megy'], ['먹다', 'eszik'],])).toBe('가다\tmegy\n먹다\teszik\n');
+    expect(
+      exportText([
+        ['가다', 'megy'],
+        ['먹다', 'eszik'],
+      ])
+    ).toBe('가다\tmegy\n먹다\teszik\n');
     expect(exportText([])).toBe('');
   });
 });

@@ -27,6 +27,7 @@ const path = lessonPath(lesson.book, lesson.lesson);
 const html = localizeLinks(lesson.html, path);
 const label = `${lesson.book} ${lesson.lesson}. lecke`;
 ---
+
 <BaseLayout
   title={`${label}: ${lesson.title.korean} – 한국어 문법`}
   description={`${label} (${lesson.title.hungarian}): ${lesson.points.map(point => stripTags(point.form)).join(', ')}`}
@@ -35,10 +36,17 @@ const label = `${lesson.book} ${lesson.lesson}. lecke`;
 >
   <BackButton />
   <PageNavigation path={path} />
-  <section class={`lesson lesson-page level-${level.color}`} id="lesson" data-book={lesson.book} data-lesson={lesson.lesson}>
+  <section
+    class={`lesson lesson-page level-${level.color}`}
+    id="lesson"
+    data-book={lesson.book}
+    data-lesson={lesson.lesson}
+  >
     <LessonHeader lesson={lesson} />
     <div class="lesson-sticky-bar" aria-hidden="true" title="A lecke elejére">
-      <span class="lesson-label">{lesson.book} · {lesson.lesson}. lecke</span>
+      <span class="lesson-label">
+        {lesson.book} · {lesson.lesson}. lecke
+      </span>
       <span class="tag current-lesson">itt tartasz</span>
       <span class="korean">{lesson.title.korean}</span>
     </div>

@@ -15,7 +15,13 @@ function htmlFiles(directory) {
 }
 
 /** "<base>/3a/9/" for dist/3a/9/index.html */
-const pagePathOf = file => BASE + '/' + relative(DIST, file).split(sep).join('/').replace(/index\.html$/, '');
+const pagePathOf = file =>
+  BASE +
+  '/' +
+  relative(DIST, file)
+    .split(sep)
+    .join('/')
+    .replace(/index\.html$/, '');
 
 const pages = new Map();
 for (const file of htmlFiles(DIST)) {
@@ -34,7 +40,8 @@ for (const [pagePath, { html }] of pages) {
     const target = pages.get(targetPath);
     checked++;
     if (!target) errors.push(`${pagePath}: link to a missing page: ${href}`);
-    else if (anchor && !target.ids.has(decodeURIComponent(anchor))) errors.push(`${pagePath}: link to a missing element: ${href}`);
+    else if (anchor && !target.ids.has(decodeURIComponent(anchor)))
+      errors.push(`${pagePath}: link to a missing element: ${href}`);
   }
 }
 

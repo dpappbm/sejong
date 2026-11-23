@@ -13,7 +13,14 @@ export const BOOKS = ['1A', '1B', '2A', '2B', '3A', '3B', '4A', '4B'] as const;
 export type BookCode = (typeof BOOKS)[number];
 
 export const BOOK_DATA: Record<BookCode, BookData> = {
-  '1A': book1A, '1B': book1B, '2A': book2A, '2B': book2B, '3A': book3A, '3B': book3B, '4A': book4A, '4B': book4B,
+  '1A': book1A,
+  '1B': book1B,
+  '2A': book2A,
+  '2B': book2B,
+  '3A': book3A,
+  '3B': book3B,
+  '4A': book4A,
+  '4B': book4B,
 };
 
 export interface Level {
@@ -32,12 +39,14 @@ export const LEVELS: Level[] = [
 ];
 
 /** Global id of a grammar point, e.g. pointId('3A', 9, 1) → "3A-09-1". */
-export const pointId = (book: string, lesson: number, point: number) => `${book}-${String(lesson).padStart(2, '0')}-${point}`;
+export const pointId = (book: string, lesson: number, point: number) =>
+  `${book}-${String(lesson).padStart(2, '0')}-${point}`;
 export const lessonId = (book: string, lesson: number) => `lesson-${book}-${lesson}`;
 /** Key of a lesson in the data files, e.g. "3A-9". */
 export const lessonKey = (book: string, lesson: number) => `${book}-${lesson}`;
 /** Linear position of a lesson, for "already learned / not yet" comparisons. */
-export const positionOf = (book: string, lesson: number | string) => BOOKS.indexOf(book as BookCode) * 100 + Number(lesson);
+export const positionOf = (book: string, lesson: number | string) =>
+  BOOKS.indexOf(book as BookCode) * 100 + Number(lesson);
 
 const POINT_ID_PATTERN = /^([1-4][AB])-(\d\d)-(\d)$/;
 export const isPointId = (id: string) => POINT_ID_PATTERN.test(id);
@@ -59,7 +68,12 @@ const byLessonAndPoint = (a: Point, b: Point) => a.lesson - b.lesson || a.point 
 
 export const POINTS_BY_ID = new Map<string, PointInfo>();
 for (const book of BOOKS) {
-  for (const point of BOOK_DATA[book].points) POINTS_BY_ID.set(pointId(book, point.lesson, point.point), { ...point, book, id: pointId(book, point.lesson, point.point), });
+  for (const point of BOOK_DATA[book].points)
+    POINTS_BY_ID.set(pointId(book, point.lesson, point.point), {
+      ...point,
+      book,
+      id: pointId(book, point.lesson, point.point),
+    });
 }
 
 /** Lessons that have grammar points, in textbook order. */
@@ -71,7 +85,9 @@ export const LESSONS: LessonInfo[] = BOOKS.flatMap(book => {
     lesson,
     key: lessonKey(book, lesson),
     title: BOOK_DATA[book].lessons[lesson] ?? { korean: '', hungarian: '' },
-    points: points.filter(point => point.lesson === lesson).map(point => POINTS_BY_ID.get(pointId(book, lesson, point.point))!),
+    points: points
+      .filter(point => point.lesson === lesson)
+      .map(point => POINTS_BY_ID.get(pointId(book, lesson, point.point))!),
   }));
 });
 
@@ -79,7 +95,11 @@ export const POINT_COUNT = POINTS_BY_ID.size;
 
 // ---------- page locations ----------
 export const lessonPath = (book: string, lesson: number | string) => `/${book.toLowerCase()}/${lesson}/`;
-export const CHAPTER_PATHS = { basics: '/basics/', pronunciation: '/pronunciation/', honorifics: '/honorifics/', } as const;
+export const CHAPTER_PATHS = {
+  basics: '/basics/',
+  pronunciation: '/pronunciation/',
+  honorifics: '/honorifics/',
+} as const;
 
 export interface Location {
   path: string;
@@ -94,7 +114,8 @@ export function locate(id: string): Location | null {
   if ((match = /^lesson-([1-4][AB])-(\d+)$/.exec(id))) return { path: lessonPath(match[1], match[2]), anchor: '' };
   if (/^rule-\d+$/.test(id)) return { path: CHAPTER_PATHS.basics, anchor: id };
   if ((match = /^pronunciation-(.+)$/.exec(id))) return { path: CHAPTER_PATHS.pronunciation, anchor: match[1] };
-  if ((match = /^honorific-category-(\d+)$/.exec(id))) return { path: CHAPTER_PATHS.honorifics, anchor: `category-${match[1]}` };
+  if ((match = /^honorific-category-(\d+)$/.exec(id)))
+    return { path: CHAPTER_PATHS.honorifics, anchor: `category-${match[1]}` };
   return null;
 }
 

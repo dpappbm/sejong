@@ -11,21 +11,40 @@ interface Props {
 
 const { lesson } = Astro.props;
 ---
-<dialog class="export-dialog flashcard-dialog" id="lesson-flashcard-dialog" aria-labelledby="lesson-flashcard-title" data-flashcard-screen="selection">
+
+<dialog
+  class="export-dialog flashcard-dialog"
+  id="lesson-flashcard-dialog"
+  aria-labelledby="lesson-flashcard-title"
+  data-flashcard-screen="selection"
+>
   <header class="export-dialog-header">
-    <h2 id="lesson-flashcard-title">Gyakorlás{' '}<span class="export-dialog-lesson">{lesson.book} · {lesson.lesson}. lecke</span></h2>
-    <button class="export-close-icon" type="button" data-flashcard-close aria-label="Bezárás" title="Bezárás">✕</button>
+    <h2 id="lesson-flashcard-title">
+      Gyakorlás{' '}
+      <span class="export-dialog-lesson">
+        {lesson.book} · {lesson.lesson}. lecke
+      </span>
+    </h2>
+    <button class="export-close-icon" type="button" data-flashcard-close aria-label="Bezárás" title="Bezárás">
+      ✕
+    </button>
   </header>
 
   <section class="flashcard-screen" data-flashcard-section="selection">
     <div class="export-dialog-body">
-      <p class="flashcard-intro">Mi kerüljön a kártyák közé? Minden kijelölt sor egyszer lesz kérdés, véletlen sorrendben.</p>
+      <p class="flashcard-intro">
+        Mi kerüljön a kártyák közé? Minden kijelölt sor egyszer lesz kérdés, véletlen sorrendben.
+      </p>
       <LessonRowTree lesson={lesson} />
     </div>
     <footer class="export-dialog-footer">
-      <button class="dialog-button dialog-primary-button" type="button" data-flashcard-start>Indítás</button>
+      <button class="dialog-button dialog-primary-button" type="button" data-flashcard-start>
+        Indítás
+      </button>
       <span class="flashcard-selection-status" data-flashcard-selection-status role="status" aria-live="polite"></span>
-      <button class="dialog-button dialog-close-button" type="button" data-flashcard-close>Bezárás</button>
+      <button class="dialog-button dialog-close-button" type="button" data-flashcard-close>
+        Bezárás
+      </button>
     </footer>
   </section>
 
@@ -37,7 +56,14 @@ const { lesson } = Astro.props;
     </div>
     <footer class="export-dialog-footer">
       <span class="flashcard-feedback" data-flashcard-feedback role="status" aria-live="polite"></span>
-      <button class="dialog-button dialog-primary-button flashcard-next-button" type="button" data-flashcard-next hidden>Következő</button>
+      <button
+        class="dialog-button dialog-primary-button flashcard-next-button"
+        type="button"
+        data-flashcard-next
+        hidden
+      >
+        Következő
+      </button>
     </footer>
   </section>
 
@@ -47,10 +73,18 @@ const { lesson } = Astro.props;
       <div data-flashcard-mistakes></div>
     </div>
     <footer class="export-dialog-footer">
-      <button class="dialog-button dialog-primary-button" type="button" data-flashcard-restart>Újra</button>
-      <button class="dialog-button" type="button" data-flashcard-retry-mistakes>Csak a hibásak</button>
-      <button class="dialog-button" type="button" data-flashcard-back>Szavak választása</button>
-      <button class="dialog-button dialog-close-button" type="button" data-flashcard-close>Bezárás</button>
+      <button class="dialog-button dialog-primary-button" type="button" data-flashcard-restart>
+        Újra
+      </button>
+      <button class="dialog-button" type="button" data-flashcard-retry-mistakes>
+        Csak a hibásak
+      </button>
+      <button class="dialog-button" type="button" data-flashcard-back>
+        Szavak választása
+      </button>
+      <button class="dialog-button dialog-close-button" type="button" data-flashcard-close>
+        Bezárás
+      </button>
     </footer>
   </section>
 </dialog>

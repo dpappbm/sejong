@@ -10,24 +10,62 @@ interface Props {
 
 const { lesson } = Astro.props;
 ---
+
 <dialog class="export-dialog" id="lesson-export-dialog" aria-labelledby="lesson-export-title">
   <header class="export-dialog-header">
-    <h2 id="lesson-export-title">Lecke exportálása{' '}<span class="export-dialog-lesson">{lesson.book} · {lesson.lesson}. lecke</span></h2>
-    <button class="export-close-icon" type="button" data-export-close aria-label="Bezárás" title="Bezárás">✕</button>
+    <h2 id="lesson-export-title">
+      Lecke exportálása{' '}
+      <span class="export-dialog-lesson">
+        {lesson.book} · {lesson.lesson}. lecke
+      </span>
+    </h2>
+    <button class="export-close-icon" type="button" data-export-close aria-label="Bezárás" title="Bezárás">
+      ✕
+    </button>
   </header>
   <div class="export-dialog-body">
     <LessonRowTree lesson={lesson} />
     <details class="export-preview">
-      <summary><span class="disclosure-arrow" aria-hidden="true"></span>Exportálandó sorok{' '}<span class="count">(<span data-export-count>0</span>)</span></summary>
-      <div class="table-wrapper"><table class="plain"><thead><tr><th>Koreai</th><th>Magyarul</th></tr></thead><tbody data-export-preview></tbody></table></div>
+      <summary>
+        <span class="disclosure-arrow" aria-hidden="true"></span>Exportálandó sorok{' '}
+        <span class="count">
+          (<span data-export-count>0</span>)
+        </span>
+      </summary>
+      <div class="table-wrapper">
+        <table class="plain">
+          <thead>
+            <tr>
+              <th>Koreai</th>
+              <th>Magyarul</th>
+            </tr>
+          </thead>
+          <tbody data-export-preview></tbody>
+        </table>
+      </div>
     </details>
   </div>
   <footer class="export-dialog-footer">
     <button class="dialog-button dialog-primary-button" type="button" data-export-copy>
-      <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2" /><path d="M5 15V6a2 2 0 0 1 2-2h9" /></svg>
+      <svg
+        viewBox="0 0 24 24"
+        width="16"
+        height="16"
+        aria-hidden="true"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <rect x="9" y="9" width="11" height="11" rx="2" />
+        <path d="M5 15V6a2 2 0 0 1 2-2h9" />
+      </svg>
       Másolás vágólapra
     </button>
     <span class="export-status" data-export-status role="status" aria-live="polite"></span>
-    <button class="dialog-button dialog-close-button" type="button" data-export-close>Bezárás</button>
+    <button class="dialog-button dialog-close-button" type="button" data-export-close>
+      Bezárás
+    </button>
   </footer>
 </dialog>

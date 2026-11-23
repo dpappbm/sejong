@@ -60,7 +60,10 @@ const MANUAL_RESOLUTIONS: Record<string, string> = {
 /** Registers every grammar point as a link target. */
 export function indexPoints(): void {
   for (const lesson of LESSONS) {
-    lessonCandidates.set(lesson.key, lesson.points.map(point => ({ id: point.id, form: point.form })));
+    lessonCandidates.set(
+      lesson.key,
+      lesson.points.map(point => ({ id: point.id, form: point.form }))
+    );
     for (const point of lesson.points) {
       const name = stripTags(point.name);
       linkTargets.set(point.id, {
@@ -77,10 +80,11 @@ export function addEdge(from: string, to: string): void {
 }
 
 // ---------- resolving "<book> <lesson>. lecke" to one point of the lesson ----------
-const normalizeForm = (text: string) => stripTags(text)
-  .replace(/\((으|이|느|스)\)/g, '')
-  .replace(/\([^)]*\)/g, '')
-  .replace(/[-–…~\s.,!?()“”„"']|\b[NVA]\b/g, '');
+const normalizeForm = (text: string) =>
+  stripTags(text)
+    .replace(/\((으|이|느|스)\)/g, '')
+    .replace(/\([^)]*\)/g, '')
+    .replace(/[-–…~\s.,!?()“”„"']|\b[NVA]\b/g, '');
 
 function longestCommonSubstring(a: string, b: string): number {
   let best = 0;
@@ -97,10 +101,16 @@ function longestCommonSubstring(a: string, b: string): number {
 function formSimilarity(korean: string, form: string): number {
   const normalized = normalizeForm(korean);
   if (!normalized) return 0;
-  const variants = String(form).split(/[\/,·]/).map(normalizeForm).filter(Boolean);
+  const variants = String(form)
+    .split(/[\/,·]/)
+    .map(normalizeForm)
+    .filter(Boolean);
   if (variants.includes(normalized) || normalizeForm(form) === normalized) return 100;
   if (variants.some(variant => variant.startsWith(normalized) || normalized.startsWith(variant))) return 50; // -(으)러 ↔ -(으)러 가다
-  return Math.max(longestCommonSubstring(normalized, normalizeForm(form)), ...variants.map(variant => longestCommonSubstring(normalized, variant)));
+  return Math.max(
+    longestCommonSubstring(normalized, normalizeForm(form)),
+    ...variants.map(variant => longestCommonSubstring(normalized, variant))
+  );
 }
 
 const BASIC_RULE_PATTERN = /Alapszabályok (\d)\./g;
@@ -164,7 +174,12 @@ function linkBlock(block: string, from: string): string {
     return [start, end];
   };
 
-  const resolve = (book: string, lesson: number, referenceText: string, position: number): { id: string; how: string } | null => {
+  const resolve = (
+    book: string,
+    lesson: number,
+    referenceText: string,
+    position: number
+  ): { id: string; how: string } | null => {
     const candidates = lessonCandidates.get(`${book}-${lesson}`) ?? [];
     const manual = MANUAL_RESOLUTIONS[`${from}|${referenceText}`];
     if (manual) return { id: manual, how: 'manual' };
@@ -175,12 +190,19 @@ function linkBlock(block: string, from: string): string {
     if (candidates.length === 1) return { id: candidates[0].id, how: 'single point' };
     const [start, end] = sentenceAround(position);
     const distance = (span: KoreanSpan) => Math.min(Math.abs(span.start - position), Math.abs(span.end - position));
-    const nearby = koreanSpans.filter(span => span.start >= start && span.end <= end).sort((a, b) => distance(a) - distance(b));
+    const nearby = koreanSpans
+      .filter(span => span.start >= start && span.end <= end)
+      .sort((a, b) => distance(a) - distance(b));
     for (const span of nearby) {
-      const scores = candidates.map(candidate => ({ candidate, score: formSimilarity(span.text, candidate.form) })).sort((a, b) => b.score - a.score);
-      if (scores[0].score >= 2 && scores[0].score > scores[1].score) return { id: scores[0].candidate.id, how: 'form: ' + span.text.trim() };
+      const scores = candidates
+        .map(candidate => ({ candidate, score: formSimilarity(span.text, candidate.form) }))
+        .sort((a, b) => b.score - a.score);
+      if (scores[0].score >= 2 && scores[0].score > scores[1].score)
+        return { id: scores[0].candidate.id, how: 'form: ' + span.text.trim() };
     }
-    reportProblem(`${from}: ambiguous reference (${referenceText}) – add it to MANUAL_RESOLUTIONS: ${candidates.map(c => c.id + ' ' + c.form).join(' | ')}`);
+    reportProblem(
+      `${from}: ambiguous reference (${referenceText}) – add it to MANUAL_RESOLUTIONS: ${candidates.map(c => c.id + ' ' + c.form).join(' | ')}`
+    );
     return { id: `lesson-${book}-${lesson}`, how: 'lesson (ambiguous)' };
   };
 
@@ -196,26 +218,37 @@ function linkBlock(block: string, from: string): string {
       addEdge(from, id);
       return `<a class="cross-reference" href="#${id}" title="${attributeText(target.title)}">${match}</a>`;
     });
-    tokens[index] = tokens[index].replace(LESSON_REFERENCE_PATTERN, (match, book: string, firstLesson: string, more: string, lessonWord: string, offset: number) => {
-      const lessonNumbers = [firstLesson, ...(more.match(/\d{1,2}/g) ?? [])];
-      const pieces: string[] = [];
-      lessonNumbers.forEach((lesson, n) => {
-        const last = n === lessonNumbers.length - 1;
-        const shown = n === 0 ? `${book} ${lesson}.` + (last ? ' ' + lessonWord : '') : `${lesson}.` + (last ? ' ' + lessonWord : '');
-        const referenceText = `${book} ${lesson}. lecke`;
-        const resolved = resolve(book, Number(lesson), referenceText, position + offset);
-        if (!resolved || resolved.id === from) {
-          pieces.push(shown);
-          return;
-        }
-        addEdge(from, resolved.id);
-        const target = linkTargets.get(resolved.id);
-        pieces.push(`<a class="cross-reference" href="#${resolved.id}" title="${attributeText(target ? target.title : referenceText)}">${shown}</a>`);
-      });
-      // The connecting words (", és ") stay.
-      const glue = match.slice((book + ' ' + firstLesson + '.').length, match.length - (' ' + lessonWord).length).match(/,? és /g) ?? [];
-      return pieces.reduce((text, piece, n) => text + (n ? (glue[n - 1] ?? ' és ') : '') + piece, '');
-    });
+    tokens[index] = tokens[index].replace(
+      LESSON_REFERENCE_PATTERN,
+      (match, book: string, firstLesson: string, more: string, lessonWord: string, offset: number) => {
+        const lessonNumbers = [firstLesson, ...(more.match(/\d{1,2}/g) ?? [])];
+        const pieces: string[] = [];
+        lessonNumbers.forEach((lesson, n) => {
+          const last = n === lessonNumbers.length - 1;
+          const shown =
+            n === 0
+              ? `${book} ${lesson}.` + (last ? ' ' + lessonWord : '')
+              : `${lesson}.` + (last ? ' ' + lessonWord : '');
+          const referenceText = `${book} ${lesson}. lecke`;
+          const resolved = resolve(book, Number(lesson), referenceText, position + offset);
+          if (!resolved || resolved.id === from) {
+            pieces.push(shown);
+            return;
+          }
+          addEdge(from, resolved.id);
+          const target = linkTargets.get(resolved.id);
+          pieces.push(
+            `<a class="cross-reference" href="#${resolved.id}" title="${attributeText(target ? target.title : referenceText)}">${shown}</a>`
+          );
+        });
+        // The connecting words (", és ") stay.
+        const glue =
+          match
+            .slice((book + ' ' + firstLesson + '.').length, match.length - (' ' + lessonWord).length)
+            .match(/,? és /g) ?? [];
+        return pieces.reduce((text, piece, n) => text + (n ? (glue[n - 1] ?? ' és ') : '') + piece, '');
+      }
+    );
   }
   return tokens.join('');
 }
@@ -225,8 +258,10 @@ export function linkSegment(html: string, from: string): string {
   const linked = html.replace(/<(p|li|tr)\b[^>]*>[\s\S]*?<\/\1>/g, block => linkBlock(block, from));
   // A reference left outside the blocks would stay unlinked.
   const rest = linked.replace(/<a class="cross-reference[\s\S]*?<\/a>/g, '').replace(/<[^>]+>/g, '');
-  for (const match of rest.matchAll(LESSON_REFERENCE_PATTERN)) reportProblem(`${from}: unlinked reference: ${match[0]}`);
-  for (const match of rest.matchAll(BASIC_RULE_PATTERN)) if ('rule-' + match[1] !== from) reportProblem(`${from}: unlinked reference: ${match[0]}`);
+  for (const match of rest.matchAll(LESSON_REFERENCE_PATTERN))
+    reportProblem(`${from}: unlinked reference: ${match[0]}`);
+  for (const match of rest.matchAll(BASIC_RULE_PATTERN))
+    if ('rule-' + match[1] !== from) reportProblem(`${from}: unlinked reference: ${match[0]}`);
   return linked;
 }
 
@@ -242,7 +277,8 @@ export function relatedBar(id: string): string {
   }
   related.delete(id);
   // Basic rules first, then the honorific words chapter, then the points.
-  const order = (target: string) => (target.startsWith('rule-') ? '0' : target.startsWith('honorific-category-') ? '1' : '2') + target;
+  const order = (target: string) =>
+    (target.startsWith('rule-') ? '0' : target.startsWith('honorific-category-') ? '1' : '2') + target;
   const items = [...related].filter(target => linkTargets.has(target)).sort((a, b) => order(a).localeCompare(order(b)));
   if (!items.length) return '';
   const links = items.map(target => {
@@ -252,5 +288,5 @@ export function relatedBar(id: string): string {
   return `<nav class="related" aria-label="Kapcsolódó pontok"><span class="related-heading">Kapcsolódó pontok:</span>${links.join('')}</nav>`;
 }
 
-export const fillRelatedBars = (html: string) => html.replace(/<!--related:([^>]+?)-->/g, (_match, id: string) => relatedBar(id));
-
+export const fillRelatedBars = (html: string) =>
+  html.replace(/<!--related:([^>]+?)-->/g, (_match, id: string) => relatedBar(id));

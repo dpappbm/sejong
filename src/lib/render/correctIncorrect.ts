@@ -15,9 +15,12 @@ export function checkCorrectIncorrect(where: string, items: CorrectIncorrect[] |
 export function correctIncorrectList(items: CorrectIncorrect[] | undefined): string {
   if (!items?.length) return '';
   // Everything goes under the Korean sentence: translation, then the reason (❌) or the note (✅).
-  const line = (className: string, text: string | undefined) => text ? `<span class="${className}">${text}</span>` : '';
-  const rows = items.map(item => 'correct' in item
-    ? `<li class="correct">${koreanSpan(item.correct)}${line('hungarian', item.translation)}${line('correct-incorrect-note', item.note)}</li>`
-    : `<li class="incorrect">${koreanSpan(item.incorrect)}${line('hungarian', item.translation)}${line('correct-incorrect-note', item.reason)}</li>`);
+  const line = (className: string, text: string | undefined) =>
+    text ? `<span class="${className}">${text}</span>` : '';
+  const rows = items.map(item =>
+    'correct' in item
+      ? `<li class="correct">${koreanSpan(item.correct)}${line('hungarian', item.translation)}${line('correct-incorrect-note', item.note)}</li>`
+      : `<li class="incorrect">${koreanSpan(item.incorrect)}${line('hungarian', item.translation)}${line('correct-incorrect-note', item.reason)}</li>`
+  );
   return `<ul class="correct-incorrect">${rows.join('')}</ul>`;
 }

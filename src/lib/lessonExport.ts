@@ -22,10 +22,8 @@ export interface LessonExport {
 }
 
 /** Plain text on one line: no HTML, no tabs or line breaks (they would break the row format). */
-const plainText = (html: string) => stripTags(html)
-  .replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&')
-  .replace(/\s+/g, ' ')
-  .trim();
+const plainText = (html: string) =>
+  stripTags(html).replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&').replace(/\s+/g, ' ').trim();
 
 function uniqueRows(rows: KoreanHungarian[]): KoreanHungarian[] {
   const seen = new Set<string>();
@@ -38,13 +36,21 @@ function uniqueRows(rows: KoreanHungarian[]): KoreanHungarian[] {
 }
 
 function pointExport(point: PointInfo): PointExport {
-  const examples = (point.examples ?? []).map(([korean, hungarian]): KoreanHungarian => [plainText(korean), plainText(hungarian),]);
+  const examples = (point.examples ?? []).map(([korean, hungarian]): KoreanHungarian => [
+    plainText(korean),
+    plainText(hungarian),
+  ]);
   // Incorrect samples are never exported; a correct one goes with its translation, without its note.
   const correctSamples = (point.correctIncorrect ?? [])
     .filter((sample): sample is CorrectSample => 'correct' in sample)
     .map((sample): KoreanHungarian => [plainText(sample.correct), plainText(sample.translation)]);
   const form = plainText(point.form);
-  return { point: point.point, form, rule: [form, plainText(point.name)], examples: uniqueRows([...examples, ...correctSamples]), };
+  return {
+    point: point.point,
+    form,
+    rule: [form, plainText(point.name)],
+    examples: uniqueRows([...examples, ...correctSamples]),
+  };
 }
 
 /** The rows behind the leaf checkboxes of the row tree, keyed like their "data-tree-rows". */
@@ -63,7 +69,8 @@ export function rowGroups(data: LessonExport): Record<string, KoreanHungarian[]>
 
 export function buildLessonExport(lesson: LessonInfo): LessonExport {
   const lessonVocabulary = vocabulary[lesson.key];
-  const rows = (part: VocabularyRow[] | undefined) => uniqueRows((part ?? []).map(([korean, hungarian]): KoreanHungarian => [plainText(korean), plainText(hungarian)]));
+  const rows = (part: VocabularyRow[] | undefined) =>
+    uniqueRows((part ?? []).map(([korean, hungarian]): KoreanHungarian => [plainText(korean), plainText(hungarian)]));
   const textbook = rows(lessonVocabulary?.textbook);
   const own = rows(lessonVocabulary?.own);
   return {

@@ -22,14 +22,23 @@ export function renderConjugationTable(table: WordTable | NounTable | undefined,
   const columns = table.kind === 'noun' ? table.nounColumns : table.columns;
   const translations = (hungarianTables as Record<string, ColumnTranslation[]>)[key];
   if (!translations) reportProblem(`${key}: no column translations in hungarianTables`);
-  else if (translations.length !== columns.length) reportProblem(`${key}: ${columns.length} columns but ${translations.length} column translations`);
+  else if (translations.length !== columns.length)
+    reportProblem(`${key}: ${columns.length} columns but ${translations.length} column translations`);
   const specs = translations ?? [];
   const head = `<tr><th>Szó</th><th>Típus</th>${columns.map(column => `<th>${column.header}</th>`).join('')}</tr>`;
 
   if (table.kind === 'noun') {
-    const rows = (table.nouns ?? ['vowelEnding', 'consonantEnding']).map(resolveNounRow).map(({ word, description }) =>
-      `<tr><td>${koreanSpan(word)}${wordGloss(word, key)}</td><td>${description}</td>${table.nounColumns.map((column, index) =>
-        `<td>${translatedCell(column.conjugate(word), word, specs[index], `${key} [${column.header}] ${word}`)}</td>`).join('')}</tr>`);
+    const rows = (table.nouns ?? ['vowelEnding', 'consonantEnding'])
+      .map(resolveNounRow)
+      .map(
+        ({ word, description }) =>
+          `<tr><td>${koreanSpan(word)}${wordGloss(word, key)}</td><td>${description}</td>${table.nounColumns
+            .map(
+              (column, index) =>
+                `<td>${translatedCell(column.conjugate(word), word, specs[index], `${key} [${column.header}] ${word}`)}</td>`
+            )
+            .join('')}</tr>`
+      );
     return `<div class="table-wrapper"><table class="conjugation-table"><thead>${head}</thead><tbody>${rows.join('')}</tbody></table></div>`;
   }
 
@@ -42,11 +51,14 @@ export function renderConjugationTable(table: WordTable | NounTable | undefined,
     try {
       form = column.conjugate(word);
     } catch (error) {
-      throw new Error(`table function failed for ${word.dictionaryForm} / ${column.header}: ${(error as Error).message}`);
+      throw new Error(
+        `table function failed for ${word.dictionaryForm} / ${column.header}: ${(error as Error).message}`
+      );
     }
     return translatedCell(form, word.dictionaryForm, specs[index], `${key} [${column.header}] ${word.dictionaryForm}`);
   };
-  const wordClassNote = (word: Word) => word.wordClass === 'adjective' ? ' <small>(mn.)</small>' : word.wordClass === 'verb' ? ' <small>(ige)</small>' : '';
+  const wordClassNote = (word: Word) =>
+    word.wordClass === 'adjective' ? ' <small>(mn.)</small>' : word.wordClass === 'verb' ? ' <small>(ige)</small>' : '';
   const row = (word: Word) =>
     `<tr><td>${koreanSpan(word.dictionaryForm)}${wordGloss(word.dictionaryForm, key)}</td><td>${stemTypeLabel(word)}${wordClassNote(word)}</td>${table.columns.map((_column, index) => `<td>${cell(word, index)}</td>`).join('')}</tr>`;
   let body = regularWords.map(row).join('');

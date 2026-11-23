@@ -8,7 +8,8 @@ export interface RowGroup {
   rows: Row[];
 }
 
-const checkboxes = (root: ParentNode, selector: string) => Array.from(root.querySelectorAll<HTMLInputElement>(`input[type="checkbox"]${selector}`));
+const checkboxes = (root: ParentNode, selector: string) =>
+  Array.from(root.querySelectorAll<HTMLInputElement>(`input[type="checkbox"]${selector}`));
 
 /** The rows of the checked leaf checkboxes in page order; a row that occurs twice is kept once, at its first place. */
 export function selectedGroups(dialog: HTMLElement): RowGroup[] {
@@ -49,11 +50,15 @@ function updateParents(dialog: HTMLElement): void {
 /** Follows a changed checkbox of the tree: a parent sets its children, then the parents follow their children. */
 export function applyTreeChange(dialog: HTMLElement, checkbox: HTMLInputElement): void {
   if (checkbox.dataset.treeParent) {
-    for (const child of checkboxes(dialog, `[data-tree-child-of="${checkbox.dataset.treeParent}"]`)) child.checked = checkbox.checked;
+    for (const child of checkboxes(dialog, `[data-tree-child-of="${checkbox.dataset.treeParent}"]`))
+      child.checked = checkbox.checked;
   }
   updateParents(dialog);
 }
 
 /** Whether an event target is a checkbox of the tree in this dialog. */
 export const isTreeCheckbox = (dialog: HTMLElement, target: EventTarget | null): target is HTMLInputElement =>
-  target instanceof HTMLInputElement && target.type === 'checkbox' && !!target.closest('.row-tree') && dialog.contains(target);
+  target instanceof HTMLInputElement &&
+  target.type === 'checkbox' &&
+  !!target.closest('.row-tree') &&
+  dialog.contains(target);
