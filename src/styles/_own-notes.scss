@@ -1,4 +1,5 @@
 // Own notes, beyond the textbook.
+@use "mixins" as *;
 
 .own:not(.tag) {
   margin-top: 12px;
@@ -30,6 +31,49 @@
 
   table.plain .korean {
     white-space: nowrap;
+  }
+
+  // sentence pairs of two contrasted patterns, one pattern per column; on mobile the pair is stacked
+  table.plain.comparison-table {
+    table-layout: fixed;
+
+    .korean {
+      display: block;
+      white-space: normal;
+      word-break: keep-all;
+      font-size: 1rem;
+    }
+
+    .hungarian {
+      display: block;
+      color: var(--muted);
+    }
+
+    .irregular-note {
+      display: block;
+      font-size: 0.78rem;
+      color: var(--own);
+    }
+
+    @include mobile {
+      @include stacked-table($row-padding: 6px 0);
+
+      td + td {
+        padding-top: 8px;
+      }
+
+      tr:last-child {
+        border-bottom: none;
+      }
+
+      td::before {
+        content: attr(data-label);
+        display: block;
+        font-size: 0.74rem;
+        font-weight: 600;
+        color: var(--level-color);
+      }
+    }
   }
 }
 

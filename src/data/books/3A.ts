@@ -7,7 +7,7 @@ import {
   withPlainStem,
   type Word,
 } from '../../lib/conjugation';
-import { exampleList } from '../../lib/html';
+import { comparisonTable, exampleList } from '../../lib/html';
 import type { BookData, PointSource } from '../types';
 
 const korean = (text: string) => `<span class="korean">${text}</span>`;
@@ -306,7 +306,8 @@ const points: PointSource[] = [
       ['영수증을 <b>보니까</b> 가격이 잘못됐어요.', 'Ránéztem a blokkra, és rossz volt rajta az ár.'],
     ],
     ownNote: `<p>A ${korean('-(으)니까')} felfedezés-jelentésének (2B 7. lecke) változata; a ${korean('-아/어 보다')} itt azt emeli ki, hogy szándékosan kipróbáltunk valamit.</p>
-<p>A második tagmondat a már megszerzett tapasztalat <b>eredménye</b>: múlt idejű, vagy jelen idejű állapot (${korean('입어 보니까 딱 맞아요')}). <b>Jövő idő, szándék, felszólítás nem</b> állhat utána.</p>`,
+<p>A második tagmondat a már megszerzett tapasztalat <b>eredménye</b>: múlt idejű, vagy jelen idejű állapot (${korean('입어 보니까 딱 맞아요')}). <b>Jövő idő, szándék, felszólítás nem</b> állhat utána.</p>
+<p>Ez a <b>próba</b> alakja. Ha hosszú vagy ismétlődő <b>folyamat</b> vezetett a felismeréshez, ${korean('-다 보니까')} kell (3A 11. lecke, ott a részletes összevetés): ${korean('한번 먹어 보니까 맛있었어요')} (megkóstoltam, és finom volt), de ${korean('매일 먹다 보니까 좋아하게 됐어요')} (minden nap ettem, és megszerettem).</p>`,
     correctIncorrect: [
       {
         incorrect: '옷을 입어 보니까 잘 맞을 거예요.',
@@ -823,6 +824,97 @@ ${exampleList([
         'Ahogy minden nap hallgattam, megszerettem azt a dalt.',
         '-다 előtt nincs ㄷ-változás: 듣다 보니까',
       ],
+    ],
+    ownNote: `<p>A ${korean('-다 보니까')} és a ${korean('-아/어 보니까')} (3A 5. lecke) is a felfedezést jelölő ${korean('-(으)니까')}-ra (2B 7. lecke) épül: „…, és rájöttem”. A különbség az, <b>hogyan</b> jutottunk a felismeréshez:</p>
+<ul><li>Kipróbáltam, és kiderült? → ${korean('-아/어 보니까')}</li><li>Sokáig vagy újra meg újra csináltam, és közben így alakult? → ${korean('-다 보니까')}</li></ul>
+${simpleTable(
+  ['', '-아/어 보니까', '-다 보니까'],
+  [
+    ['Cselekvés', 'szándékos próba, egyszer is elég', 'tartós vagy ismétlődő folyamat'],
+    [
+      'Eredmény',
+      'benyomás, ítélet: „finom”, „kicsi”, „nehezebb, mint hittem”',
+      'fokozatos változás, észrevétlenül kialakult helyzet',
+    ],
+    [
+      'Hangulat',
+      'tudatos, tárgyszerű: „kipróbáltam, tudom”',
+      'visszatekintő, kicsit csodálkozó: „nem terveztem, így alakult”; mentegetőzésre is jó',
+    ],
+    ['Hol', 'vélemény, ajánlás: étel, ruha, hely, munka', 'élettörténet, szokás, fejlődés, „elszaladt az idő”'],
+    [
+      'Gyakori szavak',
+      `${korean('한번')} (egyszer), ${korean('직접')} (saját magam), ${korean('처음')} (először)`,
+      `${korean('계속')} (folyamatosan), ${korean('매일')} (minden nap), ${korean('자꾸')} (folyton), ${korean('오래')} (sokáig)`,
+    ],
+    ['Mihez járul', 'igéhez', `igéhez; okként melléknévhez és ${korean('이다')}-hoz is`],
+  ]
+)}
+<p><b>Ugyanaz az ige, más jelentés:</b></p>
+${comparisonTable(
+  ['-아/어 보니까', '-다 보니까'],
+  [
+    [
+      [
+        '김치를 먹어 보니까 생각보다 안 매웠어요.',
+        'Megkóstoltam a kimcsit, és kevésbé volt csípős, mint gondoltam.',
+        'próba → benyomás',
+      ],
+      [
+        '김치를 매일 먹다 보니까 좋아하게 됐어요.',
+        'Ahogy minden nap kimcsit ettem, megszerettem.',
+        'folyamat → változás',
+      ],
+    ],
+    [
+      [
+        '부산에서 살아 보니까 정말 편해요.',
+        'Most, hogy Busanban élek, látom, hogy nagyon kényelmes.',
+        'kipróbáltam, milyen',
+      ],
+      [
+        '부산에서 오래 살다 보니까 사투리를 쓰게 됐어요.',
+        'Ahogy sokáig Busanban éltem, rászoktam a tájszólásra.',
+        'magától alakult így',
+      ],
+    ],
+    [
+      ['그 사람을 직접 만나 보니까 아주 친절했어요.', 'Személyesen találkoztam vele, és nagyon kedves volt.'],
+      ['그 사람을 자주 만나다 보니까 친해졌어요.', 'Ahogy gyakran találkoztunk, összebarátkoztunk.'],
+    ],
+  ]
+)}
+<p><b>Közös:</b> mindkettő tapasztalatból levont felismerés. A második tagmondat megtörtént vagy most is fennálló tény, ezért <b>jövő idő, felszólítás, javaslat nem</b> állhat utána; jövőre a ${korean('-다 보면')} való. Múlt idő jele egyik előtt sincs: ${korean('먹어 보니까, 먹다 보니까')}. (A ${korean('먹어 봤으니까')} már ok: „mivel ettem már ilyet”.)</p>
+<p><b>A ${korean('보다')} ige:</b> próbaként csak ${korean('보니까')} (nem ${korean('봐 보니까')}), folyamatként viszont szabályos a ${korean('보다 보니까')}:</p>
+${exampleList([['드라마를 보다 보니까 한국어가 늘었어요.', 'Ahogy sorozatokat néztem, fejlődött a koreaim.']])}
+<p><b>Melléknév és ${korean('이다')}:</b> a ${korean('-다 보니까')} itt okot ad, gyakran mentegetőzve; az ${korean('-아/어 보니까')} ide nem jó:</p>
+${exampleList([
+  ['요즘 바쁘다 보니까 연락을 못 했어요.', 'Mostanában annyi a dolgom, hogy nem tudtam jelentkezni.'],
+  ['외국인이다 보니까 존댓말이 어려워요.', 'Külföldi lévén nehéznek találom az udvarias beszédet.'],
+])}
+<p>Vigyázat: a ${korean('바빠 보이니까')} más szerkezet (${korean('-아/어 보이다')}, 3A 1. lecke): „mivel elfoglaltnak látszik”.</p>
+<p><b>Stílus:</b> mindkettő hétköznapi beszéd. A ${korean('까')} nélküli ${korean('-아/어 보니')} és ${korean('-다 보니')} (4B 7. lecke) tömörebb, írásban gyakoribb.</p>`,
+    correctIncorrect: [
+      { incorrect: '신발을 한번 신다 보니까 좀 작았어요.', reason: 'egyszeri próba, nem folyamat' },
+      { correct: '신발을 한번 신어 보니까 좀 작았어요.', translation: 'Felpróbáltam a cipőt, és kicsit kicsi volt.' },
+      {
+        incorrect: '이야기해 보니까 벌써 12시가 됐어요.',
+        reason: 'nem próba: beszélgetés közben telt el az idő',
+      },
+      { correct: '이야기하다 보니까 벌써 12시가 됐어요.', translation: 'Ahogy beszélgettünk, már 12 óra is lett.' },
+      { incorrect: '열심히 연습하다 보니까 잘하게 될 거예요.', reason: 'jövő idő nem állhat utána' },
+      {
+        correct: '열심히 연습하다 보면 잘하게 될 거예요.',
+        translation: 'Ha sokat gyakorolsz, előbb-utóbb jól fog menni.',
+        note: 'jövőre -다 보면',
+      },
+      { incorrect: '매일 걸었다 보니까 건강해졌어요.', reason: 'a -다 elé nem kerül múlt idő' },
+      { correct: '매일 걷다 보니까 건강해졌어요.', translation: 'Ahogy minden nap sétáltam, egészségesebb lettem.' },
+      { incorrect: '요즘 바빠 보니까 연락을 못 했어요.', reason: 'melléknévnél nincs próba: ok, tehát -다 보니까' },
+      {
+        correct: '요즘 바쁘다 보니까 연락을 못 했어요.',
+        translation: 'Mostanában annyi a dolgom, hogy nem tudtam jelentkezni.',
+      },
     ],
   },
   {
