@@ -1,0 +1,2 @@
+# The same line endings in every checkout, so that "prettier --check" gives the same result everywhere.
+* text=auto eol=lf
