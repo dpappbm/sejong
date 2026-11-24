@@ -32,6 +32,8 @@
   },
   "excluded": {},
   "takes": {
+    "한국어능력시험": { "M2": { "method": "plain", "speed": 0.7, "seed": 2 } },
+    "한국 영화 괴물을 좋아해요.": { "F1": { "method": "plain", "speed": 0.75, "seed": 3 } },
     "나는 거실 청소를 할 테니까 넌 주방 청소를 해 줘.": { "F1": { "method": "plain", "speed": 0.75, "seed": 3 } },
     "이 노트북은 삼 년 전에 샀잖아요. 그래서 자주 고장 나요.": {
       "F5": { "method": "plain", "speed": 0.75, "seed": 5 },
