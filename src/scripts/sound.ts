@@ -7,8 +7,6 @@ const audio = new Audio();
 const voiceSelect = document.getElementById('voice-select') as HTMLSelectElement | null;
 /** The button being played. */
 let playing: HTMLButtonElement | null = null;
-/** The button pressed last on this page: a new voice repeats it. */
-let last: HTMLButtonElement | null = null;
 
 function stop(): void {
   audio.pause();
@@ -28,7 +26,7 @@ function fail(button: HTMLButtonElement): void {
 function play(button: HTMLButtonElement): void {
   stop();
   if (!voiceSelect) return;
-  playing = last = button;
+  playing = button;
   button.classList.remove('failed');
   button.title = 'Meghallgatás (gépi hang)';
   button.classList.add('playing');
@@ -75,12 +73,8 @@ if (voiceSelect) {
     }
     stop();
     hideExcluded();
-    if (last && !last.hidden) play(last);
   });
 }
 
-document.addEventListener('astro:before-swap', () => {
-  stop();
-  last = null;
-});
+document.addEventListener('astro:before-swap', stop);
 document.addEventListener('astro:page-load', hideExcluded);
