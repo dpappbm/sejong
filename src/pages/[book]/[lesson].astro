@@ -3,6 +3,7 @@ import BackButton from '../../components/BackButton.astro';
 import LessonExportDialog from '../../components/LessonExportDialog.astro';
 import LessonFlashcardDialog from '../../components/LessonFlashcardDialog.astro';
 import LessonHeader from '../../components/LessonHeader.astro';
+import LessonPoint from '../../components/lessonpoint/LessonPoint.astro';
 import PageNavigation from '../../components/PageNavigation.astro';
 import Vocabulary from '../../components/Vocabulary.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
@@ -51,6 +52,9 @@ const label = `${lesson.book} ${lesson.lesson}. lecke`;
       <span class="tag current-lesson">itt tartasz</span>
       <span class="korean">{lesson.title.korean}</span>
     </div>
+    {lesson.points.map(point => (
+      <LessonPoint point={point} />
+    ))}
     <Fragment set:html={html} />
     <Vocabulary book={lesson.book} lesson={lesson.lesson} path={path} />
   </section>

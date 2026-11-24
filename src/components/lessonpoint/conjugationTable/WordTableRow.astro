@@ -1,0 +1,67 @@
+---
+import hungarianTables from '../../../data/hungarianTables';
+import { nouns, words } from '../../../data/lexicon';
+import type { ColumnTranslation, WordColumn } from '../../../data/types';
+import { stemTypeLabel, type Word } from '../../../lib/conjugation';
+import { lexiconEntry } from '../../../lib/translations';
+import TranslatedCell from './TranslatedCell.astro';
+
+interface Props {
+  columns: WordColumn[];
+  word: Word;
+  key: string;
+}
+
+const { columns, word, key } = Astro.props;
+
+const translations = (hungarianTables as Record<string, ColumnTranslation[]>)[key] ?? [];
+
+const wordClassNote = (word: Word) =>
+  word.wordClass === 'adjective' ? ' <small>(mn.)</small>' : word.wordClass === 'verb' ? ' <small>(ige)</small>' : '';
+---
+
+<tr>
+  <td>
+    <span class="korean">{word.dictionaryForm}</span>
+    {(words[word.dictionaryForm] || nouns[word.dictionaryForm]) && (
+      <span class="translation">{lexiconEntry(word.dictionaryForm)?.hungarian}</span>
+    )}
+  </td>
+  <td>
+    {stemTypeLabel(word)}
+    {word.wordClass === 'adjective' ? (
+      <>
+        {' '}
+        <small>(mn.)</small>
+      </>
+    ) : word.wordClass === 'verb' ? (
+      <>
+        {' '}
+        <small>(ige)</small>
+      </>
+    ) : (
+      ''
+    )}
+  </td>
+  {columns.map((_column, index) => {
+    const column = columns[index];
+    let form: string | null;
+    try {
+      form = column.conjugate(word);
+    } catch (error) {
+      throw new Error(
+        `table function failed for ${word.dictionaryForm} / ${column.header}: ${(error as Error).message}`
+      );
+    }
+    return (
+      <td>
+        <TranslatedCell
+          korean={form}
+          dictionaryForm={word.dictionaryForm}
+          translation={translations[index]}
+          where={`${key} [${column.header}] ${word.dictionaryForm}`}
+        />
+      </td>
+    );
+  })}
+</tr>

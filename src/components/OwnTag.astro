@@ -1,0 +1,9 @@
+---
+interface Props {
+  label?: string;
+}
+
+const { label = '＋ Saját' } = Astro.props;
+---
+
+<span class="tag own">{label}</span>

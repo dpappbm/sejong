@@ -1,0 +1,89 @@
+---
+import type { PointInfo } from '../../lib/content';
+import { relatedPlaceholder } from '../../lib/crossReferences';
+import { correctIncorrectList } from '../../lib/render/correctIncorrect';
+import { forwardMark } from '../../lib/render/forwardReferences';
+import { groupBoxesFor } from '../../lib/render/groups';
+import { soundButton, withSoundButtons } from '../../lib/sound';
+import OwnTag from '../OwnTag.astro';
+import NounTable from './conjugationTable/NounTable.astro';
+import WordTable from './conjugationTable/WordTable.astro';
+import Honorifics from './honorific/Honorifics.astro';
+
+interface Props {
+  point: PointInfo;
+}
+
+const { point } = Astro.props;
+
+const key = `${point.book}-${point.lesson}-${point.point}`;
+---
+
+<article class="grammar-point" id="${point.id}" data-book="${point.book}" data-lesson="${point.lesson}">
+  <header class="grammar-point-header">
+    <div class="grammar-point-number">
+      {point.book} · {point.lesson}. lecke · {point.point}. nyelvtan
+    </div>
+    <h4>
+      <span class="korean form">{point.form}</span>
+      <span class="grammar-point-name">{point.name}</span>
+    </h4>
+    <div class="grammar-point-meta">
+      <span class="tag textbook">Tankönyv</span>
+      <span class="tag future-tag progress-tag">még nem vettük</span>
+      <span class="source-reference">
+        SB {point.studentBookPage}. o. · VG {point.vocabularyGrammarPage}. o.
+      </span>
+    </div>
+  </header>
+  <div class="grammar-point-body">
+    <div class="explanation" set:html={point.explanation} />
+    <Fragment set:html={point.customHtml ?? ''} />
+    {point.table ? (
+      <>
+        <h5>Képzés</h5>
+        {point.table.kind === 'noun' ? (
+          <NounTable table={point.table} key={key} />
+        ) : (
+          <WordTable table={point.table} key={key} />
+        )}
+      </>
+    ) : (
+      ''
+    )}
+    {!!point.examples && (
+      <>
+        <h5>Példák</h5>
+        <ul class="examples">
+          {point.examples.map(([korean, hungarian, note]) => (
+            <li>
+              <span class="korean">
+                <Fragment set:html={korean} />
+                <Fragment set:html={soundButton(korean, point.book)} />
+              </span>
+              <span class="hungarian">
+                <Fragment set:html={hungarian} />
+                <Fragment set:html={forwardMark(point.id, korean)} />
+              </span>
+              {!!note && <span class="irregular-note">{note}</span>}
+            </li>
+          ))}
+        </ul>
+      </>
+    )}
+    <Fragment set:html={correctIncorrectList(point.correctIncorrect, point.book)} />
+    <Honorifics book={point.book} honorific={point.honorific} key={key} />
+    {point.ownNote ? (
+      <aside class="own">
+        <div class="own-heading">
+          <OwnTag label="＋ Saját kiegészítés" />
+        </div>
+        <Fragment set:html={withSoundButtons(point.ownNote, point.book)} />
+      </aside>
+    ) : (
+      ''
+    )}
+    <Fragment set:html={groupBoxesFor(point.id)} />
+    {relatedPlaceholder(point.id)}
+  </div>
+</article>

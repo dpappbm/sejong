@@ -1,0 +1,59 @@
+---
+import hungarianTables from '../../../data/hungarianTables';
+import { nouns, words } from '../../../data/lexicon';
+import type { ColumnTranslation, NounRow, NounTable } from '../../../data/types';
+import { lexiconEntry } from '../../../lib/translations';
+import ConjugationTable from './ConjugationTable.astro';
+import TranslatedCell from './TranslatedCell.astro';
+
+interface Props {
+  table: NounTable;
+  key: string;
+}
+
+const { table, key } = Astro.props;
+
+if (!table) return '';
+
+const SAMPLE_NOUNS = { vowelEnding: '친구', consonantEnding: '선생님', rieulEnding: '지하철' } as const;
+const SAMPLE_NOUN_DESCRIPTIONS = {
+  vowelEnding: 'magánhangzóra végződik',
+  consonantEnding: 'mássalhangzóra (받침) végződik',
+  rieulEnding: 'ㄹ-re végződik',
+} as const;
+
+const translations = (hungarianTables as Record<string, ColumnTranslation[]>)[key] ?? [];
+---
+
+<ConjugationTable>
+  <Fragment slot="head">
+    {table.nounColumns.map(column => (
+      <th>{column.header}</th>
+    ))}
+  </Fragment>
+  <Fragment slot="body">
+    {(table.nouns ?? ['vowelEnding', 'consonantEnding'])
+      .map((row: NounRow) =>
+        typeof row === 'string' ? { word: SAMPLE_NOUNS[row], description: SAMPLE_NOUN_DESCRIPTIONS[row] } : row
+      )
+      .map(({ word, description }) => (
+        <tr>
+          <td>
+            <span class="korean">{word}</span>
+            {(words[word] || nouns[word]) && <span class="translation">{lexiconEntry(word)?.hungarian}</span>}
+          </td>
+          <td>{description}</td>
+          {table.nounColumns.map((column, index) => (
+            <td>
+              <TranslatedCell
+                korean={column.conjugate(word)}
+                dictionaryForm={word}
+                translation={translations[index]}
+                where={`${key} [${column.header}] ${word}`}
+              />
+            </td>
+          ))}
+        </tr>
+      ))}
+  </Fragment>
+</ConjugationTable>

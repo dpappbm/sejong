@@ -90,7 +90,7 @@ export function getSite(): SiteContent {
   checkForwardReferences();
   checkVocabulary();
   const basics = linkBasics(renderBasics());
-  const lessons = lessonParts.map(({ lesson, points, rest }) => ({ ...lesson, html: linkPoints(points) + rest }));
+  const lessons = lessonParts.map(({ lesson, rest }) => ({ ...lesson, html: rest }));
   site = {
     lessons: lessons.map(lesson => ({ ...lesson, html: fillRelatedBars(lesson.html) })),
     basicsHtml: fillRelatedBars(basics),
