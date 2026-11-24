@@ -1,0 +1,4 @@
+These recordings are machine-generated. No person said these sentences.
+
+They were made with the Supertonic 3 text-to-speech model (https://huggingface.co/Supertone/supertonic-3, OpenRAIL-M license).
+The pronunciation may contain mistakes. Wherever the recordings are published, they have to be marked as a machine voice.

@@ -1,0 +1,36 @@
+{
+  "packs": [
+    {
+      "book": "3A",
+      "voice": "F1",
+      "file": "3A-F1-a1b4517a339c.tar",
+      "sha256": "a1b4517a339cb59484ac9c8029e7bdc9b3492127da2f25e20dd02b7e2326b05f",
+      "bytes": 5667328,
+      "sounds": 398
+    },
+    {
+      "book": "3A",
+      "voice": "F5",
+      "file": "3A-F5-1549d01b7ab3.tar",
+      "sha256": "1549d01b7ab327dd4f11c421575a7cac7040497c642ccd74c9f09db605869701",
+      "bytes": 5883392,
+      "sounds": 398
+    },
+    {
+      "book": "3A",
+      "voice": "M2",
+      "file": "3A-M2-0499721ebf88.tar",
+      "sha256": "0499721ebf888e04bf29263d27a889dab5ad079af96451eca5817f3edd641417",
+      "bytes": 5338112,
+      "sounds": 398
+    },
+    {
+      "book": "3A",
+      "voice": "M4",
+      "file": "3A-M4-f944d46d95b6.tar",
+      "sha256": "f944d46d95b6928e753072c9749771036d8b7ee4a4900c0a51d143615410f7f4",
+      "bytes": 5633536,
+      "sounds": 398
+    }
+  ]
+}

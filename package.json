@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "npm run format:check && astro check && vitest run && astro build && node scripts/check-built-links.mjs",
+    "build": "node --env-file-if-exists=.env scripts/audio/download.mjs --build && npm run format:check && astro check && vitest run && astro build && node scripts/check-built-links.mjs",
     "preview": "astro preview",
     "test": "vitest run",
     "format": "prettier --write .",
@@ -17,7 +17,11 @@
     "audio:setup": "node scripts/audio/docker.mjs setup",
     "audio:collect": "node scripts/audio/collect-texts.mjs",
     "audio:generate": "node scripts/audio/docker.mjs generate",
-    "audio:review": "node scripts/audio/build-review.mjs"
+    "audio:review": "node scripts/audio/build-review.mjs",
+    "audio:pack": "node scripts/audio/pack.mjs",
+    "audio:publish": "node scripts/audio/publish.mjs",
+    "audio:compare": "node scripts/audio/compare.mjs",
+    "audio:download": "node scripts/audio/download.mjs"
   },
   "dependencies": {
     "astro": "^7.4.7",
