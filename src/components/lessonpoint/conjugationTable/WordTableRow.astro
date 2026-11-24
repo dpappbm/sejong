@@ -1,7 +1,7 @@
 ---
-import hungarianTables from '../../../data/hungarianTables';
-import type { ColumnTranslation, WordColumn } from '../../../data/types';
+import type { WordColumn } from '../../../data/types';
 import { stemTypeLabel, type Word, type WordClass } from '../../../lib/conjugation';
+import { columnTranslations, conjugatedForm } from '../../../lib/conjugationTable';
 import { lexiconEntry } from '../../../lib/translations';
 import TranslatedCell from './TranslatedCell.astro';
 
@@ -14,7 +14,7 @@ interface Props {
 const { columns, word, key } = Astro.props;
 
 const WORD_CLASS_LABELS: Record<WordClass, string> = { adjective: 'mn.', verb: 'ige', noun: '' };
-const translations = (hungarianTables as Record<string, ColumnTranslation[]>)[key] ?? [];
+const translations = columnTranslations(key) ?? [];
 const gloss = lexiconEntry(word.dictionaryForm)?.hungarian;
 const label = WORD_CLASS_LABELS[word.wordClass];
 ---
@@ -33,25 +33,14 @@ const label = WORD_CLASS_LABELS[word.wordClass];
       </>
     )}
   </td>
-  {columns.map((_column, index) => {
-    const column = columns[index];
-    let form: string | null;
-    try {
-      form = column.conjugate(word);
-    } catch (error) {
-      throw new Error(
-        `table function failed for ${word.dictionaryForm} / ${column.header}: ${(error as Error).message}`
-      );
-    }
-    return (
-      <td>
-        <TranslatedCell
-          korean={form}
-          dictionaryForm={word.dictionaryForm}
-          translation={translations[index]}
-          where={`${key} [${column.header}] ${word.dictionaryForm}`}
-        />
-      </td>
-    );
-  })}
+  {columns.map((column, index) => (
+    <td>
+      <TranslatedCell
+        korean={conjugatedForm(column, word)}
+        dictionaryForm={word.dictionaryForm}
+        translation={translations[index]}
+        where={`${key} [${column.header}] ${word.dictionaryForm}`}
+      />
+    </td>
+  ))}
 </tr>

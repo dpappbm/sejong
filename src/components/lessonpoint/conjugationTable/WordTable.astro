@@ -1,6 +1,7 @@
 ---
 import type { WordTable } from '../../../data/types';
-import { SAMPLE_WORD_SETS, irregularSampleSet, type Word } from '../../../lib/conjugation';
+import { type Word } from '../../../lib/conjugation';
+import { wordRows } from '../../../lib/conjugationTable';
 import ConjugationTable from './ConjugationTable.astro';
 import WordTableRow from './WordTableRow.astro';
 
@@ -11,9 +12,7 @@ interface Props {
 
 const { table, key } = Astro.props;
 
-const sampleSet = table.sampleSet ?? 'verbsAndAdjectives';
-const regularWords = table.words ?? SAMPLE_WORD_SETS[sampleSet];
-const irregularWords = table.irregularWords ?? irregularSampleSet(sampleSet);
+const { regular, irregular } = wordRows(table);
 ---
 
 <ConjugationTable>
@@ -24,16 +23,16 @@ const irregularWords = table.irregularWords ?? irregularSampleSet(sampleSet);
   </Fragment>
   <Fragment slot="body">
     <>
-      {regularWords.map((word: Word) => (
+      {regular.map((word: Word) => (
         <WordTableRow columns={table.columns} key={key} word={word} />
       ))}
 
-      {irregularWords.length > 0 && table.irregular !== false && (
+      {irregular.length > 0 && (
         <>
           <tr class="subheading-row">
             <td colspan={table.columns.length + 2}>Rendhagyó szavak ugyanezzel a végződéssel</td>
           </tr>
-          {irregularWords.map((word: Word) => (
+          {irregular.map((word: Word) => (
             <WordTableRow columns={table.columns} key={key} word={word} />
           ))}
         </>
