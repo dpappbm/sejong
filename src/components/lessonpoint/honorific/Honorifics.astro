@@ -1,39 +1,25 @@
 ---
 import type { Honorific } from '../../../data/types';
 import { correctIncorrectList } from '../../../lib/render/correctIncorrect';
+import { linkPointText } from '../../../lib/site';
 import OwnTag from '../../OwnTag.astro';
 import HonorificsExampleItem from './HonorificsExampleItem.astro';
 import HonorificsRowItem from './HonorificsRowItem.astro';
 
 interface Props {
-  honorific: Honorific | undefined;
-  key: string;
+  honorific: Honorific;
   book: string;
+  pointId: string;
 }
 
-const { honorific, key, book } = Astro.props;
-
-if (!honorific) return;
-
-// function renderHonorificSection(honorific: Honorific | undefined, key: string, book: string): string {
-//   if (!honorific) return '';
-//   for (const row of honorific.rows ?? []) {
-//     if (row.length < 4 || row.some(cell => !cell))
-//       reportProblem(`${key}: incomplete honorific table row: ${row.join(' | ')}`);
-//   }
-//   if (!honorific.examples || honorific.examples.length < 2)
-//     reportProblem(`${key}: honorific section with fewer than 2 examples`);
-//   for (const [korean, hungarian] of honorific.examples ?? [])
-//     if (!hungarian) reportProblem(`${key}: honorific example without translation: ${korean}`);
-//   checkCorrectIncorrect(`${key} honorific`, honorific.correctIncorrect);
-// }
+const { honorific, book, pointId } = Astro.props;
 ---
 
 <section class="honorific">
   <h5>
     Tiszteleti alak <OwnTag />
   </h5>
-  {honorific.rows?.length && honorific.rows.length > 0 && (
+  {!!honorific.rows?.length && (
     <div class="table-wrapper">
       <table class="conjugation-table honorific-table">
         <thead>
@@ -51,7 +37,7 @@ if (!honorific) return;
       </table>
     </div>
   )}
-  <Fragment set:html={honorific.note ?? ''} />
+  <Fragment set:html={linkPointText(honorific.note ?? '', pointId)} />
   {honorific.examples && (
     <ul class="examples">
       {honorific.examples.map(item => (

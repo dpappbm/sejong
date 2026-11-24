@@ -1,8 +1,7 @@
 ---
 import hungarianTables from '../../../data/hungarianTables';
-import { nouns, words } from '../../../data/lexicon';
 import type { ColumnTranslation, WordColumn } from '../../../data/types';
-import { stemTypeLabel, type Word } from '../../../lib/conjugation';
+import { stemTypeLabel, type Word, type WordClass } from '../../../lib/conjugation';
 import { lexiconEntry } from '../../../lib/translations';
 import TranslatedCell from './TranslatedCell.astro';
 
@@ -14,33 +13,24 @@ interface Props {
 
 const { columns, word, key } = Astro.props;
 
+const WORD_CLASS_LABELS: Record<WordClass, string> = { adjective: 'mn.', verb: 'ige', noun: '' };
 const translations = (hungarianTables as Record<string, ColumnTranslation[]>)[key] ?? [];
-
-const wordClassNote = (word: Word) =>
-  word.wordClass === 'adjective' ? ' <small>(mn.)</small>' : word.wordClass === 'verb' ? ' <small>(ige)</small>' : '';
+const gloss = lexiconEntry(word.dictionaryForm)?.hungarian;
+const label = WORD_CLASS_LABELS[word.wordClass];
 ---
 
 <tr>
   <td>
     <span class="korean">{word.dictionaryForm}</span>
-    {(words[word.dictionaryForm] || nouns[word.dictionaryForm]) && (
-      <span class="translation">{lexiconEntry(word.dictionaryForm)?.hungarian}</span>
-    )}
+    {gloss && <span class="translation">{gloss}</span>}
   </td>
   <td>
     {stemTypeLabel(word)}
-    {word.wordClass === 'adjective' ? (
+    {label && (
       <>
         {' '}
-        <small>(mn.)</small>
+        <small>({label})</small>
       </>
-    ) : word.wordClass === 'verb' ? (
-      <>
-        {' '}
-        <small>(ige)</small>
-      </>
-    ) : (
-      ''
     )}
   </td>
   {columns.map((_column, index) => {

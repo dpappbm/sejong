@@ -1,6 +1,5 @@
 ---
 import hungarianTables from '../../../data/hungarianTables';
-import { nouns, words } from '../../../data/lexicon';
 import type { ColumnTranslation, NounRow, NounTable } from '../../../data/types';
 import { lexiconEntry } from '../../../lib/translations';
 import ConjugationTable from './ConjugationTable.astro';
@@ -12,8 +11,6 @@ interface Props {
 }
 
 const { table, key } = Astro.props;
-
-if (!table) return '';
 
 const SAMPLE_NOUNS = { vowelEnding: '친구', consonantEnding: '선생님', rieulEnding: '지하철' } as const;
 const SAMPLE_NOUN_DESCRIPTIONS = {
@@ -36,24 +33,27 @@ const translations = (hungarianTables as Record<string, ColumnTranslation[]>)[ke
       .map((row: NounRow) =>
         typeof row === 'string' ? { word: SAMPLE_NOUNS[row], description: SAMPLE_NOUN_DESCRIPTIONS[row] } : row
       )
-      .map(({ word, description }) => (
-        <tr>
-          <td>
-            <span class="korean">{word}</span>
-            {(words[word] || nouns[word]) && <span class="translation">{lexiconEntry(word)?.hungarian}</span>}
-          </td>
-          <td>{description}</td>
-          {table.nounColumns.map((column, index) => (
+      .map(({ word, description }) => {
+        const gloss = lexiconEntry(word)?.hungarian;
+        return (
+          <tr>
             <td>
-              <TranslatedCell
-                korean={column.conjugate(word)}
-                dictionaryForm={word}
-                translation={translations[index]}
-                where={`${key} [${column.header}] ${word}`}
-              />
+              <span class="korean">{word}</span>
+              {gloss && <span class="translation">{gloss}</span>}
             </td>
-          ))}
-        </tr>
-      ))}
+            <td>{description}</td>
+            {table.nounColumns.map((column, index) => (
+              <td>
+                <TranslatedCell
+                  korean={column.conjugate(word)}
+                  dictionaryForm={word}
+                  translation={translations[index]}
+                  where={`${key} [${column.header}] ${word}`}
+                />
+              </td>
+            ))}
+          </tr>
+        );
+      })}
   </Fragment>
 </ConjugationTable>

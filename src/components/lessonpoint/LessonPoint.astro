@@ -1,9 +1,10 @@
 ---
-import type { PointInfo } from '../../lib/content';
-import { relatedPlaceholder } from '../../lib/crossReferences';
+import { locate, type PointInfo } from '../../lib/content';
+import { relatedBar } from '../../lib/crossReferences';
 import { correctIncorrectList } from '../../lib/render/correctIncorrect';
 import { forwardMark } from '../../lib/render/forwardReferences';
 import { groupBoxesFor } from '../../lib/render/groups';
+import { linkPointText, localizePointLinks } from '../../lib/site';
 import { soundButton, withSoundButtons } from '../../lib/sound';
 import OwnTag from '../OwnTag.astro';
 import NounTable from './conjugationTable/NounTable.astro';
@@ -17,9 +18,14 @@ interface Props {
 const { point } = Astro.props;
 
 const key = `${point.book}-${point.lesson}-${point.point}`;
+
+/** Global ids → links of this page. */
+const local = (html: string) => localizePointLinks(html, point.id);
+/** Links the lesson references of the text too. */
+const linked = (html: string) => linkPointText(html, point.id);
 ---
 
-<article class="grammar-point" id="${point.id}" data-book="${point.book}" data-lesson="${point.lesson}">
+<article class="grammar-point" id={locate(point.id)!.anchor} data-book={point.book} data-lesson={point.lesson}>
   <header class="grammar-point-header">
     <div class="grammar-point-number">
       {point.book} · {point.lesson}. lecke · {point.point}. nyelvtan
@@ -37,7 +43,7 @@ const key = `${point.book}-${point.lesson}-${point.point}`;
     </div>
   </header>
   <div class="grammar-point-body">
-    <div class="explanation" set:html={point.explanation} />
+    <div class="explanation" set:html={linked(point.explanation)} />
     <Fragment set:html={point.customHtml ?? ''} />
     {point.table ? (
       <>
@@ -63,7 +69,7 @@ const key = `${point.book}-${point.lesson}-${point.point}`;
               </span>
               <span class="hungarian">
                 <Fragment set:html={hungarian} />
-                <Fragment set:html={forwardMark(point.id, korean)} />
+                <Fragment set:html={local(forwardMark(point.id, korean))} />
               </span>
               {!!note && <span class="irregular-note">{note}</span>}
             </li>
@@ -71,19 +77,19 @@ const key = `${point.book}-${point.lesson}-${point.point}`;
         </ul>
       </>
     )}
-    <Fragment set:html={correctIncorrectList(point.correctIncorrect, point.book)} />
-    <Honorifics book={point.book} honorific={point.honorific} key={key} />
+    <Fragment set:html={linked(correctIncorrectList(point.correctIncorrect, point.book))} />
+    {point.honorific && <Honorifics book={point.book} honorific={point.honorific} pointId={point.id} />}
     {point.ownNote ? (
       <aside class="own">
         <div class="own-heading">
           <OwnTag label="＋ Saját kiegészítés" />
         </div>
-        <Fragment set:html={withSoundButtons(point.ownNote, point.book)} />
+        <Fragment set:html={linked(withSoundButtons(point.ownNote, point.book))} />
       </aside>
     ) : (
       ''
     )}
-    <Fragment set:html={groupBoxesFor(point.id)} />
-    {relatedPlaceholder(point.id)}
+    <Fragment set:html={local(groupBoxesFor(point.id))} />
+    <Fragment set:html={local(relatedBar(point.id))} />
   </div>
 </article>

@@ -7,7 +7,7 @@ const allHtml = [
   site.basicsHtml,
   site.pronunciationHtml,
   site.honorificsHtml,
-  ...site.lessons.map(lesson => lesson.html),
+  ...site.lessons.map(lesson => lesson.pointsHtml + lesson.html),
 ].join('\n');
 const ids = new Set([...allHtml.matchAll(/\sid="([^"]+)"/g)].map(match => match[1]));
 

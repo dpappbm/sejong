@@ -15,7 +15,9 @@ import { checkVocabulary, registerVocabularyForwardReferences } from './render/v
 import { lexiconEntry, translatedCell, wordGloss } from './translations';
 
 export interface LessonContent extends LessonInfo {
-  /** Grammar points and pronunciation box of the lesson. */
+  /** Grammar points as rendered by renderPoint(); only for the tests and the reference graph. */
+  pointsHtml: string;
+  /** Pronunciation box of the lesson. */
   html: string;
 }
 
@@ -90,9 +92,17 @@ export function getSite(): SiteContent {
   checkForwardReferences();
   checkVocabulary();
   const basics = linkBasics(renderBasics());
-  const lessons = lessonParts.map(({ lesson, rest }) => ({ ...lesson, html: rest }));
+  const lessons = lessonParts.map(({ lesson, points, rest }) => ({
+    ...lesson,
+    pointsHtml: linkPoints(points),
+    html: rest,
+  }));
   site = {
-    lessons: lessons.map(lesson => ({ ...lesson, html: fillRelatedBars(lesson.html) })),
+    lessons: lessons.map(lesson => ({
+      ...lesson,
+      pointsHtml: fillRelatedBars(lesson.pointsHtml),
+      html: fillRelatedBars(lesson.html),
+    })),
     basicsHtml: fillRelatedBars(basics),
     pronunciationHtml,
     honorificsHtml,
@@ -118,6 +128,12 @@ export function localizeLinks(html: string, pagePath: string): string {
       return location && location.path === pagePath && location.anchor ? ` id="${location.anchor}"` : match;
     });
 }
+
+/** localizeLinks() for the page of a grammar point. */
+export const localizePointLinks = (html: string, pointId: string) => localizeLinks(html, locate(pointId)!.path);
+
+/** Links the lesson references in a text of a grammar point. */
+export const linkPointText = (html: string, pointId: string) => localizePointLinks(linkSegment(html, pointId), pointId);
 
 export interface ChapterOutline {
   path: string;

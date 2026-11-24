@@ -5,13 +5,11 @@ import ConjugationTable from './ConjugationTable.astro';
 import WordTableRow from './WordTableRow.astro';
 
 interface Props {
-  table: WordTable | undefined;
+  table: WordTable;
   key: string;
 }
 
 const { table, key } = Astro.props;
-
-if (!table) return '';
 
 const sampleSet = table.sampleSet ?? 'verbsAndAdjectives';
 const regularWords = table.words ?? SAMPLE_WORD_SETS[sampleSet];
