@@ -2,7 +2,7 @@
 
 Tools that read the Korean texts of the site aloud with a text-to-speech model and save them as MP3. The model is [Supertonic 3](https://huggingface.co/Supertone/supertonic-3); it runs locally in Docker, on the CPU, without an account or a network connection.
 
-The tools are in the repository; **the sound files are not**. They are written to `public/audio/`, which git ignores, so the development server serves them right away at `/sejong/audio/<voice>/<id>.mp3`.
+The tools are in the repository; **the sound files are not**. They are written to `public/audio/`, which git ignores, so the development server serves them right away at `/sejong/audio/<voice>/<id>.mp3`. Without Docker, `npm run audio:download` fetches the published ones.
 
 ## First run
 
@@ -47,19 +47,22 @@ Numbers, Latin letters, parentheses and alternatives inside a phrase are never g
 
 ## Files
 
-| File                                      | Role                                                                     |
-| ----------------------------------------- | ------------------------------------------------------------------------ |
-| `docker.mjs`                              | `audio:setup` and `audio:generate`: runs the container                   |
-| `Dockerfile`, `requirements.txt`          | the environment, with exact versions                                     |
-| `collect-texts.mjs`                       | `audio:collect`: content files → `work/texts-<book>.json`                |
-| `spoken-text.mjs`, `spoken-text.test.mjs` | the spoken form of a text, and its tests (part of `npm test`)            |
-| `generate.py`                             | texts → MP3 and manifest                                                 |
-| `score.py`                                | measures a take: length, pauses, pitch range                             |
-| `profiles.json`                           | speeds and methods of each voice                                         |
-| `overrides.json`                          | spoken forms and hand-picked takes                                       |
-| `build-review.mjs`                        | `audio:review`: the listening pages                                      |
-| `work/`                                   | collected texts and listening pages (ignored by git)                     |
-| `public/audio/manifest.json`              | what was generated and how: text, speed, seed, problems (ignored by git) |
+| File                                                     | Role                                                                     |
+| -------------------------------------------------------- | ------------------------------------------------------------------------ |
+| `docker.mjs`                                             | `audio:setup` and `audio:generate`: runs the container                   |
+| `Dockerfile`, `requirements.txt`                         | the environment, with exact versions                                     |
+| `collect-texts.mjs`                                      | `audio:collect`: content files → `work/texts-<book>.json`                |
+| `spoken-text.mjs`, `spoken-text.test.mjs`                | the spoken form of a text, and its tests (part of `npm test`)            |
+| `generate.py`                                            | texts → MP3 and manifest                                                 |
+| `score.py`                                               | measures a take: length, pauses, pitch range                             |
+| `profiles.json`                                          | speeds and methods of each voice                                         |
+| `overrides.json`                                         | spoken forms and hand-picked takes                                       |
+| `build-review.mjs`                                       | `audio:review`: the listening pages                                      |
+| `pack.mjs`, `publish.mjs`, `compare.mjs`, `download.mjs` | storage in the GitHub release, see below                                 |
+| `packs.mjs`, `tar.mjs`, `packs.test.mjs`                 | what those four share, and its tests                                     |
+| `packs.json`, `NOTICE.txt`                               | the packs in use, and the notice that the voice is a machine             |
+| `work/`                                                  | collected texts and listening pages (ignored by git)                     |
+| `public/audio/manifest.json`                             | what was generated and how: text, speed, seed, problems (ignored by git) |
 
 The name of a file is the first 12 hexadecimal digits of the SHA-256 of the spoken text (`audioId()`), so a changed text gets a new file.
 
@@ -115,9 +118,27 @@ Silence is trimmed to 50 ms before and 250 ms after the speech, the loudness is 
 
 Run `audio:collect -- --book 3B`, add the spoken forms it asks for, then `audio:generate -- --book 3B --write`. Files of other books stay.
 
-## Where the sound files come from (planned)
+## Where the sound files are stored
 
-`AUDIO_SOURCE` will decide who fills `public/audio/`: `local` (default, development) uses the files that are there, `release` (GitHub Pages) downloads them from a GitHub release before the build. The address of the files is the same in both cases.
+The release `audio` of the repository holds one uncompressed tar archive (pack) for each book and voice. `packs.json` lists the packs this version of the site uses, with their checksums. The name of a pack holds its checksum, so a changed pack is added next to the old one and earlier versions of the site can still be built. `index.json` in the release lists the checksum of every sound file.
+
+`AUDIO_SOURCE` decides where `npm run build` takes the sound files from. It can be set in the environment or in `.env` (see `.env.example`). The address of the files is the same in both cases.
+
+| `AUDIO_SOURCE`    | Source                                                                                   |
+| ----------------- | ---------------------------------------------------------------------------------------- |
+| `local` (default) | whatever is in `public/audio/`, even nothing                                             |
+| `release`         | the packs of `packs.json`, downloaded and checked; used by the deployment (`deploy.yml`) |
+
+| Command                           | What it does                                                                        |
+| --------------------------------- | ----------------------------------------------------------------------------------- |
+| `npm run audio:pack -- --book 3A` | packs the files of the book into `work/packs/` and updates `packs.json`             |
+| `npm run audio:publish`           | shows what the release does not have yet; with `-- --write` uploads it (needs `gh`) |
+| `npm run audio:compare`           | compares the local files with the latest ones of the release                        |
+| `npm run audio:download`          | downloads the missing files; `-- --force` also replaces the ones that differ        |
+
+After generating: `audio:pack`, `audio:publish -- --write`, then commit `packs.json`. The upload has to come before the merge, otherwise the deployment stops with an error.
+
+`audio:compare` reads only `index.json` and compares the SHA-256 of every file. It changes nothing. It lists the files that differ, exist only locally or exist only in the release, and tells when `packs.json` is not the latest list. `--deep` also downloads the packs and compares their real content, `--all` lists every difference. Exit code: 0 the same, 1 different, 2 the release could not be read.
 
 ## License
 

@@ -18,4 +18,4 @@ Content lives in `src/data/`, rendering and checks in `src/lib/`, pages in `src/
 
 ## Sound files
 
-The Korean texts can be read aloud by a text-to-speech model that runs locally in Docker. The tools, their settings and the reasons behind them are described in [scripts/audio/README.md](scripts/audio/README.md); the generated files in `public/audio/` are not part of the repository.
+The Korean texts can be read aloud by a text-to-speech model that runs locally in Docker. The tools, their settings and the reasons behind them are described in [scripts/audio/README.md](scripts/audio/README.md); the generated files in `public/audio/` are not part of the repository. They are stored in a GitHub release: `npm run audio:download` fetches them.
