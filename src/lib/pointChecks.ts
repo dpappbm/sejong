@@ -1,3 +1,4 @@
+// Content checks of the grammar points: missing translations, incomplete rows, references that would stay unlinked.
 import type { CorrectIncorrect, Example, Honorific, NounTable, WordTable } from '../data/types';
 import { columnTranslations, conjugatedForm, nounRows, wordRows } from './conjugationTable';
 import type { PointInfo } from './content';
@@ -29,8 +30,7 @@ export function checkPoint(point: PointInfo): void {
   if (point.honorific) checkHonorific(point.honorific, key);
 }
 
-export function checkHonorific(honorific: Honorific, key: string): void {
-  if (!honorific) return;
+function checkHonorific(honorific: Honorific, key: string): void {
   for (const row of honorific.rows ?? []) {
     if (row.length < 4 || row.some(cell => !cell))
       reportProblem(`${key}: incomplete honorific table row: ${row.join(' | ')}`);
@@ -39,7 +39,6 @@ export function checkHonorific(honorific: Honorific, key: string): void {
     reportProblem(`${key}: honorific section with fewer than 2 examples`);
   for (const [korean, hungarian] of honorific.examples ?? [])
     if (!hungarian) reportProblem(`${key}: honorific example without translation: ${korean}`);
-  checkCorrectIncorrect(`${key} honorific`, honorific.correctIncorrect);
   checkUnlinkedExamples(`${key} honorific`, honorific.examples);
   checkCorrectIncorrect(`${key} honorific`, honorific.correctIncorrect);
 }
