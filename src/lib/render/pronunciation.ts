@@ -5,6 +5,7 @@ import type { Lesson, LessonPronunciation, PronunciationCategory } from '../../d
 import { LESSONS, lessonKey } from '../content';
 import { disclosureArrow, ownTag } from '../html';
 import { reportProblem } from '../problems';
+import { soundButton } from '../sound';
 import { forwardMark } from './forwardReferences';
 
 const categories = new Map<string, PronunciationCategory & { number: number }>(
@@ -88,7 +89,7 @@ export function pronunciationBox(book: string, lesson: number, title: Lesson): s
     `<ul class="examples pronunciation-examples">${entry.examples
       .map(
         ([korean, value, hungarian]) =>
-          `<li><span class="korean">${korean}${value ? ' ' + notation(value) : ''}</span><span class="hungarian">${hungarian}${forwardMark(`pronunciation ${book}-${lesson}`, korean)}</span></li>`
+          `<li><span class="korean">${korean}${value ? ' ' + notation(value) : ''}${soundButton(korean, book)}</span><span class="hungarian">${hungarian}${forwardMark(`pronunciation ${book}-${lesson}`, korean)}</span></li>`
       )
       .join('')}</ul>` +
     (entry.note ? `<aside class="own pronunciation-note">${ownTag()} ${entry.note}</aside>` : '') +
@@ -129,7 +130,7 @@ export function pronunciationChapter(): string {
             entry.examples
               .map(
                 ([korean, value, hungarian]) =>
-                  `<tr class="pronunciation-row" ${attributes}><td class="korean">${korean}</td><td class="korean${value ? '' : ' empty'}">${value ? notation(value) : '–'}</td><td>${hungarian}${forwardMark(`pronunciation ${book}-${lesson}`, korean)}</td></tr>`
+                  `<tr class="pronunciation-row" ${attributes}><td class="korean">${korean}${soundButton(korean, book)}</td><td class="korean${value ? '' : ' empty'}">${value ? notation(value) : '–'}</td><td>${hungarian}${forwardMark(`pronunciation ${book}-${lesson}`, korean)}</td></tr>`
               )
               .join('')
           );

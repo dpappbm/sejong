@@ -3,9 +3,9 @@
     {
       "book": "3A",
       "voice": "F1",
-      "file": "3A-F1-a1b4517a339c.tar",
-      "sha256": "a1b4517a339cb59484ac9c8029e7bdc9b3492127da2f25e20dd02b7e2326b05f",
-      "bytes": 5667328,
+      "file": "3A-F1-b52401849ae6.tar",
+      "sha256": "b52401849ae64bb00ce76fa4f0514d8d581c1b59f1fcab8bcef97dbd81ed5492",
+      "bytes": 5667840,
       "sounds": 398
     },
     {
@@ -19,8 +19,8 @@
     {
       "book": "3A",
       "voice": "M2",
-      "file": "3A-M2-0499721ebf88.tar",
-      "sha256": "0499721ebf888e04bf29263d27a889dab5ad079af96451eca5817f3edd641417",
+      "file": "3A-M2-0eb823741a31.tar",
+      "sha256": "0eb823741a3127a85029ab8606e95a6f926748ac0e124d9785cc6e7f4679afc4",
       "bytes": 5338112,
       "sounds": 398
     },

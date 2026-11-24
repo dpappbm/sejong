@@ -1,12 +1,13 @@
 // Browser behaviour of every page: theme, per-visitor progress ("Hol tartasz?"), the loading bar of page changes,
 // the sticky lesson bar, the "← Vissza" button, the floating buttons and the flash on arriving at a grammar point.
-// Progress and theme live in the visitor's localStorage (kg-progress, kg-hideFuture, kg-theme); keys kept from the old site.
+// Progress and theme live in the visitor's localStorage (kg-progress, kg-theme; kg-voice in sound.ts); keys kept from the old site.
 //
 // Pages change through Astro's ClientRouter: the sidebar, the floating buttons and the loading bar persist, the rest of
 // the body is swapped. Listeners on document and window are set once; per-page work runs on "astro:page-load".
 import { navigate } from 'astro:transitions/client';
 import './lessonExport';
 import './flashcards';
+import './sound';
 
 const BOOKS = ['1A', '1B', '2A', '2B', '3A', '3B', '4A', '4B'];
 const LESSON_KEY_PATTERN = /^([1-4][AB])-(\d+)$/;
@@ -36,7 +37,9 @@ const lessonUrl = (book: string, lesson: string | number) => `${base()}/${book.t
 
 // Persistent elements (they survive page changes).
 const progressSelect = document.getElementById('progress-select') as HTMLSelectElement;
-const hideFutureCheckbox = document.getElementById('hide-future') as HTMLInputElement;
+// Hiding the "not yet learned" parts is switched off for now: the lines marked "hide-future" belong to the checkbox that
+// is commented out in Sidebar.astro (and to a rule in _progress.scss). Put all of them back together.
+// hide-future: const hideFutureCheckbox = document.getElementById('hide-future') as HTMLInputElement;
 const sidebar = document.getElementById('sidebar')!;
 const toTopButton = document.getElementById('to-top')!;
 const loadingBar = document.getElementById('navigation-progress')!;
@@ -148,13 +151,14 @@ function applyProgress(value: string): void {
   const futureStat = document.getElementById('stat-future');
   if (doneStat) doneStat.textContent = String(done);
   if (futureStat) futureStat.textContent = String(future);
-  if (current === null) {
-    hideFutureCheckbox.checked = false;
-    document.body.classList.remove('future-hidden');
-  } else {
-    hideFutureCheckbox.checked = readStorage('kg-hideFuture') === '1';
-    document.body.classList.toggle('future-hidden', hideFutureCheckbox.checked);
-  }
+  // hide-future:
+  // if (current === null) {
+  //   hideFutureCheckbox.checked = false;
+  //   document.body.classList.remove('future-hidden');
+  // } else {
+  //   hideFutureCheckbox.checked = readStorage('kg-hideFuture') === '1';
+  //   document.body.classList.toggle('future-hidden', hideFutureCheckbox.checked);
+  // }
 }
 
 function setProgress(value: string): void {
@@ -189,10 +193,11 @@ document.addEventListener('click', event => {
   if (lessonKeys.includes(button.dataset.lessonKey ?? '')) setProgress(button.dataset.lessonKey!);
 });
 
-hideFutureCheckbox.addEventListener('change', () => {
-  document.body.classList.toggle('future-hidden', hideFutureCheckbox.checked);
-  writeStorage('kg-hideFuture', hideFutureCheckbox.checked ? '1' : '0');
-});
+// hide-future:
+// hideFutureCheckbox.addEventListener('change', () => {
+//   document.body.classList.toggle('future-hidden', hideFutureCheckbox.checked);
+//   writeStorage('kg-hideFuture', hideFutureCheckbox.checked ? '1' : '0');
+// });
 
 // ---------- the menu follows the page: highlight the shown lesson and open its book ----------
 function highlightMenu(): void {
@@ -220,12 +225,12 @@ function openParents(element: Element): void {
 function arriveAt(id: string, smooth: boolean): void {
   const element = id ? document.getElementById(id) : null;
   if (!element) return;
-  // A hidden ("not yet learned") target: switch hiding off, otherwise the link would lead nowhere.
-  if (document.body.classList.contains('future-hidden') && element.closest('.future')) {
-    hideFutureCheckbox.checked = false;
-    document.body.classList.remove('future-hidden');
-    writeStorage('kg-hideFuture', '0');
-  }
+  // hide-future: a hidden ("not yet learned") target: switch hiding off, otherwise the link would lead nowhere.
+  // if (document.body.classList.contains('future-hidden') && element.closest('.future')) {
+  //   hideFutureCheckbox.checked = false;
+  //   document.body.classList.remove('future-hidden');
+  //   writeStorage('kg-hideFuture', '0');
+  // }
   openParents(element);
   element.scrollIntoView({ behavior: smooth ? 'smooth' : 'instant' });
   if (element.classList.contains('grammar-point')) {

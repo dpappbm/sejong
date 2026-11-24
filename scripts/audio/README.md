@@ -19,7 +19,7 @@ npm run audio:review -- --book 3A    # build the two listening pages
 
 Generating takes about 4 seconds per file on a four-core laptop, uses all its cores and about 2 GB of memory (less with `--workers 2`). The run can be stopped at any time: the next one continues with the missing files.
 
-To listen, open `scripts/audio/work/index.html` (every text) or `scripts/audio/work/review.html` (only the files the measurements find suspicious). Both work from the disk, remember your ratings in the browser and copy them with one button.
+To listen, open one of the pages in `scripts/audio/work/`: `index.html` (every text), `review.html` (only the files the measurements find suspicious) or `pronunciation.html` (the examples of the pronunciation boxes, with the pronunciation the book expects). They work from the disk, remember your ratings in the browser and copy them with one button.
 
 ## What gets a sound file
 
@@ -113,6 +113,18 @@ Silence is trimmed to 50 ms before and 250 ms after the speech, the loudness is 
    ```
 
 3. Run `npm run audio:generate -- --write`. Only the files whose entry changed are generated again. The file of a text that no longer exists is not deleted.
+
+4. If no take is right, name the voices in `excluded`, keyed by the spoken text. The text then has no play button for those voices. No file is generated or deleted.
+
+   ```json
+   "excluded": {
+     "버스를 타고 갔어요.": ["F1", "M4"]
+   }
+   ```
+
+## On the site
+
+`src/lib/sound.ts` puts a play button after a text if its book is in `packs.json` and `public/audio/` has its file for every voice that is not excluded. The same text elsewhere (another book, an own word) has no button. Without sound files there are no buttons, no voice menu and no notice in the footer. `src/scripts/sound.ts` plays the files in the browser.
 
 ## Adding a book
 

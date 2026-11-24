@@ -2,6 +2,7 @@
 import type { CorrectIncorrect } from '../../data/types';
 import { koreanSpan } from '../html';
 import { reportProblem } from '../problems';
+import { soundButton } from '../sound';
 
 /** Every correct sample needs a translation, every incorrect one a reason. */
 export function checkCorrectIncorrect(where: string, items: CorrectIncorrect[] | undefined): void {
@@ -12,14 +13,15 @@ export function checkCorrectIncorrect(where: string, items: CorrectIncorrect[] |
   }
 }
 
-export function correctIncorrectList(items: CorrectIncorrect[] | undefined): string {
+/** With a book, the correct samples get a play button (the incorrect ones never do). */
+export function correctIncorrectList(items: CorrectIncorrect[] | undefined, book?: string): string {
   if (!items?.length) return '';
   // Everything goes under the Korean sentence: translation, then the reason (❌) or the note (✅).
   const line = (className: string, text: string | undefined) =>
     text ? `<span class="${className}">${text}</span>` : '';
   const rows = items.map(item =>
     'correct' in item
-      ? `<li class="correct">${koreanSpan(item.correct)}${line('hungarian', item.translation)}${line('correct-incorrect-note', item.note)}</li>`
+      ? `<li class="correct">${koreanSpan(item.correct + soundButton(item.correct, book))}${line('hungarian', item.translation)}${line('correct-incorrect-note', item.note)}</li>`
       : `<li class="incorrect">${koreanSpan(item.incorrect)}${line('hungarian', item.translation)}${line('correct-incorrect-note', item.reason)}</li>`
   );
   return `<ul class="correct-incorrect">${rows.join('')}</ul>`;

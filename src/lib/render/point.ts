@@ -4,6 +4,7 @@ import type { PointInfo } from '../content';
 import { relatedPlaceholder } from '../crossReferences';
 import { escapeHtml, ownTag } from '../html';
 import { reportProblem } from '../problems';
+import { soundButton, withSoundButtons } from '../sound';
 import { checkCustomTableTranslations } from '../translations';
 import { checkCorrectIncorrect, correctIncorrectList } from './correctIncorrect';
 import { forwardMark } from './forwardReferences';
@@ -11,7 +12,7 @@ import { groupBoxesFor } from './groups';
 import { renderConjugationTable } from './table';
 
 /** "Tiszteleti alak": only where the honorific is a distinct form (께, 계시다, 드리다 …). */
-function renderHonorificSection(honorific: Honorific | undefined, key: string): string {
+function renderHonorificSection(honorific: Honorific | undefined, key: string, book: string): string {
   if (!honorific) return '';
   for (const row of honorific.rows ?? []) {
     if (row.length < 4 || row.some(cell => !cell))
@@ -35,10 +36,10 @@ function renderHonorificSection(honorific: Honorific | undefined, key: string): 
   const examples = (honorific.examples ?? [])
     .map(
       ([korean, hungarian, note]) =>
-        `<li><span class="korean">${korean}</span><span class="hungarian">${hungarian}</span>${note ? `<span class="irregular-note">${note}</span>` : ''}</li>`
+        `<li><span class="korean">${korean}${soundButton(korean, book)}</span><span class="hungarian">${hungarian}</span>${note ? `<span class="irregular-note">${note}</span>` : ''}</li>`
     )
     .join('');
-  return `<section class="honorific"><h5>Tiszteleti alak ${ownTag()}</h5>${table}${honorific.note ?? ''}${examples ? `<ul class="examples">${examples}</ul>` : ''}${correctIncorrectList(honorific.correctIncorrect)}</section>`;
+  return `<section class="honorific"><h5>Tiszteleti alak ${ownTag()}</h5>${table}${honorific.note ?? ''}${examples ? `<ul class="examples">${examples}</ul>` : ''}${correctIncorrectList(honorific.correctIncorrect, book)}</section>`;
 }
 
 function checkPoint(point: PointInfo): void {
@@ -70,7 +71,7 @@ export function renderPoint(point: PointInfo): string {
   const examples = (point.examples ?? [])
     .map(
       ([korean, hungarian, note]) =>
-        `<li><span class="korean">${korean}</span><span class="hungarian">${hungarian}${forwardMark(point.id, korean)}</span>${note ? `<span class="irregular-note">${note}</span>` : ''}</li>`
+        `<li><span class="korean">${korean}${soundButton(korean, point.book)}</span><span class="hungarian">${hungarian}${forwardMark(point.id, korean)}</span>${note ? `<span class="irregular-note">${note}</span>` : ''}</li>`
     )
     .join('');
   return `
@@ -85,9 +86,9 @@ export function renderPoint(point: PointInfo): string {
     ${point.customHtml ?? ''}
     ${point.table ? `<h5>Képzés</h5>${renderConjugationTable(point.table, key)}` : ''}
     ${examples ? `<h5>Példák</h5><ul class="examples">${examples}</ul>` : ''}
-    ${correctIncorrectList(point.correctIncorrect)}
-    ${renderHonorificSection(point.honorific, key)}
-    ${point.ownNote ? `<aside class="own"><div class="own-heading">${ownTag('＋ Saját kiegészítés')}</div>${point.ownNote}</aside>` : ''}
+    ${correctIncorrectList(point.correctIncorrect, point.book)}
+    ${renderHonorificSection(point.honorific, key, point.book)}
+    ${point.ownNote ? `<aside class="own"><div class="own-heading">${ownTag('＋ Saját kiegészítés')}</div>${withSoundButtons(point.ownNote, point.book)}</aside>` : ''}
     ${groupBoxesFor(point.id)}
     ${relatedPlaceholder(point.id)}
   </div>
