@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { audioSource, fetchAsset, openPack, packName, sha256 } from './packs.mjs';
+import { audioSource, fetchAsset, openPack, packName, sha256, stalePacks } from './packs.mjs';
 import { packTar, unpackTar } from './tar.mjs';
 
 const files = [
@@ -59,6 +59,27 @@ describe('openPack', () => {
 describe('packName', () => {
   it('depends on the content', () => {
     expect(packName('3A', 'F1', 'abcdef0123456789')).toBe('3A-F1-abcdef012345.tar');
+  });
+});
+
+describe('stalePacks', () => {
+  const pack = file => ({ file });
+  const [live, pending, replaced] = ['3A-F1-000000000001.tar', '3A-F1-000000000002.tar', '3A-F1-000000000000.tar'];
+
+  it('finds the packs that no list uses', () => {
+    expect(stalePacks([replaced, live, pending], [[pack(pending)], [pack(live)]])).toEqual([replaced]);
+    expect(stalePacks([live, pending], [[pack(pending)], [pack(pending)]])).toEqual([live]);
+  });
+
+  it('never finds any other file', () => {
+    const others = [
+      'index.json',
+      'notes.tar',
+      '3A-F1-0000.tar',
+      'x3A-F1-000000000000.tar',
+      '3A-F1-000000000000.tar.gz',
+    ];
+    expect(stalePacks(others, [[]])).toEqual([]);
   });
 });
 

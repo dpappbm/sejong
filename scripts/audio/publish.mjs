@@ -1,5 +1,7 @@
 // Uploads the packs of packs.json that the GitHub release does not have yet, and index.json with the checksum of every
-// sound file (read by compare.mjs). Needs a logged-in gh. Usage: npm run audio:publish (dry run) | -- --write
+// sound file (read by compare.mjs). Then deletes the packs that neither this packs.json nor the one on the main branch
+// lists: until the merge the published site is still built from the latter. Needs a logged-in gh.
+// Usage: npm run audio:publish (dry run) | -- --write
 import { spawnSync } from 'node:child_process';
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
@@ -16,16 +18,25 @@ import {
   openPack,
   readJson,
   sha256,
+  stalePacks,
   toJson,
 } from './packs.mjs';
 
 const { values: options } = parseArgs({ options: { write: { type: 'boolean', default: false } } });
 
-function gh(...args) {
-  const { status, stdout, stderr, error } = spawnSync('gh', [...args, '--repo', REPOSITORY], { encoding: 'utf8' });
+function runGh(args) {
+  const { status, stdout, stderr, error } = spawnSync('gh', args, { encoding: 'utf8' });
   if (error) throw new Error(`gh could not be started: ${error.message}`);
   if (status !== 0) throw new Error(stderr.trim());
   return stdout;
+}
+
+const gh = (...args) => runGh([...args, '--repo', REPOSITORY]);
+
+/** The packs the published site uses. */
+function packsOfMain() {
+  const path = `repos/${REPOSITORY}/contents/scripts/audio/packs.json?ref=main`;
+  return JSON.parse(runGh(['api', path, '-H', 'Accept: application/vnd.github.raw+json'])).packs;
 }
 
 /** The checksum of each file of the release by name, or null when there is no release yet. */
@@ -64,12 +75,14 @@ const indexed = packs.map(pack => {
 });
 const index = toJson({ packs: indexed, texts });
 const isIndexNew = published?.get(INDEX) !== sha256(index);
+const stale = published ? stalePacks(published.keys(), [packs, packsOfMain()]) : [];
 
 console.log(published ? `Release "${RELEASE}": ${published.size} files` : `Release "${RELEASE}" does not exist yet`);
 for (const file of uploads) console.log(`to upload: ${file}`);
 if (isIndexNew) console.log(`to upload: ${INDEX}`);
-if (!uploads.length && !isIndexNew) console.log('Everything is published.');
-else if (!options.write) console.log('Nothing uploaded. Add --write to upload.');
+for (const name of stale) console.log(`to delete: ${name}`);
+if (!uploads.length && !isIndexNew && !stale.length) console.log('Everything is published.');
+else if (!options.write) console.log('Nothing changed. Add --write to upload and delete.');
 else {
   if (!published)
     gh(
@@ -87,5 +100,9 @@ else {
   for (const pack of packs)
     if (now.get(pack.file) !== pack.sha256) throw new Error(`${pack.file}: GitHub reports a different checksum`);
   if (now.get(INDEX) !== sha256(index)) throw new Error(`${INDEX}: GitHub reports a different checksum`);
-  console.log('Uploaded, the checksums agree with those of GitHub.');
+  console.log('Everything is published, the checksums agree with those of GitHub.');
+  for (const name of stale) {
+    gh('release', 'delete-asset', RELEASE, name, '--yes');
+    console.log(`deleted: ${name}`);
+  }
 }
