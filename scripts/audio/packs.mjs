@@ -20,8 +20,16 @@ export const readJson = file => JSON.parse(readFileSync(file, 'utf8'));
 export const toJson = value => JSON.stringify(value, null, 2) + '\n';
 export const sha256 = content => createHash('sha256').update(content).digest('hex');
 
-/** The name holds the checksum, so a changed pack never replaces the one an earlier version of the site uses. */
+/** The name holds the checksum, so a changed pack does not replace the one the published site still uses. */
 export const packName = (book, voice, checksum) => `${book}-${voice}-${checksum.slice(0, 12)}.tar`;
+
+const PACK_NAME = /^[1-4][AB]-[A-Z][0-9]-[0-9a-f]{12}[.]tar$/;
+
+/** The packs among the file names that none of the lists uses any more. Any other file is left alone. */
+export function stalePacks(names, lists) {
+  const used = new Set(lists.flat().map(pack => pack.file));
+  return [...names].filter(name => PACK_NAME.test(name) && !used.has(name));
+}
 
 const MEMBER = /^(?:NOTICE\.txt|([A-Z]\d)\/(?:manifest\.json|([0-9a-f]{12})\.mp3))$/;
 

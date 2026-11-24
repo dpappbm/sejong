@@ -132,7 +132,7 @@ Run `audio:collect -- --book 3B`, add the spoken forms it asks for, then `audio:
 
 ## Where the sound files are stored
 
-The release `audio` of the repository holds one uncompressed tar archive (pack) for each book and voice. `packs.json` lists the packs this version of the site uses, with their checksums. The name of a pack holds its checksum, so a changed pack is added next to the old one and earlier versions of the site can still be built. `index.json` in the release lists the checksum of every sound file.
+The release `audio` of the repository holds one uncompressed tar archive (pack) for each book and voice. `packs.json` lists the packs this version of the site uses, with their checksums. The name of a pack holds its checksum, so a changed pack is added next to the one the published site is still built from. `index.json` in the release lists the checksum of every sound file.
 
 `AUDIO_SOURCE` decides where `npm run build` takes the sound files from. It can be set in the environment or in `.env` (see `.env.example`). The address of the files is the same in both cases.
 
@@ -148,7 +148,9 @@ The release `audio` of the repository holds one uncompressed tar archive (pack) 
 | `npm run audio:compare`           | compares the local files with the latest ones of the release                        |
 | `npm run audio:download`          | downloads the missing files; `-- --force` also replaces the ones that differ        |
 
-After generating: `audio:pack`, `audio:publish -- --write`, then commit `packs.json`. The upload has to come before the merge, otherwise the deployment stops with an error.
+After generating: `audio:pack`, `audio:publish -- --write`, then commit `packs.json`. The upload has to come before the merge, otherwise the deployment stops with an error. After the merge run `audio:publish -- --write` again.
+
+`audio:publish -- --write` also deletes the packs that neither the local `packs.json` nor the one on the `main` branch lists, so a replaced pack disappears after the merge. The published site does not need it, because it serves the files downloaded by its build. But an older commit cannot be built with `AUDIO_SOURCE=release` any more, and after reverting a change of the packs they have to be packed and uploaded again. Work on one branch with new packs at a time: publishing from another branch would delete the packs that wait for a merge.
 
 `audio:compare` reads only `index.json` and compares the SHA-256 of every file. It changes nothing. It lists the files that differ, exist only locally or exist only in the release, and tells when `packs.json` is not the latest list. `--deep` also downloads the packs and compares their real content, `--all` lists every difference. Exit code: 0 the same, 1 different, 2 the release could not be read.
 
