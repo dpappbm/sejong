@@ -4,7 +4,7 @@
 import forwardReferences from '../../data/forwardReferences';
 import type { ForwardReference } from '../../data/types';
 import { isPointId, positionOf } from '../content';
-import { addEdge, edges, linkTargets } from '../crossReferences';
+import { addEdge, linkTargets } from '../crossReferences';
 import { attributeText, stripTags } from '../html';
 import { reportProblem } from '../problems';
 
@@ -32,8 +32,7 @@ export function forwardMark(location: string, text: string): string {
         return '';
       }
       // From a point the mark is bidirectional; from vocabulary and pronunciation rows it is one-way.
-      if (isPointId(location) && !edges.some(edge => edge.from === location && edge.to === reference.target))
-        addEdge(location, reference.target);
+      if (isPointId(location)) addEdge(location, reference.target);
       const positions = positionsOf(reference);
       const backward = !!positions && positions.target < positions.source;
       const title = (backward ? 'Korábban tanult szerkezet: ' : 'Később tanult szerkezet: ') + target.title;

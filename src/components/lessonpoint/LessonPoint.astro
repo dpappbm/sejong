@@ -44,7 +44,7 @@ const linked = (html: string) => linkPointText(html, point.id);
   </header>
   <div class="grammar-point-body">
     <div class="explanation" set:html={linked(point.explanation)} />
-    <Fragment set:html={point.customHtml ?? ''} />
+    <Fragment set:html={linked(point.customHtml ?? '')} />
     {point.table ? (
       <>
         <h5>Képzés</h5>

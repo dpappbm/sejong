@@ -2,21 +2,27 @@
 import { basicsHtml } from '../data/basics';
 import honorifics from '../data/honorifics';
 import pronunciation from '../data/pronunciation';
-import { CHAPTER_PATHS, LESSONS, locate, withBase, type LessonInfo } from './content';
-import { fillRelatedBars, indexPoints, linkSegment, linkTargets, relatedPlaceholder } from './crossReferences';
+import { CHAPTER_PATHS, LESSONS, locate, withBase, type LessonInfo, type PointInfo } from './content';
+import {
+  completeEdges,
+  fillRelatedBars,
+  indexPoints,
+  linkSegment,
+  linkTargets,
+  relatedPlaceholder,
+} from './crossReferences';
 import { disclosureArrow, stripTags, translationLine } from './html';
+import { checkPoint } from './pointChecks';
 import { problems } from './problems';
-import { checkForwardReferences } from './render/forwardReferences';
+import { correctIncorrectList } from './render/correctIncorrect';
+import { checkForwardReferences, forwardMark } from './render/forwardReferences';
 import { checkGroups } from './render/groups';
 import { honorificsChapter, honorificsIntro } from './render/honorifics';
-import { renderPoint } from './render/point';
 import { pronunciationBox, pronunciationChapter } from './render/pronunciation';
 import { checkVocabulary, registerVocabularyForwardReferences } from './render/vocabulary';
 import { lexiconEntry, translatedCell, wordGloss } from './translations';
 
 export interface LessonContent extends LessonInfo {
-  /** Grammar points as rendered by renderPoint(); only for the tests and the reference graph. */
-  pointsHtml: string;
   /** Pronunciation box of the lesson. */
   html: string;
 }
@@ -68,46 +74,42 @@ const linkBasics = (html: string) =>
       : linked.slice(0, cardEnd) + relatedPlaceholder(id) + linked.slice(cardEnd);
   });
 
-/** Links the references inside each grammar point's body (up to its related-bar placeholder). */
-const linkPoints = (html: string) =>
-  html.replace(
-    /(<article class="grammar-point[^"]*" id="([^"]+)"[\s\S]*?<div class="grammar-point-body">)([\s\S]*?)(<!--related:\2-->)/g,
-    (_match, head: string, id: string, body: string, placeholder: string) => head + linkSegment(body, id) + placeholder
-  );
+/** The components render after getSite(), so the references of the points are registered here in advance. */
+function registerPointReferences(point: PointInfo): void {
+  const texts = [
+    point.explanation,
+    point.customHtml,
+    point.ownNote,
+    point.honorific?.note,
+    correctIncorrectList(point.correctIncorrect),
+    correctIncorrectList(point.honorific?.correctIncorrect),
+  ];
+  for (const text of texts) linkSegment(text ?? '', point.id);
+  for (const [korean] of point.examples ?? []) forwardMark(point.id, korean);
+}
 
 let site: SiteContent | null = null;
 
 export function getSite(): SiteContent {
   if (site) return site;
   indexPoints();
-  const lessonParts = LESSONS.map(lesson => ({
-    lesson,
-    points: lesson.points.map(renderPoint).join(''),
-    rest: pronunciationBox(lesson.book, lesson.lesson, lesson.title),
+  const basics = linkBasics(renderBasics()); // registers the rules as link targets
+  const lessons = LESSONS.map(lesson => ({
+    ...lesson,
+    html: pronunciationBox(lesson.book, lesson.lesson, lesson.title),
   }));
+  for (const point of LESSONS.flatMap(lesson => lesson.points)) {
+    checkPoint(point);
+    registerPointReferences(point);
+  }
   checkGroups();
   const pronunciationHtml = pronunciationChapter();
   const honorificsHtml = honorificsIntro + honorificsChapter();
   registerVocabularyForwardReferences();
   checkForwardReferences();
   checkVocabulary();
-  const basics = linkBasics(renderBasics());
-  const lessons = lessonParts.map(({ lesson, points, rest }) => ({
-    ...lesson,
-    pointsHtml: linkPoints(points),
-    html: rest,
-  }));
-  site = {
-    lessons: lessons.map(lesson => ({
-      ...lesson,
-      pointsHtml: fillRelatedBars(lesson.pointsHtml),
-      html: fillRelatedBars(lesson.html),
-    })),
-    basicsHtml: fillRelatedBars(basics),
-    pronunciationHtml,
-    honorificsHtml,
-    problems,
-  };
+  completeEdges();
+  site = { lessons, basicsHtml: fillRelatedBars(basics), pronunciationHtml, honorificsHtml, problems };
   return site;
 }
 
@@ -146,7 +148,7 @@ export interface ChapterOutline {
   items: { label: string; href: string }[];
 }
 
-const hrefOf = (id: string) => {
+export const hrefOf = (id: string) => {
   const location = locate(id)!;
   return withBase(location.path) + (location.anchor ? '#' + location.anchor : '');
 };

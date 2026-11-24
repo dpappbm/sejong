@@ -45,5 +45,5 @@ const { honorific, book, pointId } = Astro.props;
       ))}
     </ul>
   )}
-  <Fragment set:html={correctIncorrectList(honorific.correctIncorrect, book)} />
+  <Fragment set:html={linkPointText(correctIncorrectList(honorific.correctIncorrect, book), pointId)} />
 </section>

@@ -27,6 +27,7 @@ export interface Edge {
 /** Every link target by global id. */
 export const linkTargets = new Map<string, LinkTarget>();
 export const edges: Edge[] = [];
+let complete = false;
 /** The point candidates of each lesson, by lesson key ("3A-4"). */
 const lessonCandidates = new Map<string, LessonPointCandidate[]>();
 
@@ -59,6 +60,9 @@ const MANUAL_RESOLUTIONS: Record<string, string> = {
 
 /** Registers every grammar point as a link target. */
 export function indexPoints(): void {
+  edges.length = 0;
+  complete = false;
+
   for (const lesson of LESSONS) {
     lessonCandidates.set(
       lesson.key,
@@ -76,7 +80,14 @@ export function indexPoints(): void {
 }
 
 export function addEdge(from: string, to: string): void {
+  if (edges.some(edge => edge.from === from && edge.to === to)) return;
+  if (complete) throw new Error(`${from} → ${to}: the reference was not registered before rendering`);
   edges.push({ from, to });
+}
+
+/** From here on no new reference may appear: the related bars are already being rendered. */
+export function completeEdges(): void {
+  complete = true;
 }
 
 // ---------- resolving "<book> <lesson>. lecke" to one point of the lesson ----------
@@ -115,6 +126,10 @@ function formSimilarity(korean: string, form: string): number {
 
 const BASIC_RULE_PATTERN = /Alapszabályok (\d)\./g;
 const LESSON_REFERENCE_PATTERN = /([1-4][AB]) (\d{1,2})\.((?:,? és \d{1,2}\.)*) (leck[a-záéíóöőúüű]*)/g;
+
+/** Whether the text refers to a lesson or a basic rule. */
+export const hasReference = (text: string) =>
+  text.search(LESSON_REFERENCE_PATTERN) >= 0 || text.search(BASIC_RULE_PATTERN) >= 0;
 
 interface KoreanSpan {
   text: string;

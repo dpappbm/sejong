@@ -1,17 +1,7 @@
 // The ✅/❌ usage samples of grammar points, honorific sections, related-structure boxes and honorific word categories.
 import type { CorrectIncorrect } from '../../data/types';
 import { koreanSpan } from '../html';
-import { reportProblem } from '../problems';
 import { soundButton } from '../sound';
-
-/** Every correct sample needs a translation, every incorrect one a reason. */
-export function checkCorrectIncorrect(where: string, items: CorrectIncorrect[] | undefined): void {
-  for (const item of items ?? []) {
-    if ('correct' in item) {
-      if (!item.translation.trim()) reportProblem(`${where}: correct sample without translation: ${item.correct}`);
-    } else if (!item.reason.trim()) reportProblem(`${where}: incorrect sample without reason: ${item.incorrect}`);
-  }
-}
 
 /** With a book, the correct samples get a play button (the incorrect ones never do). */
 export function correctIncorrectList(items: CorrectIncorrect[] | undefined, book?: string): string {

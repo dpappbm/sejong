@@ -5,8 +5,9 @@ import type { KoreanHungarian } from '../../data/types';
 import { isPointId } from '../content';
 import { addEdge, linkTargets } from '../crossReferences';
 import { attributeText, disclosureArrow, escapeHtml } from '../html';
+import { checkCorrectIncorrect } from '../pointChecks';
 import { reportProblem } from '../problems';
-import { checkCorrectIncorrect, correctIncorrectList } from './correctIncorrect';
+import { correctIncorrectList } from './correctIncorrect';
 
 export const honorificsIntro = honorifics.intro;
 

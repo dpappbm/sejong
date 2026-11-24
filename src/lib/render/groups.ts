@@ -5,8 +5,9 @@ import groups from '../../data/groups';
 import type { RelatedGroup } from '../../data/types';
 import { POINTS_BY_ID } from '../content';
 import { disclosureArrow, ownTag } from '../html';
+import { checkCorrectIncorrect } from '../pointChecks';
 import { reportProblem } from '../problems';
-import { checkCorrectIncorrect, correctIncorrectList } from './correctIncorrect';
+import { correctIncorrectList } from './correctIncorrect';
 
 /** All points of a group: scale and side branches, or members. */
 const groupPointIds = (group: RelatedGroup) =>
