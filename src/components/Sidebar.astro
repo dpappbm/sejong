@@ -10,6 +10,7 @@ import {
   type LessonInfo,
 } from '../lib/content';
 import { stripTags } from '../lib/html';
+import { VOICES, hasSound } from '../lib/sound';
 
 interface Props {
   currentLesson?: LessonInfo;
@@ -46,9 +47,21 @@ const isCurrent = (book: string, lesson: number) => currentLesson?.book === book
         ◐ Téma
       </button>
     </div>
+    {hasSound && (
+      <label class="voice-control" title="Gépi felolvasás. A böngésződ megjegyzi a hangot.">
+        Gépi hang:
+        <select id="voice-select">
+          {VOICES.map(voice => (
+            <option value={voice.id}>{voice.label}</option>
+          ))}
+        </select>
+      </label>
+    )}
+    {/* Hiding the "not yet learned" parts is switched off for now; the rest of it is commented out in site.ts and _progress.scss.
     <label class="progress-only" hidden>
       <input type="checkbox" id="hide-future" /> „Még nem vettük” részek elrejtése
     </label>
+    */}
   </div>
   <button class="button sidebar-toggle" id="sidebar-toggle" type="button">
     ☰ Tartalomjegyzék

@@ -1,9 +1,10 @@
 // Progress marks: only when a progress is set (the browser script adds the future / current / current-lesson classes).
 @use "mixins" as *;
 
-.future-hidden .future {
-  display: none !important;
-}
+// Switched off with the "hide-future" checkbox (Sidebar.astro).
+// .future-hidden .future {
+//   display: none !important;
+// }
 
 [hidden] {
   display: none !important;

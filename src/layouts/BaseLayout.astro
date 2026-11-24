@@ -3,6 +3,7 @@ import { ClientRouter } from 'astro:transitions';
 import '../styles/main.scss';
 import Sidebar from '../components/Sidebar.astro';
 import type { LessonInfo } from '../lib/content';
+import { hasSound } from '../lib/sound';
 
 interface Props {
   title: string;
@@ -49,7 +50,10 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       <Sidebar currentLesson={lesson} />
       <main>
         <slot />
-        <footer>Készült a 세종한국어 1A–4B (국립국어원, 2022) anyagai alapján, tanulási célra.</footer>
+        <footer>
+          Készült a 세종한국어 1A–4B (국립국어원, 2022) anyagai alapján, tanulási célra.
+          {hasSound && ' A meghallgatható hangok gépi felolvasások (Supertonic 3), a kiejtésük hibás lehet.'}
+        </footer>
       </main>
     </div>
     <div class="floating-buttons" aria-label="Gyorsgombok" transition:persist>

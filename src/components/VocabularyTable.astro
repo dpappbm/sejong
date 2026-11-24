@@ -3,15 +3,18 @@
 import type { VocabularyRow } from '../data/types';
 import { forwardMark } from '../lib/render/forwardReferences';
 import { localizeLinks } from '../lib/site';
+import { soundButton } from '../lib/sound';
 
 interface Props {
   rows: VocabularyRow[];
   book: string;
   lesson: number;
   path: string;
+  /** Whether the words get a play button. */
+  hasSound?: boolean;
 }
 
-const { rows, book, lesson, path } = Astro.props;
+const { rows, book, lesson, path, hasSound = false } = Astro.props;
 const mark = (korean: string) => localizeLinks(forwardMark(`vocabulary ${book}-${lesson}`, korean), path);
 ---
 
@@ -26,7 +29,10 @@ const mark = (korean: string) => localizeLinks(forwardMark(`vocabulary ${book}-$
     <tbody>
       {rows.map(([korean, hungarian]) => (
         <tr class="vocabulary-row">
-          <td class="korean">{korean}</td>
+          <td class="korean">
+            {korean}
+            {hasSound && <Fragment set:html={soundButton(korean, book)} />}
+          </td>
           <td>
             {hungarian}
             <Fragment set:html={mark(korean)} />

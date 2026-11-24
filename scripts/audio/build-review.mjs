@@ -1,5 +1,6 @@
-// Builds two local pages from the generated sound files: scripts/audio/work/index.html with every text of the book, and
-// scripts/audio/work/review.html with the takes the measurements find suspicious. Not part of the site.
+// Builds three local pages from the generated sound files in scripts/audio/work/: index.html with every text of the
+// book, review.html with the takes the measurements find suspicious, and pronunciation.html with the examples of the
+// pronunciation boxes, which have to be said exactly as the book expects. Not part of the site.
 // Usage: npm run audio:review -- --book 3A
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { parseArgs } from 'node:util';
@@ -187,6 +188,16 @@ writeFileSync(
     `${book} gyanús hangfájlok`,
     'Csak azok, amelyeknél a mérés gondot talált. Az ok a lejátszó alatt pirossal olvasható.',
     `<section>${table(suspicious.map(text => row(text, voice => isSuspicious(voice, text))))}</section>`
+  )
+);
+
+const isPronunciation = text => text.uses.some(({ source }) => source === 'pronunciation');
+writeFileSync(
+  new URL('work/pronunciation.html', directory),
+  page(
+    `${book} kiejtés-példák`,
+    'A szöveg alatt az elvárt kiejtés. Rossz az a hang, amelyik mást mond: az oldalon annál a hangnál nem lesz gomb.',
+    `<section>${table(texts.filter(isPronunciation).map(text => row(text)))}</section>`
   )
 );
 

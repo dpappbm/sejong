@@ -1,0 +1,73 @@
+// Play buttons of the Korean texts and the voice menu.
+@use "mixins" as *;
+
+$size: 32px;
+$space: 29px;
+
+// room for the button at the end of the line
+.korean:has(> .sound-button),
+table.plain td.korean:has(> .sound-button) {
+  padding-right: $space;
+}
+
+.sound-button {
+  @include inline-center;
+  @include button-base;
+  // A comfortable touch target that does not push the lines apart. It takes no width (see .korean below), so it always
+  // stays beside the last word.
+  width: $size;
+  height: $size;
+  margin: -6px (-$space) -6px ($space - $size);
+  padding: 0;
+  vertical-align: middle;
+  border: none;
+  border-radius: 50%;
+  background: none;
+  color: var(--muted);
+  user-select: none;
+
+  &::before {
+    content: "";
+    width: 18px;
+    height: 18px;
+    background: currentcolor;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 9v6h4l5 5V4L8 9zm12.5 3A4.5 4.5 0 0 0 14 8v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z'/%3E%3C/svg%3E")
+      center / contain no-repeat;
+  }
+
+  @include hover-focus {
+    color: var(--accent);
+  }
+
+  &.playing {
+    color: var(--accent);
+    background: color-mix(in srgb, var(--accent) 16%, transparent);
+
+    // a square: pressing again stops it
+    &::before {
+      width: 12px;
+      height: 12px;
+      border-radius: 2px;
+      mask: none;
+    }
+  }
+
+  &.failed {
+    color: var(--incorrect);
+  }
+
+  @media print {
+    display: none;
+  }
+}
+
+.voice-control select {
+  flex: 1;
+  min-width: 0;
+  font: inherit;
+  padding: 5px 8px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--foreground);
+}
