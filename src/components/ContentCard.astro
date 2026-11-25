@@ -1,0 +1,23 @@
+---
+// A collapsible card of the "Alapszabályok" and "Számok" chapters.
+import type { ContentCard } from '../data/types';
+import { locate } from '../lib/content';
+import DisclosureArrow from './DisclosureArrow.astro';
+import RelatedBar from './RelatedBar.astro';
+import Blocks from './text/Blocks.astro';
+
+interface Props {
+  card: ContentCard;
+}
+
+const { card } = Astro.props;
+---
+
+<details class="card" open>
+  <summary>
+    <DisclosureArrow />
+    <h3 id={locate(card.id)!.anchor}>{card.title}</h3>
+  </summary>
+  <Blocks content={card.content} />
+  <RelatedBar id={card.id} />
+</details>

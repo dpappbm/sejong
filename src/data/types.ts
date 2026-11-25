@@ -10,9 +10,16 @@ type LessonNumber = '01' | '02' | '03' | '04' | '05' | '06' | '07' | '08' | '09'
 export type PointId = `${BookCode}-${LessonNumber}-${1 | 2}`;
 /** Global id of a basic rule, e.g. "rule-5". */
 export type RuleId = `rule-${number}`;
+/** Global id of a card of the "Számok" chapter, e.g. "numbers-large". */
+export type NumbersId = `numbers-${string}`;
 /** Whatever a text can link to. */
 export type ReferenceId =
-  PointId | RuleId | `lesson-${BookCode}-${number}` | `pronunciation-${string}` | `honorific-category-${number}`;
+  | PointId
+  | RuleId
+  | NumbersId
+  | `lesson-${BookCode}-${number}`
+  | `pronunciation-${string}`
+  | `honorific-category-${number}`;
 
 // ---------- examples ----------
 export interface ExampleDetails {
@@ -122,14 +129,20 @@ export interface BookData {
   points: Point[];
 }
 
-// ---------- basic rules ----------
-export interface BasicRule {
-  id: RuleId;
+// ---------- chapters of cards (basic rules, numbers) ----------
+export interface ContentCard {
+  id: RuleId | NumbersId;
   /** Numbered title, e.g. "5. A rendhagyó (불규칙) osztályok". */
   title: string;
   content: Content;
   /** Related points that the content does not link to. */
   references?: ReferenceId[];
+}
+export interface BasicRule extends ContentCard {
+  id: RuleId;
+}
+export interface NumbersCard extends ContentCard {
+  id: NumbersId;
 }
 
 // ---------- pronunciation ----------

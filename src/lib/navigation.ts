@@ -1,4 +1,4 @@
-// The previous / next chain of the pages: home ← basic rules ↔ pronunciation ↔ honorific words ↔ 1A 1 … 4B last → home.
+// The previous / next chain of the pages: home ← basic rules ↔ pronunciation ↔ honorific words ↔ numbers ↔ 1A 1 … 4B last → home.
 import { CHAPTER_PATHS, LESSONS, lessonPath } from './content';
 
 export interface PageLink {
@@ -14,6 +14,7 @@ export const PAGE_SEQUENCE: PageLink[] = [
   { path: CHAPTER_PATHS.basics, label: 'Alapszabályok' },
   { path: CHAPTER_PATHS.pronunciation, label: 'Kiejtés' },
   { path: CHAPTER_PATHS.honorifics, label: 'Tiszteleti szavak' },
+  { path: CHAPTER_PATHS.numbers, label: 'Számok' },
   ...LESSONS.map(lesson => ({
     path: lessonPath(lesson.book, lesson.lesson),
     label: `${lesson.book} · ${lesson.lesson}. lecke`,

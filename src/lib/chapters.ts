@@ -1,6 +1,7 @@
-// The three chapters (basic rules, pronunciation, honorific words) for the cards of the home page.
+// The chapters (basic rules, pronunciation, honorific words, numbers) for the cards of the home page.
 import { basicRules } from '../data/basics';
 import honorifics from '../data/honorifics';
+import { numbersCards } from '../data/numbers';
 import pronunciation from '../data/pronunciation';
 import { CHAPTER_PATHS, hrefOf } from './content';
 import { honorificCategoryId } from './references';
@@ -47,5 +48,14 @@ export const chapters: ChapterOutline[] = [
       label: category.hungarian,
       href: hrefOf(honorificCategoryId(index))!,
     })),
+  },
+  {
+    path: CHAPTER_PATHS.numbers,
+    symbol: '#',
+    title: 'Számok',
+    korean: '수',
+    ownTag: '＋ Saját összeállítás',
+    description: 'Koreai és kínai eredetű számok, nagy számok, számlálószavak, dátum és idő.',
+    items: numbersCards.map(({ id, title }) => ({ label: title, href: hrefOf(id)! })),
   },
 ];
