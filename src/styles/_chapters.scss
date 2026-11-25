@@ -1,5 +1,9 @@
 // Chapter pages: basic rules, pronunciation, honorific words.
 
+.chapter-badge {
+  background: var(--accent);
+}
+
 .chapter-section {
   .card {
     background: var(--card);

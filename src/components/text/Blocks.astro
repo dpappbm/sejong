@@ -18,7 +18,7 @@ const { content, place } = Astro.props;
   switch (block.kind) {
     case 'paragraph':
       return (
-        <p style={block.muted ? 'font-size:.85rem;color:var(--muted)' : undefined}>
+        <p class={block.muted ? 'muted-note' : undefined}>
           <RichText content={block.content} />
         </p>
       );

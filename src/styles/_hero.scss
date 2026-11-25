@@ -30,6 +30,11 @@ main {
     margin: 6px 0;
     color: var(--muted);
   }
+
+  .source-note {
+    margin-top: 12px;
+    font-size: 0.85rem;
+  }
 }
 
 // QR code of the public address: always dark modules on white, so phones can scan it in the dark theme too
