@@ -1,5 +1,6 @@
 import { experimental_AstroContainer as AstroContainer } from 'astro/container';
 import { describe, expect, it } from 'vitest';
+import Basics from '../components/basics/Basics.astro';
 import LessonPoint from '../components/lessonpoint/LessonPoint.astro';
 import { isPointId, LESSONS, POINT_COUNT } from './content';
 import { linkTargets } from './crossReferences';
@@ -12,17 +13,18 @@ const points = LESSONS.flatMap(lesson => lesson.points);
 const sections = new Map<string, string>();
 const container = await AstroContainer.create();
 for (const point of points) sections.set(point.id, await container.renderToString(LessonPoint, { props: { point } }));
-for (const match of site.basicsHtml.matchAll(/<h3 id="(rule-\d+)"[\s\S]*?(?=<h3 id="rule-|$)/g))
+const basicsHtml = await container.renderToString(Basics);
+for (const match of basicsHtml.matchAll(/<h3 id="(rule-\d+)"[\s\S]*?(?=<h3 id="rule-|$)/g))
   sections.set(match[1], match[0]);
 for (const match of site.honorificsHtml.matchAll(
   /<h3 id="(honorific-category-\d+)"[\s\S]*?(?=<h3 id="honorific-category-|$)/g
 ))
   sections.set(match[1], match[0]);
 
-/** The global id of a link: the components write page links, the chapter HTML still has global ids. */
+/** The global id of a link: the components write page links, the honorifics HTML still has global ids. */
 const idByHref = new Map([...linkTargets.keys()].map(id => [hrefOf(id), id]));
 function targetId(href: string, from: string): string | undefined {
-  if (!isPointId(from)) return href.slice(1);
+  if (from.startsWith('honorific-category-')) return href.slice(1);
   return idByHref.get(href.startsWith('#') ? hrefOf(from).split('#')[0] + href : href);
 }
 

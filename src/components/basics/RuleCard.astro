@@ -1,0 +1,24 @@
+---
+import { basicRules } from '../../data/basics';
+import { relatedBar } from '../../lib/crossReferences';
+import { linkPointText, localizePointLinks } from '../../lib/site';
+import DisclosureArrow from '../DisclosureArrow.astro';
+
+interface Props {
+  number: number;
+}
+
+const { number } = Astro.props;
+
+const { id, title } = basicRules[number - 1];
+const content = await Astro.slots.render('default');
+---
+
+<details class="card" open>
+  <summary>
+    <DisclosureArrow />
+    <h3 id={id}>{title}</h3>
+  </summary>
+  <Fragment set:html={linkPointText(content, id)} />
+  <Fragment set:html={localizePointLinks(relatedBar(id), id)} />
+</details>

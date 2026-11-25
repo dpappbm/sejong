@@ -280,9 +280,6 @@ export function linkSegment(html: string, from: string): string {
   return linked;
 }
 
-/** Placeholder for the "Kapcsolódó pontok" bar; replaced once every edge is known. */
-export const relatedPlaceholder = (id: string) => `<!--related:${id}-->`;
-
 /** The "Kapcsolódó pontok" bar: everything the id links to and everything that links to it. */
 export function relatedBar(id: string): string {
   const related = new Set<string>();
@@ -302,6 +299,3 @@ export function relatedBar(id: string): string {
   });
   return `<nav class="related" aria-label="Kapcsolódó pontok"><span class="related-heading">Kapcsolódó pontok:</span>${links.join('')}</nav>`;
 }
-
-export const fillRelatedBars = (html: string) =>
-  html.replace(/<!--related:([^>]+?)-->/g, (_match, id: string) => relatedBar(id));
