@@ -277,6 +277,11 @@ export function linkSegment(html: string, from: string): string {
     reportProblem(`${from}: unlinked reference: ${match[0]}`);
   for (const match of rest.matchAll(BASIC_RULE_PATTERN))
     if ('rule-' + match[1] !== from) reportProblem(`${from}: unlinked reference: ${match[0]}`);
+
+  if (html !== linked) {
+    console.log('CHANGED FR', html);
+    console.log('CHANGED TO', linked);
+  }
   return linked;
 }
 

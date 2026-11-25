@@ -1,5 +1,6 @@
 // The text the voice reads for a Korean text of the site, and the name of its sound file.
 import { createHash } from 'node:crypto';
+import { reportProblem } from '../../src/lib/problems';
 
 const ENTITIES = { '&amp;': '&', '&lt;': '<', '&gt;': '>', '&quot;': '"', '&#39;': "'", '&nbsp;': ' ' };
 
@@ -31,8 +32,10 @@ export function spokenText(html, spokenForms = {}) {
       .replace(/\s*\/\s*/g, ', ') // alternatives, with a short pause
       .replace(/\s+/g, ' ')
       .trim();
-  if (isAmbiguous || !/^[가-힣 .,?!]+$/.test(spoken) || !/[가-힣]/.test(spoken))
-    throw new Error(`No spoken form for "${text}": add it to "spokenForms" in scripts/audio/overrides.json`);
+  if (isAmbiguous || !/^[가-힣 .,?!]+$/.test(spoken) || !/[가-힣]/.test(spoken)) {
+    reportProblem(`No spoken form for "${text}": add it to "spokenForms" in scripts/audio/overrides.json`);
+    return '';
+  }
   return spoken;
 }
 

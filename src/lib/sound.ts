@@ -21,12 +21,10 @@ interface SoundSettings {
   voices: readonly string[];
   hasFile: (voice: string, id: string) => boolean;
   spokenForms: Record<string, string>;
-  /** Spoken text → the voices that say it wrong. */
-  excluded: Record<string, string[]>;
 }
 
 /** The function behind soundButton(), for any set of sound files. */
-export function createSoundButton({ books, voices, hasFile, spokenForms, excluded }: SoundSettings) {
+export function createSoundButton({ books, voices, hasFile, spokenForms }: SoundSettings) {
   return (korean: string, book: string | undefined): string => {
     if (!book || !books.has(book)) return '';
     let spoken: string;
@@ -36,18 +34,15 @@ export function createSoundButton({ books, voices, hasFile, spokenForms, exclude
       return ''; // a text without a spoken form was never recorded
     }
     const id = audioId(spoken);
-    const without = voices.filter(voice => excluded[spoken]?.includes(voice));
-    if (without.length === voices.length) return '';
-    if (!voices.every(voice => without.includes(voice) || hasFile(voice, id))) return '';
+    if (!voices.every(voice => hasFile(voice, id))) return '';
     const label = `Meghallgatás: ${attributeText(korean)}`;
-    const withoutAttribute = without.length ? ` data-without="${without.join(' ')}"` : '';
     // No text inside: the button must not become part of the Korean text (links, copying).
-    return `<button class="sound-button" type="button" data-sound="${id}"${withoutAttribute} aria-label="${label}" title="Meghallgatás (gépi hang)"></button>`;
+    return `<button class="sound-button" type="button" data-sound="${id}" aria-label="${label}" title="Meghallgatás (gépi hang)"></button>`;
   };
 }
 
 /** The ids of the sound files of each voice in public/audio; empty without sound files. */
-function soundFiles(): Map<string, Set<string>> {
+export function soundFiles(): Map<string, Set<string>> {
   const files = new Map<string, Set<string>>();
   for (const { id } of VOICES) {
     try {
@@ -70,7 +65,6 @@ export const soundButton = createSoundButton({
   voices: VOICES.map(voice => voice.id),
   hasFile: (voice, id) => files.get(voice)!.has(id),
   spokenForms: overrides.spokenForms,
-  excluded: overrides.excluded,
 });
 
 /** Adds the buttons to the example lists (exampleList() in html.ts) of an own note. */

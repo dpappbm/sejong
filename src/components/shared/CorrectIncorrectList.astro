@@ -1,0 +1,35 @@
+---
+// The ✅/❌ usage samples of grammar points, honorific sections, related-structure boxes and honorific word categories.
+import type { CorrectIncorrect } from '../../data/types';
+import { koreanSpan } from '../../lib/html';
+import SoundButton from '../SoundButton.astro';
+
+interface Props {
+  items: CorrectIncorrect[];
+}
+
+const { items } = Astro.props;
+---
+
+<ul class="correct-incorrect">
+  {items.map(item =>
+    'correct' in item ? (
+      <li class="correct">
+        <span class="korean">{item.correct}</span>
+        <span class="korean">
+          <Fragment>{item.correct}</Fragment>
+          <SoundButton korean={item.correct} />
+        </span>
+        {item.translation && <span class="hungarian">{item.translation}</span>}
+        {item.note && <span class="correct-incorrect-note">{item.note}</span>}
+      </li>
+    ) : (
+      <li class="incorrect">
+        <span class="korean">{item.incorrect}</span>
+        {koreanSpan(item.incorrect)}
+        {item.translation && <span class="hungarian">{item.translation}</span>}
+        {item.reason && <span class="correct-incorrect-note">{item.reason}</span>}
+      </li>
+    )
+  )}
+</ul>

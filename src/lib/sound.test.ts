@@ -15,7 +15,6 @@ describe('soundButton', () => {
     const button = createSoundButton(settings)('<b>나라</b>가 커요.', '3A');
     expect(button).toContain(`data-sound="${audioId('나라가 커요.')}"`);
     expect(button).toContain('aria-label="Meghallgatás: 나라가 커요."');
-    expect(button).not.toContain('data-without');
     expect(createSoundButton(settings)('3월', '3A')).toContain(`data-sound="${audioId('삼월')}"`);
   });
 
@@ -34,16 +33,6 @@ describe('soundButton', () => {
 
   it('is left out for a text that cannot be read aloud', () => {
     expect(createSoundButton(settings)('케이팝(K-POP)', '3A')).toBe('');
-  });
-
-  it('lists the voices that say the text wrong, whose file is not needed', () => {
-    const excluded = { 나라: ['M4'] };
-    const button = createSoundButton({ ...settings, excluded, hasFile: voice => voice === 'F1' })('나라', '3A');
-    expect(button).toContain('data-without="M4"');
-  });
-
-  it('is left out if every voice says the text wrong', () => {
-    expect(createSoundButton({ ...settings, excluded: { 나라: ['F1', 'M4'] } })('나라', '3A')).toBe('');
   });
 });
 

@@ -1,0 +1,31 @@
+---
+import overrides from '../../scripts/audio/overrides.json';
+import { audioId, spokenText } from '../../scripts/audio/spoken-text.mjs';
+import { attributeText } from '../lib/html';
+import { soundFiles, VOICES } from '../lib/sound';
+
+interface Props {
+  korean: string;
+}
+
+const { korean } = Astro.props;
+
+const voices = VOICES.map(voice => voice.id);
+const files = soundFiles();
+
+const spokenForms = overrides.spokenForms as Record<string, string>;
+const spoken = spokenText(korean, spokenForms) as string;
+const id = audioId(spoken);
+
+const hasAudio = voices.some(voice => files.get(voice)!.has(id));
+---
+
+{hasAudio && (
+  <button
+    class="sound-button"
+    type="button"
+    data-sound={id}
+    aria-label={`Meghallgatás: ${attributeText(korean)}`}
+    title="Meghallgatás (gépi hang)"
+  ></button>
+)}
