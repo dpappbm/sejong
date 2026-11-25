@@ -3,34 +3,34 @@
     {
       "book": "3A",
       "voice": "F1",
-      "file": "3A-F1-b52401849ae6.tar",
-      "sha256": "b52401849ae64bb00ce76fa4f0514d8d581c1b59f1fcab8bcef97dbd81ed5492",
-      "bytes": 5667840,
-      "sounds": 398
+      "file": "3A-F1-2ca27e8b0781.tar",
+      "sha256": "2ca27e8b0781b519bd31f11fe4eb11cebcb87868b0e9b572fc2acd36dfba0cf5",
+      "bytes": 6052352,
+      "sounds": 414
     },
     {
       "book": "3A",
       "voice": "F5",
-      "file": "3A-F5-1549d01b7ab3.tar",
-      "sha256": "1549d01b7ab327dd4f11c421575a7cac7040497c642ccd74c9f09db605869701",
-      "bytes": 5883392,
-      "sounds": 398
+      "file": "3A-F5-826e40739760.tar",
+      "sha256": "826e40739760d5743ed8e0da8b2126fcd36430e6720fd12af87a4dc3d0ca3739",
+      "bytes": 6277120,
+      "sounds": 414
     },
     {
       "book": "3A",
       "voice": "M2",
-      "file": "3A-M2-0eb823741a31.tar",
-      "sha256": "0eb823741a3127a85029ab8606e95a6f926748ac0e124d9785cc6e7f4679afc4",
-      "bytes": 5338112,
-      "sounds": 398
+      "file": "3A-M2-4711c4cf0a57.tar",
+      "sha256": "4711c4cf0a573c3ee5a5c9456c57fb642077b328ce2132877a70c766b93f73b0",
+      "bytes": 5709824,
+      "sounds": 414
     },
     {
       "book": "3A",
       "voice": "M4",
-      "file": "3A-M4-f944d46d95b6.tar",
-      "sha256": "f944d46d95b6928e753072c9749771036d8b7ee4a4900c0a51d143615410f7f4",
-      "bytes": 5633536,
-      "sounds": 398
+      "file": "3A-M4-275321de54eb.tar",
+      "sha256": "275321de54ebb4d970e3dc35fec47a9c10c6febf031b7db67273fc5cf80599df",
+      "bytes": 6008832,
+      "sounds": 414
     }
   ]
 }
