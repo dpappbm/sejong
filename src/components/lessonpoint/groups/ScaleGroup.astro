@@ -35,7 +35,9 @@ const { group, pointId } = Astro.props;
         </span>
       ))}
     </div>
-    <Blocks content={group.explanation} />
+    <div class="group-description">
+      <Blocks content={group.explanation} />
+    </div>
     {group.examples && (
       <ul class="examples group-examples">
         {group.examples.map(([korean, hungarian]) => (

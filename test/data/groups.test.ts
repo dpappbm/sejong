@@ -3,8 +3,8 @@ import groups from '../../src/data/groups';
 import type { FormGroup, RelatedGroup, ScaleGroup } from '../../src/data/types';
 import { POINTS_BY_ID } from '../../src/lib/content';
 import { groupPointIds } from '../../src/lib/groups';
-import { plainText } from '../../src/lib/richText';
-import { incompleteSamples } from '../helpers';
+import { plainText, textsOf } from '../../src/lib/richText';
+import { incompleteSamples, partsOf } from '../helpers';
 
 const all: RelatedGroup[] = groups;
 const scales = all.filter((group): group is ScaleGroup => group.kind !== 'form');
@@ -30,6 +30,20 @@ describe('groups of related points', () => {
         .map(([id]) => `${group.id}: ${id}`)
     );
     expect(incomplete).toEqual([]);
+  });
+
+  // So that the look of the Korean texts can be changed in one place (_related.scss).
+  it('mark the Korean texts of the descriptions with korean()', () => {
+    const unmarked = all.flatMap(group => {
+      const side = group.kind === 'form' ? [] : (group.side ?? []).map(([, text]) => text);
+      return [...textsOf(group.explanation), ...side]
+        .flatMap(partsOf)
+        .filter(part => typeof part === 'string' || part.kind !== 'korean')
+        .map(plainText)
+        .filter(text => /[ㄱ-ㅎㅏ-ㅣ가-힣]/.test(text))
+        .map(text => `${group.id}: ${text}`);
+    });
+    expect(unmarked).toEqual([]);
   });
 
   it('have translated examples', () => {

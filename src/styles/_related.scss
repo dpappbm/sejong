@@ -71,6 +71,12 @@ details.related-group {
   font-weight: 700;
 }
 
+// The look of the Korean texts in the descriptions: for now the same as the text around them.
+.group-description .korean,
+.group-side .korean:not(.group-link, .group-self) {
+  font-family: inherit;
+}
+
 a.group-link {
   @include reference-link;
 }

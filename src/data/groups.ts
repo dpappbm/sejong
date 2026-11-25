@@ -1,7 +1,5 @@
-import { bold, list, paragraph, text } from '../lib/richText';
+import { bold, korean, list, paragraph, text } from '../lib/richText';
 import type { RelatedGroup } from './types';
-
-const korean = (text: string): string => text;
 
 export default [
   {
@@ -41,12 +39,12 @@ export default [
       [`4B-09-2`, `írott, hivatalos`],
     ],
     explanation: [
-      paragraph`Mindhárom „de”; jobbra haladva az ellentét egyre határozottabb, a stílus egyre írottabb. Beszédben a -는데 a leggyakoribb: inkább bemutatja a helyzetet, mint szembeállít. A -지만 két tényt világosan szembeállít, vagy a várttal ellentétes folytatást hoz. A -(으)나 ugyanez írásban, hivatalos szövegben.`,
+      paragraph`Mindhárom „de”; jobbra haladva az ellentét egyre határozottabb, a stílus egyre írottabb. Beszédben a ${korean('-는데')} a leggyakoribb: inkább bemutatja a helyzetet, mint szembeállít. A ${korean('-지만')} két tényt világosan szembeállít, vagy a várttal ellentétes folytatást hoz. A ${korean('-(으)나')} ugyanez írásban, hivatalos szövegben.`,
       paragraph`Segítő kérdések:`,
       list(
-        'Mi áll szemben az első állítással? → -지만',
-        'Minek a háttere, előzménye az első tag? → -는데',
-        'Mi helyettesíti vagy ellensúlyozza az első dolgot? → -는/(으)ㄴ 대신에'
+        text`Mi áll szemben az első állítással? → ${korean('-지만')}`,
+        text`Minek a háttere, előzménye az első tag? → ${korean('-는데')}`,
+        text`Mi helyettesíti vagy ellensúlyozza az első dolgot? → ${korean('-는/(으)ㄴ 대신에')}`
       ),
     ],
     examples: [
@@ -79,7 +77,7 @@ export default [
       [`3B-11-1`, `a változás halad előre`],
     ],
     explanation: [
-      paragraph`Mindhárom változást fejez ki, de mást változtat. Ha egy ${bold('tulajdonság, állapot')} lesz más, a melléknévhez -아지다/어지다 járul. Ha egy ${bold('cselekvés, szokás, helyzet')} alakul ki (nem csak a saját döntésünkből), az igéhez -게 되다. Melléknévvel a -게 되다 egyszerű változásra nem természetes: 날씨가 추워졌어요, nem 춥게 됐어요. Ha viszont egy körülmény következménye, mindkettő jó: 시험을 못 봐서 합격이 어렵게 됐어요 / 어려워졌어요 („nem sikerült a vizsga, így nehéz lesz átmenni”); a -게 되다 az eredményt, az -아지다/어지다 inkább a folyamatot emeli ki (날씨가 점점 추워져요). Az -아/어 가다 azt teszi hozzá, hogy a folyamat még tart, egy végpont felé halad; az -아지다-val össze is kapcsolható: 추워져 가요.`,
+      paragraph`Mindhárom változást fejez ki, de mást változtat. Ha egy ${bold('tulajdonság, állapot')} lesz más, a melléknévhez ${korean('-아지다/어지다')} járul. Ha egy ${bold('cselekvés, szokás, helyzet')} alakul ki (nem csak a saját döntésünkből), az igéhez ${korean('-게 되다')}. Melléknévvel a ${korean('-게 되다')} egyszerű változásra nem természetes: ${korean('날씨가 추워졌어요')}, nem ${korean('춥게 됐어요')}. Ha viszont egy körülmény következménye, mindkettő jó: ${korean('시험을 못 봐서 합격이 어렵게 됐어요 / 어려워졌어요')} („nem sikerült a vizsga, így nehéz lesz átmenni”); a ${korean('-게 되다')} az eredményt, az ${korean('-아지다/어지다')} inkább a folyamatot emeli ki (${korean('날씨가 점점 추워져요')}). Az ${korean('-아/어 가다')} azt teszi hozzá, hogy a folyamat még tart, egy végpont felé halad; az ${korean('-아지다')}-val össze is kapcsolható: ${korean('추워져 가요')}.`,
     ],
     examples: [
       [`한국어 실력이 좋아졌어요.`, `Javult a koreaitudásom.`],
@@ -105,7 +103,7 @@ export default [
     kind: `form`,
     title: `-기`,
     explanation: [
-      paragraph`A -기 az ige vagy a melléknév tövéből főnevet képez: 가다 → 가기 „menés”, 먹다 → 먹기 „evés”. Ezért kaphat partikulát (가, 를, 는, (으)로, 보다), és állhat főnév előtt (전, 때문). A család tagjainak jelentése többnyire kiolvasható a felbontásból.`,
+      paragraph`A ${korean('-기')} az ige vagy a melléknév tövéből főnevet képez: ${korean('가다 → 가기')} „menés”, ${korean('먹다 → 먹기')} „evés”. Ezért kaphat partikulát (${korean('가, 를, 는, (으)로, 보다')}), és állhat főnév előtt (${korean('전, 때문')}). A család tagjainak jelentése többnyire kiolvasható a felbontásból.`,
     ],
 
     members: [
@@ -185,7 +183,7 @@ export default [
     kind: `form`,
     title: `-아/어 + segédige`,
     explanation: [
-      paragraph`Az -아/어 alak (ugyanaz, mint az -아요/어요, csak -요 nélkül) után egy második ige áll. Ez a cselekvés módját, irányát vagy eredményét adja hozzá: 보다 „néz → kipróbál”, 주다 „ad → valakinek megtesz”, 놓다/두다 „tesz → elkészít és úgy hagy”, 버리다 „eldob → teljesen megtesz”, 가다 „megy → egyre …”.`,
+      paragraph`Az ${korean('-아/어')} alak (ugyanaz, mint az ${korean('-아요/어요')}, csak ${korean('-요')} nélkül) után egy második ige áll. Ez a cselekvés módját, irányát vagy eredményét adja hozzá: ${korean('보다')} „néz → kipróbál”, ${korean('주다')} „ad → valakinek megtesz”, ${korean('놓다/두다')} „tesz → elkészít és úgy hagy”, ${korean('버리다')} „eldob → teljesen megtesz”, ${korean('가다')} „megy → egyre …”.`,
     ],
     members: [
       [
@@ -273,7 +271,7 @@ export default [
     kind: `form`,
     title: `-아야/어야`,
     explanation: [
-      paragraph`Az -아야/어야 jelentése „csak ha …, csak úgy …” (szükséges feltétel). Erre épülnek a „kell” jelentésű szerkezetek: „csak ha megteszem, (akkor) rendben (되다)”.`,
+      paragraph`Az ${korean('-아야/어야')} jelentése „csak ha …, csak úgy …” (szükséges feltétel). Erre épülnek a „kell” jelentésű szerkezetek: „csak ha megteszem, (akkor) rendben (${korean('되다')})”.`,
     ],
     members: [
       [
@@ -313,7 +311,7 @@ export default [
     kind: `form`,
     title: `-(으)면`,
     explanation: [
-      paragraph`A -(으)면 a „ha” feltétel. Sok szerkezet épül rá: a feltétel után egy értékelés áll (좋겠다 „jó lenne”, 안 되다 „nem jó”), vagy elé kerül egy másik elem (szándék: -(으)려, elképzelt: -는다, múlt: -았/었).`,
+      paragraph`A ${korean('-(으)면')} a „ha” feltétel. Sok szerkezet épül rá: a feltétel után egy értékelés áll (${korean('좋겠다')} „jó lenne”, ${korean('안 되다')} „nem jó”), vagy elé kerül egy másik elem (szándék: ${korean('-(으)려')}, elképzelt: ${korean('-는다')}, múlt: ${korean('-았/었')}).`,
     ],
     members: [
       [`2A-07-1`, `-(으)면`, `ha …`, [text`시간이 있${bold('으면')} 같이 가요.`, `Ha van időd, menjünk együtt.`]],
@@ -357,7 +355,7 @@ export default [
     kind: `form`,
     title: `-(으)려`,
     explanation: [
-      paragraph`A -(으)려 a szándék jele („… akar”). A -고 하다, a -면 és a -다가 végződéssel három szerkezet lesz belőle.`,
+      paragraph`A ${korean('-(으)려')} a szándék jele („… akar”). A ${korean('-고 하다')}, a ${korean('-면')} és a ${korean('-다가')} végződéssel három szerkezet lesz belőle.`,
     ],
     members: [
       [
@@ -385,7 +383,7 @@ export default [
     kind: `form`,
     title: `-다(가)`,
     explanation: [
-      paragraph`A -다가 egy cselekvést megszakít, vagy átvezet egy másikba („… közben, aztán”). A 보다 („lát”) igével összetéve azt jelenti: „ha / ahogy az ember sokáig csinálja …”.`,
+      paragraph`A ${korean('-다가')} egy cselekvést megszakít, vagy átvezet egy másikba („… közben, aztán”). A ${korean('보다')} („lát”) igével összetéve azt jelenti: „ha / ahogy az ember sokáig csinálja …”.`,
     ],
     members: [
       [
@@ -422,7 +420,7 @@ export default [
     kind: `form`,
     title: `-(으)ㄹ까`,
     explanation: [
-      paragraph`A -(으)ㄹ까 bizonytalan, „vajon?” jellegű kérdés. Ebből jön a javaslat („… -junk?”) és a találgatás („vajon …?”). Ha más elem kapcsolódik hozzá: tépelődés („azon gondolkodom”) és aggodalom („attól tartva, hogy …”).`,
+      paragraph`A ${korean('-(으)ㄹ까')} bizonytalan, „vajon?” jellegű kérdés. Ebből jön a javaslat („… -junk?”) és a találgatás („vajon …?”). Ha más elem kapcsolódik hozzá: tépelődés („azon gondolkodom”) és aggodalom („attól tartva, hogy …”).`,
     ],
     members: [
       [
@@ -465,7 +463,7 @@ export default [
     kind: `form`,
     title: `-지`,
     explanation: [
-      paragraph`A -지 a tő után áll, és a következő elemhez köti az igét: tagadáshoz (않다, 못하다, 말다), ellentéthez (-지만) vagy a hallgatóhoz forduló kérdéshez (-지요?, -지 않아요?).`,
+      paragraph`A ${korean('-지')} a tő után áll, és a következő elemhez köti az igét: tagadáshoz (${korean('않다, 못하다, 말다')}), ellentéthez (${korean('-지만')}) vagy a hallgatóhoz forduló kérdéshez (${korean('-지요?, -지 않아요?')}).`,
     ],
     members: [
       [
@@ -523,7 +521,7 @@ export default [
     kind: `form`,
     title: `-게`,
     explanation: [
-      paragraph`A -게 a tőből határozót csinál („…-an/-en, úgy, hogy …”). A 되다 („lesz”) igével „úgy alakul”, a 하다 („csinál”) igével „ráveszi, hogy …” lesz belőle.`,
+      paragraph`A ${korean('-게')} a tőből határozót csinál („…-an/-en, úgy, hogy …”). A ${korean('되다')} („lesz”) igével „úgy alakul”, a ${korean('하다')} („csinál”) igével „ráveszi, hogy …” lesz belőle.`,
     ],
     members: [
       [
@@ -554,7 +552,7 @@ export default [
     kind: `form`,
     title: `-아도/어도`,
     explanation: [
-      paragraph`Az -아도/어도 jelentése „még ha … is”. A 되다 („rendben van”) igével: „még ha megteszed is, rendben van”, azaz szabad.`,
+      paragraph`Az ${korean('-아도/어도')} jelentése „még ha … is”. A ${korean('되다')} („rendben van”) igével: „még ha megteszed is, rendben van”, azaz szabad.`,
     ],
     members: [
       [
@@ -576,7 +574,7 @@ export default [
     kind: `form`,
     title: `-는데/(으)ㄴ데`,
     explanation: [
-      paragraph`Ugyanaz a végződés háromféle szerepben: háttér, amire a folytatás épül; ellentét („de”); a mondat végén -요-val csodálkozás.`,
+      paragraph`Ugyanaz a végződés háromféle szerepben: háttér, amire a folytatás épül; ellentét („de”); a mondat végén ${korean('-요')}-val csodálkozás.`,
     ],
     members: [
       [

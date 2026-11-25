@@ -22,7 +22,9 @@ const { group, pointId } = Astro.props;
     </b>
   </summary>
   <div class="group-body">
-    <Blocks content={group.explanation} />
+    <div class="group-description">
+      <Blocks content={group.explanation} />
+    </div>
     <ul class="group-members">
       {group.members.map(([id, breakdown, hungarian, example]) => (
         <li class={id === pointId ? 'self' : undefined}>
