@@ -1,9 +1,10 @@
-// The store of the links between points, basic rules and honorific word cards. It is built once from the fields of the
+// The store of the links between points and the cards of the basic rules, honorific words and numbers. It is built once from the fields of the
 // content files: every reference() in a text, every "uses" of an example and every "references" list connects the two
 // cards in both directions ("Kapcsolódó pontok" bar).
 import { basicRules } from '../data/basics';
 import honorifics from '../data/honorifics';
-import type { BasicRule, CorrectIncorrect, HonorificCategory, ReferenceId } from '../data/types';
+import { numbersCards } from '../data/numbers';
+import type { ContentCard, CorrectIncorrect, HonorificCategory, ReferenceId } from '../data/types';
 import { POINTS_BY_ID, type PointInfo } from './content';
 import { exampleParts, exampleTexts, examplesOf, referencesOf, textsOf, type Content, type Text } from './richText';
 
@@ -44,6 +45,7 @@ const targets = new Map<string, ReferenceTarget>(
     ...honorifics.categories.map((category, index) =>
       chapterTarget(honorificCategoryId(index), 'Tiszteleti szavak', honorificCategoryTitle(category, index))
     ),
+    ...numbersCards.map(card => chapterTarget(card.id, 'Számok', card.title)),
   ].map(target => [target.id, target])
 );
 
@@ -90,10 +92,10 @@ export function pointSource(point: PointInfo): ReferenceSource {
   };
 }
 
-export const ruleSource = (rule: BasicRule): ReferenceSource => ({
-  id: rule.id,
-  texts: textsOf(rule.content),
-  ids: rule.references ?? [],
+export const cardSource = (card: ContentCard): ReferenceSource => ({
+  id: card.id,
+  texts: textsOf(card.content),
+  ids: card.references ?? [],
 });
 
 export const honorificSource = (category: HonorificCategory, index: number): ReferenceSource => ({
@@ -104,8 +106,9 @@ export const honorificSource = (category: HonorificCategory, index: number): Ref
 
 export const referenceSources = (): ReferenceSource[] => [
   ...[...POINTS_BY_ID.values()].map(pointSource),
-  ...basicRules.map(ruleSource),
+  ...basicRules.map(cardSource),
   ...honorifics.categories.map(honorificSource),
+  ...numbersCards.map(cardSource),
 ];
 
 // ---------- graph ----------
@@ -118,9 +121,12 @@ const references = buildReferences(referenceSources());
 /** The ids a card refers to. */
 export const referencesFrom = (id: ReferenceId): ReferenceId[] => [...(references.get(id) ?? [])];
 
-// Basic rules first, then the honorific words chapter, then the points.
-const orderOf = ({ id }: ReferenceTarget) =>
-  (id.startsWith('rule-') ? '0' : id.startsWith('honorific-category-') ? '1' : '2') + id;
+// The chapters first, in the order of the menu, then the points.
+const CHAPTER_PREFIXES = ['rule-', 'honorific-category-', 'numbers-'];
+const orderOf = ({ id }: ReferenceTarget) => {
+  const chapter = CHAPTER_PREFIXES.findIndex(prefix => id.startsWith(prefix));
+  return (chapter < 0 ? CHAPTER_PREFIXES.length : chapter) + id;
+};
 
 /** The "Kapcsolódó pontok" of a card: everything it refers to and everything that refers to it. */
 export function relatedTo(id: ReferenceId): ReferenceTarget[] {

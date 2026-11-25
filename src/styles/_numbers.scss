@@ -1,0 +1,30 @@
+@use "mixins" as *;
+
+.numbers-chapter {
+  > ul,
+  details.card > ul {
+    margin: 6px 0;
+  }
+
+  .korean {
+    word-break: keep-all;
+  }
+
+  // The tables have to fit on a phone: their last column is as important as the first one.
+  @include mobile {
+    table.plain {
+      th {
+        white-space: normal;
+      }
+
+      th,
+      td {
+        padding: 6px;
+      }
+
+      .translation {
+        min-width: 0;
+      }
+    }
+  }
+}

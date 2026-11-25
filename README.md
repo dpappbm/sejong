@@ -1,6 +1,6 @@
 # Sejong Korean grammar (1A–4B) in Hungarian
 
-All 188 grammar points of the 세종한국어 1A–4B textbooks (2022 edition), explained in Hungarian, with computed conjugation tables, translated examples, pronunciation rules and honorific words.
+All 188 grammar points of the 세종한국어 1A–4B textbooks (2022 edition), explained in Hungarian, with computed conjugation tables, translated examples, pronunciation rules, honorific words and numbers.
 
 Live site: https://dpappbm.github.io/sejong/
 

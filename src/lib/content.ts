@@ -98,6 +98,7 @@ export const CHAPTER_PATHS = {
   basics: '/basics/',
   pronunciation: '/pronunciation/',
   honorifics: '/honorifics/',
+  numbers: '/numbers/',
 } as const;
 
 export interface Location {
@@ -115,6 +116,7 @@ export function locate(id: ReferenceId): Location | null {
   if ((match = /^pronunciation-(.+)$/.exec(id))) return { path: CHAPTER_PATHS.pronunciation, anchor: match[1] };
   if ((match = /^honorific-category-(\d+)$/.exec(id)))
     return { path: CHAPTER_PATHS.honorifics, anchor: `category-${match[1]}` };
+  if ((match = /^numbers-(.+)$/.exec(id))) return { path: CHAPTER_PATHS.numbers, anchor: match[1] };
   return null;
 }
 

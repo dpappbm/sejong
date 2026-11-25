@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import groups from '../../src/data/groups';
 import pronunciation from '../../src/data/pronunciation';
 import type { RelatedGroup } from '../../src/data/types';
-import { LESSONS } from '../../src/lib/content';
+import { lessonId, LESSONS } from '../../src/lib/content';
 import {
   allTargets,
   buildReferences,
@@ -29,12 +29,15 @@ const sources = referenceSources();
 
 describe('references of the content', () => {
   it('lead to existing points, rules and chapter cards', () => {
-    const chapterIds = pronunciation.categories.map(category => `pronunciation-${category.id}`);
+    const pageIds: string[] = [
+      ...pronunciation.categories.map(category => `pronunciation-${category.id}`),
+      ...LESSONS.map(({ book, lesson }) => lessonId(book, lesson)),
+    ];
     const pronunciationIds = Object.values(pronunciation.lessons).flatMap(entry =>
       [entry.rule, entry.note ?? ''].flatMap(referencesOf)
     );
     const all = [...sources.flatMap(({ id }) => referencesFrom(id)), ...pronunciationIds];
-    expect(all.filter(id => !targetOf(id) && !chapterIds.includes(id))).toEqual([]);
+    expect(all.filter(id => !targetOf(id) && !pageIds.includes(id))).toEqual([]);
   });
 
   it('do not lead to the card they stand in', () => {
@@ -67,10 +70,11 @@ describe('relatedTo', () => {
     expect(oneWay).toEqual([]);
   });
 
-  it('lists the basic rules first, then the honorific words, then the points', () => {
+  it('lists the chapters first, in the order of the menu, then the points', () => {
     const order = relatedTo('1A-04-1').map(target => target.id);
     expect(order.slice(0, 3)).toEqual(['rule-2', 'rule-5', 'rule-8']);
     expect(relatedTo('2B-03-1').map(target => target.id)[0]).toMatch(/^honorific-category-/);
+    expect(relatedTo('1A-07-2').map(target => target.id)).toEqual(['numbers-date-and-time']);
   });
 });
 

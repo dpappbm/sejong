@@ -1,13 +1,15 @@
 // What the cards show must be what the store knows: the links of the rendered cards against the reference graph.
 import { experimental_AstroContainer as AstroContainer } from 'astro/container';
 import { describe, expect, it } from 'vitest';
-import RuleCard from '../../src/components/basics/RuleCard.astro';
+import ContentCard from '../../src/components/ContentCard.astro';
 import HonorificCategoryCard from '../../src/components/honorifics/HonorificCategoryCard.astro';
 import LessonPoint from '../../src/components/lessonpoint/LessonPoint.astro';
 import { basicRules } from '../../src/data/basics';
 import honorifics from '../../src/data/honorifics';
+import { numbersCards } from '../../src/data/numbers';
+import pronunciation from '../../src/data/pronunciation';
 import type { ReferenceId } from '../../src/data/types';
-import { hrefOf, LESSONS } from '../../src/lib/content';
+import { hrefOf, lessonId, LESSONS } from '../../src/lib/content';
 import { allTargets, honorificCategoryId, referencesFrom, relatedTo } from '../../src/lib/references';
 
 const container = await AstroContainer.create();
@@ -17,11 +19,16 @@ const render = async (id: ReferenceId, component: Parameters<typeof container.re
   cards.push({ id, html: await container.renderToString(component, { props: { ...props }, request }) });
 };
 for (const point of LESSONS.flatMap(lesson => lesson.points)) await render(point.id, LessonPoint, { point });
-for (const rule of basicRules) await render(rule.id, RuleCard, { rule });
+for (const card of [...basicRules, ...numbersCards]) await render(card.id, ContentCard, { card });
 for (const [index, category] of honorifics.categories.entries())
   await render(honorificCategoryId(index), HonorificCategoryCard, { category, index });
 
-const idByHref = new Map(allTargets().map(({ id }) => [hrefOf(id), id]));
+const linkableIds: ReferenceId[] = [
+  ...allTargets().map(({ id }) => id),
+  ...LESSONS.map(({ book, lesson }) => lessonId(book, lesson)),
+  ...pronunciation.categories.map(({ id }) => `pronunciation-${id}` as const),
+];
+const idByHref = new Map(linkableIds.map(id => [hrefOf(id), id]));
 /** The ids (or the unknown addresses) of the links of a kind on a card. */
 const linkedIds = ({ id, html }: (typeof cards)[number], className: string): string[] => {
   const page = hrefOf(id)!.split('#')[0];

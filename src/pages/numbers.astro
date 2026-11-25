@@ -1,0 +1,29 @@
+---
+import BackButton from '../components/BackButton.astro';
+import ContentCard from '../components/ContentCard.astro';
+import PageNavigation from '../components/PageNavigation.astro';
+import Blocks from '../components/text/Blocks.astro';
+import { numbersCards, numbersIntro } from '../data/numbers';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { CHAPTER_PATHS } from '../lib/content';
+---
+
+<BaseLayout
+  title="Számok – 한국어 문법"
+  pageLabel="Számok"
+  description="Koreai és kínai eredetű számok (수), nagy számok, számlálószavak, dátum és idő."
+>
+  <BackButton />
+  <PageNavigation path={CHAPTER_PATHS.numbers} />
+  <section class="chapter-section numbers-chapter">
+    <h2>
+      <span class="level-badge chapter-badge">#</span>
+      Számok <span class="korean">(수)</span> <span class="tag own">＋ Saját összeállítás</span>
+    </h2>
+    <Blocks content={numbersIntro} />
+    {numbersCards.map(card => (
+      <ContentCard card={card} />
+    ))}
+  </section>
+  <PageNavigation path={CHAPTER_PATHS.numbers} />
+</BaseLayout>
