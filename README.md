@@ -4,7 +4,7 @@ All 188 grammar points of the 세종한국어 1A–4B textbooks (2022 edition), 
 
 Live site: https://dpappbm.github.io/sejong/
 
-Built with [Astro](https://astro.build); every push to `main` is built and published by GitHub Actions.
+Built with [Astro](https://astro.build); every push to `main` is tested, built and published by GitHub Actions. If a check fails, the version published before stays online.
 
 ```
 npm install
