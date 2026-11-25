@@ -122,3 +122,11 @@ export function locate(id: string): Location | null {
 const BASE = (import.meta.env?.BASE_URL ?? '/').replace(/\/$/, '');
 /** A site path with the deploy base prepended. */
 export const withBase = (path: string) => BASE + path;
+
+/** The address of a global id as seen from the page at pagePath: on the same page only the anchor. */
+export function hrefFrom(id: string, pagePath: string): string | null {
+  const location = locate(id);
+  if (!location) return null;
+  if (location.path === pagePath) return `#${location.anchor}`;
+  return withBase(location.path) + (location.anchor ? '#' + location.anchor : '');
+}

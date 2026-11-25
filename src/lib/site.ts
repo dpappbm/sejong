@@ -2,7 +2,7 @@
 import { basicsHtml } from '../data/basics';
 import honorifics from '../data/honorifics';
 import pronunciation from '../data/pronunciation';
-import { CHAPTER_PATHS, LESSONS, locate, withBase, type LessonInfo, type PointInfo } from './content';
+import { CHAPTER_PATHS, hrefFrom, LESSONS, locate, withBase, type LessonInfo, type PointInfo } from './content';
 import {
   completeEdges,
   fillRelatedBars,
@@ -120,10 +120,8 @@ export function getSite(): SiteContent {
 export function localizeLinks(html: string, pagePath: string): string {
   return html
     .replace(/href="#([^"]+)"/g, (match, id: string) => {
-      const location = locate(id);
-      if (!location) return match;
-      if (location.path === pagePath) return `href="#${location.anchor}"`;
-      return `href="${withBase(location.path)}${location.anchor ? '#' + location.anchor : ''}"`;
+      const href = hrefFrom(id, pagePath);
+      return href ? `href="${href}"` : match;
     })
     .replace(/ id="([^"]+)"/g, (match, id: string) => {
       const location = locate(id);

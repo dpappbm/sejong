@@ -3,12 +3,13 @@ import { locate, type PointInfo } from '../../lib/content';
 import { relatedBar } from '../../lib/crossReferences';
 import { correctIncorrectList } from '../../lib/render/correctIncorrect';
 import { forwardMark } from '../../lib/render/forwardReferences';
-import { groupBoxesFor } from '../../lib/render/groups';
+import { groupsFor } from '../../lib/render/groups';
 import { linkPointText, localizePointLinks } from '../../lib/site';
 import { soundButton, withSoundButtons } from '../../lib/sound';
 import OwnTag from '../OwnTag.astro';
 import NounTable from './conjugationTable/NounTable.astro';
 import WordTable from './conjugationTable/WordTable.astro';
+import GroupBox from './groups/GroupBox.astro';
 import Honorifics from './honorific/Honorifics.astro';
 
 interface Props {
@@ -79,17 +80,18 @@ const linked = (html: string) => linkPointText(html, point.id);
     )}
     <Fragment set:html={linked(correctIncorrectList(point.correctIncorrect, point.book))} />
     {point.honorific && <Honorifics book={point.book} honorific={point.honorific} pointId={point.id} />}
-    {point.ownNote ? (
+    {point.ownNote && (
       <aside class="own">
         <div class="own-heading">
           <OwnTag label="＋ Saját kiegészítés" />
         </div>
         <Fragment set:html={linked(withSoundButtons(point.ownNote, point.book))} />
       </aside>
-    ) : (
-      ''
     )}
-    <Fragment set:html={local(groupBoxesFor(point.id))} />
+
+    {groupsFor(point.id).map(group => (
+      <GroupBox group={group} pointId={point.id} />
+    ))}
     <Fragment set:html={local(relatedBar(point.id))} />
   </div>
 </article>

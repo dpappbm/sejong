@@ -1,0 +1,22 @@
+---
+import { hrefFrom, locate, POINTS_BY_ID } from '../../../lib/content';
+
+interface Props {
+  id: string;
+  pointId: string;
+}
+
+const { id, pointId } = Astro.props;
+
+const point = POINTS_BY_ID.get(id);
+const reference = point ? `${point.book} ${point.lesson}/${point.point}` : id;
+const form = point?.form ?? id;
+---
+
+{id === pointId ? (
+  <b class="korean group-self">{form}</b>
+) : (
+  <a class="group-link korean" href={hrefFrom(id, locate(pointId)!.path)} title={reference}>
+    {form}
+  </a>
+)}

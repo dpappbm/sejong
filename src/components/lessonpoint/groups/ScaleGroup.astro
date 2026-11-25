@@ -1,0 +1,61 @@
+---
+import type { ScaleGroup } from '../../../data/types';
+import OwnTag from '../../OwnTag.astro';
+import CorrectIncorrectList from '../../shared/CorrectIncorrectList.astro';
+import GroupItem from './GroupItem.astro';
+
+interface Props {
+  group: ScaleGroup;
+  pointId: string;
+}
+
+const { group, pointId } = Astro.props;
+---
+
+<details class="own related-group">
+  <summary>
+    <span class="disclosure-arrow" aria-hidden="true"></span>
+    <OwnTag /> <b>Rokon szerkezetek: {group.title}</b>
+  </summary>
+  <div class="group-body">
+    <div class="group-scale">
+      {group.scale.map(([id, label], index) => (
+        <span class="group-pair">
+          {index > 0 && (
+            <span class="group-less-than" aria-hidden="true">
+              {group.unordered ? '·' : '<'}
+            </span>
+          )}
+          <span class={'group-step' + (id === pointId ? ' self' : '')}>
+            <GroupItem id={id} pointId={pointId} />
+            <small>{label}</small>
+          </span>
+        </span>
+      ))}
+    </div>
+    <Fragment set:html={group.explanation} />
+    {group.examples && (
+      <ul class="examples group-examples">
+        {group.examples.map(([korean, hungarian]) => (
+          <li>
+            <span class="korean">{korean}</span>
+            <span class="hungarian">{hungarian}</span>
+          </li>
+        ))}
+      </ul>
+    )}
+    {group.correctIncorrect && <CorrectIncorrectList items={group.correctIncorrect} />}
+    {group.side && (
+      <>
+        <p class="group-side-heading">Mellékágak:</p>
+        <ul class="group-side">
+          {group.side.map(([id, text]) => (
+            <li>
+              <GroupItem id={id} pointId={pointId} /> – <Fragment set:html={text} />
+            </li>
+          ))}
+        </ul>
+      </>
+    )}
+  </div>
+</details>

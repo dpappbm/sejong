@@ -1,0 +1,46 @@
+---
+import type { FormGroup } from '../../../data/types';
+import OwnTag from '../../OwnTag.astro';
+import GroupItem from './GroupItem.astro';
+
+interface Props {
+  group: FormGroup;
+  pointId: string;
+}
+
+const { group, pointId } = Astro.props;
+---
+
+<details class="own related-group form-group">
+  <summary>
+    <span class="disclosure-arrow" aria-hidden="true"></span>
+    <OwnTag />{' '}
+    <b>
+      Közös építőelem: <span class="korean">{group.title}</span>
+    </b>
+  </summary>
+  <div class="group-body">
+    <Fragment set:html={group.explanation} />
+    <ul class="group-members">
+      {group.members.map(([id, breakdown, hungarian, example]) => (
+        <li class={id === pointId ? 'self' : undefined}>
+          <GroupItem id={id} pointId={pointId} />{' '}
+          <span class="group-breakdown">
+            = <Fragment set:html={breakdown} />
+          </span>{' '}
+          <span class="hungarian">– {hungarian}</span>
+          {example && (
+            <div class="group-member-example">
+              <span class="korean">
+                <Fragment set:html={example[0]} />
+              </span>{' '}
+              <span class="hungarian">
+                – <Fragment set:html={example[1]} />
+              </span>
+            </div>
+          )}
+        </li>
+      ))}
+    </ul>
+  </div>
+</details>
