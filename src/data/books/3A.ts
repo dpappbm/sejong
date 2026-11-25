@@ -798,9 +798,11 @@ ${exampleList([
     point: 1,
     form: '-다 보면',
     name: '„ha az ember sokáig …, (előbb-utóbb) …”',
-    explanation: `<p>Ige után azt fejezi ki, hogy ha egy cselekvést <b>folyamatosan, sokáig</b> végzünk, akkor <b>rájövünk</b> valamire vagy <b>új állapotba</b> kerülünk. A tő végétől függetlenül ${korean('-다 보면')}. Múltbeli tapasztalatra: ${korean('-다 보니까')} („ahogy …, rájöttem / úgy alakult, hogy …”).</p>`,
+    explanation: `<p>Ige után azt fejezi ki, hogy ha egy cselekvést <b>folyamatosan, sokáig</b> végzünk, akkor <b>rájövünk</b> valamire vagy <b>új állapotba</b> kerülünk. A tő végétől függetlenül ${korean('-다 보면')}; a ${korean('-다가 보면')} rövidült alakja.</p>
+<ul><li>${korean('-다 보면')} + <b>jelen</b> vagy <b>jövő</b>: ami általában így van, vagy várhatóan így lesz</li><li>${korean('-다 보니까')} + <b>múlt</b>: ami már megtörtént („ahogy …, rájöttem / úgy alakult, hogy …”)</li></ul>`,
     table: {
       sampleSet: 'verbs',
+      words: VERBS_WITH_BODA,
       columns: [
         {
           header: '-다 보면',
@@ -818,14 +820,49 @@ ${exampleList([
         'Ha sokáig nézel koreai sorozatokat, fejlődni fog a koreaid.',
       ],
       ['열심히 연습하<b>다 보면</b> 잘하게 될 거예요.', 'Ha sokat gyakorolsz, előbb-utóbb jól fog menni.'],
+      [
+        '이야기를 하<b>다 보면</b> 시간 가는 것을 몰라요.',
+        'Ha az ember beszélget, észre sem veszi, hogy múlik az idő.',
+      ],
+      [
+        '한국에서 살<b>다 보면</b> 한국 문화에 익숙해져요.',
+        'Ha az ember Koreában él, idővel hozzászokik a koreai kultúrához.',
+        'ㄹ-tő: -다 előtt az ㄹ megmarad: 살다 보면',
+      ],
       ['혼자 살<b>다 보니까</b> 요리를 잘하게 됐어요.', 'Ahogy egyedül éltem, megtanultam jól főzni.'],
+      [
+        '외국어를 배우<b>다 보니까</b> 다른 나라의 문화를 더 잘 이해하게 됐어요.',
+        'Ahogy idegen nyelvet tanultam, jobban megértettem más országok kultúráját.',
+      ],
       [
         '매일 듣<b>다 보니까</b> 그 노래가 좋아졌어요.',
         'Ahogy minden nap hallgattam, megszerettem azt a dalt.',
         '-다 előtt nincs ㄷ-változás: 듣다 보니까',
       ],
     ],
-    ownNote: `<p>A ${korean('-다 보니까')} és a ${korean('-아/어 보니까')} (3A 5. lecke) is a felfedezést jelölő ${korean('-(으)니까')}-ra (2B 7. lecke) épül: „…, és rájöttem”. A különbség az, <b>hogyan</b> jutottunk a felismeréshez:</p>
+    ownNote: `<p><b>Ugyanaz a folyamat, más idő:</b></p>
+${comparisonTable(
+  ['-다 보면 + jelen, jövő', '-다 보니까 + múlt'],
+  [
+    [
+      ['운동을 하다 보면 건강이 좋아져요.', 'Ha az ember sportol, idővel egészségesebb lesz.', 'általában így van'],
+      ['운동을 하다 보니까 건강이 좋아졌어요.', 'Ahogy sportoltam, egészségesebb lettem.', 'így történt'],
+    ],
+    [
+      [
+        '이 길로 쭉 가다 보면 큰 공원이 나올 거예요.',
+        'Ha végigmegy ezen az úton, egy nagy parkhoz fog érni.',
+        'útbaigazítás',
+      ],
+      [
+        '큰 길로 쭉 가다 보니까 큰 공원이 나왔어요.',
+        'Ahogy végigmentem a nagy úton, egy nagy parkhoz értem.',
+        'elmesélés',
+      ],
+    ],
+  ]
+)}
+<p>A ${korean('-다 보니까')} és a ${korean('-아/어 보니까')} (3A 5. lecke) is a felfedezést jelölő ${korean('-(으)니까')}-ra (2B 7. lecke) épül: „…, és rájöttem”. A különbség az, <b>hogyan</b> jutottunk a felismeréshez:</p>
 <ul><li>Kipróbáltam, és kiderült? → ${korean('-아/어 보니까')}</li><li>Sokáig vagy újra meg újra csináltam, és közben így alakult? → ${korean('-다 보니까')}</li></ul>
 ${simpleTable(
   ['', '-아/어 보니까', '-다 보니까'],
@@ -908,6 +945,12 @@ ${exampleList([
         translation: 'Ha sokat gyakorolsz, előbb-utóbb jól fog menni.',
         note: 'jövőre -다 보면',
       },
+      { incorrect: '재미로 하다 보면 요리 실력이 많이 늘었어요.', reason: 'a -다 보면 után nem állhat múlt idő' },
+      {
+        correct: '재미로 하다 보니까 요리 실력이 많이 늘었어요.',
+        translation: 'Csak kedvtelésből csináltam, és közben sokat fejlődött a főzőtudásom.',
+        note: 'megtörtént dologra -다 보니까',
+      },
       { incorrect: '매일 걸었다 보니까 건강해졌어요.', reason: 'a -다 elé nem kerül múlt idő' },
       { correct: '매일 걷다 보니까 건강해졌어요.', translation: 'Ahogy minden nap sétáltam, egészségesebb lettem.' },
       { incorrect: '요즘 바빠 보니까 연락을 못 했어요.', reason: 'melléknévnél nincs próba: ok, tehát -다 보니까' },
@@ -922,13 +965,18 @@ ${exampleList([
     point: 2,
     form: '-더라고요',
     name: '„azt tapasztaltam, hogy …” (saját élmény felidézése)',
-    explanation: `<p>Ige vagy melléknév után a beszélő a <b>múltban közvetlenül látott, megtapasztalt</b> dolgot idézi fel és meséli el: „(láttam, és) tényleg …”. A tő végétől függetlenül ${korean('-더라고요')}.</p>`,
+    explanation: `<p>Ige, melléknév vagy főnév után a beszélő a <b>múltban közvetlenül látott, megtapasztalt</b> dolgot idézi fel és meséli el: „(láttam, és) tényleg …”.</p>
+<ul><li><b>Ige, melléknév</b>: a tő végétől függetlenül ${korean('-더라고요')}, ha akkor és ott <b>éppen azt</b> láttam, éreztem</li><li><b>Múlt</b>: ${korean('-았더라고요/었더라고요')}, ha a cselekvés már lezajlott, és csak az <b>eredményét</b> vettem észre</li><li><b>Főnév</b>: 받침 után ${korean('-이더라고요')} (${korean('곡이더라고요, 느낌이더라고요')}), magánhangzó után ${korean('-더라고요')} (${korean('친구더라고요, 드라마더라고요')})</li><li>Barátok között (반말): ${korean('-더라고')}</li></ul>`,
     table: {
       sampleSet: 'verbsAndAdjectives',
       columns: [
         {
           header: '-더라고요',
           conjugate: word => withPlainStem(word, '더라고요'),
+        },
+        {
+          header: 'Múlt: -았더라고요/었더라고요',
+          conjugate: word => withPast(word, '더라고요'),
         },
       ],
     },
@@ -941,8 +989,76 @@ ${exampleList([
         'Tegnap ott voltam, és tényleg nagyon meleg volt.',
         '-더라고요 előtt nincs ㅂ-változás: 덥더라고요',
       ],
+      ['주노 씨가 오늘 출근을 안 <b>했더라고요</b>.', 'Észrevettem, hogy Dzsuno ma nem jött be dolgozni.'],
+      [
+        '어제 사무실 앞에서 큰 사고가 <b>났더라고</b>.',
+        'Láttam, hogy tegnap nagy baleset történt az iroda előtt.',
+        '반말, múlt',
+      ],
+      [
+        '어제 들은 노래는 제가 아는 곡이<b>더라고요</b>.',
+        'Kiderült, hogy ismerem a tegnap hallott dalt.',
+        'főnév: 곡 → 곡이더라고요',
+      ],
     ],
-    ownNote: `<p>Saját cselekvésünkről általában nem mondjuk (${korean('제가 먹더라고요')} furcsa), csak arról, amit <b>megfigyeltünk</b>; saját érzésről viszont igen: ${korean('저는 그 영화가 슬프더라고요')}.</p>`,
+    ownNote: `<p><b>Ki lehet az alany?</b> Csak azt mondhatjuk így, amit <b>megfigyeltünk</b> vagy <b>magunk átéltünk</b>:</p>
+${simpleTable(
+  ['', 'én', 'más'],
+  [
+    ['Ige, jelen', '❌ nem látom magam', '✅ láttam'],
+    ['Ige, múlt', '✅ visszanézve', '✅ utólag láttam'],
+    ['Érzést, benyomást jelentő melléknév', '✅ átéltem', '❌ nem én éltem át'],
+  ]
+)}
+<p>A melléknév tilalma csak arra vonatkozik, amit a másik <b>érez</b>. Dologról vagy látható tulajdonságról jó:</p>
+${exampleList([
+  ['새로 생긴 식당이 맛있더라고요.', 'Finom az új étterem (kipróbáltam).'],
+  ['안나 씨가 키가 크더라고요.', 'Láttam, hogy Anna magas.'],
+])}
+<p>Ha a másik érzése <b>kívülről látszik</b>, a melléknévből ${korean('-아/어하다')} igét képezünk: ${korean('반갑다 → 반가워하다')} „örül, kimutatja az örömét”.</p>
+<p>A ${korean('저는/나는')} témaként állhat az elején, ha a megfigyelt dolog alanya más:</p>
+${exampleList([
+  [
+    '나는 도서관보다 카페가 집중이 잘 되더라고.',
+    'Azt tapasztaltam, hogy kávézóban jobban tudok koncentrálni, mint a könyvtárban.',
+    '반말; a 되더라고 alanya a 집중',
+  ],
+])}
+<p>Ha nem mi tapasztaltuk, csak <b>hallottuk</b>, ${korean('-는다고/ㄴ다고/다고 하다')} (3A 2. lecke) kell: ${korean('맛있더라고요')} „finom volt (kóstoltam)”, ${korean('맛있다고 해요')} „azt mondják, finom”.</p>`,
+    correctIncorrect: [
+      { incorrect: '저는 주말에 쇼핑몰에 가더라고요.', reason: 'a saját cselekvésemet nem figyelhetem kívülről' },
+      {
+        correct: '안나 씨가 주말에 쇼핑몰에 가더라고요.',
+        translation: 'Láttam, hogy Anna a hétvégén a plázába ment.',
+        note: 'mást figyeltem meg',
+      },
+      {
+        correct: '저는 일 년 동안 많은 일을 했더라고요.',
+        translation: 'Visszanézve látom, hogy egy év alatt sok mindent csináltam.',
+        note: 'múlt idővel saját magamról is',
+      },
+      {
+        correct: '안나 씨가 일 년 동안 많은 일을 했더라고요.',
+        translation: 'Észrevettem, hogy Anna egy év alatt sok mindent csinált.',
+      },
+      {
+        correct: '주노 씨를 만나서 반갑더라고요.',
+        translation: 'Örültem, hogy találkoztam Dzsunóval.',
+        note: 'a saját érzésem',
+      },
+      { incorrect: '안나 씨가 주노 씨를 만나서 반갑더라고요.', reason: 'más érzését nem élhetem át' },
+      {
+        correct: '안나 씨가 주노 씨를 만나서 반가워하더라고요.',
+        translation: 'Láttam, hogy Anna örült, amikor találkozott Dzsunóval.',
+        note: '-아/어하다: kívülről látható érzés',
+      },
+      {
+        correct: '새로운 식당에 갔는데 맛있더라고요.',
+        translation: 'Voltam egy új étteremben, és finom volt.',
+        note: 'én kóstoltam',
+      },
+      { incorrect: '안나 씨가 새로운 식당에 갔는데 맛있더라고요.', reason: 'Anna kóstolta, nem én' },
+    ],
   },
   {
     lesson: 12,
