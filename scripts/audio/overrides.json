@@ -48,6 +48,47 @@
       "F5": { "method": "plain", "speed": 0.7, "seed": 2 }
     },
     "마크 씨가 요즘 바쁜가 봐요. 연락이 없어요.": { "F5": { "speed": 0.8 }, "M4": { "speed": 0.8 } },
-    "싸고 예쁜 옷을 사려면 학교 근처에 있는 옷 가게에 가 보세요.": { "F5": { "speed": 0.8 } }
+    "싸고 예쁜 옷을 사려면 학교 근처에 있는 옷 가게에 가 보세요.": { "F5": { "speed": 0.8 } },
+    "한국 드라마를 계속 보다 보면 한국어 실력이 늘 거예요.": {
+      "F1": { "method": "plain", "speed": 0.85, "seed": 2 },
+      "F5": { "method": "plain", "speed": 0.8, "seed": 5 }
+    },
+    "외국어를 배우다 보니까 다른 나라의 문화를 더 잘 이해하게 됐어요.": {
+      "F1": { "method": "plain", "speed": 0.75, "seed": 4 }
+    },
+    "안나 씨가 키가 크더라고요.": {
+      "F5": { "method": "plain", "speed": 0.7, "seed": 4 },
+      "M4": { "method": "plain", "speed": 0.7, "seed": 5 }
+    },
+    "안나 씨가 주말에 쇼핑몰에 가더라고요.": {
+      "F1": { "method": "plain", "speed": 0.9, "seed": 4 },
+      "F5": { "method": "plain", "speed": 0.85, "seed": 3 },
+      "M4": { "method": "plain", "speed": 0.85, "seed": 5 },
+      "M2": { "method": "plain", "speed": 0.9, "seed": 15 }
+    },
+    "안나 씨가 일 년 동안 많은 일을 했더라고요.": {
+      "F5": { "method": "plain", "speed": 0.8, "seed": 2 },
+      "M2": { "method": "plain", "speed": 0.8, "seed": 4 }
+    },
+    "안나 씨가 주노 씨를 만나서 반가워하더라고요.": {
+      "F1": { "method": "plain", "speed": 0.85, "seed": 2 },
+      "F5": { "method": "plain", "speed": 0.8, "seed": 3 },
+      "M4": { "method": "plain", "speed": 0.8, "seed": 4 },
+      "M2": { "method": "plain", "speed": 0.8, "seed": 2 }
+    },
+    "스트레스가 풀리다": {
+      "F5": { "method": "plain", "speed": 0.7, "seed": 3 },
+      "M4": { "method": "plain", "speed": 0.7, "seed": 2 },
+      "M2": { "method": "plain", "speed": 0.7, "seed": 3 }
+    },
+    "뿌듯한 기분이 들다": {
+      "F5": { "method": "plain", "speed": 0.7, "seed": 2 },
+      "M4": { "method": "plain", "speed": 0.7, "seed": 2 }
+    },
+    "일상에서 벗어나다": {
+      "F5": { "method": "plain", "speed": 0.7, "seed": 2 },
+      "M4": { "method": "plain", "speed": 0.7, "seed": 5 },
+      "M2": { "method": "plain", "speed": 0.7, "seed": 3 }
+    }
   }
 }
