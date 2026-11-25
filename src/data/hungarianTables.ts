@@ -187,7 +187,10 @@ export default {
     { verb: 'ha sokat {presentFirstSingular}, (idővel) …' },
     { verb: 'ahogy sokat {pastFirstSingular}, (rájöttem) …' },
   ],
-  '3A-11-2': [{ verb: 'azt tapasztaltam, hogy {presentThirdSingular}', adjective: 'azt tapasztaltam, hogy {base}' }],
+  '3A-11-2': [
+    { verb: 'azt tapasztaltam, hogy {presentThirdSingular}', adjective: 'azt tapasztaltam, hogy {base}' },
+    { verb: 'azt vettem észre, hogy (már) {pastThirdSingular}', adjective: 'azt vettem észre, hogy {base} volt' },
+  ],
   '3A-12-1': [
     { verb: '{presentFirstSingular} (írott stílus)', adjective: '{base} (írott stílus)' },
     { verb: '{pastFirstSingular}', adjective: '{base} volt' },
