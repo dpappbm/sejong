@@ -28,6 +28,11 @@ body {
   font-family: $korean-fonts;
 }
 
+.muted-note {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
 a {
   color: inherit;
 }

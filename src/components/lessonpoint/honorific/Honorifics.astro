@@ -1,0 +1,43 @@
+---
+import type { Honorific } from '../../../data/types';
+import type { PointInfo } from '../../../lib/content';
+import OwnTag from '../../OwnTag.astro';
+import CorrectIncorrectList from '../../shared/CorrectIncorrectList.astro';
+import Blocks from '../../text/Blocks.astro';
+import ExampleList from '../../text/ExampleList.astro';
+import HonorificsRowItem from './HonorificsRowItem.astro';
+
+interface Props {
+  honorific: Honorific;
+  point: PointInfo;
+}
+
+const { honorific, point } = Astro.props;
+---
+
+<section class="honorific">
+  <h5>
+    Tiszteleti alak <OwnTag />
+  </h5>
+  {!!honorific.rows?.length && (
+    <div class="table-wrapper">
+      <table class="conjugation-table honorific-table">
+        <thead>
+          <tr>
+            <th>Alap</th>
+            <th aria-hidden="true"></th>
+            <th>Tiszteleti</th>
+          </tr>
+        </thead>
+        <tbody>
+          {honorific.rows.map(item => (
+            <HonorificsRowItem item={item} />
+          ))}
+        </tbody>
+      </table>
+    </div>
+  )}
+  {honorific.note && <Blocks content={honorific.note} />}
+  {honorific.examples && <ExampleList items={honorific.examples} place={point} />}
+  {honorific.correctIncorrect && <CorrectIncorrectList items={honorific.correctIncorrect} place={point} />}
+</section>

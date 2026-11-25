@@ -1,0 +1,45 @@
+---
+import type { Example } from '../../data/types';
+import { exampleParts } from '../../lib/richText';
+import RichText from './RichText.astro';
+
+interface Props {
+  patterns: [string, string];
+  rows: [Example, Example][];
+}
+
+const { patterns, rows } = Astro.props;
+---
+
+<div class="table-wrapper">
+  <table class="plain comparison-table">
+    <thead>
+      <tr>
+        {patterns.map(pattern => (
+          <th>{pattern}</th>
+        ))}
+      </tr>
+    </thead>
+    <tbody>
+      {rows.map(row => (
+        <tr>
+          {row.map(exampleParts).map(({ korean, hungarian, note }, index) => (
+            <td data-label={patterns[index]}>
+              <span class="korean">
+                <RichText content={korean} />
+              </span>
+              <span class="hungarian">
+                <RichText content={hungarian} />
+              </span>
+              {note && (
+                <span class="irregular-note">
+                  <RichText content={note} />
+                </span>
+              )}
+            </td>
+          ))}
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>

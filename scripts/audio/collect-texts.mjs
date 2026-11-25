@@ -5,7 +5,7 @@
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { parseArgs } from 'node:util';
 import { runnerImport } from 'vite';
-import { audioId, plainText, spokenText } from './spoken-text.mjs';
+import { audioId, oneLine, spokenText } from './spoken-text.mjs';
 
 const directory = new URL('./', import.meta.url);
 const { values: options } = parseArgs({ options: { book: { type: 'string', default: '3A' } } });
@@ -14,37 +14,28 @@ const { book } = options;
 const load = async path =>
   (await runnerImport(path, { root: process.cwd(), configFile: false, logLevel: 'error' })).module;
 const { BOOK_DATA } = await load('/src/lib/content.ts');
+const { examplesOf, plainText } = await load('/src/lib/richText.ts');
 const { default: vocabulary } = await load('/src/data/vocabulary/index.ts');
 const { default: pronunciation } = await load('/src/data/pronunciation.ts');
 const { spokenForms } = JSON.parse(readFileSync(new URL('overrides.json', directory), 'utf8'));
 
 if (!BOOK_DATA[book]) throw new Error(`Unknown book: ${book}`);
 
-/** The items of the example lists (exampleList() in src/lib/html.ts) of an own note. */
-function exampleListItems(html) {
-  return [...html.matchAll(/<ul class="examples">(.*?)<\/ul>/gs)].flatMap(([, list]) =>
-    [
-      ...list.matchAll(/<li><span class="korean">(.*?)<\/span><span class="hungarian">(.*?)<\/span>(?=<span|<\/li>)/gs),
-    ].map(([, korean, hungarian]) => [korean, hungarian])
-  );
-}
-
 const entries = [];
 const add = (source, lesson, korean, hungarian, pronunciationText) =>
   entries.push({
     source,
     lesson,
-    text: plainText(korean),
-    hungarian: plainText(hungarian ?? ''),
+    text: oneLine(plainText(korean)),
+    hungarian: oneLine(plainText(hungarian)),
     ...(pronunciationText?.length ? { pronunciation: [pronunciationText].flat().join(' → ') } : {}),
-    korean,
   });
 
 for (const point of BOOK_DATA[book].points) {
   const examples = [...(point.examples ?? []), ...(point.honorific?.examples ?? [])];
   for (const [korean, hungarian] of examples) add('example', point.lesson, korean, hungarian);
-  for (const [korean, hungarian] of exampleListItems(point.ownNote ?? ''))
-    add('ownNote', point.lesson, korean, hungarian);
+  const ownLists = (point.ownNote ?? []).filter(block => block.kind === 'examples');
+  for (const [korean, hungarian] of examplesOf(ownLists)) add('ownNote', point.lesson, korean, hungarian);
   for (const sample of [...(point.correctIncorrect ?? []), ...(point.honorific?.correctIncorrect ?? [])])
     if ('correct' in sample) add('correct', point.lesson, sample.correct, sample.translation);
 }
@@ -57,9 +48,9 @@ for (const lesson of Object.keys(BOOK_DATA[book].lessons).map(Number)) {
 
 const problems = [];
 const texts = new Map();
-for (const { korean, ...entry } of entries) {
+for (const entry of entries) {
   try {
-    const spoken = spokenText(korean, spokenForms);
+    const spoken = spokenText(entry.text, spokenForms);
     const id = audioId(spoken);
     if (!texts.has(id)) texts.set(id, { id, spoken, uses: [] });
     if (texts.get(id).spoken !== spoken)

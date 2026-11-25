@@ -1,11 +1,16 @@
+import { bold, korean, list, paragraph, reference, text } from '../lib/richText';
 import type { HonorificsData } from './types';
 
 export default {
-  intro: `<p>A koreai a tiszteletet a <b>-(으)시-</b> végződésen túl <b>külön szavakkal</b> is kifejezi. Ez a gyűjtemény ezeket a párokat veszi sorra:</p>
-<ul><li><b>tiszteleti szó</b> a tisztelt személyre és arra, amit ő tesz: ${'<span class="korean">자다 → 주무시다, 집 → 댁</span>'};</li>
-<li><b>szerény alak</b> magunkra és arra, amit mi teszünk a tisztelt személy felé: ${'<span class="korean">주다 → 드리다, 나 → 저</span>'};</li>
-<li><b>megszólítás</b>: kinek mit mondunk a „te/Ön” helyett.</li></ul>
-<p>A „Leckék” oszlop linkjei arra a nyelvtani pontra visznek, ahol a könyv az alakot tanítja.</p>`,
+  intro: [
+    paragraph`A koreai a tiszteletet a ${bold('-(으)시-')} végződésen túl ${bold('külön szavakkal')} is kifejezi. Ez a gyűjtemény ezeket a párokat veszi sorra:`,
+    list(
+      text`${bold('tiszteleti szó')} a tisztelt személyre és arra, amit ő tesz: ${korean('자다 → 주무시다, 집 → 댁')};`,
+      text`${bold('szerény alak')} magunkra és arra, amit mi teszünk a tisztelt személy felé: ${korean('주다 → 드리다, 나 → 저')};`,
+      text`${bold('megszólítás')}: kinek mit mondunk a „te/Ön” helyett.`
+    ),
+    paragraph`A „Leckék” oszlop linkjei arra a nyelvtani pontra visznek, ahol a könyv az alakot tanítja.`,
+  ],
   categories: [
     {
       hungarian: 'Partikulák',
@@ -150,12 +155,16 @@ export default {
           references: [],
         },
       ],
-      note: `<p>A többi igénél és melléknévnél elég a szabályos <span class="korean">-(으)시-</span>: <span class="korean">가다 → 가세요, 읽다 → 읽으세요</span> ([[2B-03-1]]).</p>`,
+      note: [
+        paragraph`A többi igénél és melléknévnél elég a szabályos ${korean('-(으)시-')}: ${korean('가다 → 가세요, 읽다 → 읽으세요')} (${reference('2B-03-1', '2B 3/1')}).`,
+      ],
     },
     {
       hungarian: 'Szerény alakok',
       korean: '겸양 표현',
-      intro: `<p>Ezekkel <b>magunkat</b> tesszük „kisebbé”: amikor mi teszünk valamit egy tisztelt személyért vagy felé. Magunkra soha nem használunk tiszteleti szót.</p>`,
+      intro: [
+        paragraph`Ezekkel ${bold('magunkat')} tesszük „kisebbé”: amikor mi teszünk valamit egy tisztelt személyért vagy felé. Magunkra soha nem használunk tiszteleti szót.`,
+      ],
       rows: [
         {
           base: ['나 / 우리', 'én / mi'],
@@ -200,7 +209,9 @@ export default {
           references: [],
         },
       ],
-      note: `<p>A <span class="korean">저희</span> („mi”) csak akkor áll, ha a megszólított nem tartozik bele; ha ő is a „mi” része, <span class="korean">우리</span> marad.</p>`,
+      note: [
+        paragraph`A ${korean('저희')} („mi”) csak akkor áll, ha a megszólított nem tartozik bele; ha ő is a „mi” része, ${korean('우리')} marad.`,
+      ],
     },
     {
       hungarian: 'Megszólítás',
@@ -252,7 +263,9 @@ export default {
           references: [],
         },
       ],
-      note: `<p>Koreaiul nincs olyan „Ön”, amit bárkinek mondhatunk. Udvariasan a megszólított <b>címét vagy nevét</b> ismételjük, vagy egyszerűen elhagyjuk a „te/Ön”-t.</p>`,
+      note: [
+        paragraph`Koreaiul nincs olyan „Ön”, amit bárkinek mondhatunk. Udvariasan a megszólított ${bold('címét vagy nevét')} ismételjük, vagy egyszerűen elhagyjuk a „te/Ön”-t.`,
+      ],
       correctIncorrect: [
         { correct: '선생님, 이거 선생님 가방이세요?', translation: 'Tanár úr, ez az Ön táskája?' },
         { incorrect: '당신 가방이에요?', reason: 'idegennek, tanárnak sértő' },

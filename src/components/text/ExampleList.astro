@@ -1,0 +1,19 @@
+---
+import type { Example } from '../../data/types';
+import type { TextPlace } from '../../lib/richText';
+import ExampleItem from './ExampleItem.astro';
+
+interface Props {
+  items: Example[];
+  /** With a place, the Korean sentences get a play button. */
+  place?: TextPlace;
+}
+
+const { items, place } = Astro.props;
+---
+
+<ul class="examples">
+  {items.map(item => (
+    <ExampleItem item={item} place={place} />
+  ))}
+</ul>

@@ -1,0 +1,24 @@
+---
+// The play button of a Korean text of a book; nothing if there is no sound for it.
+import { plainText, type Text } from '../lib/richText';
+import { soundOf } from '../lib/sound';
+
+interface Props {
+  korean: Text;
+  book?: string;
+}
+
+const { korean, book } = Astro.props;
+const sound = soundOf(korean, book);
+---
+
+{sound && (
+  <button
+    class="sound-button"
+    type="button"
+    data-sound={sound.id}
+    data-without={sound.without.join(' ') || undefined}
+    aria-label={`Meghallgatás: ${plainText(korean)}`}
+    title="Meghallgatás (gépi hang)"
+  />
+)}

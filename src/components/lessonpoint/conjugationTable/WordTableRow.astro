@@ -1,0 +1,45 @@
+---
+import type { WordColumn } from '../../../data/types';
+import { stemTypeLabel, type Word, type WordClass } from '../../../lib/conjugation';
+import { columnTranslations, conjugatedForm } from '../../../lib/conjugationTable';
+import { lexiconEntry } from '../../../lib/translations';
+import TranslatedCell from './TranslatedCell.astro';
+
+interface Props {
+  columns: WordColumn[];
+  word: Word;
+  key: string;
+}
+
+const { columns, word, key } = Astro.props;
+
+const WORD_CLASS_LABELS: Record<WordClass, string> = { adjective: 'mn.', verb: 'ige', noun: '' };
+const translations = columnTranslations(key) ?? [];
+const gloss = lexiconEntry(word.dictionaryForm)?.hungarian;
+const label = WORD_CLASS_LABELS[word.wordClass];
+---
+
+<tr>
+  <td>
+    <span class="korean">{word.dictionaryForm}</span>
+    {gloss && <span class="translation">{gloss}</span>}
+  </td>
+  <td>
+    {stemTypeLabel(word)}
+    {label && (
+      <>
+        {' '}
+        <small>({label})</small>
+      </>
+    )}
+  </td>
+  {columns.map((column, index) => (
+    <td>
+      <TranslatedCell
+        korean={conjugatedForm(column, word)}
+        dictionaryForm={word.dictionaryForm}
+        translation={translations[index]}
+      />
+    </td>
+  ))}
+</tr>

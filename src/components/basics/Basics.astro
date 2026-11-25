@@ -1,0 +1,8 @@
+---
+import { basicRules } from '../../data/basics';
+import RuleCard from './RuleCard.astro';
+---
+
+{basicRules.map(rule => (
+  <RuleCard rule={rule} />
+))}

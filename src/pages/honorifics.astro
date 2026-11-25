@@ -1,11 +1,11 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import BackButton from '../components/BackButton.astro';
+import HonorificCategoryCard from '../components/honorifics/HonorificCategoryCard.astro';
 import PageNavigation from '../components/PageNavigation.astro';
+import Blocks from '../components/text/Blocks.astro';
+import honorifics from '../data/honorifics';
 import { CHAPTER_PATHS } from '../lib/content';
-import { getSite, localizeLinks } from '../lib/site';
-
-const html = localizeLinks(getSite().honorificsHtml, CHAPTER_PATHS.honorifics);
 ---
 
 <BaseLayout
@@ -17,12 +17,13 @@ const html = localizeLinks(getSite().honorificsHtml, CHAPTER_PATHS.honorifics);
   <PageNavigation path={CHAPTER_PATHS.honorifics} />
   <section class="chapter-section honorifics-chapter">
     <h2>
-      <span class="level-badge" style="background:var(--accent)">
-        ◆
-      </span>
+      <span class="level-badge chapter-badge">◆</span>
       Tiszteleti szavak <span class="korean">(높임말)</span> <span class="tag own">＋ Saját összeállítás</span>
     </h2>
-    <Fragment set:html={html} />
+    <Blocks content={honorifics.intro} />
+    {honorifics.categories.map((category, index) => (
+      <HonorificCategoryCard category={category} index={index} />
+    ))}
   </section>
   <PageNavigation path={CHAPTER_PATHS.honorifics} />
 </BaseLayout>

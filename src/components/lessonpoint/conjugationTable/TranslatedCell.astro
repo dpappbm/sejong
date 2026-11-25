@@ -1,0 +1,22 @@
+---
+import type { ColumnTranslation } from '../../../data/types';
+import { cellTranslation } from '../../../lib/translations';
+
+interface Props {
+  korean: string | null;
+  dictionaryForm: string;
+  translation: ColumnTranslation | undefined;
+}
+
+const { korean, dictionaryForm, translation } = Astro.props;
+const hungarian = cellTranslation(dictionaryForm, translation);
+---
+
+{korean === null ? (
+  <span class="not-applicable">—</span>
+) : (
+  <>
+    <span class="korean">{korean}</span>
+    {hungarian && <span class="translation">{hungarian}</span>}
+  </>
+)}

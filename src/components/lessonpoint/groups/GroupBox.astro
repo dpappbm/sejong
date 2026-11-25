@@ -1,0 +1,14 @@
+---
+import type { PointId, RelatedGroup } from '../../../data/types';
+import FormGroup from './FormGroup.astro';
+import ScaleGroup from './ScaleGroup.astro';
+
+interface Props {
+  group: RelatedGroup;
+  pointId: PointId;
+}
+
+const { group, pointId } = Astro.props;
+---
+
+{group.kind === 'form' ? <FormGroup group={group} pointId={pointId} /> : <ScaleGroup group={group} pointId={pointId} />}

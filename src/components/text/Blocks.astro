@@ -1,0 +1,48 @@
+---
+import type { Content, TextPlace } from '../../lib/richText';
+import ComparisonTable from './ComparisonTable.astro';
+import ExampleList from './ExampleList.astro';
+import RichText from './RichText.astro';
+import SimpleTable from './SimpleTable.astro';
+
+interface Props {
+  content: Content;
+  /** With a place, the example lists get play buttons. */
+  place?: TextPlace;
+}
+
+const { content, place } = Astro.props;
+---
+
+{content.map(block => {
+  switch (block.kind) {
+    case 'paragraph':
+      return (
+        <p class={block.muted ? 'muted-note' : undefined}>
+          <RichText content={block.content} />
+        </p>
+      );
+    case 'heading':
+      return (
+        <h5>
+          <RichText content={block.content} />
+        </h5>
+      );
+    case 'list':
+      return (
+        <ul>
+          {block.items.map(item => (
+            <li>
+              <RichText content={item} />
+            </li>
+          ))}
+        </ul>
+      );
+    case 'examples':
+      return <ExampleList items={block.items} place={place} />;
+    case 'table':
+      return <SimpleTable headers={block.headers} rows={block.rows} />;
+    case 'comparison':
+      return <ComparisonTable patterns={block.patterns} rows={block.rows} />;
+  }
+})}

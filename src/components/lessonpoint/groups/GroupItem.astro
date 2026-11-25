@@ -1,0 +1,22 @@
+---
+import type { PointId } from '../../../data/types';
+import { targetOf } from '../../../lib/references';
+import Reference from '../../text/Reference.astro';
+
+interface Props {
+  id: PointId;
+  /** The point whose card the group stands in. */
+  pointId: PointId;
+}
+
+const { id, pointId } = Astro.props;
+const { label, form } = targetOf(id)!;
+---
+
+{id === pointId ? (
+  <b class="korean group-self">{form}</b>
+) : (
+  <Reference to={id} class="group-link korean" title={label}>
+    {form}
+  </Reference>
+)}

@@ -1,4 +1,4 @@
-# Builds the site (including type check, tests and link check) and publishes it to GitHub Pages.
+# Runs the checks and the tests, then builds the site (with the link check) and publishes it to GitHub Pages.
 name: Deploy to GitHub Pages
 
 on:
@@ -17,7 +17,14 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  # Nothing is built or published if a check fails: the version published before stays online.
+  test:
+    uses: ./.github/workflows/test.yml
+    permissions:
+      contents: read
+
   build:
+    needs: test
     runs-on: ubuntu-latest
     env:
       # The sound files are not in the repository (scripts/audio/README.md).

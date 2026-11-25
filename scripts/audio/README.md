@@ -52,17 +52,19 @@ Numbers, Latin letters, parentheses and alternatives inside a phrase are never g
 | `docker.mjs`                                             | `audio:setup` and `audio:generate`: runs the container                   |
 | `Dockerfile`, `requirements.txt`                         | the environment, with exact versions                                     |
 | `collect-texts.mjs`                                      | `audio:collect`: content files → `work/texts-<book>.json`                |
-| `spoken-text.mjs`, `spoken-text.test.mjs`                | the spoken form of a text, and its tests (part of `npm test`)            |
+| `spoken-text.mjs`                                        | the spoken form of a text                                                |
 | `generate.py`                                            | texts → MP3 and manifest                                                 |
 | `score.py`                                               | measures a take: length, pauses, pitch range                             |
 | `profiles.json`                                          | speeds and methods of each voice                                         |
 | `overrides.json`                                         | spoken forms and hand-picked takes                                       |
 | `build-review.mjs`                                       | `audio:review`: the listening pages                                      |
 | `pack.mjs`, `publish.mjs`, `compare.mjs`, `download.mjs` | storage in the GitHub release, see below                                 |
-| `packs.mjs`, `tar.mjs`, `packs.test.mjs`                 | what those four share, and its tests                                     |
+| `packs.mjs`, `tar.mjs`                                   | what those four share                                                    |
 | `packs.json`, `NOTICE.txt`                               | the packs in use, and the notice that the voice is a machine             |
 | `work/`                                                  | collected texts and listening pages (ignored by git)                     |
 | `public/audio/manifest.json`                             | what was generated and how: text, speed, seed, problems (ignored by git) |
+
+The tests of the tools are in `test/scripts/audio/` (part of `npm test`).
 
 The name of a file is the first 12 hexadecimal digits of the SHA-256 of the spoken text (`audioId()`), so a changed text gets a new file.
 

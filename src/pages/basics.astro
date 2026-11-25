@@ -1,11 +1,9 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
 import BackButton from '../components/BackButton.astro';
+import Basics from '../components/basics/Basics.astro';
 import PageNavigation from '../components/PageNavigation.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
 import { CHAPTER_PATHS } from '../lib/content';
-import { getSite, localizeLinks } from '../lib/site';
-
-const html = localizeLinks(getSite().basicsHtml, CHAPTER_PATHS.basics);
 ---
 
 <BaseLayout
@@ -17,12 +15,10 @@ const html = localizeLinks(getSite().basicsHtml, CHAPTER_PATHS.basics);
   <PageNavigation path={CHAPTER_PATHS.basics} />
   <section class="chapter-section">
     <h2>
-      <span class="level-badge" style="background:var(--accent)">
-        ★
-      </span>
+      <span class="level-badge chapter-badge">★</span>
       Alapszabályok <span class="tag own">＋ Saját összefoglaló</span>
     </h2>
-    <Fragment set:html={html} />
+    <Basics />
   </section>
   <PageNavigation path={CHAPTER_PATHS.basics} />
 </BaseLayout>

@@ -1,0 +1,43 @@
+---
+import type { NounTable } from '../../../data/types';
+import { columnTranslations, nounRows } from '../../../lib/conjugationTable';
+import { lexiconEntry } from '../../../lib/translations';
+import ConjugationTable from './ConjugationTable.astro';
+import TranslatedCell from './TranslatedCell.astro';
+
+interface Props {
+  table: NounTable;
+  key: string;
+}
+
+const { table, key } = Astro.props;
+
+const translations = columnTranslations(key) ?? [];
+---
+
+<ConjugationTable>
+  <Fragment slot="head">
+    {table.nounColumns.map(column => (
+      <th>{column.header}</th>
+    ))}
+  </Fragment>
+  <Fragment slot="body">
+    {nounRows(table).map(({ word, description }) => {
+      const gloss = lexiconEntry(word)?.hungarian;
+      return (
+        <tr>
+          <td>
+            <span class="korean">{word}</span>
+            {gloss && <span class="translation">{gloss}</span>}
+          </td>
+          <td>{description}</td>
+          {table.nounColumns.map((column, index) => (
+            <td>
+              <TranslatedCell korean={column.conjugate(word)} dictionaryForm={word} translation={translations[index]} />
+            </td>
+          ))}
+        </tr>
+      );
+    })}
+  </Fragment>
+</ConjugationTable>

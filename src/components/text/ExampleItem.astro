@@ -1,0 +1,32 @@
+---
+import type { Example } from '../../data/types';
+import { exampleParts, type TextPlace } from '../../lib/richText';
+import SoundButton from '../SoundButton.astro';
+import ForwardReferences from './ForwardReferences.astro';
+import RichText from './RichText.astro';
+
+interface Props {
+  item: Example;
+  /** With a place, the Korean sentence gets a play button. */
+  place?: TextPlace;
+}
+
+const { item, place } = Astro.props;
+const { korean, hungarian, note, uses } = exampleParts(item);
+---
+
+<li>
+  <span class="korean">
+    <RichText content={korean} />
+    <SoundButton korean={korean} book={place?.book} />
+  </span>
+  <span class="hungarian">
+    <RichText content={hungarian} />
+    {place && <ForwardReferences uses={uses} place={place} />}
+  </span>
+  {note && (
+    <span class="irregular-note">
+      <RichText content={note} />
+    </span>
+  )}
+</li>

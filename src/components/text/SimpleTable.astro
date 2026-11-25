@@ -1,0 +1,34 @@
+---
+import type { Text } from '../../lib/richText';
+import RichText from './RichText.astro';
+
+interface Props {
+  headers: string[];
+  rows: Text[][];
+}
+
+const { headers, rows } = Astro.props;
+---
+
+<div class="table-wrapper">
+  <table class="plain">
+    <thead>
+      <tr>
+        {headers.map(header => (
+          <th>{header}</th>
+        ))}
+      </tr>
+    </thead>
+    <tbody>
+      {rows.map(row => (
+        <tr>
+          {row.map(cell => (
+            <td>
+              <RichText content={cell} />
+            </td>
+          ))}
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>

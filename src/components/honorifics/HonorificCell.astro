@@ -1,0 +1,19 @@
+---
+import type { KoreanHungarian } from '../../data/types';
+
+interface Props {
+  pair: KoreanHungarian | null;
+  class?: string;
+}
+
+const { pair, class: className } = Astro.props;
+---
+
+{pair ? (
+  <td class={className}>
+    <span class="korean">{pair[0]}</span>
+    <span class="translation">{pair[1]}</span>
+  </td>
+) : (
+  <td class="empty">–</td>
+)}

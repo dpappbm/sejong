@@ -1,0 +1,34 @@
+---
+import type { Text } from '../../lib/richText';
+import Reference from './Reference.astro';
+
+interface Props {
+  content: Text;
+}
+
+const { content } = Astro.props;
+---
+
+{typeof content === 'string' && content}
+{Array.isArray(content) && content.map(part => <Astro.self content={part} />)}
+{typeof content === 'object' && 'kind' in content && (
+  <>
+    {content.kind === 'reference' && <Reference to={content.to}>{content.label}</Reference>}
+    {content.kind === 'lineBreak' && <br />}
+    {content.kind === 'bold' && (
+      <b>
+        <Astro.self content={content.content} />
+      </b>
+    )}
+    {content.kind === 'korean' && (
+      <span class:list={['korean', content.glossedInRow && 'glossed-in-row']}>
+        <Astro.self content={content.content} />
+      </span>
+    )}
+    {content.kind === 'translation' && (
+      <span class="translation">
+        <Astro.self content={content.content} />
+      </span>
+    )}
+  </>
+)}

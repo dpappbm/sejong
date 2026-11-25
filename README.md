@@ -4,7 +4,7 @@ All 188 grammar points of the 세종한국어 1A–4B textbooks (2022 edition), 
 
 Live site: https://dpappbm.github.io/sejong/
 
-Built with [Astro](https://astro.build); every push to `main` is built and published by GitHub Actions.
+Built with [Astro](https://astro.build); GitHub Actions tests every pull request, and tests, builds and publishes every push to `main`. If a check fails, the version published before stays online.
 
 ```
 npm install
@@ -14,7 +14,7 @@ npm run build    # format check, type check, tests, build and internal link chec
 npm test         # tests only
 ```
 
-Content lives in `src/data/`, rendering and checks in `src/lib/`, pages in `src/pages/`.
+Content lives in `src/data/`, its logic (conjugation, references) in `src/lib/`, the templates in `src/components/` and `src/pages/`. The tests, including every check of the content, are in `test/`, in the same structure as the files they test.
 
 ## Sound files
 

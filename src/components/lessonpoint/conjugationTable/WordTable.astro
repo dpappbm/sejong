@@ -1,0 +1,42 @@
+---
+import type { WordTable } from '../../../data/types';
+import { type Word } from '../../../lib/conjugation';
+import { wordRows } from '../../../lib/conjugationTable';
+import ConjugationTable from './ConjugationTable.astro';
+import WordTableRow from './WordTableRow.astro';
+
+interface Props {
+  table: WordTable;
+  key: string;
+}
+
+const { table, key } = Astro.props;
+
+const { regular, irregular } = wordRows(table);
+---
+
+<ConjugationTable>
+  <Fragment slot="head">
+    {table.columns.map(column => (
+      <th>{column.header}</th>
+    ))}
+  </Fragment>
+  <Fragment slot="body">
+    <>
+      {regular.map((word: Word) => (
+        <WordTableRow columns={table.columns} key={key} word={word} />
+      ))}
+
+      {irregular.length > 0 && (
+        <>
+          <tr class="subheading-row">
+            <td colspan={table.columns.length + 2}>Rendhagyó szavak ugyanezzel a végződéssel</td>
+          </tr>
+          {irregular.map((word: Word) => (
+            <WordTableRow columns={table.columns} key={key} word={word} />
+          ))}
+        </>
+      )}
+    </>
+  </Fragment>
+</ConjugationTable>

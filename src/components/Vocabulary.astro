@@ -1,18 +1,16 @@
 ---
 // The collapsed "Szókincs" bar at the end of a lesson: the textbook's words and the own ones.
 import entries from '../data/vocabulary';
+import type { LessonInfo } from '../lib/content';
 import VocabularyTable from './VocabularyTable.astro';
 
 interface Props {
-  book: string;
-  lesson: number;
-  path: string;
+  lesson: LessonInfo;
 }
 
-const { book, lesson, path } = Astro.props;
-const { textbook = [], own = [] } = entries[`${book}-${lesson}`] ?? {};
+const { lesson } = Astro.props;
+const { textbook = [], own = [] } = entries[lesson.key] ?? {};
 const count = textbook.length + own.length;
-const tableProps = { book, lesson, path };
 ---
 
 {count > 0 && (
@@ -26,7 +24,7 @@ const tableProps = { book, lesson, path };
       {textbook.length > 0 && (
         <div class="vocabulary-part">
           <div class="vocabulary-heading">Tankönyv</div>
-          <VocabularyTable rows={textbook} {...tableProps} hasSound />
+          <VocabularyTable rows={textbook} place={lesson} hasSound />
         </div>
       )}
       {own.length > 0 && (
@@ -34,7 +32,7 @@ const tableProps = { book, lesson, path };
           <div class="own-heading">
             <span class="tag own">＋ Saját</span> <b>További szavak</b>
           </div>
-          <VocabularyTable rows={own} {...tableProps} />
+          <VocabularyTable rows={own} place={lesson} />
         </aside>
       )}
     </div>

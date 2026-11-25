@@ -1,0 +1,22 @@
+---
+interface Props {
+  item: [string, string, string, string];
+}
+const {
+  item: [baseKorean, baseHungarian, honorificKorean, honorificHungarian],
+} = Astro.props;
+---
+
+<tr>
+  <td>
+    <span class="korean">{baseKorean}</span>
+    <span class="translation">{baseHungarian}</span>
+  </td>
+  <td class="arrow" aria-hidden="true">
+    →
+  </td>
+  <td>
+    <span class="korean">{honorificKorean}</span>
+    <span class="translation">{honorificHungarian}</span>
+  </td>
+</tr>

@@ -1,0 +1,79 @@
+---
+import { locate, type PointInfo } from '../../lib/content';
+import { groupsFor } from '../../lib/groups';
+import OwnTag from '../OwnTag.astro';
+import RelatedBar from '../RelatedBar.astro';
+import CorrectIncorrectList from '../shared/CorrectIncorrectList.astro';
+import Blocks from '../text/Blocks.astro';
+import ExampleList from '../text/ExampleList.astro';
+import NounTable from './conjugationTable/NounTable.astro';
+import WordTable from './conjugationTable/WordTable.astro';
+import GroupBox from './groups/GroupBox.astro';
+import Honorifics from './honorific/Honorifics.astro';
+
+interface Props {
+  point: PointInfo;
+}
+
+const { point } = Astro.props;
+
+const key = `${point.book}-${point.lesson}-${point.point}`;
+---
+
+<article class="grammar-point" id={locate(point.id)!.anchor} data-book={point.book} data-lesson={point.lesson}>
+  <header class="grammar-point-header">
+    <div class="grammar-point-number">
+      {point.book} · {point.lesson}. lecke · {point.point}. nyelvtan
+    </div>
+    <h4>
+      <span class="korean form">{point.form}</span>
+      <span class="grammar-point-name">{point.name}</span>
+    </h4>
+    <div class="grammar-point-meta">
+      <span class="tag textbook">Tankönyv</span>
+      <span class="tag future-tag progress-tag">még nem vettük</span>
+      <span class="source-reference">
+        SB {point.studentBookPage}. o. · VG {point.vocabularyGrammarPage}. o.
+      </span>
+    </div>
+  </header>
+  <div class="grammar-point-body">
+    <div class="explanation">
+      <Blocks content={point.explanation} />
+    </div>
+    {point.customContent && <Blocks content={point.customContent} />}
+    {point.table ? (
+      <>
+        <h5>Képzés</h5>
+        {point.table.kind === 'noun' ? (
+          <NounTable table={point.table} key={key} />
+        ) : (
+          <WordTable table={point.table} key={key} />
+        )}
+      </>
+    ) : (
+      ''
+    )}
+    {point.examples && (
+      <>
+        <h5>Példák</h5>
+        <ExampleList items={point.examples} place={point} />
+      </>
+    )}
+    {point.correctIncorrect && <CorrectIncorrectList items={point.correctIncorrect} place={point} />}
+    {point.honorific && <Honorifics honorific={point.honorific} point={point} />}
+    {point.ownNote && (
+      <aside class="own">
+        <div class="own-heading">
+          <OwnTag label="＋ Saját kiegészítés" />
+        </div>
+        <Blocks content={point.ownNote} place={point} />
+      </aside>
+    )}
+
+    {groupsFor(point.id).map(group => (
+      <GroupBox group={group} pointId={point.id} />
+    ))}
+    <RelatedBar id={point.id} />
+  </div>
+</article>

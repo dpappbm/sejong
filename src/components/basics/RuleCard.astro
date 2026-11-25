@@ -1,0 +1,21 @@
+---
+import type { BasicRule } from '../../data/types';
+import DisclosureArrow from '../DisclosureArrow.astro';
+import RelatedBar from '../RelatedBar.astro';
+import Blocks from '../text/Blocks.astro';
+
+interface Props {
+  rule: BasicRule;
+}
+
+const { rule } = Astro.props;
+---
+
+<details class="card" open>
+  <summary>
+    <DisclosureArrow />
+    <h3 id={rule.id}>{rule.title}</h3>
+  </summary>
+  <Blocks content={rule.content} />
+  <RelatedBar id={rule.id} />
+</details>

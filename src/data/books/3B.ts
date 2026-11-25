@@ -1,7 +1,6 @@
+import { bold, korean, list, paragraph, reference, text } from '../../lib/richText';
 import { withAOrEo, withPast, withEu, withPlainStem, plainStyleStatement, type Word } from '../../lib/conjugation';
 import type { BookData, PointSource } from '../types';
-
-const korean = (text: string) => `<span class="korean">${text}</span>`;
 const vocabularyGrammarPageOf = (lesson: number, point: number) => 26 + 2 * (lesson - 1) + (point - 1),
   studentBookPageOf = (lesson: number, point: number) => 16 + 8 * (lesson - 1) + (point - 1);
 const isItdaOrEopda = (word: Word) => /(있|없)다$/.test(word.dictionaryForm);
@@ -14,33 +13,39 @@ const points: PointSource[] = [
     point: 1,
     form: '-아도/어도',
     name: '„még ha … is; hiába …”',
-    explanation: `<p>Ige vagy melléknév után azt fejezi ki, hogy az első részben mondott tény vagy feltételezés <b>ellenére</b> a várttal ellentétes dolog történik: „Hiába esik, elmegyek.” Gyakran ${korean('아무리')} („bármennyire”) erősíti. A <b>-아/어</b> szabály szerint (${korean('가도, 먹어도, 해도')}). Főnévvel: ${korean('N(이)라도')}.</p>`,
+    explanation: [
+      paragraph`Ige vagy melléknév után azt fejezi ki, hogy az első részben mondott tény vagy feltételezés ${bold('ellenére')} a várttal ellentétes dolog történik: „Hiába esik, elmegyek.” Gyakran ${korean('아무리')} („bármennyire”) erősíti. A ${bold('-아/어')} szabály szerint (${korean('가도, 먹어도, 해도')}). Főnévvel: ${korean('N(이)라도')}.`,
+    ],
     table: {
       sampleSet: 'verbsAndAdjectives',
       columns: [{ header: '-아도/어도', conjugate: word => withAOrEo(word, '도') }],
     },
     examples: [
       [
-        '아무리 바<b>빠도</b> 주말에는 부모님께 전화해요.',
+        text`아무리 바${bold('빠도')} 주말에는 부모님께 전화해요.`,
         'Akármilyen elfoglalt vagyok, hétvégén felhívom a szüleimet.',
         '으-kiesés: 바쁘다 → 바빠도',
       ],
-      ['비가 <b>와도</b> 축구를 할 거예요.', 'Még ha esik is, focizni fogunk.'],
-      ['약을 먹<b>어도</b> 감기가 안 나아요.', 'Hiába szedem a gyógyszert, nem múlik a megfázás.'],
+      [text`비가 ${bold('와도')} 축구를 할 거예요.`, 'Még ha esik is, focizni fogunk.'],
+      [text`약을 먹${bold('어도')} 감기가 안 나아요.`, 'Hiába szedem a gyógyszert, nem múlik a megfázás.'],
       [
-        '아무리 들<b>어도</b> 무슨 말인지 모르겠어요.',
+        text`아무리 들${bold('어도')} 무슨 말인지 모르겠어요.`,
         'Akárhányszor hallgatom, nem értem, mit mond.',
-        'ㄷ-rendhagyó: 듣다 → 들어도',
+        { note: 'ㄷ-rendhagyó: 듣다 → 들어도', uses: ['4B-06-1'] },
       ],
     ],
-    ownNote: `<p>A 2B 6. leckében tanult ${korean('-아도/어도 되다')} (engedély) is erre épül: „ha megcsinálod is, rendben van”.</p>`,
+    ownNote: [
+      paragraph`A ${reference('2B-06-1', '2B 6. leckében')} tanult ${korean('-아도/어도 되다')} (engedély) is erre épül: „ha megcsinálod is, rendben van”.`,
+    ],
   },
   {
     lesson: 1,
     point: 2,
     form: '-아/어 드리다',
     name: '„megteszi (tisztelt) valakinek”',
-    explanation: `<p>A ${korean('-아/어 주다')} (2B 4. lecke) <b>tiszteleti</b> párja: akkor használjuk, ha a cselekvést <b>idősebb, tisztelt személy javára</b> végezzük. A címzett gyakran ${korean('께')} vagy ${korean('에게')} partikulát kap. A <b>-아/어</b> szabály szerint.</p>`,
+    explanation: [
+      paragraph`A ${korean('-아/어 주다')} (${reference('2B-04-2')}) ${bold('tiszteleti')} párja: akkor használjuk, ha a cselekvést ${bold('idősebb, tisztelt személy javára')} végezzük. A címzett gyakran ${korean('께')} vagy ${korean('에게')} partikulát kap. A ${bold('-아/어')} szabály szerint.`,
+    ],
     table: {
       sampleSet: 'verbs',
       columns: [
@@ -50,27 +55,31 @@ const points: PointSource[] = [
     },
     examples: [
       [
-        '할아버지, 할머니 이야기도 들어 <b>드렸어요</b>.',
+        text`할아버지, 할머니 이야기도 들어 ${bold('드렸어요')}.`,
         'A nagyszülők történeteit is meghallgattam.',
         'ㄷ-rendhagyó: 듣다 → 들어 드렸어요',
       ],
-      ['어머니께 편지를 써 <b>드렸어요</b>.', 'Levelet írtam édesanyámnak.'],
-      ['제가 가방을 들어 <b>드릴게요</b>.', 'Majd én viszem a táskáját.'],
+      [text`어머니께 편지를 써 ${bold('드렸어요')}.`, 'Levelet írtam édesanyámnak.'],
+      [text`제가 가방을 들어 ${bold('드릴게요')}.`, 'Majd én viszem a táskáját.'],
       [
-        '할머니 댁에 가서 청소를 도와 <b>드렸어요</b>.',
+        text`할머니 댁에 가서 청소를 도와 ${bold('드렸어요')}.`,
         'Elmentem a nagymamámhoz, és segítettem neki takarítani.',
         'ㅂ-rendhagyó: 돕다 → 도와 드렸어요',
       ],
     ],
-    ownNote: `<p>Felajánlás udvariasan: ${korean('-아/어 드릴까요?')} („…-jak Önnek?”). A ${korean('주다')} „ad” tiszteleti párja önállóan is ${korean('드리다')}: ${korean('선물을 드렸어요')}.</p>`,
+    ownNote: [
+      paragraph`Felajánlás udvariasan: ${korean('-아/어 드릴까요?')} („…-jak Önnek?”). A ${korean('주다')} „ad” tiszteleti párja önállóan is ${korean('드리다')}: ${korean('선물을 드렸어요')}.`,
+    ],
   },
   {
     lesson: 2,
     point: 1,
     form: '-(으)ㄹ까 봐',
     name: '„attól tartva, hogy …; nehogy …”',
-    explanation: `<p>Ige vagy melléknév után azt fejezi ki, hogy a beszélő <b>aggódik, fél</b> egy lehetséges helyzettől, és ezért tesz (vagy nem tesz) valamit. A második tagmondat a megtett óvintézkedés. ${korean('-(으)ㄹ까 봐서')} alakban is.</p>
-<p><b>받침</b> után: <b>-을까 봐</b>, magánhangzó után: <b>-ㄹ까 봐</b>, ㄹ-tőnél: ${korean('멀까 봐')}. Múltra: ${korean('-았을까/었을까 봐')}.</p>`,
+    explanation: [
+      paragraph`Ige vagy melléknév után azt fejezi ki, hogy a beszélő ${bold('aggódik, fél')} egy lehetséges helyzettől, és ezért tesz (vagy nem tesz) valamit. A második tagmondat a megtett óvintézkedés. ${korean('-(으)ㄹ까 봐서')} alakban is.`,
+      paragraph`${bold('받침')} után: ${bold('-을까 봐')}, magánhangzó után: ${bold('-ㄹ까 봐')}, ㄹ-tőnél: ${korean('멀까 봐')}. Múltra: ${korean('-았을까/었을까 봐')}.`,
+    ],
     table: {
       sampleSet: 'verbsAndAdjectives',
       columns: [
@@ -79,24 +88,28 @@ const points: PointSource[] = [
       ],
     },
     examples: [
-      ['표가 없<b>을까 봐</b> 미리 예매했어요.', 'Attól tartva, hogy nem lesz jegy, előre megvettem.'],
-      ['늦<b>을까 봐</b> 택시를 탔어요.', 'Féltem, hogy elkések, ezért taxiba ültem.'],
+      [text`표가 없${bold('을까 봐')} 미리 예매했어요.`, 'Attól tartva, hogy nem lesz jegy, előre megvettem.'],
+      [text`늦${bold('을까 봐')} 택시를 탔어요.`, 'Féltem, hogy elkések, ezért taxiba ültem.'],
       [
-        '밖이 <b>추울까 봐</b> 코트를 가져왔어요.',
+        text`밖이 ${bold('추울까 봐')} 코트를 가져왔어요.`,
         'Féltem, hogy kint hideg lesz, ezért hoztam kabátot.',
         'ㅂ-rendhagyó: 춥다 → 추울까 봐',
       ],
-      ['아이가 깰<b>까 봐</b> 조용히 들어왔어요.', 'Csendben jöttem be, nehogy felébredjen a gyerek.'],
+      [text`아이가 깰${bold('까 봐')} 조용히 들어왔어요.`, 'Csendben jöttem be, nehogy felébredjen a gyerek.'],
     ],
-    ownNote: `<p>A második tagmondat nem lehet felszólítás vagy jövő idejű terv (${korean('-(으)세요, -(으)ㄹ 거예요')}); a félelem ténylegesen befolyásolta a cselekvést. ${korean('-(으)ㄹ까 봐 걱정이에요')} „attól félek, hogy…”.</p>`,
+    ownNote: [
+      paragraph`A második tagmondat nem lehet felszólítás vagy jövő idejű terv (${korean('-(으)세요, -(으)ㄹ 거예요')}); a félelem ténylegesen befolyásolta a cselekvést. ${korean('-(으)ㄹ까 봐 걱정이에요')} „attól félek, hogy…”.`,
+    ],
   },
   {
     lesson: 2,
     point: 2,
     form: '-(으)ㄹ 텐데',
     name: '„biztos …, (pedig / és) …” (feltételezés + folytatás)',
-    explanation: `<p>Ige vagy melléknév után a beszélő <b>feltételezését</b> mondja ki, és ehhez kapcsolódóan folytatja: kérdés, javaslat, aggodalom. „Biztos fáradt vagy, pihenj.”</p>
-<p><b>받침</b> után: <b>-을 텐데</b>, magánhangzó után: <b>-ㄹ 텐데</b>. Múltra: ${korean('-았을/었을 텐데')}.</p>`,
+    explanation: [
+      paragraph`Ige vagy melléknév után a beszélő ${bold('feltételezését')} mondja ki, és ehhez kapcsolódóan folytatja: kérdés, javaslat, aggodalom. „Biztos fáradt vagy, pihenj.”`,
+      paragraph`${bold('받침')} után: ${bold('-을 텐데')}, magánhangzó után: ${bold('-ㄹ 텐데')}. Múltra: ${korean('-았을/었을 텐데')}.`,
+    ],
     table: {
       sampleSet: 'verbsAndAdjectives',
       columns: [
@@ -106,26 +119,30 @@ const points: PointSource[] = [
     },
     examples: [
       [
-        '티켓을 구하는 게 쉽지 않<b>았을 텐데</b> 어떻게 구했어요?',
+        text`티켓을 구하는 게 쉽지 않${bold('았을 텐데')} 어떻게 구했어요?`,
         'Nem lehetett könnyű jegyet szerezni – hogy sikerült?',
       ],
-      ['많이 피곤<b>할 텐데</b> 좀 쉬세요.', 'Biztos nagyon fáradt vagy, pihenj egy kicsit.'],
+      [text`많이 피곤${bold('할 텐데')} 좀 쉬세요.`, 'Biztos nagyon fáradt vagy, pihenj egy kicsit.'],
       [
-        '밖에 <b>추울 텐데</b> 따뜻하게 입고 나가세요.',
+        text`밖에 ${bold('추울 텐데')} 따뜻하게 입고 나가세요.`,
         'Kint biztos hideg van, öltözz fel melegen.',
         'ㅂ-rendhagyó: 춥다 → 추울 텐데',
       ],
-      ['지금 출발하면 길이 막<b>힐 텐데</b>요.', 'Ha most indulsz, biztos dugó lesz.'],
+      [text`지금 출발하면 길이 막${bold('힐 텐데')}요.`, 'Ha most indulsz, biztos dugó lesz.'],
     ],
-    ownNote: `<p>Mondatvégen (${korean('-(으)ㄹ 텐데요')}) aggodalmat, sajnálkozást fejez ki. A 4B 4. lecke ${korean('-았을/었을 텐데')} alakja: „pedig …-t volna” (megvalósulatlan múlt).</p>`,
+    ownNote: [
+      paragraph`Mondatvégen (${korean('-(으)ㄹ 텐데요')}) aggodalmat, sajnálkozást fejez ki. A ${reference('4B-04-2')} ${korean('-았을/었을 텐데')} alakja: „pedig …-t volna” (megvalósulatlan múlt).`,
+    ],
   },
   {
     lesson: 3,
     point: 1,
     form: '-거든요',
     name: '„merthogy …, ugyanis …” (magyarázó ok)',
-    explanation: `<p>Ige vagy melléknév után olyan <b>okot vagy hátteret</b> ad meg, amit <b>csak a beszélő tud</b>, magától értetődő természetességgel: „Merthogy …”. A tő végétől függetlenül ${korean('-거든요')}; múlt: ${korean('-았거든요/었거든요')}.</p>
-<p>Különbség: ${korean('-거든요')} = csak én tudom az okot; ${korean('-잖아요')} = mindketten tudjuk.</p>`,
+    explanation: [
+      paragraph`Ige vagy melléknév után olyan ${bold('okot vagy hátteret')} ad meg, amit ${bold('csak a beszélő tud')}, magától értetődő természetességgel: „Merthogy …”. A tő végétől függetlenül ${korean('-거든요')}; múlt: ${korean('-았거든요/었거든요')}.`,
+      paragraph`Különbség: ${korean('-거든요')} = csak én tudom az okot; ${korean('-잖아요')} = mindketten tudjuk.`,
+    ],
     table: {
       sampleSet: 'verbsAndAdjectives',
       columns: [
@@ -135,26 +152,33 @@ const points: PointSource[] = [
     },
     examples: [
       [
-        '저는 매운 음식을 잘 먹어요. 어렸을 때부터 많이 먹었<b>거든요</b>.',
+        text`저는 매운 음식을 잘 먹어요. 어렸을 때부터 많이 먹었${bold('거든요')}.`,
         'Jól bírom a csípőset. Gyerekkorom óta sokat eszem.',
       ],
-      ['오늘은 못 가요. 약속이 있<b>거든요</b>.', 'Ma nem tudok menni. Ugyanis programom van.'],
+      [text`오늘은 못 가요. 약속이 있${bold('거든요')}.`, 'Ma nem tudok menni. Ugyanis programom van.'],
       [
-        '창문 좀 열어도 돼요? 좀 덥<b>거든요</b>.',
+        text`창문 좀 열어도 돼요? 좀 덥${bold('거든요')}.`,
         'Kinyithatom az ablakot? Ugyanis kicsit meleg van.',
         '-거든요 előtt nincs ㅂ-változás: 덥거든요',
       ],
-      ['요즘 이 노래만 들어요. 정말 좋<b>거든요</b>.', 'Mostanában csak ezt a dalt hallgatom. Tudniillik nagyon jó.'],
+      [
+        text`요즘 이 노래만 들어요. 정말 좋${bold('거든요')}.`,
+        'Mostanában csak ezt a dalt hallgatom. Tudniillik nagyon jó.',
+      ],
     ],
-    ownNote: `<p>Beszélgetés elején is: új téma bevezetése, amire folytatás jön: ${korean('제가 다음 주에 이사하거든요. 그래서…')}. Idősebbnek túl sokszor mondva tiszteletlennek hathat.</p>`,
+    ownNote: [
+      paragraph`Beszélgetés elején is: új téma bevezetése, amire folytatás jön: ${korean('제가 다음 주에 이사하거든요. 그래서…')}. Idősebbnek túl sokszor mondva tiszteletlennek hathat.`,
+    ],
   },
   {
     lesson: 3,
     point: 2,
     form: '-는구나/구나',
     name: '„ó, szóval …!” (most észrevett tény, tegező)',
-    explanation: `<p>A beszélő <b>épp most</b> lát, hall vagy ért meg valamit, és erre <b>rácsodálkozik</b>. Magában mondva, fiatalabbnak vagy közeli barátnak (tegező stílus).</p>
-<p><b>Ige</b>: ${korean('-는구나')} (ㄹ kiesik: ${korean('사는구나')}), <b>melléknév</b> és ${korean('있다/없다')}: ${korean('-구나')} (a ${korean('있다/없다')} lehet ${korean('-는구나')} is); <b>főnév</b>: ${korean('-(이)구나')}; <b>múlt</b>: ${korean('-았구나/었구나')}.</p>`,
+    explanation: [
+      paragraph`A beszélő ${bold('épp most')} lát, hall vagy ért meg valamit, és erre ${bold('rácsodálkozik')}. Magában mondva, fiatalabbnak vagy közeli barátnak (tegező stílus).`,
+      paragraph`${bold('Ige')}: ${korean('-는구나')} (ㄹ kiesik: ${korean('사는구나')}), ${bold('melléknév')} és ${korean('있다/없다')}: ${korean('-구나')} (a ${korean('있다/없다')} lehet ${korean('-는구나')} is); ${bold('főnév')}: ${korean('-(이)구나')}; ${bold('múlt')}: ${korean('-았구나/었구나')}.`,
+    ],
     table: {
       sampleSet: 'verbsAndAdjectives',
       columns: [
@@ -166,19 +190,23 @@ const points: PointSource[] = [
       ],
     },
     examples: [
-      ['매운 음식을 진짜 잘 먹<b>는구나</b>!', 'Hű, tényleg jól bírod a csípőset!'],
-      ['벌써 봄이 왔<b>구나</b>.', 'Ó, már itt a tavasz.'],
-      ['오늘 정말 <b>덥구나</b>.', 'Ma aztán meleg van!', '-구나 előtt nincs ㅂ-változás: 덥구나'],
-      ['네가 이 케이크를 만<b>들었구나</b>!', 'Szóval te sütötted ezt a tortát!'],
+      [text`매운 음식을 진짜 잘 먹${bold('는구나')}!`, 'Hű, tényleg jól bírod a csípőset!'],
+      [text`벌써 봄이 왔${bold('구나')}.`, 'Ó, már itt a tavasz.'],
+      [text`오늘 정말 ${bold('덥구나')}.`, 'Ma aztán meleg van!', '-구나 előtt nincs ㅂ-változás: 덥구나'],
+      [text`네가 이 케이크를 만${bold('들었구나')}!`, 'Szóval te sütötted ezt a tortát!'],
     ],
-    ownNote: `<p>Udvarias változata ${korean('-는군요/군요')}; a ${korean('-네요')} (2B 5. lecke) hasonló, de jobban a hallgatóhoz szól. A ${korean('-구나')} gyakran félig magának mondott felismerés.</p>`,
+    ownNote: [
+      paragraph`Udvarias változata ${korean('-는군요/군요')}; a ${korean('-네요')} (${reference('2B-05-1')}) hasonló, de jobban a hallgatóhoz szól. A ${korean('-구나')} gyakran félig magának mondott felismerés.`,
+    ],
   },
   {
     lesson: 4,
     point: 1,
     form: '-아/어 놓다',
     name: '„elkészít, megcsinál (és úgy hagy)”',
-    explanation: `<p>Ige után azt fejezi ki, hogy egy cselekvést <b>befejeztünk</b>, és az <b>eredménye megmarad</b>, úgy is hagyjuk; gyakran előkészületként. A <b>-아/어</b> szabály szerint (${korean('사 놓다, 씻어 놓다, 해 놓다')}).</p>`,
+    explanation: [
+      paragraph`Ige után azt fejezi ki, hogy egy cselekvést ${bold('befejeztünk')}, és az ${bold('eredménye megmarad')}, úgy is hagyjuk; gyakran előkészületként. A ${bold('-아/어')} szabály szerint (${korean('사 놓다, 씻어 놓다, 해 놓다')}).`,
+    ],
     table: {
       sampleSet: 'verbs',
       columns: [
@@ -187,35 +215,39 @@ const points: PointSource[] = [
       ],
     },
     examples: [
-      ['채소부터 씻어서 썰어 <b>놓자</b>.', 'Először mossuk meg és vágjuk fel a zöldséget.'],
-      ['손님이 오기 전에 음식을 만들어 <b>놓았어요</b>.', 'A vendégek érkezése előtt elkészítettem az ételt.'],
-      ['창문을 열어 <b>놓았어요</b>.', 'Kinyitottam (és nyitva hagytam) az ablakot.'],
-      ['재료를 미리 사 <b>놓을게요</b>.', 'Előre megveszem a hozzávalókat.'],
-      ['밥을 미리 지<b>어 놓았어요</b>.', 'Előre megfőztem a rizst.', 'ㅅ-rendhagyó: 짓다 → 지어 놓다'],
+      [text`채소부터 씻어서 썰어 ${bold('놓자')}.`, 'Először mossuk meg és vágjuk fel a zöldséget.'],
+      [text`손님이 오기 전에 음식을 만들어 ${bold('놓았어요')}.`, 'A vendégek érkezése előtt elkészítettem az ételt.'],
+      [text`창문을 열어 ${bold('놓았어요')}.`, 'Kinyitottam (és nyitva hagytam) az ablakot.'],
+      [text`재료를 미리 사 ${bold('놓을게요')}.`, 'Előre megveszem a hozzávalókat.'],
+      [text`밥을 미리 지${bold('어 놓았어요')}.`, 'Előre megfőztem a rizst.', 'ㅅ-rendhagyó: 짓다 → 지어 놓다'],
     ],
-    ownNote: `<p>Beszédben gyakran rövidül: ${korean('놓아요 → 놔요, 놓았어요 → 놨어요')}. Nagyon közeli rokona a ${korean('-아/어 두다')} (3B 11. lecke); a ${korean('두다')} inkább a hosszabb megtartást, a ${korean('놓다')} inkább a kész állapotot hangsúlyozza.</p>`,
+    ownNote: [
+      paragraph`Beszédben gyakran rövidül: ${korean('놓아요 → 놔요, 놓았어요 → 놨어요')}. Nagyon közeli rokona a ${korean('-아/어 두다')} (${reference('3B-11-2')}); a ${korean('두다')} inkább a hosszabb megtartást, a ${korean('놓다')} inkább a kész állapotot hangsúlyozza.`,
+    ],
   },
   {
     lesson: 4,
     point: 2,
     form: '-(으)ㄴ 다음에',
     name: '„miután …, utána …”',
-    explanation: `<p>Ige után azt fejezi ki, hogy egy cselekvést <b>először</b> elvégzünk, és <b>utána</b> jön a következő; különösen lépések, receptek, utasítások sorrendjében. Rokon kifejezések: ${korean('-고 나서')}, ${korean('-(으)ㄴ 후에')}.</p>
-<p><b>받침</b> után: <b>-은 다음에</b>, magánhangzó után: <b>-ㄴ 다음에</b>, ㄹ-tőnél az ㄹ kiesik: ${korean('만든 다음에')}.</p>`,
+    explanation: [
+      paragraph`Ige után azt fejezi ki, hogy egy cselekvést ${bold('először')} elvégzünk, és ${bold('utána')} jön a következő; különösen lépések, receptek, utasítások sorrendjében. Rokon kifejezések: ${korean('-고 나서')}, ${korean('-(으)ㄴ 후에')}.`,
+      paragraph`${bold('받침')} után: ${bold('-은 다음에')}, magánhangzó után: ${bold('-ㄴ 다음에')}, ㄹ-tőnél az ㄹ kiesik: ${korean('만든 다음에')}.`,
+    ],
     table: {
       sampleSet: 'verbs',
       columns: [{ header: '-(으)ㄴ 다음에', conjugate: word => withEu(word, 'ㄴ 다음에') }],
     },
     examples: [
-      ['채소를 씻<b>은 다음에</b> 썰어요.', 'Miután megmostuk a zöldséget, felvágjuk.'],
-      ['물이 끓<b>은 다음에</b> 라면을 넣으세요.', 'Miután felforrt a víz, tegye bele a ramyeont.'],
+      [text`채소를 씻${bold('은 다음에')} 썰어요.`, 'Miután megmostuk a zöldséget, felvágjuk.'],
+      [text`물이 끓${bold('은 다음에')} 라면을 넣으세요.`, 'Miután felforrt a víz, tegye bele a ramyeont.'],
       [
-        '소스를 만<b>든 다음에</b> 고기에 부어요.',
+        text`소스를 만${bold('든 다음에')} 고기에 부어요.`,
         'Miután elkészült a szósz, ráöntjük a húsra.',
         'ㄹ-tő: 만들다 → 만든',
       ],
       [
-        '설명을 들<b>은 다음에</b> 시작하세요.',
+        text`설명을 들${bold('은 다음에')} 시작하세요.`,
         'A magyarázat meghallgatása után kezdjenek hozzá.',
         'ㄷ-rendhagyó: 듣다 → 들은',
       ],
@@ -226,37 +258,43 @@ const points: PointSource[] = [
     point: 1,
     form: '-자마자',
     name: '„amint …, (azonnal) …”',
-    explanation: `<p>Ige után azt fejezi ki, hogy az első történés után <b>rögtön, azonnal</b> jön a második. A tő végétől függetlenül ${korean('-자마자')}. Melléknév a ${korean('-아지다/어지다')}-val igévé alakítva állhat előtte: ${korean('추워지자마자')}.</p>`,
+    explanation: [
+      paragraph`Ige után azt fejezi ki, hogy az első történés után ${bold('rögtön, azonnal')} jön a második. A tő végétől függetlenül ${korean('-자마자')}. Melléknév a ${korean('-아지다/어지다')}-val igévé alakítva állhat előtte: ${korean('추워지자마자')}.`,
+    ],
     table: { sampleSet: 'verbs', columns: [{ header: '-자마자', conjugate: word => withPlainStem(word, '자마자') }] },
     examples: [
-      ['집에 도착하<b>자마자</b> 잠이 들었어요.', 'Amint hazaértem, elaludtam.'],
-      ['수업이 끝나<b>자마자</b> 친구에게 전화했어요.', 'Amint vége lett az órának, felhívtam a barátomat.'],
+      [text`집에 도착하${bold('자마자')} 잠이 들었어요.`, 'Amint hazaértem, elaludtam.'],
+      [text`수업이 끝나${bold('자마자')} 친구에게 전화했어요.`, 'Amint vége lett az órának, felhívtam a barátomat.'],
       [
-        '그 소식을 듣<b>자마자</b> 달려왔어요.',
+        text`그 소식을 듣${bold('자마자')} 달려왔어요.`,
         'Amint meghallottam a hírt, odarohantam.',
         '-자 előtt nincs ㄷ-változás: 듣자마자',
       ],
-      ['날씨가 추워지<b>자마자</b> 감기에 걸렸어요.', 'Amint hideg lett, megfáztam.'],
+      [text`날씨가 추워지${bold('자마자')} 감기에 걸렸어요.`, 'Amint hideg lett, megfáztam.'],
     ],
-    ownNote: `<p>Elé nem kerül múlt idő: ${korean('도착하자마자')}, nem ${korean('도착했자마자')}; az időt a mondat vége adja.</p>`,
+    ownNote: [
+      paragraph`Elé nem kerül múlt idő: ${korean('도착하자마자')}, nem ${korean('도착했자마자')}; az időt a mondat vége adja.`,
+    ],
   },
   {
     lesson: 5,
     point: 2,
     form: '-아/어 버리다',
     name: '„teljesen el-/meg-/ki- …” (befejezettség, megkönnyebbülés, sajnálat)',
-    explanation: `<p>Ige után azt fejezi ki, hogy egy cselekvés <b>teljesen befejeződött</b>, semmi nem maradt belőle. Gyakran a beszélő érzését is mutatja: <b>megkönnyebbülést</b> (letudtam), vagy <b>sajnálatot</b> (sajnos megtörtént). A <b>-아/어</b> szabály szerint.</p>`,
+    explanation: [
+      paragraph`Ige után azt fejezi ki, hogy egy cselekvés ${bold('teljesen befejeződött')}, semmi nem maradt belőle. Gyakran a beszélő érzését is mutatja: ${bold('megkönnyebbülést')} (letudtam), vagy ${bold('sajnálatot')} (sajnos megtörtént). A ${bold('-아/어')} szabály szerint.`,
+    ],
     table: {
       sampleSet: 'verbs',
       columns: [{ header: '-아/어 버렸어요', conjugate: word => withAOrEo(word, ' 버렸어요') }],
     },
     examples: [
-      ['딴생각을 하다가 버스를 놓쳐 <b>버렸어요</b>.', 'Elkalandoztak a gondolataim, és lekéstem a buszt.'],
-      ['배가 고파서 케이크를 다 먹어 <b>버렸어요</b>.', 'Éhes voltam, és megettem az egész tortát.'],
-      ['숙제를 빨리 해 <b>버리고</b> 놀러 가자.', 'Csináljuk meg gyorsan a házit, aztán menjünk játszani.'],
-      ['비밀번호를 잊어 <b>버렸어요</b>.', 'Elfelejtettem a jelszót.'],
+      [text`딴생각을 하다가 버스를 놓쳐 ${bold('버렸어요')}.`, 'Elkalandoztak a gondolataim, és lekéstem a buszt.'],
+      [text`배가 고파서 케이크를 다 먹어 ${bold('버렸어요')}.`, 'Éhes voltam, és megettem az egész tortát.'],
+      [text`숙제를 빨리 해 ${bold('버리고')} 놀러 가자.`, 'Csináljuk meg gyorsan a házit, aztán menjünk játszani.'],
+      [text`비밀번호를 잊어 ${bold('버렸어요')}.`, 'Elfelejtettem a jelszót.'],
       [
-        '그 이야기를 들어 <b>버렸으니까</b> 이제 모르는 척할 수 없어요.',
+        text`그 이야기를 들어 ${bold('버렸으니까')} 이제 모르는 척할 수 없어요.`,
         'Már meghallottam azt a történetet, most már nem tehetek úgy, mintha nem tudnám.',
         'ㄷ-rendhagyó: 듣다 → 들어 버리다',
       ],
@@ -267,30 +305,36 @@ const points: PointSource[] = [
     point: 1,
     form: '-았었/었었-',
     name: 'régmúlt: „valaha …, de már nem”',
-    explanation: `<p>Ige vagy melléknév után azt fejezi ki, hogy egy helyzet <b>a múltban fennállt, de már nem tart</b>: „régen …, (de most már nem)”. ㅏ, ㅗ után ${korean('-았었-')}, egyébként ${korean('-었었-')}, 하다 → ${korean('했었-')}. Főnévvel: 받침 után ${korean('-이었었-')}, magánhangzó után ${korean('-였었-')}.</p>`,
+    explanation: [
+      paragraph`Ige vagy melléknév után azt fejezi ki, hogy egy helyzet ${bold('a múltban fennállt, de már nem tart')}: „régen …, (de most már nem)”. ㅏ, ㅗ után ${korean('-았었-')}, egyébként ${korean('-었었-')}, 하다 → ${korean('했었-')}. Főnévvel: 받침 után ${korean('-이었었-')}, magánhangzó után ${korean('-였었-')}.`,
+    ],
     table: {
       sampleSet: 'verbsAndAdjectives',
       columns: [{ header: '-았었어요/었었어요', conjugate: word => withPast(word, '었어요') }],
     },
     examples: [
-      ['작년에는 머리가 길<b>었었어요</b>.', 'Tavaly hosszú hajam volt (most már nem).'],
-      ['어렸을 때 부산에 살<b>았었어요</b>.', 'Gyerekkoromban Puszanban laktam.'],
-      ['그 식당에 가 봤는데 문을 닫<b>았었어요</b>.', 'Elmentem abba az étterembe, de (akkor) zárva volt.'],
+      [text`작년에는 머리가 길${bold('었었어요')}.`, 'Tavaly hosszú hajam volt (most már nem).'],
+      [text`어렸을 때 부산에 살${bold('았었어요')}.`, 'Gyerekkoromban Puszanban laktam.'],
+      [text`그 식당에 가 봤는데 문을 닫${bold('았었어요')}.`, 'Elmentem abba az étterembe, de (akkor) zárva volt.'],
       [
-        '예전에는 이 노래를 자주 들<b>었었어요</b>.',
+        text`예전에는 이 노래를 자주 들${bold('었었어요')}.`,
         'Régen gyakran hallgattam ezt a dalt.',
         'ㄷ-rendhagyó: 듣다 → 들었었어요',
       ],
     ],
-    ownNote: `<p>${korean('갔어요')} „elment (és lehet, hogy még ott van)”, ${korean('갔었어요')} „elment, de már visszajött / már nem igaz”. Magyarul gyakran a „régen”, „valamikor” szóval adjuk vissza.</p>`,
+    ownNote: [
+      paragraph`${korean('갔어요')} „elment (és lehet, hogy még ott van)”, ${korean('갔었어요')} „elment, de már visszajött / már nem igaz”. Magyarul gyakran a „régen”, „valamikor” szóval adjuk vissza.`,
+    ],
   },
   {
     lesson: 6,
     point: 2,
     form: '-(으)ㄹ걸 그랬다',
     name: '„jobb lett volna, ha …” (megbánás)',
-    explanation: `<p>Ige után a beszélő <b>megbánását</b> fejezi ki valami miatt, amit <b>nem tett meg</b>: „Bárcsak …-tam volna!”. Tagadva: ${korean('-지 말걸 그랬다')} „bárcsak ne tettem volna”. Beszédben gyakran csak ${korean('-(으)ㄹ걸')}.</p>
-<p><b>받침</b> után: <b>-을걸 그랬다</b>, magánhangzó után: <b>-ㄹ걸 그랬다</b>, ㄹ-tőnél: ${korean('만들걸')}.</p>`,
+    explanation: [
+      paragraph`Ige után a beszélő ${bold('megbánását')} fejezi ki valami miatt, amit ${bold('nem tett meg')}: „Bárcsak …-tam volna!”. Tagadva: ${korean('-지 말걸 그랬다')} „bárcsak ne tettem volna”. Beszédben gyakran csak ${korean('-(으)ㄹ걸')}.`,
+      paragraph`${bold('받침')} után: ${bold('-을걸 그랬다')}, magánhangzó után: ${bold('-ㄹ걸 그랬다')}, ㄹ-tőnél: ${korean('만들걸')}.`,
+    ],
     table: {
       sampleSet: 'verbs',
       columns: [
@@ -299,133 +343,165 @@ const points: PointSource[] = [
       ],
     },
     examples: [
-      ['제가 좀 참<b>을걸 그랬어요</b>.', 'Jobb lett volna, ha visszafogom magam.'],
-      ['우산을 가져<b>올걸 그랬어요</b>.', 'Bárcsak hoztam volna esernyőt.'],
-      ['그 말을 하<b>지 말걸 그랬어요</b>.', 'Bárcsak ne mondtam volna ezt.'],
+      [text`제가 좀 참${bold('을걸 그랬어요')}.`, 'Jobb lett volna, ha visszafogom magam.'],
+      [text`우산을 가져${bold('올걸 그랬어요')}.`, 'Bárcsak hoztam volna esernyőt.'],
+      [text`그 말을 하${bold('지 말걸 그랬어요')}.`, 'Bárcsak ne mondtam volna ezt.'],
       [
-        '선생님 말씀을 잘 들<b>을걸 그랬어요</b>.',
+        text`선생님 말씀을 잘 들${bold('을걸 그랬어요')}.`,
         'Jobban oda kellett volna figyelnem a tanár szavaira.',
         'ㄷ-rendhagyó: 듣다 → 들을걸',
       ],
     ],
-    ownNote: `<p>Kiejtése: [-ㄹ껄]. Hasonló, de erősebb: ${korean('-았어야/었어야 했는데')} (4B 4. lecke).</p>`,
+    ownNote: [
+      paragraph`Kiejtése: [-ㄹ껄]. Hasonló, de erősebb: ${korean('-았어야/었어야 했는데')} (${reference('4B-04-1')}).`,
+    ],
   },
   {
     lesson: 7,
     point: 1,
     form: '-아/어 가지고',
     name: '„…, és ezért / és azzal …” (beszélt nyelvi ok, sorrend)',
-    explanation: `<p>Ige vagy melléknév után azt fejezi ki, hogy az első rész a második <b>oka</b>, vagy hogy az első cselekvés eredményével folytatjuk. A ${korean('-아서/어서')} <b>beszélt nyelvi</b>, lazább párja. A <b>-아/어</b> szabály szerint.</p>`,
+    explanation: [
+      paragraph`Ige vagy melléknév után azt fejezi ki, hogy az első rész a második ${bold('oka')}, vagy hogy az első cselekvés eredményével folytatjuk. A ${korean('-아서/어서')} ${bold('beszélt nyelvi')}, lazább párja. A ${bold('-아/어')} szabály szerint.`,
+    ],
     table: {
       sampleSet: 'verbsAndAdjectives',
       columns: [{ header: '-아/어 가지고', conjugate: word => withAOrEo(word, ' 가지고') }],
     },
     examples: [
-      ['너무 바<b>빠 가지고</b> 연락을 못 했어.', 'Annyira elfoglalt voltam, hogy nem tudtam jelentkezni.'],
+      [text`너무 바${bold('빠 가지고')} 연락을 못 했어.`, 'Annyira elfoglalt voltam, hogy nem tudtam jelentkezni.'],
       [
-        '날씨가 <b>추워 가지고</b> 밖에 안 나갔어요.',
+        text`날씨가 ${bold('추워 가지고')} 밖에 안 나갔어요.`,
         'Olyan hideg volt, hogy ki se mentem.',
         'ㅂ-rendhagyó: 춥다 → 추워 가지고',
       ],
-      ['돈을 모<b>아 가지고</b> 노트북을 샀어요.', 'Összegyűjtöttem a pénzt, és vettem belőle egy laptopot.'],
-      ['김밥을 만들<b>어 가지고</b> 소풍을 갔어요.', 'Csináltam kimbapot, és elvittem a kirándulásra.'],
+      [text`돈을 모${bold('아 가지고')} 노트북을 샀어요.`, 'Összegyűjtöttem a pénzt, és vettem belőle egy laptopot.'],
+      [text`김밥을 만들${bold('어 가지고')} 소풍을 갔어요.`, 'Csináltam kimbapot, és elvittem a kirándulásra.'],
     ],
-    ownNote: `<p>A ${korean('-아서/어서')} megkötései itt is érvényesek: elé nem kerül múlt idő, és utána nem állhat felszólítás. Írásban, hivatalos helyzetben kerüljük.</p>`,
+    ownNote: [
+      paragraph`A ${korean('-아서/어서')} megkötései itt is érvényesek: elé nem kerül múlt idő, és utána nem állhat felszólítás. Írásban, hivatalos helyzetben kerüljük.`,
+    ],
   },
   {
     lesson: 7,
     point: 2,
     form: '-는다거나/ㄴ다거나',
     name: '„például … vagy …” (példák felsorolása)',
-    explanation: `<p>Két vagy több <b>példát sorol fel</b>, amelyek közül bármelyik szóba jöhet: „például kempingezünk, vagy …”. Gyakran ${korean('-는다거나 -는다거나 하다')} szerkezetben.</p>
-<ul><li><b>Ige</b>: 받침 után ${korean('-는다거나')}, magánhangzó után ${korean('-ㄴ다거나')} (ㄹ kiesik: ${korean('만든다거나')})</li><li><b>Melléknév</b>: ${korean('-다거나')}</li><li><b>Főnév</b>: ${korean('(이)라거나')}</li></ul>`,
+    explanation: [
+      paragraph`Két vagy több ${bold('példát sorol fel')}, amelyek közül bármelyik szóba jöhet: „például kempingezünk, vagy …”. Gyakran ${korean('-는다거나 -는다거나 하다')} szerkezetben.`,
+      list(
+        text`${bold('Ige')}: 받침 után ${korean('-는다거나')}, magánhangzó után ${korean('-ㄴ다거나')} (ㄹ kiesik: ${korean('만든다거나')})`,
+        text`${bold('Melléknév')}: ${korean('-다거나')}`,
+        text`${bold('Főnév')}: ${korean('(이)라거나')}`
+      ),
+    ],
     table: {
       sampleSet: 'verbsAndAdjectives',
       columns: [{ header: '-는다거나/ㄴ다거나/다거나', conjugate: word => plainStyleStatement(word) + '거나' }],
     },
     examples: [
       [
-        '캠핑을 같이 간<b>다거나</b> 친목 모임을 해요.',
+        text`캠핑을 같이 간${bold('다거나')} 친목 모임을 해요.`,
         'Például együtt kempingezünk vagy baráti találkozókat tartunk.',
       ],
       [
-        '주말에는 영화를 본<b>다거나</b> 음악을 듣<b>는다거나</b> 해요.',
+        text`주말에는 영화를 본${bold('다거나')} 음악을 듣${bold('는다거나')} 해요.`,
         'Hétvégén például filmet nézek vagy zenét hallgatok.',
         '-는다 előtt nincs ㄷ-változás: 듣는다거나',
       ],
       [
-        '방이 너무 좁<b>다거나</b> 어둡<b>다거나</b> 하면 말씀하세요.',
+        text`방이 너무 좁${bold('다거나')} 어둡${bold('다거나')} 하면 말씀하세요.`,
         'Ha például túl szűk vagy sötét a szoba, szóljon.',
       ],
       [
-        '떡볶이<b>라거나</b> 김밥 같은 분식을 좋아해요.',
+        text`떡볶이${bold('라거나')} 김밥 같은 분식을 좋아해요.`,
         'Szeretem a gyorsételeket, például a tokpokkit vagy a kimbapot.',
       ],
     ],
-    ownNote: `<p>A ${korean('-거나')} (2A 2. lecke) egyszerű „vagy”; a ${korean('-는다거나')} hozzáteszi, hogy ezek csak <b>példák</b> a sok lehetőség közül.</p>`,
+    ownNote: [
+      paragraph`A ${korean('-거나')} (${reference('2A-02-1')}) egyszerű „vagy”; a ${korean('-는다거나')} hozzáteszi, hogy ezek csak ${bold('példák')} a sok lehetőség közül.`,
+    ],
   },
   {
     lesson: 8,
     point: 1,
     form: '-느라고',
     name: '„mivel épp …-tam (ezért nem tudtam …)”',
-    explanation: `<p>Ige után azt fejezi ki, hogy az első cselekvés <b>miatt</b> lett egy <b>negatív következmény</b> (nem tudtam, késtem, fáradt lettem…). A két cselekvés <b>egy időben</b> zajlik, és az alanyuk azonos. A tő végétől függetlenül ${korean('-느라고')}; ㄹ-tőnél az ㄹ kiesik (${korean('노느라고')}).</p>`,
+    explanation: [
+      paragraph`Ige után azt fejezi ki, hogy az első cselekvés ${bold('miatt')} lett egy ${bold('negatív következmény')} (nem tudtam, késtem, fáradt lettem…). A két cselekvés ${bold('egy időben')} zajlik, és az alanyuk azonos. A tő végétől függetlenül ${korean('-느라고')}; ㄹ-tőnél az ㄹ kiesik (${korean('노느라고')}).`,
+    ],
     table: { sampleSet: 'verbs', columns: [{ header: '-느라고', conjugate: word => withPlainStem(word, '느라고') }] },
     examples: [
       [
-        '일하<b>느라고</b> 바빠서 오랫동안 못 갔어요.',
+        text`일하${bold('느라고')} 바빠서 오랫동안 못 갔어요.`,
         'A munka miatt annyira elfoglalt voltam, hogy sokáig nem tudtam elmenni.',
       ],
-      ['게임을 하<b>느라고</b> 숙제를 못 했어요.', 'Játszottam, ezért nem csináltam meg a házit.'],
+      [text`게임을 하${bold('느라고')} 숙제를 못 했어요.`, 'Játszottam, ezért nem csináltam meg a házit.'],
       [
-        '음악을 듣<b>느라고</b> 전화 소리를 못 들었어요.',
+        text`음악을 듣${bold('느라고')} 전화 소리를 못 들었어요.`,
         'Zenét hallgattam, ezért nem hallottam a telefont.',
         '-느라고 előtt nincs ㄷ-változás: 듣느라고',
       ],
-      ['친구들과 노<b>느라고</b> 늦었어요.', 'A barátaimmal lógtam, ezért késtem el.', 'ㄹ-tő: 놀다 → 노느라고'],
+      [
+        text`친구들과 노${bold('느라고')} 늦었어요.`,
+        'A barátaimmal lógtam, ezért késtem el.',
+        'ㄹ-tő: 놀다 → 노느라고',
+      ],
     ],
     correctIncorrect: [
       { correct: '공부하느라고 못 잤어요.', translation: 'Tanultam, ezért nem tudtam aludni.' },
       { incorrect: '공부했느라고 못 잤어요.', reason: 'elé nem kerül múlt idő' },
       { incorrect: '비가 오느라고 못 갔어요.', reason: 'csak szándékos cselekvés lehet, nem időjárás' },
     ],
-    ownNote: `<p>Melléknévvel nem áll, és utána nem jöhet felszólítás vagy javaslat. Bocsánatkérésben gyakori: ${korean('준비하느라고 늦었어요. 죄송해요.')}</p>`,
+    ownNote: [
+      paragraph`Melléknévvel nem áll, és utána nem jöhet felszólítás vagy javaslat. Bocsánatkérésben gyakori: ${korean('준비하느라고 늦었어요. 죄송해요.')}`,
+    ],
   },
   {
     lesson: 8,
     point: 2,
     form: '-기는요',
     name: '„ugyan már, dehogy …” (szerény tagadás)',
-    explanation: `<p>Ige vagy melléknév után a másik állítását <b>finoman, szerényen tagadja</b>; főleg <b>dicséretre</b> adott válaszként, illetve bocsánatkérésre, köszönetre: „Ugyan, dehogy!”. A tő végétől függetlenül ${korean('-기는요')}; főnévvel ${korean('-은요/는요')}.</p>`,
+    explanation: [
+      paragraph`Ige vagy melléknév után a másik állítását ${bold('finoman, szerényen tagadja')}; főleg ${bold('dicséretre')} adott válaszként, illetve bocsánatkérésre, köszönetre: „Ugyan, dehogy!”. A tő végétől függetlenül ${korean('-기는요')}; főnévvel ${korean('-은요/는요')}.`,
+    ],
     table: {
       sampleSet: 'verbsAndAdjectives',
       columns: [{ header: '-기는요', conjugate: word => withPlainStem(word, '기는요') }],
     },
     examples: [
       [
-        '가: 한국어를 정말 잘하시네요. 나: 잘하<b>기는요</b>. 아직 멀었어요.',
+        text`가: 한국어를 정말 잘하시네요. 나: 잘하${bold('기는요')}. 아직 멀었어요.`,
         '– Nagyon jól beszél koreaiul! – Ugyan már, még messze vagyok tőle.',
       ],
       [
-        '가: 음식이 정말 맛있어요. 나: 맛있<b>기는요</b>. 그냥 간단하게 만들었어요.',
+        text`가: 음식이 정말 맛있어요. 나: 맛있${bold('기는요')}. 그냥 간단하게 만들었어요.`,
         '– Nagyon finom az étel! – Ugyan, csak gyorsan összedobtam.',
       ],
-      ['가: 많이 바쁘시죠? 나: 바쁘<b>기는요</b>.', '– Biztos nagyon elfoglalt. – Dehogy.'],
+      [text`가: 많이 바쁘시죠? 나: 바쁘${bold('기는요')}.`, '– Biztos nagyon elfoglalt. – Dehogy.'],
       [
-        '가: 도와줘서 고마워요. 나: 고맙<b>기는요</b>.',
+        text`가: 도와줘서 고마워요. 나: 고맙${bold('기는요')}.`,
         '– Köszönöm a segítséget! – Ugyan, nincs mit.',
         '-기 előtt nincs ㅂ-változás: 고맙기는요',
       ],
     ],
-    ownNote: `<p>Barátok közt: ${korean('-기는')} (${korean('잘하기는!')}). Hangnemtől függően ellentmondás is lehet: ${korean('가깝기는요, 엄청 멀어요')} „Közel? Ugyan, nagyon messze van!”</p>`,
+    ownNote: [
+      paragraph`Barátok közt: ${korean('-기는')} (${korean('잘하기는!')}). Hangnemtől függően ellentmondás is lehet: ${korean('가깝기는요, 엄청 멀어요')} „Közel? Ugyan, nagyon messze van!”`,
+    ],
   },
   {
     lesson: 9,
     point: 1,
     form: '-는/(으)ㄴ 모양이다',
     name: '„úgy tűnik, hogy …” (következtetés tényekből)',
-    explanation: `<p>Egy <b>tény vagy helyzet alapján következtetünk</b>: „úgy látszik, …”. Első személyről nem mondjuk.</p>
-<ul><li><b>Jelen</b>: ige és ${korean('있다/없다')} ${korean('-는 모양이다')}; melléknév 받침 után ${korean('-은')}, magánhangzó után ${korean('-ㄴ 모양이다')}</li><li><b>Múlt</b> (ige): ${korean('-(으)ㄴ 모양이다')}</li><li>Főnév: ${korean('-인 모양이다')}</li></ul>`,
+    explanation: [
+      paragraph`Egy ${bold('tény vagy helyzet alapján következtetünk')}: „úgy látszik, …”. Első személyről nem mondjuk.`,
+      list(
+        text`${bold('Jelen')}: ige és ${korean('있다/없다')} ${korean('-는 모양이다')}; melléknév 받침 után ${korean('-은')}, magánhangzó után ${korean('-ㄴ 모양이다')}`,
+        text`${bold('Múlt')} (ige): ${korean('-(으)ㄴ 모양이다')}`,
+        text`Főnév: ${korean('-인 모양이다')}`
+      ),
+    ],
     table: {
       sampleSet: 'verbsAndAdjectives',
       columns: [
@@ -434,15 +510,24 @@ const points: PointSource[] = [
       ],
     },
     examples: [
-      ['두 사람이 많이 부러<b>운 모양이에요</b>.', 'Úgy tűnik, nagyon irigyli őket.', 'ㅂ-rendhagyó: 부럽다 → 부러운'],
       [
-        '불이 꺼져 있어요. 다들 집에 <b>간 모양이에요</b>.',
+        text`두 사람이 많이 부러${bold('운 모양이에요')}.`,
+        'Úgy tűnik, nagyon irigyli őket.',
+        'ㅂ-rendhagyó: 부럽다 → 부러운',
+      ],
+      [
+        text`불이 꺼져 있어요. 다들 집에 ${bold('간 모양이에요')}.`,
         'Le van kapcsolva a villany. Úgy látszik, mindenki hazament.',
       ],
-      ['밖에 비가 오<b>는 모양이에요</b>. 우산을 쓴 사람이 많아요.', 'Úgy tűnik, esik: sokan tartanak esernyőt.'],
-      ['마크 씨가 오늘 기분이 좋<b>은 모양이에요</b>.', 'Mark ma úgy tűnik, jókedvű.'],
+      [
+        text`밖에 비가 오${bold('는 모양이에요')}. 우산을 쓴 사람이 많아요.`,
+        'Úgy tűnik, esik: sokan tartanak esernyőt.',
+      ],
+      [text`마크 씨가 오늘 기분이 좋${bold('은 모양이에요')}.`, 'Mark ma úgy tűnik, jókedvű.'],
     ],
-    ownNote: `<p>Közel áll a ${korean('-나/(으)ㄴ가 보다')} (3A 2. lecke) jelentéséhez; a ${korean('모양이다')} kicsit írottabb, tárgyilagosabb.</p>`,
+    ownNote: [
+      paragraph`Közel áll a ${korean('-나/(으)ㄴ가 보다')} (${reference('3A-02-2')}) jelentéséhez; a ${korean('모양이다')} kicsit írottabb, tárgyilagosabb.`,
+    ],
   },
   {
     lesson: 9,
@@ -450,21 +535,27 @@ const points: PointSource[] = [
     form: '같이',
     name: '„mint, -ként” (hasonlóság)',
     conjugable: false,
-    explanation: `<p>Főnév után azt fejezi ki, hogy valami az adott főnév <b>jellegzetes tulajdonságához hasonló</b>: ${korean('천사같이 착해요')} „angyalian jószívű”. Legtöbbször felcserélhető a ${korean('처럼')}-mel (2B 12. lecke), de bizonyos <b>állandósult hasonlatokban</b> csak az egyik természetes: ${korean('불같이 화를 내다')} „dühbe gurul”, de ${korean('새처럼 날고 싶다')} „repülni szeretnék, mint a madár”.</p>`,
-    examples: [
-      ['그 사람은 천사<b>같이</b> 착해요.', 'Angyalian jószívű.'],
-      ['아버지가 불<b>같이</b> 화를 내셨어요.', 'Apa dühbe gurult (szó szerint: tűzként).'],
-      ['오늘은 봄날<b>같이</b> 따뜻해요.', 'Ma olyan meleg van, mint tavasszal.'],
-      ['우리 언니는 모델<b>같이</b> 키가 커요.', 'A nővérem magas, mint egy modell.'],
+    explanation: [
+      paragraph`Főnév után azt fejezi ki, hogy valami az adott főnév ${bold('jellegzetes tulajdonságához hasonló')}: ${korean('천사같이 착해요')} „angyalian jószívű”. Legtöbbször felcserélhető a ${korean('처럼')}-mel (${reference('2B-12-1')}), de bizonyos ${bold('állandósult hasonlatokban')} csak az egyik természetes: ${korean('불같이 화를 내다')} „dühbe gurul”, de ${korean('새처럼 날고 싶다')} „repülni szeretnék, mint a madár”.`,
     ],
-    ownNote: `<p>Vigyázat: a ${korean('같이')} „együtt” jelentésben külön szó (${korean('친구하고 같이 가요')}), itt viszont <b>partikula</b>, egybeírjuk a főnévvel. Jelzőként: ${korean('N 같은 N')}.</p>`,
+    examples: [
+      [text`그 사람은 천사${bold('같이')} 착해요.`, 'Angyalian jószívű.'],
+      [text`아버지가 불${bold('같이')} 화를 내셨어요.`, 'Apa dühbe gurult (szó szerint: tűzként).'],
+      [text`오늘은 봄날${bold('같이')} 따뜻해요.`, 'Ma olyan meleg van, mint tavasszal.'],
+      [text`우리 언니는 모델${bold('같이')} 키가 커요.`, 'A nővérem magas, mint egy modell.'],
+    ],
+    ownNote: [
+      paragraph`Vigyázat: a ${korean('같이')} „együtt” jelentésben külön szó (${korean('친구하고 같이 가요')}), itt viszont ${bold('partikula')}, egybeírjuk a főnévvel. Jelzőként: ${korean('N 같은 N')}.`,
+    ],
   },
   {
     lesson: 10,
     point: 1,
     form: '-던데요',
     name: '„azt láttam (tapasztaltam), hogy … ám!” (felidézett élmény, csodálkozva)',
-    explanation: `<p>Ige vagy melléknév után a beszélő a <b>múltban közvetlenül átélt jelenetet</b> idézi fel, és <b>csodálkozva, elismerően</b> beszél róla: „Láttam, tényleg nagyon …!”. A tő végétől függetlenül ${korean('-던데요')}.</p>`,
+    explanation: [
+      paragraph`Ige vagy melléknév után a beszélő a ${bold('múltban közvetlenül átélt jelenetet')} idézi fel, és ${bold('csodálkozva, elismerően')} beszél róla: „Láttam, tényleg nagyon …!”. A tő végétől függetlenül ${korean('-던데요')}.`,
+    ],
     table: {
       sampleSet: 'verbsAndAdjectives',
       columns: [
@@ -473,62 +564,74 @@ const points: PointSource[] = [
       ],
     },
     examples: [
-      ['그 식당 떡국이 정말 맛있<b>던데요</b>.', 'Annak az étteremnek a tteokgukja tényleg nagyon finom volt!'],
-      ['마크 씨가 노래를 정말 잘하<b>던데요</b>.', 'Mark tényleg nagyon jól énekel (hallottam)!'],
-      ['어제 가 보니까 사람이 정말 많<b>던데요</b>.', 'Tegnap ott jártam, és tényleg rengeteg ember volt.'],
-      ['제주도는 바람이 많이 불<b>던데요</b>.', 'Dzsedzsun aztán erősen fúj a szél.'],
+      [text`그 식당 떡국이 정말 맛있${bold('던데요')}.`, 'Annak az étteremnek a tteokgukja tényleg nagyon finom volt!'],
+      [text`마크 씨가 노래를 정말 잘하${bold('던데요')}.`, 'Mark tényleg nagyon jól énekel (hallottam)!'],
+      [text`어제 가 보니까 사람이 정말 많${bold('던데요')}.`, 'Tegnap ott jártam, és tényleg rengeteg ember volt.'],
+      [text`제주도는 바람이 많이 불${bold('던데요')}.`, 'Dzsedzsun aztán erősen fúj a szél.'],
       [
-        '어제 가 보니까 거기는 정말 덥<b>던데요</b>.',
+        text`어제 가 보니까 거기는 정말 덥${bold('던데요')}.`,
         'Tegnap ott jártam, és tényleg nagyon meleg volt!',
         '-던 előtt nincs ㅂ-változás: 덥던데요',
       ],
     ],
-    ownNote: `<p>A ${korean('-더라고요')} (3A 11. lecke) közeli rokona; a ${korean('-던데요')} jobban kifejezi a meglepetést, és nyitva hagyja a beszélgetést (a hallgató reakcióját várja).</p>`,
+    ownNote: [
+      paragraph`A ${korean('-더라고요')} (${reference('3A-11-2')}) közeli rokona; a ${korean('-던데요')} jobban kifejezi a meglepetést, és nyitva hagyja a beszélgetést (a hallgató reakcióját várja).`,
+    ],
   },
   {
     lesson: 10,
     point: 2,
     form: '-았더니/었더니',
     name: '„amikor …-tam, (erre az lett, hogy) …”',
-    explanation: `<p>Ige után azt fejezi ki, hogy a beszélő <b>valamit megtett</b>, és ennek <b>eredményeként vagy reakcióként</b> valami történt / kiderült. Az első tagmondat alanya általában a beszélő. ㅏ, ㅗ után ${korean('-았더니')}, egyébként ${korean('-었더니')}, 하다 → ${korean('했더니')}.</p>`,
+    explanation: [
+      paragraph`Ige után azt fejezi ki, hogy a beszélő ${bold('valamit megtett')}, és ennek ${bold('eredményeként vagy reakcióként')} valami történt / kiderült. Az első tagmondat alanya általában a beszélő. ㅏ, ㅗ után ${korean('-았더니')}, egyébként ${korean('-었더니')}, 하다 → ${korean('했더니')}.`,
+    ],
     table: { sampleSet: 'verbs', columns: [{ header: '-았더니/었더니', conjugate: word => withPast(word, '더니') }] },
     examples: [
       [
-        '떡국을 한 그릇 다 먹<b>었더니</b> 배가 불러요.',
+        text`떡국을 한 그릇 다 먹${bold('었더니')} 배가 불러요.`,
         'Megettem egy egész tál tteokgukot, most tele vagyok.',
         '르-rendhagyó: 부르다 → 불러요',
       ],
-      ['아침에 운동을 <b>했더니</b> 기분이 좋아요.', 'Reggel edzettem, és most jó kedvem van.'],
-      ['친구에게 전화<b>했더니</b> 안 받았어요.', 'Felhívtam a barátomat, de nem vette fel.'],
+      [text`아침에 운동을 ${bold('했더니')} 기분이 좋아요.`, 'Reggel edzettem, és most jó kedvem van.'],
+      [text`친구에게 전화${bold('했더니')} 안 받았어요.`, 'Felhívtam a barátomat, de nem vette fel.'],
       [
-        '그 노래를 계속 들<b>었더니</b> 가사를 다 외웠어요.',
+        text`그 노래를 계속 들${bold('었더니')} 가사를 다 외웠어요.`,
         'Annyit hallgattam azt a dalt, hogy az egész szövegét megtanultam.',
         'ㄷ-rendhagyó: 듣다 → 들었더니',
       ],
     ],
-    ownNote: `<p>A 4A 10. leckében tanult ${korean('-더니')} (múlt idő jele nélkül) más személy megfigyelt változását írja le; a ${korean('-았더니/었더니')} a <b>saját</b> cselekvés következményét.</p>`,
+    ownNote: [
+      paragraph`A ${reference('4A-10-1', '4A 10. leckében')} tanult ${korean('-더니')} (múlt idő jele nélkül) más személy megfigyelt változását írja le; a ${korean('-았더니/었더니')} a ${bold('saját')} cselekvés következményét.`,
+    ],
   },
   {
     lesson: 11,
     point: 1,
     form: '-아/어 가다',
     name: '„egyre …, folyamatosan …” (változás a jövő felé)',
-    explanation: `<p>Ige (vagy ${korean('-아지다')}-s melléknév) után azt fejezi ki, hogy egy cselekvés vagy változás <b>folyamatosan halad előre</b>, egy végpont felé: „egyre jobban …”, „folyamatosan …”. A <b>-아/어</b> szabály szerint.</p>`,
+    explanation: [
+      paragraph`Ige (vagy ${korean('-아지다')}-s melléknév) után azt fejezi ki, hogy egy cselekvés vagy változás ${bold('folyamatosan halad előre')}, egy végpont felé: „egyre jobban …”, „folyamatosan …”. A ${bold('-아/어')} szabály szerint.`,
+    ],
     table: { sampleSet: 'verbs', columns: [{ header: '-아/어 가요', conjugate: word => withAOrEo(word, ' 가요') }] },
     examples: [
-      ['숙제를 거의 다 해 <b>가요</b>.', 'Már majdnem kész vagyok a házival.'],
-      ['날씨가 점점 추워져 <b>가요</b>.', 'Egyre hidegebb lesz.', 'ㅂ-rendhagyó: 춥다 → 추워져 가요'],
-      ['한국 생활에 조금씩 익숙해져 <b>가요</b>.', 'Lassan megszokom a koreai életet.'],
-      ['요리가 다 되어 <b>가요</b>. 조금만 기다리세요.', 'Mindjárt kész az étel, várjatok egy kicsit.'],
+      [text`숙제를 거의 다 해 ${bold('가요')}.`, 'Már majdnem kész vagyok a házival.'],
+      [text`날씨가 점점 추워져 ${bold('가요')}.`, 'Egyre hidegebb lesz.', 'ㅂ-rendhagyó: 춥다 → 추워져 가요'],
+      [text`한국 생활에 조금씩 익숙해져 ${bold('가요')}.`, 'Lassan megszokom a koreai életet.'],
+      [text`요리가 다 되어 ${bold('가요')}. 조금만 기다리세요.`, 'Mindjárt kész az étel, várjatok egy kicsit.'],
     ],
-    ownNote: `<p>A ${korean('-아/어 오다')} a múltból a jelen felé tartó folyamatot jelenti: ${korean('10년 동안 한국어를 공부해 왔어요')} „tíz éve tanulok koreaiul (egészen mostanáig)”.</p>`,
+    ownNote: [
+      paragraph`A ${korean('-아/어 오다')} a múltból a jelen felé tartó folyamatot jelenti: ${korean('10년 동안 한국어를 공부해 왔어요')} „tíz éve tanulok koreaiul (egészen mostanáig)”.`,
+    ],
   },
   {
     lesson: 11,
     point: 2,
     form: '-아/어 두다',
     name: '„előre megcsinál, eltesz (későbbre)”',
-    explanation: `<p>Ige után azt fejezi ki, hogy egy cselekvés eredményét <b>megtartjuk</b>, vagy valamit <b>előre elvégzünk</b>, hogy később felhasználjuk, felkészüljünk. A <b>-아/어</b> szabály szerint.</p>`,
+    explanation: [
+      paragraph`Ige után azt fejezi ki, hogy egy cselekvés eredményét ${bold('megtartjuk')}, vagy valamit ${bold('előre elvégzünk')}, hogy később felhasználjuk, felkészüljünk. A ${bold('-아/어')} szabály szerint.`,
+    ],
     table: {
       sampleSet: 'verbs',
       columns: [
@@ -538,25 +641,29 @@ const points: PointSource[] = [
     },
     examples: [
       [
-        '자격증 준비나 외국어 공부도 미리 해 <b>두면</b> 좋을 거야.',
+        text`자격증 준비나 외국어 공부도 미리 해 ${bold('두면')} 좋을 거야.`,
         'Jó lesz előre készülni a vizsgákra és nyelvet tanulni.',
       ],
-      ['중요한 내용은 메모해 <b>두세요</b>.', 'A fontos dolgokat jegyezd fel.'],
-      ['여행 가기 전에 호텔을 예약해 <b>뒀어요</b>.', 'Az utazás előtt lefoglaltam a szállodát.'],
+      [text`중요한 내용은 메모해 ${bold('두세요')}.`, 'A fontos dolgokat jegyezd fel.'],
+      [text`여행 가기 전에 호텔을 예약해 ${bold('뒀어요')}.`, 'Az utazás előtt lefoglaltam a szállodát.'],
       [
-        '면접 전에 예상 질문을 들어 <b>두세요</b>.',
+        text`면접 전에 예상 질문을 들어 ${bold('두세요')}.`,
         'Az interjú előtt hallgasd meg a várható kérdéseket.',
         'ㄷ-rendhagyó: 듣다 → 들어 두세요',
       ],
     ],
-    ownNote: `<p>Szinte minden esetben felcserélhető a ${korean('-아/어 놓다')}-val (3B 4. lecke). Rövid alakok: ${korean('두었어요 → 뒀어요')}.</p>`,
+    ownNote: [
+      paragraph`Szinte minden esetben felcserélhető a ${korean('-아/어 놓다')}-val (${reference('3B-04-1')}). Rövid alakok: ${korean('두었어요 → 뒀어요')}.`,
+    ],
   },
   {
     lesson: 12,
     point: 1,
     form: '-기는 하다',
     name: '„… az igaz, (de) …” (részleges egyetértés)',
-    explanation: `<p>Ige vagy melléknév után a másik véleményét <b>részben elismeri</b>, de utána <b>enyhén ellentmond</b> vagy mást tesz hozzá: „Drága az igaz, de jó minőségű.” Gyakran ${korean('-기는 하는데 / -기는 하지만')}. Ugyanazt a szót ismételjük: ${korean('비싸기는 비싸요')}.</p>`,
+    explanation: [
+      paragraph`Ige vagy melléknév után a másik véleményét ${bold('részben elismeri')}, de utána ${bold('enyhén ellentmond')} vagy mást tesz hozzá: „Drága az igaz, de jó minőségű.” Gyakran ${korean('-기는 하는데 / -기는 하지만')}. Ugyanazt a szót ismételjük: ${korean('비싸기는 비싸요')}.`,
+    ],
     table: {
       sampleSet: 'verbsAndAdjectives',
       columns: [
@@ -569,16 +676,16 @@ const points: PointSource[] = [
     },
     examples: [
       [
-        '가: 유학 준비가 힘들죠? 나: 힘들<b>기는 해요</b>. 그래도 재미있어요.',
+        text`가: 유학 준비가 힘들죠? 나: 힘들${bold('기는 해요')}. 그래도 재미있어요.`,
         '– Nehéz a tanulmányi út előkészítése, ugye? – Nehéz, az igaz. De azért érdekes.',
       ],
-      ['이 옷이 예쁘<b>기는 한데</b> 너무 비싸요.', 'Szép ez a ruha, de túl drága.'],
+      [text`이 옷이 예쁘${bold('기는 한데')} 너무 비싸요.`, 'Szép ez a ruha, de túl drága.'],
       [
-        '한국어가 어렵<b>기는 하지만</b> 재미있어요.',
+        text`한국어가 어렵${bold('기는 하지만')} 재미있어요.`,
         'A koreai nehéz, az igaz, de érdekes.',
         '-기 előtt nincs ㅂ-változás: 어렵기는',
       ],
-      ['그 노래를 듣<b>기는 했는데</b> 제목은 몰라요.', 'Hallottam a dalt, de a címét nem tudom.'],
+      [text`그 노래를 듣${bold('기는 했는데')} 제목은 몰라요.`, 'Hallottam a dalt, de a címét nem tudom.'],
     ],
   },
   {
@@ -586,18 +693,22 @@ const points: PointSource[] = [
     point: 2,
     form: '-는 중이다',
     name: '„épp …-ok, folyamatban van”',
-    explanation: `<p>Ige után azt fejezi ki, hogy egy cselekvés <b>éppen folyamatban van</b>, „épp …-ban/-ben vagyok”. A tő végétől függetlenül ${korean('-는 중이다')}; ㄹ-tőnél az ㄹ kiesik (${korean('만드는 중이에요')}). Főnévvel rövidebben: ${korean('N 중이다')} (${korean('회의 중이에요')}).</p>`,
+    explanation: [
+      paragraph`Ige után azt fejezi ki, hogy egy cselekvés ${bold('éppen folyamatban van')}, „épp …-ban/-ben vagyok”. A tő végétől függetlenül ${korean('-는 중이다')}; ㄹ-tőnél az ㄹ kiesik (${korean('만드는 중이에요')}). Főnévvel rövidebben: ${korean('N 중이다')} (${korean('회의 중이에요')}).`,
+    ],
     table: {
       sampleSet: 'verbs',
       columns: [{ header: '-는 중이에요', conjugate: word => withPlainStem(word, '는 중이에요') }],
     },
     examples: [
-      ['한국으로 유학을 가려고 준비하<b>는 중이에요</b>.', 'Épp arra készülök, hogy Koreába menjek tanulni.'],
-      ['지금 밥을 먹<b>는 중이에요</b>. 이따가 전화할게요.', 'Épp eszem. Később visszahívlak.'],
-      ['케이크를 만드<b>는 중이에요</b>.', 'Épp tortát sütök.', 'ㄹ-tő: 만들다 → 만드는'],
-      ['부장님은 지금 회의 <b>중이세요</b>.', 'Az osztályvezető úr épp értekezleten van.'],
+      [text`한국으로 유학을 가려고 준비하${bold('는 중이에요')}.`, 'Épp arra készülök, hogy Koreába menjek tanulni.'],
+      [text`지금 밥을 먹${bold('는 중이에요')}. 이따가 전화할게요.`, 'Épp eszem. Később visszahívlak.'],
+      [text`케이크를 만드${bold('는 중이에요')}.`, 'Épp tortát sütök.', 'ㄹ-tő: 만들다 → 만드는'],
+      [text`부장님은 지금 회의 ${bold('중이세요')}.`, 'Az osztályvezető úr épp értekezleten van.'],
     ],
-    ownNote: `<p>A ${korean('-고 있다')} (1B 11. lecke) hétköznapibb; a ${korean('-는 중이다')} jobban hangsúlyozza, hogy <b>éppen most</b> zajlik (pl. telefonban: „épp nem érek rá”). Állapotigékkel (${korean('알다, 좋아하다')}) egyik sem használható.</p>`,
+    ownNote: [
+      paragraph`A ${korean('-고 있다')} (${reference('1B-11-2')}) hétköznapibb; a ${korean('-는 중이다')} jobban hangsúlyozza, hogy ${bold('éppen most')} zajlik (pl. telefonban: „épp nem érek rá”). Állapotigékkel (${korean('알다, 좋아하다')}) egyik sem használható.`,
+    ],
   },
 ];
 export default {
