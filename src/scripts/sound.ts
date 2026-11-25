@@ -38,6 +38,13 @@ function play(button: HTMLButtonElement): void {
   });
 }
 
+/** A text that the chosen voice says wrong has no button. */
+function hideExcluded(): void {
+  document.querySelectorAll<HTMLElement>('.sound-button[data-without]').forEach(button => {
+    button.hidden = button.dataset.without!.split(' ').includes(voiceSelect?.value ?? '');
+  });
+}
+
 audio.addEventListener('ended', stop);
 audio.addEventListener('error', () => {
   if (playing) fail(playing);
@@ -65,7 +72,9 @@ if (voiceSelect) {
       // Storage blocked: the choice lasts until the page is left.
     }
     stop();
+    hideExcluded();
   });
 }
 
 document.addEventListener('astro:before-swap', stop);
+document.addEventListener('astro:page-load', hideExcluded);
