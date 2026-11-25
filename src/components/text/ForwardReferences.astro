@@ -1,0 +1,35 @@
+---
+// Marks after a text that uses structures of other lessons: ↗ taught later, ↖ taught earlier.
+import type { PointId } from '../../data/types';
+import { POINTS_BY_ID, positionOf } from '../../lib/content';
+import { targetOf } from '../../lib/references';
+import type { TextPlace } from '../../lib/richText';
+import Reference from './Reference.astro';
+
+interface Props {
+  uses: PointId[];
+  /** Where the text stands. */
+  place: TextPlace;
+}
+
+const { uses, place } = Astro.props;
+const position = positionOf(place.book, place.lesson);
+const marks = uses.map(to => {
+  const { book, lesson } = POINTS_BY_ID.get(to)!;
+  return { to, target: targetOf(to)!, isBackward: positionOf(book, lesson) < position };
+});
+---
+
+{marks.map(({ to, target, isBackward }) => (
+  <>
+    {' '}
+    <Reference
+      to={to}
+      class={'cross-reference forward-reference' + (isBackward ? ' backward-reference' : '')}
+      title={`${isBackward ? 'Korábban' : 'Később'} tanult szerkezet: ${target.title}`}
+    >
+      {`${isBackward ? '↖' : '↗'} ${target.label} `}
+      <span class="korean">{target.form}</span>
+    </Reference>
+  </>
+))}

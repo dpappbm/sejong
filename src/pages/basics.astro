@@ -4,9 +4,6 @@ import Basics from '../components/basics/Basics.astro';
 import PageNavigation from '../components/PageNavigation.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { CHAPTER_PATHS } from '../lib/content';
-import { getSite } from '../lib/site';
-
-getSite(); // registers the references before the cards render
 ---
 
 <BaseLayout

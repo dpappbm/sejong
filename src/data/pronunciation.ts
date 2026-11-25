@@ -1,3 +1,4 @@
+import { bold, lineBreak, reference, text } from '../lib/richText';
 import type { LessonPronunciation, PronunciationCategory, PronunciationData } from './types';
 
 const categories: PronunciationCategory[] = [
@@ -156,8 +157,8 @@ const lessons: Record<string, LessonPronunciation> = {
     hungarian: 'így van',
     rule: 'Ha a 받침 után magánhangzóval kezdődő szótag jön, a 받침 átkerül a következő szótag elejére.',
     examples: [
-      ['제 <b>이름은</b> 안나예요.', '이르믄', 'A nevem Anna.'],
-      ['저는 <b>회사원이에요</b>.', '회사워니에요', 'Irodai dolgozó vagyok.'],
+      [text`제 ${bold('이름은')} 안나예요.`, '이르믄', 'A nevem Anna.'],
+      [text`저는 ${bold('회사원이에요')}.`, '회사워니에요', 'Irodai dolgozó vagyok.'],
     ],
   },
   '1A-4': {
@@ -167,7 +168,13 @@ const lessons: Record<string, LessonPronunciation> = {
     samplePronunciation: '',
     hungarian: 'Tanulsz? · Tanulok.',
     rule: 'A kérdő mondat vége emelkedik (↗), minden más mondaté ereszkedik (↘).',
-    examples: [['가: 밥을 <b>먹어요</b>? ↗<br>나: 네. 밥을 <b>먹어요</b>. ↘', '', 'A: Eszel? – B: Igen, eszem.']],
+    examples: [
+      [
+        text`가: 밥을 ${bold('먹어요')}? ↗${lineBreak}나: 네. 밥을 ${bold('먹어요')}. ↘`,
+        '',
+        'A: Eszel? – B: Igen, eszem.',
+      ],
+    ],
   },
   '1A-6': {
     category: 'final-consonant-sound',
@@ -177,9 +184,9 @@ const lessons: Record<string, LessonPronunciation> = {
     hungarian: 'öt',
     rule: 'A szótag végén csak hét hang lehet: [ㄱ], [ㄴ], [ㄷ], [ㄹ], [ㅁ], [ㅂ], [ㅇ]. A ㅋ és a ㄲ [ㄱ]-nek hangzik; a ㅅ, ㅆ, ㅈ, ㅊ, ㅌ [ㄷ]-nek; a ㅍ [ㅂ]-nek.',
     examples: [
-      ['<b>책, 밖, 부엌</b>', '책, 박, 부억', 'könyv, kint, konyha'],
-      ['<b>옷, 꽃, 끝</b>', '옫, 꼳, 끋', 'ruha, virág, vég'],
-      ['<b>밥, 앞, 옆</b>', '밥, 압, 엽', 'rizs (étel), elöl, mellett'],
+      [bold('책, 밖, 부엌'), '책, 박, 부억', 'könyv, kint, konyha'],
+      [bold('옷, 꽃, 끝'), '옫, 꼳, 끋', 'ruha, virág, vég'],
+      [bold('밥, 앞, 옆'), '밥, 압, 엽', 'rizs (étel), elöl, mellett'],
     ],
   },
   '1A-8': {
@@ -190,8 +197,8 @@ const lessons: Record<string, LessonPronunciation> = {
     hungarian: 'nincs meleg',
     rule: 'Az 안-t külön írjuk, de olvasáskor egybeolvad a következő szóval, nincs előtte szünet.',
     examples: [
-      ['지금은 비가 <b>안 와요</b>.', '아놔요', 'Most nem esik az eső.'],
-      ['저는 여름을 <b>안 좋아해요</b>.', '안조아해요', 'Nem szeretem a nyarat.'],
+      [text`지금은 비가 ${bold('안 와요')}.`, '아놔요', 'Most nem esik az eső.'],
+      [text`저는 여름을 ${bold('안 좋아해요')}.`, '안조아해요', 'Nem szeretem a nyarat.'],
     ],
   },
   '1A-10': {
@@ -202,8 +209,8 @@ const lessons: Record<string, LessonPronunciation> = {
     hungarian: 'jó',
     rule: 'Ha a ㅎ 받침 után magánhangzó jön, a ㅎ nem hangzik.',
     examples: [
-      ['운동을 <b>좋아해요</b>.', '조아해요', 'Szeretek sportolni.'],
-      ['사람이 <b>많아요</b>.', '마나요', 'Sokan vannak.'],
+      [text`운동을 ${bold('좋아해요')}.`, '조아해요', 'Szeretek sportolni.'],
+      [text`사람이 ${bold('많아요')}.`, '마나요', 'Sokan vannak.'],
     ],
   },
   // ---------- 1B ----------
@@ -215,8 +222,8 @@ const lessons: Record<string, LessonPronunciation> = {
     hungarian: 'különösen',
     rule: 'Ha a ㄱ, ㄷ, ㅂ, ㅈ 받침 után ㅎ jön, összeolvadnak: [ㅋ], [ㅌ], [ㅍ], [ㅊ] lesz belőlük.',
     examples: [
-      ['<b>백화점에</b> 가요.', '배콰저메', 'Az áruházba megyek.'],
-      ['수업을 <b>시작해요</b>.', '시자캐요', 'Elkezdjük az órát.'],
+      [text`${bold('백화점에')} 가요.`, '배콰저메', 'Az áruházba megyek.'],
+      [text`수업을 ${bold('시작해요')}.`, '시자캐요', 'Elkezdjük az órát.'],
     ],
   },
   '1B-4': {
@@ -227,8 +234,8 @@ const lessons: Record<string, LessonPronunciation> = {
     hungarian: 'van',
     rule: 'Orrhang (ㄴ, ㅁ) előtt a ㄱ, ㄷ, ㅂ 받침 orrhanggá válik: [ㅇ], [ㄴ], [ㅁ].',
     examples: [
-      ['비가 <b>옵니다</b>.', '옴니다', 'Esik az eső.'],
-      ['저는 <b>한국말을</b> 배워요.', '한궁마를', 'Koreaiul tanulok.'],
+      [text`비가 ${bold('옵니다')}.`, '옴니다', 'Esik az eső.'],
+      [text`저는 ${bold('한국말을')} 배워요.`, '한궁마를', 'Koreaiul tanulok.'],
     ],
   },
   '1B-6': {
@@ -239,8 +246,8 @@ const lessons: Record<string, LessonPronunciation> = {
     hungarian: 'Szedzsong Intézet',
     rule: 'A [ㄱ], [ㄷ], [ㅂ] hangzású 받침 után a ㄷ [ㄸ]-nek, a ㅂ [ㅃ]-nek hangzik.',
     examples: [
-      ['<b>깍두기</b> 좀 더 주세요.', '깍뚜기', 'Kérek még egy kis kaktugit (retekkimcsit).'],
-      ['<b>10분쯤</b> 걸려요.', '십뿐쯤', 'Kb. 10 percig tart.'],
+      [text`${bold('깍두기')} 좀 더 주세요.`, '깍뚜기', 'Kérek még egy kis kaktugit (retekkimcsit).'],
+      [text`${bold('10분쯤')} 걸려요.`, '십뿐쯤', 'Kb. 10 percig tart.'],
     ],
   },
   '1B-8': {
@@ -251,8 +258,8 @@ const lessons: Record<string, LessonPronunciation> = {
     hungarian: 'rendben volt',
     rule: 'A kettős 받침 két mássalhangzóból áll. A ㄶ a szótag végén és magánhangzó előtt is [ㄴ]-nek hangzik.',
     examples: [
-      ['가게가 정말 <b>많았어요</b>.', '마나써요', 'Tényleg sok bolt volt.'],
-      ['날씨는 <b>괜찮아요</b>.', '괜차나요', 'Az idő rendben van.'],
+      [text`가게가 정말 ${bold('많았어요')}.`, '마나써요', 'Tényleg sok bolt volt.'],
+      [text`날씨는 ${bold('괜찮아요')}.`, '괜차나요', 'Az idő rendben van.'],
     ],
   },
   '1B-10': {
@@ -263,8 +270,8 @@ const lessons: Record<string, LessonPronunciation> = {
     hungarian: 'nyolc',
     rule: 'A ㄼ a szótag végén és mássalhangzó előtt [ㄹ]-nek hangzik. Ha magánhangzó jön utána, mindkét mássalhangzó hallatszik.',
     examples: [
-      ['<b>여덟</b> 명이에요.', '여덜', 'Nyolcan vagyunk.'],
-      ['방이 <b>넓어요</b>.', '널버요', 'Tágas a szoba.'],
+      [text`${bold('여덟')} 명이에요.`, '여덜', 'Nyolcan vagyunk.'],
+      [text`방이 ${bold('넓어요')}.`, '널버요', 'Tágas a szoba.'],
     ],
   },
   '1B-12': {
@@ -275,8 +282,8 @@ const lessons: Record<string, LessonPronunciation> = {
     hungarian: 'nem tudtam megcsinálni',
     rule: 'A ㄱ, ㄷ, ㅂ, ㅈ 받침 a következő ㅎ-val összeolvad: [ㅋ], [ㅌ], [ㅍ], [ㅊ] lesz belőle. Két szó határán is.',
     examples: [
-      ['생일을 <b>축하해요</b>.', '추카해요', 'Boldog születésnapot!'],
-      ['동생에게 <b>입학</b> 선물을 했어요.', '이팍', 'Ajándékot adtam az öcsémnek, mert iskolába került.'],
+      [text`생일을 ${bold('축하해요')}.`, '추카해요', 'Boldog születésnapot!'],
+      [text`동생에게 ${bold('입학')} 선물을 했어요.`, '이팍', 'Ajándékot adtam az öcsémnek, mert iskolába került.'],
     ],
   },
   // ---------- 2A ----------
@@ -288,8 +295,8 @@ const lessons: Record<string, LessonPronunciation> = {
     hungarian: 'milyen munka; mi történt',
     rule: 'Ha két szót egyben ejtünk, az első 받침-re végződik, és a második 이-vel kezdődik, ㄴ toldódik be: [니].',
     examples: [
-      ['빵을 <b>만드는 일을</b> 해요.', '만드는니를', 'Kenyérsütéssel foglalkozom.'],
-      ['<b>서른일곱</b> 살이에요.', '서른닐곱', '37 éves vagyok.'],
+      [text`빵을 ${bold('만드는 일을')} 해요.`, '만드는니를', 'Kenyérsütéssel foglalkozom.'],
+      [text`${bold('서른일곱')} 살이에요.`, '서른닐곱', '37 éves vagyok.'],
     ],
   },
   '2A-3': {
@@ -300,8 +307,8 @@ const lessons: Record<string, LessonPronunciation> = {
     hungarian: '',
     rule: 'Figyelj a ㅈ, ㅉ, ㅊ kiejtésére! A ㅈ lágy. A ㅉ-nél a legfeszesebb a torok. A ㅊ-nél jön ki a legtöbb levegő.',
     examples: [
-      ['같이 <b>저녁</b> 먹어요.', '저녁', 'Vacsorázzunk együtt.'],
-      ['<b>아침 7시쯤에</b> 일어나요.', '아침 일곱씨쯔메', 'Reggel 7 körül kelek.'],
+      [text`같이 ${bold('저녁')} 먹어요.`, '저녁', 'Vacsorázzunk együtt.'],
+      [text`${bold('아침 7시쯤에')} 일어나요.`, '아침 일곱씨쯔메', 'Reggel 7 körül kelek.'],
     ],
   },
   '2A-5': {
@@ -312,9 +319,9 @@ const lessons: Record<string, LessonPronunciation> = {
     hungarian: 'világos',
     rule: 'Az igék és melléknevek ㄺ 받침-je a szótag végén és a ㄱ-n kívüli mássalhangzók előtt [ㄱ]-nek hangzik. ㄱ előtt [ㄹ]-nek. Ha magánhangzó jön utána, mindkét mássalhangzó hallatszik.',
     examples: [
-      ['날씨가 <b>맑다</b>.', '막따', 'Derült az idő.'],
-      ['책을 <b>읽고</b> 싶어요.', '일꼬', 'Könyvet szeretnék olvasni.'],
-      ['<b>밝은</b> 집이 좋아요.', '발근', 'A világos lakást szeretem.'],
+      [text`날씨가 ${bold('맑다')}.`, '막따', 'Derült az idő.'],
+      [text`책을 ${bold('읽고')} 싶어요.`, '일꼬', 'Könyvet szeretnék olvasni.'],
+      [text`${bold('밝은')} 집이 좋아요.`, '발근', 'A világos lakást szeretem.'],
     ],
   },
   '2A-7': {
@@ -325,8 +332,8 @@ const lessons: Record<string, LessonPronunciation> = {
     hungarian: 'elfoglalt vagy, ugye?',
     rule: 'A ㅛ magánhangzó a ㅈ, ㅉ, ㅊ után [ㅗ]-nak hangzik.',
     examples: [
-      ['얼굴 많이 <b>부었죠</b>?', '부얻쪼', 'Nagyon bedagadt az arcod, ugye?'],
-      ['스트레스가 <b>많죠</b>?', '만초', 'Sok a stressz, ugye?'],
+      [text`얼굴 많이 ${bold('부었죠')}?`, '부얻쪼', 'Nagyon bedagadt az arcod, ugye?'],
+      [text`스트레스가 ${bold('많죠')}?`, '만초', 'Sok a stressz, ugye?'],
     ],
   },
   '2A-9': {
@@ -337,8 +344,8 @@ const lessons: Record<string, LessonPronunciation> = {
     hungarian: 'kalguksu (kézzel vágott tésztaleves)',
     rule: 'A [ㄱ], [ㄷ], [ㅂ] hangzású 받침 után a ㅅ [ㅆ]-nek, a ㅈ [ㅉ]-nek hangzik.',
     examples: [
-      ['저는 <b>칼국수를</b> 좋아해요.', '칼국쑤를', 'Szeretem a kalguksut.'],
-      ['짜장면은 <b>맵지</b> 않아요.', '맵찌', 'A csadzsangmjon nem csípős.'],
+      [text`저는 ${bold('칼국수를')} 좋아해요.`, '칼국쑤를', 'Szeretem a kalguksut.'],
+      [text`짜장면은 ${bold('맵지')} 않아요.`, '맵찌', 'A csadzsangmjon nem csípős.'],
     ],
   },
   '2A-11': {
@@ -349,8 +356,8 @@ const lessons: Record<string, LessonPronunciation> = {
     hungarian: 'tavaly',
     rule: 'A ㄱ, ㄲ, ㅋ 받침 [ㄱ]-nek hangzik. Ha ezután ㄴ jön, a [ㄱ]-ből [ㅇ] lesz.',
     examples: [
-      ['<b>작년에</b> 한국을 여행했어요.', '장녀네', 'Tavaly Koreában utaztam.'],
-      ['자주 <b>먹는</b> 음식이 뭐예요?', '멍는', 'Mit eszel gyakran?'],
+      [text`${bold('작년에')} 한국을 여행했어요.`, '장녀네', 'Tavaly Koreában utaztam.'],
+      [text`자주 ${bold('먹는')} 음식이 뭐예요?`, '멍는', 'Mit eszel gyakran?'],
     ],
   },
   // ---------- 2B ----------
@@ -362,8 +369,16 @@ const lessons: Record<string, LessonPronunciation> = {
     hungarian: 'elmentem, és…',
     rule: 'A ㅆ 받침 [ㄷ]-nek hangzik. Ha utána ㄴ jön, a [ㄷ]-ből [ㄴ] lesz.',
     examples: [
-      ['어제 동아리 모임에 <b>갔는데</b> 재미있었어요.', '간는데', 'Tegnap elmentem a klubtalálkozóra, és jó volt.'],
-      ['시험이 <b>끝났으니까</b> 동아리 모임 할래요?', '끈나쓰니까', 'Vége a vizsgáknak, tartsunk klubtalálkozót?'],
+      [
+        text`어제 동아리 모임에 ${bold('갔는데')} 재미있었어요.`,
+        '간는데',
+        'Tegnap elmentem a klubtalálkozóra, és jó volt.',
+      ],
+      [
+        text`시험이 ${bold('끝났으니까')} 동아리 모임 할래요?`,
+        '끈나쓰니까',
+        'Vége a vizsgáknak, tartsunk klubtalálkozót?',
+      ],
     ],
   },
   '2B-3': {
@@ -374,8 +389,8 @@ const lessons: Record<string, LessonPronunciation> = {
     hungarian: 'eszik, és…',
     rule: 'A [ㄱ], [ㄷ], [ㅂ] hangzású 받침 után a ㄱ [ㄲ]-nek hangzik.',
     examples: [
-      ['코트를 <b>입고</b> 나가세요.', '입꼬', 'Vegyen kabátot, mielőtt kimegy.'],
-      ['직접 만드신 <b>목걸이예요</b>.', '목꺼리예요', 'Ezt a nyakláncot saját kezűleg készítette.'],
+      [text`코트를 ${bold('입고')} 나가세요.`, '입꼬', 'Vegyen kabátot, mielőtt kimegy.'],
+      [text`직접 만드신 ${bold('목걸이예요')}.`, '목꺼리예요', 'Ezt a nyakláncot saját kezűleg készítette.'],
     ],
   },
   '2B-5': {
@@ -386,8 +401,8 @@ const lessons: Record<string, LessonPronunciation> = {
     hungarian: 'Nahát, tanulsz!',
     rule: 'A -네요-s felkiáltó mondat vége előbb lemegy, aztán kicsit felmegy.',
     examples: [
-      ['사람이 아주 <b>많네요</b>!', '만네요', 'Hű, de sokan vannak!'],
-      ['공연이 정말 <b>재미있네요</b>!', '재미인네요', 'Ez az előadás tényleg érdekes!'],
+      [text`사람이 아주 ${bold('많네요')}!`, '만네요', 'Hű, de sokan vannak!'],
+      [text`공연이 정말 ${bold('재미있네요')}!`, '재미인네요', 'Ez az előadás tényleg érdekes!'],
     ],
   },
   '2B-7': {
@@ -410,8 +425,8 @@ const lessons: Record<string, LessonPronunciation> = {
     hungarian: 'házasság',
     rule: 'Az ㄴ, ㄹ, ㅁ, ㅇ után álló ㅎ-t gyengén is ejthetjük (a tankönyv a mintaszóban halványan jelöli).',
     examples: [
-      ['언니가 9월에 <b>결혼해요</b>.', '', 'A nővérem szeptemberben férjhez megy.'],
-      ['저는 오늘 <b>은행에</b> 갈 거예요.', '', 'Ma bankba megyek.'],
+      [text`언니가 9월에 ${bold('결혼해요')}.`, '', 'A nővérem szeptemberben férjhez megy.'],
+      [text`저는 오늘 ${bold('은행에')} 갈 거예요.`, '', 'Ma bankba megyek.'],
     ],
   },
   '2B-11': {
@@ -423,7 +438,7 @@ const lessons: Record<string, LessonPronunciation> = {
     rule: 'A tegező (반말) kérdés vége is emelkedik.',
     examples: [
       [
-        '재민: 학교에서도 한국어를 <b>배워</b>? ↗<br>안나: 응.',
+        text`재민: 학교에서도 한국어를 ${bold('배워')}? ↗${lineBreak}안나: 응.`,
         '',
         'Dzsemin: Az iskolában is tanulsz koreaiul? – Anna: Igen.',
       ],
@@ -438,9 +453,9 @@ const lessons: Record<string, LessonPronunciation> = {
     hungarian: 'beiratkozás (iskolába)',
     rule: 'Ha a ㅂ 받침 után ㅎ jön, a kettő összeolvad: [ㅍ].',
     examples: [
-      ['3월에 <b>입학을</b> 해요.', '이파글', 'Márciusban kezdem az iskolát.'],
-      ['<b>급하게</b> 나오다가 미끄러졌어.', '그파게', 'Sietve jöttem ki, és elcsúsztam.'],
-      ['무늬가 너무 <b>복잡한</b> 것 같아요.', '복짜판', 'Szerintem túl bonyolult a minta.'],
+      [text`3월에 ${bold('입학을')} 해요.`, '이파글', 'Márciusban kezdem az iskolát.'],
+      [text`${bold('급하게')} 나오다가 미끄러졌어.`, '그파게', 'Sietve jöttem ki, és elcsúsztam.'],
+      [text`무늬가 너무 ${bold('복잡한')} 것 같아요.`, '복짜판', 'Szerintem túl bonyolult a minta.'],
     ],
   },
   '3A-4': {
@@ -451,9 +466,9 @@ const lessons: Record<string, LessonPronunciation> = {
     hungarian: 'kidobom',
     rule: 'A -(으)ㄹ után álló ㄱ, ㄷ, ㅂ, ㅅ, ㅈ keményedik: [ㄲ], [ㄸ], [ㅃ], [ㅆ], [ㅉ].',
     examples: [
-      ['내가 먼저 <b>쓸게</b>.', '쓸께', 'Majd én használom először.'],
-      ['내일 일찍 <b>올게요</b>.', '올께요', 'Holnap korán jövök.'],
-      ['열심히 <b>공부할게요</b>.', '공부할께요', 'Szorgalmasan fogok tanulni.'],
+      [text`내가 먼저 ${bold('쓸게')}.`, '쓸께', 'Majd én használom először.'],
+      [text`내일 일찍 ${bold('올게요')}.`, '올께요', 'Holnap korán jövök.'],
+      [text`열심히 ${bold('공부할게요')}.`, '공부할께요', 'Szorgalmasan fogok tanulni.'],
     ],
   },
   '3A-6': {
@@ -464,9 +479,9 @@ const lessons: Record<string, LessonPronunciation> = {
     hungarian: '',
     rule: 'A ㄱ, ㄷ, ㅂ, ㅅ, ㅈ betűvel írt jövevényszavakat általában keményen ejtjük: [ㄲ], [ㄸ], [ㅃ], [ㅆ], [ㅉ].',
     examples: [
-      ['<b>서비스 센터에서</b> 수리했어요.', '써비쓰 쎈터에서', 'A szervizben javíttattam meg.'],
-      ['<b>버스를</b> 타고 갔어요.', '뻐쓰를', 'Busszal mentem.'],
-      ['이 돈을 <b>달러로</b> 바꿔 주세요.', '딸러로', 'Kérem, váltsa át ezt a pénzt dollárra.'],
+      [text`${bold('서비스 센터에서')} 수리했어요.`, '써비쓰 쎈터에서', 'A szervizben javíttattam meg.'],
+      [text`${bold('버스를')} 타고 갔어요.`, '뻐쓰를', 'Busszal mentem.'],
+      [text`이 돈을 ${bold('달러로')} 바꿔 주세요.`, '딸러로', 'Kérem, váltsa át ezt a pénzt dollárra.'],
     ],
   },
   '3A-8': {
@@ -477,9 +492,9 @@ const lessons: Record<string, LessonPronunciation> = {
     hungarian: 'üdítőital',
     rule: 'Ha az ㅇ vagy ㅁ 받침 után ㄹ jön, a ㄹ [ㄴ]-nek hangzik.',
     examples: [
-      ['시원한 <b>음료수를</b> 마셔야겠어요.', '음뇨수를', 'Innom kell egy hideg üdítőt.'],
-      ['<b>한국어능력시험</b>', '한구거능녁씨험', 'koreai nyelvvizsga (TOPIK)'],
-      ['<b>강릉에</b> 한번 가 보세요.', '강능에', 'Menjen el egyszer Kangnungba.'],
+      [text`시원한 ${bold('음료수를')} 마셔야겠어요.`, '음뇨수를', 'Innom kell egy hideg üdítőt.'],
+      [bold('한국어능력시험'), '한구거능녁씨험', 'koreai nyelvvizsga (TOPIK)'],
+      [text`${bold('강릉에')} 한번 가 보세요.`, '강능에', 'Menjen el egyszer Kangnungba.'],
     ],
   },
   '3A-10': {
@@ -490,11 +505,11 @@ const lessons: Record<string, LessonPronunciation> = {
     hungarian: 'majdnem',
     rule: 'A szó második szótagjában álló 의 ejthető [의]-nek vagy [이]-nek is.',
     examples: [
-      ['열은 <b>거의</b> 내렸어요.', '거의/거이', 'A láz majdnem lement.'],
-      ['환불 <b>유의</b> 사항은 다음과 같아요.', '유의/유이', 'A visszatérítés tudnivalói a következők.'],
-      ['세종학당에 <b>문의해</b> 보세요.', '무늬해/무니해', 'Érdeklődjön a Szedzsong Intézetben.'],
+      [text`열은 ${bold('거의')} 내렸어요.`, '거의/거이', 'A láz majdnem lement.'],
+      [text`환불 ${bold('유의')} 사항은 다음과 같아요.`, '유의/유이', 'A visszatérítés tudnivalói a következők.'],
+      [text`세종학당에 ${bold('문의해')} 보세요.`, '무늬해/무니해', 'Érdeklődjön a Szedzsong Intézetben.'],
     ],
-    note: 'A 의 máshol másképp hangzik: szó elején [의], mássalhangzó után mindig [이], birtokos partikulaként [의] vagy [에]. Részletesen: <a class="cross-reference" href="#pronunciation-vowels">→ Kiejtés 12.</a>',
+    note: text`A 의 máshol másképp hangzik: szó elején [의], mássalhangzó után mindig [이], birtokos partikulaként [의] vagy [에]. Részletesen: ${reference('pronunciation-vowels', '→ Kiejtés 12.')}`,
   },
   '3A-12': {
     category: 'vowels',
@@ -504,9 +519,13 @@ const lessons: Record<string, LessonPronunciation> = {
     hungarian: 'szörny',
     rule: 'A ㅚ magánhangzó ejthető [ㅚ]-nek vagy [ㅞ]-nek.',
     examples: [
-      ['한국 영화 〈<b>괴물</b>〉을 좋아해요.', '괴물/궤물', 'Szeretem a 〈괴물〉 („The Host”) című koreai filmet.'],
-      ['<b>외국어</b> 공부에 관심이 많아요.', '외구거/웨구거', 'Nagyon érdekel az idegennyelv-tanulás.'],
-      ['<b>회의</b> 준비를 했어요.', '회의/훼의', 'Felkészültem az értekezletre.'],
+      [
+        text`한국 영화 〈${bold('괴물')}〉을 좋아해요.`,
+        '괴물/궤물',
+        'Szeretem a 〈괴물〉 („The Host”) című koreai filmet.',
+      ],
+      [text`${bold('외국어')} 공부에 관심이 많아요.`, '외구거/웨구거', 'Nagyon érdekel az idegennyelv-tanulás.'],
+      [text`${bold('회의')} 준비를 했어요.`, '회의/훼의', 'Felkészültem az értekezletre.'],
     ],
   },
   // ---------- 3B ----------
@@ -518,10 +537,14 @@ const lessons: Record<string, LessonPronunciation> = {
     hungarian: '…és (még) …',
     rule: 'A -더라고요 és a -하고요 pontos kiejtése [더라고요], [하고요], de beszédben gyakran [더라구요], [하구요].',
     examples: [
-      ['콘서트가 <b>감동적이더라고요</b>.', '감동저기더라고요/감동저기더라구요', 'Megható volt a koncert.'],
-      ['친구가 참 착해요. <b>성실하고요</b>.', '성실하고요/성실하구요', 'A barátom nagyon kedves. És szorgalmas is.'],
+      [text`콘서트가 ${bold('감동적이더라고요')}.`, '감동저기더라고요/감동저기더라구요', 'Megható volt a koncert.'],
       [
-        '저는 <b>학생이고요</b>, 친구는 회사원이에요.',
+        text`친구가 참 착해요. ${bold('성실하고요')}.`,
+        '성실하고요/성실하구요',
+        'A barátom nagyon kedves. És szorgalmas is.',
+      ],
+      [
+        text`저는 ${bold('학생이고요')}, 친구는 회사원이에요.`,
         '학쌩이고요/학쌩이구요',
         'Én diák vagyok, a barátom pedig irodai dolgozó.',
       ],
@@ -535,9 +558,9 @@ const lessons: Record<string, LessonPronunciation> = {
     hungarian: 'Akkor mivel kezdjem?',
     rule: 'Ha határozószó vagy indulatszó áll a mondat elején, utána rövid szünetet tartunk, és úgy folytatjuk. Így hangzik természetesen.',
     examples: [
-      ['<b>그럼</b> ∨ 다음에 만나요.', '', 'Akkor majd legközelebb találkozunk.'],
-      ['<b>아,</b> ∨ 나도 알아요.', '', 'Ja, én is tudom.'],
-      ['<b>우선</b> ∨ 청소부터 하자.', '', 'Először takarítsunk.'],
+      [text`${bold('그럼')} ∨ 다음에 만나요.`, '', 'Akkor majd legközelebb találkozunk.'],
+      [text`${bold('아,')} ∨ 나도 알아요.`, '', 'Ja, én is tudom.'],
+      [text`${bold('우선')} ∨ 청소부터 하자.`, '', 'Először takarítsunk.'],
     ],
   },
   '3B-6': {
@@ -549,12 +572,12 @@ const lessons: Record<string, LessonPronunciation> = {
     rule: 'Ha a ㄷ vagy ㅌ 받침 után 이 jön, a ㄷ [ㅈ]-nek, a ㅌ [ㅊ]-nek hangzik.',
     examples: [
       [
-        '어차피 지정석이니까 <b>굳이</b> 일찍 가서 줄 안 서도 돼.',
+        text`어차피 지정석이니까 ${bold('굳이')} 일찍 가서 줄 안 서도 돼.`,
         '구지',
         'Úgyis számozott helyek vannak, nem kell feltétlenül korán odamenni sorba állni.',
       ],
-      ['소파를 벽 쪽에 <b>붙이세요</b>.', '부치세요', 'Tolja a kanapét a falhoz.'],
-      ['<b>똑같이</b> 그려 보세요.', '똑까치', 'Rajzolja le pontosan ugyanígy.'],
+      [text`소파를 벽 쪽에 ${bold('붙이세요')}.`, '부치세요', 'Tolja a kanapét a falhoz.'],
+      [text`${bold('똑같이')} 그려 보세요.`, '똑까치', 'Rajzolja le pontosan ugyanígy.'],
     ],
   },
   '3B-8': {
@@ -565,9 +588,9 @@ const lessons: Record<string, LessonPronunciation> = {
     hungarian: 'sokáig',
     rule: 'A [ㄷ] hangzású 받침 után a ㄱ, ㄷ, ㅂ, ㅅ, ㅈ keményedik: [ㄲ], [ㄸ], [ㅃ], [ㅆ], [ㅉ].',
     examples: [
-      ['<b>오랫동안</b> 고향에 못 갔어요.', '오랟똥안', 'Sokáig nem jutottam haza.'],
-      ['<b>옷걸이가</b> 필요해요.', '옫꺼리가', 'Kell egy vállfa.'],
-      ['<b>찻잔을</b> 모으는 것이 취미예요.', '찯짜늘', 'A hobbim a teáscsészék gyűjtése.'],
+      [text`${bold('오랫동안')} 고향에 못 갔어요.`, '오랟똥안', 'Sokáig nem jutottam haza.'],
+      [text`${bold('옷걸이가')} 필요해요.`, '옫꺼리가', 'Kell egy vállfa.'],
+      [text`${bold('찻잔을')} 모으는 것이 취미예요.`, '찯짜늘', 'A hobbim a teáscsészék gyűjtése.'],
     ],
   },
   '3B-10': {
@@ -578,9 +601,9 @@ const lessons: Record<string, LessonPronunciation> = {
     hungarian: 'jutnori (hagyományos koreai táblajáték)',
     rule: 'Ha a [ㄷ] hangzású 받침 után ㄴ vagy ㅁ jön, a [ㄷ]-ből [ㄴ] lesz.',
     examples: [
-      ['<b>윷놀이</b> 할 줄 알죠?', '윤노리', 'Ugye tudsz jutnorit játszani?'],
-      ['생일 선물로 <b>꽃만</b> 샀어요.', '꼰만', 'Szülinapi ajándéknak csak virágot vettem.'],
-      ['<b>눈빛만</b> 봐도 알 수 있어요.', '눈빈만', 'Már a tekintetéből is látszik.'],
+      [text`${bold('윷놀이')} 할 줄 알죠?`, '윤노리', 'Ugye tudsz jutnorit játszani?', ['4B-02-1']],
+      [text`생일 선물로 ${bold('꽃만')} 샀어요.`, '꼰만', 'Szülinapi ajándéknak csak virágot vettem.'],
+      [text`${bold('눈빛만')} 봐도 알 수 있어요.`, '눈빈만', 'Már a tekintetéből is látszik.'],
     ],
   },
   '3B-12': {
@@ -591,9 +614,9 @@ const lessons: Record<string, LessonPronunciation> = {
     hungarian: 'szóval így van',
     rule: 'A ㅎ 받침 után álló ㄱ, ㄷ, ㅈ összeolvad vele: [ㅋ], [ㅌ], [ㅊ].',
     examples: [
-      ['<b>그렇구나</b>. 이제 알았어.', '그러쿠나', 'Szóval így van. Most már értem.'],
-      ['인맥을 <b>쌓다</b>.', '싸타', 'Kapcsolatokat épít.'],
-      ['나야 늘 <b>그렇지</b>.', '그러치', 'Velem mindig minden a régi.'],
+      [text`${bold('그렇구나')}. 이제 알았어.`, '그러쿠나', 'Szóval így van. Most már értem.'],
+      [text`인맥을 ${bold('쌓다')}.`, '싸타', 'Kapcsolatokat épít.'],
+      [text`나야 늘 ${bold('그렇지')}.`, '그러치', 'Velem mindig minden a régi.'],
     ],
   },
   // ---------- 4A ----------
@@ -605,8 +628,8 @@ const lessons: Record<string, LessonPronunciation> = {
     hungarian: 'Jól sikerült (a kép), ugye?',
     rule: 'A kiejtés attól is függ, hol tartunk szünetet. Az ㄴ a ㄹ előtt vagy után [ㄹ]-nek hangzik.',
     examples: [
-      ['<b>실내</b> 온도가 낮다.', '실래', 'Alacsony a beltéri hőmérséklet.'],
-      ['<b>오늘날까지</b> 전해진다.', '오늘랄까지', 'Napjainkig fennmaradt.'],
+      [text`${bold('실내')} 온도가 낮다.`, '실래', 'Alacsony a beltéri hőmérséklet.'],
+      [text`${bold('오늘날까지')} 전해진다.`, '오늘랄까지', 'Napjainkig fennmaradt.'],
     ],
   },
   '4A-4': {
@@ -617,8 +640,8 @@ const lessons: Record<string, LessonPronunciation> = {
     hungarian: 'járatközlekedés',
     rule: 'Az ㄴ után álló ㅎ-t vagy nem ejtjük, vagy csak gyengén.',
     examples: [
-      ['<b>가만히</b> 누워 있다.', '가만히/가마니', 'Csendben fekszik.'],
-      ['매달 <b>꾸준히</b> 저축하고 있다.', '꾸준히/꾸주니', 'Minden hónapban rendszeresen takarékoskodik.'],
+      [text`${bold('가만히')} 누워 있다.`, '가만히/가마니', 'Csendben fekszik.'],
+      [text`매달 ${bold('꾸준히')} 저축하고 있다.`, '꾸준히/꾸주니', 'Minden hónapban rendszeresen takarékoskodik.'],
     ],
   },
   '4A-6': {
@@ -629,9 +652,9 @@ const lessons: Record<string, LessonPronunciation> = {
     hungarian: 'immunitás',
     rule: 'Ha a ㄱ 받침 után ㄹ jön, a ㄹ [ㄴ]-nek hangzik, a ㄱ pedig az [ㄴ] előtt [ㅇ]-vá válik.',
     examples: [
-      ['올해 집을 나와 <b>독립을</b> 했다.', '동니블', 'Idén elköltöztem otthonról, és önálló lettem.'],
+      [text`올해 집을 나와 ${bold('독립을')} 했다.`, '동니블', 'Idén elköltöztem otthonról, és önálló lettem.'],
       [
-        '퇴근길에 <b>강변북로가</b> 많이 막혔다.',
+        text`퇴근길에 ${bold('강변북로가')} 많이 막혔다.`,
         '강변붕노가',
         'Munkából hazafelé nagy dugó volt a Gangbjon északi parti úton.',
       ],
@@ -645,25 +668,29 @@ const lessons: Record<string, LessonPronunciation> = {
     hungarian: 'nagykapus ház',
     rule: 'Ha kínai eredetű és koreai szó összetett szót alkot, az ㄴ, ㄹ, ㅁ, ㅇ után álló ㄱ, ㄷ, ㅅ, ㅂ, ㅈ gyakran keményedik: [ㄲ], [ㄸ], [ㅆ], [ㅃ], [ㅉ].',
     examples: [
-      ['이제 <b>고생길이</b> 훤하다.', '고생끼리', 'Most már világos, hogy nehéz idők jönnek.'],
-      ['바람이 불자 <b>등불이</b> 흔들렸다.', '등뿌리', 'Ahogy fújni kezdett a szél, meglibbent a lámpás lángja.'],
+      [text`이제 ${bold('고생길이')} 훤하다.`, '고생끼리', 'Most már világos, hogy nehéz idők jönnek.'],
+      [
+        text`바람이 불자 ${bold('등불이')} 흔들렸다.`,
+        '등뿌리',
+        'Ahogy fújni kezdett a szél, meglibbent a lámpás lángja.',
+      ],
     ],
   },
   '4A-10': {
     category: 'intonation',
     studentBookPage: 88,
-    sampleWord: '가: 어디 가요? ↗ – 나: 네. 잠깐 나갔다 오려고요.<br>가: 어디 가요? ↘ – 나: 도서관에 가요.',
+    sampleWord: text`가: 어디 가요? ↗ – 나: 네. 잠깐 나갔다 오려고요.${lineBreak}가: 어디 가요? ↘ – 나: 도서관에 가요.`,
     samplePronunciation: '',
     hungarian: 'Elmész valahová? – Igen, csak kiugrom. · Hová mész? – A könyvtárba.',
     rule: 'Más a hanglejtés, ha igen/nem választ várunk, és más, ha arra kérdezünk rá, hogy „mi” vagy „hol”. Az igen/nem kérdés vége emelkedik. A kérdőszavas kérdésben a kérdőszó (어디, 뭐) hangsúlyos, a mondat vége ereszkedik.',
     examples: [
       [
-        '가: <b>뭐가</b> 없어졌어? ↗<br>나: 응. 지갑이 없어졌어.',
+        text`가: ${bold('뭐가')} 없어졌어? ↗${lineBreak}나: 응. 지갑이 없어졌어.`,
         '',
         'A: Eltűnt valami? – B: Igen, eltűnt a pénztárcám.',
       ],
       [
-        '가: <b>뭐가</b> 없어졌어? ↘<br>나: 선물 받은 지갑이 없어졌어.',
+        text`가: ${bold('뭐가')} 없어졌어? ↘${lineBreak}나: 선물 받은 지갑이 없어졌어.`,
         '',
         'A: Mi tűnt el? – B: Az ajándékba kapott pénztárcám.',
       ],
@@ -677,8 +704,8 @@ const lessons: Record<string, LessonPronunciation> = {
     hungarian: 'koreai hullám (hallyu)',
     rule: 'Az ㄴ a ㄹ előtt vagy után [ㄹ]-nek hangzik.',
     examples: [
-      ['한국에 가기 전에 <b>연락했다</b>.', '열라캗따', 'Mielőtt Koreába mentem, jelentkeztem.'],
-      ['이 앱은 사용이 <b>편리하다</b>.', '펼리하다', 'Ez az alkalmazás kényelmesen használható.'],
+      [text`한국에 가기 전에 ${bold('연락했다')}.`, '열라캗따', 'Mielőtt Koreába mentem, jelentkeztem.'],
+      [text`이 앱은 사용이 ${bold('편리하다')}.`, '펼리하다', 'Ez az alkalmazás kényelmesen használható.'],
     ],
   },
   // ---------- 4B ----------
@@ -691,12 +718,12 @@ const lessons: Record<string, LessonPronunciation> = {
     rule: 'Ha a -거든 okot fejez ki, a mondat vége lemegy. Ha viszont egy tényt magyarázunk, és a történet folytatódik, a vége felmegy.',
     examples: [
       [
-        '생각보다 키가 작아서 놀랐어. 사진만 봤을 때는 키가 큰 줄 <b>알았거든.</b> ↘',
+        text`생각보다 키가 작아서 놀랐어. 사진만 봤을 때는 키가 큰 줄 ${bold('알았거든.')} ↘`,
         '',
         'Meglepődtem, hogy alacsonyabb, mint gondoltam. A fénykép alapján azt hittem, magas.',
       ],
       [
-        '빈자리가 나서 얼른 <b>앉았거든요.</b> ↗ 근데 할아버지가 오셔서….',
+        text`빈자리가 나서 얼른 ${bold('앉았거든요.')} ↗ 근데 할아버지가 오셔서….`,
         '',
         'Megüresedett egy hely, gyorsan leültem. De aztán jött egy idős bácsi, és…',
       ],
@@ -710,9 +737,9 @@ const lessons: Record<string, LessonPronunciation> = {
     hungarian: 'Jó sportoló lett volna belőle.',
     rule: 'A sajnálkozást kifejező -(으)ㄹ 텐데 végén a hang lemegy. Utána rövid szünet jön, és úgy folytatjuk a következő kifejezéssel.',
     examples: [
-      ['미리 말했으면 <b>준비했을 텐데.</b> ↘', '', 'Ha előre szóltál volna, felkészültem volna.'],
+      [text`미리 말했으면 ${bold('준비했을 텐데.')} ↘`, '', 'Ha előre szóltál volna, felkészültem volna.'],
       [
-        '일찍 돈을 벌었으면 부자가 <b>되었을 텐데.</b> ↘',
+        text`일찍 돈을 벌었으면 부자가 ${bold('되었을 텐데.')} ↘`,
         '',
         'Ha korán kezdtem volna pénzt keresni, gazdag lettem volna.',
       ],
@@ -727,12 +754,12 @@ const lessons: Record<string, LessonPronunciation> = {
     rule: 'Kínai eredetű szavakban az ㄹ 받침 után álló ㄷ, ㅅ, ㅈ keményedik: [ㄸ], [ㅆ], [ㅉ].',
     examples: [
       [
-        '과학 기술의 <b>발전으로</b> 인해 일자리가 줄어들었다.',
+        text`과학 기술의 ${bold('발전으로')} 인해 일자리가 줄어들었다.`,
         '발쩌느로',
         'A tudomány és a technika fejlődése miatt kevesebb lett a munkahely.',
       ],
       [
-        '봄은 날씨가 따뜻해서 야외 <b>활동에</b> 좋은 계절이다.',
+        text`봄은 날씨가 따뜻해서 야외 ${bold('활동에')} 좋은 계절이다.`,
         '활똥에',
         'A tavasz meleg időjárása miatt jó évszak a szabadtéri programokhoz.',
       ],
@@ -747,11 +774,11 @@ const lessons: Record<string, LessonPronunciation> = {
     rule: 'Az ㅇ 받침 után álló ㄹ [ㄴ]-nek hangzik.',
     examples: [
       [
-        '이번 학기에도 세종학당에 <b>등록했다</b>.',
+        text`이번 학기에도 세종학당에 ${bold('등록했다')}.`,
         '등노캗따',
         'Ebben a félévben is beiratkoztam a Szedzsong Intézetbe.',
       ],
-      ['이삿짐을 <b>정리해서</b> 옮겼다.', '정니해서', 'Összepakoltam a költözési holmit, és elvittem.'],
+      [text`이삿짐을 ${bold('정리해서')} 옮겼다.`, '정니해서', 'Összepakoltam a költözési holmit, és elvittem.'],
     ],
   },
   '4B-10': {
@@ -763,12 +790,12 @@ const lessons: Record<string, LessonPronunciation> = {
     rule: 'A 효과, 관건, 불법 és hasonló szavakban a második szótag ㄱ-ja és ㅂ-je ejthető [ㄱ], [ㅂ]-nek és [ㄲ], [ㅃ]-nek is.',
     examples: [
       [
-        '초등학교 앞에 주차를 하는 것은 <b>불법이다</b>.',
+        text`초등학교 앞에 주차를 하는 것은 ${bold('불법이다')}.`,
         '불버비다/불뻐비다',
         'Az általános iskola előtt tilos parkolni.',
       ],
       [
-        '오늘 경기의 <b>관건은</b> 두 감독의 전략이다.',
+        text`오늘 경기의 ${bold('관건은')} 두 감독의 전략이다.`,
         '관거는/관꺼는',
         'A mai meccsen a két edző stratégiája a döntő.',
       ],

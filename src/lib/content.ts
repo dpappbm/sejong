@@ -7,7 +7,7 @@ import book3A from '../data/books/3A';
 import book3B from '../data/books/3B';
 import book4A from '../data/books/4A';
 import book4B from '../data/books/4B';
-import type { BookData, Lesson, Point } from '../data/types';
+import type { BookData, Lesson, Point, PointId, ReferenceId } from '../data/types';
 
 export const BOOKS = ['1A', '1B', '2A', '2B', '3A', '3B', '4A', '4B'] as const;
 export type BookCode = (typeof BOOKS)[number];
@@ -40,8 +40,8 @@ export const LEVELS: Level[] = [
 
 /** Global id of a grammar point, e.g. pointId('3A', 9, 1) → "3A-09-1". */
 export const pointId = (book: string, lesson: number, point: number) =>
-  `${book}-${String(lesson).padStart(2, '0')}-${point}`;
-export const lessonId = (book: string, lesson: number) => `lesson-${book}-${lesson}`;
+  `${book}-${String(lesson).padStart(2, '0')}-${point}` as PointId;
+export const lessonId = (book: BookCode, lesson: number) => `lesson-${book}-${lesson}` as const;
 /** Key of a lesson in the data files, e.g. "3A-9". */
 export const lessonKey = (book: string, lesson: number) => `${book}-${lesson}`;
 /** Linear position of a lesson, for "already learned / not yet" comparisons. */
@@ -49,11 +49,10 @@ export const positionOf = (book: string, lesson: number | string) =>
   BOOKS.indexOf(book as BookCode) * 100 + Number(lesson);
 
 const POINT_ID_PATTERN = /^([1-4][AB])-(\d\d)-(\d)$/;
-export const isPointId = (id: string) => POINT_ID_PATTERN.test(id);
 
 export interface PointInfo extends Point {
   book: BookCode;
-  id: string;
+  id: PointId;
 }
 
 export interface LessonInfo {
@@ -108,7 +107,7 @@ export interface Location {
 }
 
 /** The page and element of a global id (point, lesson, basic rule, pronunciation category, honorific category). */
-export function locate(id: string): Location | null {
+export function locate(id: ReferenceId): Location | null {
   let match = POINT_ID_PATTERN.exec(id);
   if (match) return { path: lessonPath(match[1], Number(match[2])), anchor: `point-${match[3]}` };
   if ((match = /^lesson-([1-4][AB])-(\d+)$/.exec(id))) return { path: lessonPath(match[1], match[2]), anchor: '' };
@@ -123,10 +122,14 @@ const BASE = (import.meta.env?.BASE_URL ?? '/').replace(/\/$/, '');
 /** A site path with the deploy base prepended. */
 export const withBase = (path: string) => BASE + path;
 
-/** The address of a global id as seen from the page at pagePath: on the same page only the anchor. */
-export function hrefFrom(id: string, pagePath: string): string | null {
+/** The address of a global id. */
+export function hrefOf(id: ReferenceId): string | null {
   const location = locate(id);
-  if (!location) return null;
-  if (location.path === pagePath) return `#${location.anchor}`;
-  return withBase(location.path) + (location.anchor ? '#' + location.anchor : '');
+  return location && withBase(location.path) + (location.anchor ? '#' + location.anchor : '');
+}
+
+/** The address of a global id as seen from the page at pathname (Astro.url.pathname): on the same page only the anchor. */
+export function hrefFrom(id: ReferenceId, pathname: string): string | null {
+  const location = locate(id);
+  return location && withBase(location.path) === pathname ? `#${location.anchor}` : hrefOf(id);
 }

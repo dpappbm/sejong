@@ -1,19 +1,18 @@
 import { describe, expect, it } from 'vitest';
-import { audioId, plainText, spokenText } from '../../../scripts/audio/spoken-text.mjs';
+import { audioId, oneLine, spokenText } from '../../../scripts/audio/spoken-text.mjs';
 
-describe('plainText', () => {
-  it('drops the markup and decodes entities', () => {
-    expect(plainText('3월에 <b>입학을</b> 해요.')).toBe('3월에 입학을 해요.');
-    expect(plainText('밥을 먹어요?<br>네.&nbsp;먹어요.')).toBe('밥을 먹어요? 네. 먹어요.');
+describe('oneLine', () => {
+  it('leaves single spaces', () => {
+    expect(oneLine(' 밥을  먹어요?\n네. ')).toBe('밥을 먹어요? 네.');
   });
 });
 
 describe('spokenText', () => {
   it.each([
-    ['요즘 좀 피곤<b>해 보여요</b>.', '요즘 좀 피곤해 보여요.'],
+    ['요즘 좀 피곤해 보여요.', '요즘 좀 피곤해 보여요.'],
     ['가: 뭐 먹을까요? 나: 비빔밥 먹어요.', '뭐 먹을까요? 비빔밥 먹어요.'],
     ['지금 뭐 해? – 음악 들어.', '지금 뭐 해? 음악 들어.'],
-    ['한국 영화 〈<b>괴물</b>〉을 좋아해요.', '한국 영화 괴물을 좋아해요.'],
+    ['한국 영화 〈괴물〉을 좋아해요.', '한국 영화 괴물을 좋아해요.'],
     ['내일은 덜 더웠으면….', '내일은 덜 더웠으면.'],
     ['하나/한', '하나, 한'],
     ['잊어버리다 / 깜빡하다', '잊어버리다, 깜빡하다'],
@@ -21,9 +20,9 @@ describe('spokenText', () => {
     expect(spokenText(text)).toBe(spoken);
   });
 
-  it('prefers the form given in overrides.json, looked up without markup', () => {
+  it('prefers the form given in overrides.json, looked up with single spaces', () => {
     expect(
-      spokenText('서울에 산 지 <b>5년이</b> 됐어요.', { '서울에 산 지 5년이 됐어요.': '서울에 산 지 오 년이 됐어요.' })
+      spokenText('서울에 산 지  5년이 됐어요.', { '서울에 산 지 5년이 됐어요.': '서울에 산 지 오 년이 됐어요.' })
     ).toBe('서울에 산 지 오 년이 됐어요.');
   });
 

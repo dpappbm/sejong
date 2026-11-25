@@ -14,7 +14,7 @@ npm run build    # format check, type check, tests, build and internal link chec
 npm test         # tests only
 ```
 
-Content lives in `src/data/`, rendering and checks in `src/lib/`, pages in `src/pages/`; the tests are in `test/`, in the same structure as the files they test.
+Content lives in `src/data/`, its logic (conjugation, references) in `src/lib/`, the templates in `src/components/` and `src/pages/`. The tests, including every check of the content, are in `test/`, in the same structure as the files they test.
 
 ## Sound files
 

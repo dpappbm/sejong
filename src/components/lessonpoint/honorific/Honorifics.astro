@@ -1,18 +1,18 @@
 ---
 import type { Honorific } from '../../../data/types';
-import { correctIncorrectList } from '../../../lib/render/correctIncorrect';
-import { linkPointText } from '../../../lib/site';
+import type { PointInfo } from '../../../lib/content';
 import OwnTag from '../../OwnTag.astro';
-import HonorificsExampleItem from './HonorificsExampleItem.astro';
+import CorrectIncorrectList from '../../shared/CorrectIncorrectList.astro';
+import Blocks from '../../text/Blocks.astro';
+import ExampleList from '../../text/ExampleList.astro';
 import HonorificsRowItem from './HonorificsRowItem.astro';
 
 interface Props {
   honorific: Honorific;
-  book: string;
-  pointId: string;
+  point: PointInfo;
 }
 
-const { honorific, book, pointId } = Astro.props;
+const { honorific, point } = Astro.props;
 ---
 
 <section class="honorific">
@@ -37,13 +37,7 @@ const { honorific, book, pointId } = Astro.props;
       </table>
     </div>
   )}
-  <Fragment set:html={linkPointText(honorific.note ?? '', pointId)} />
-  {honorific.examples && (
-    <ul class="examples">
-      {honorific.examples.map(item => (
-        <HonorificsExampleItem book={book} item={item} />
-      ))}
-    </ul>
-  )}
-  <Fragment set:html={linkPointText(correctIncorrectList(honorific.correctIncorrect, book), pointId)} />
+  {honorific.note && <Blocks content={honorific.note} />}
+  {honorific.examples && <ExampleList items={honorific.examples} place={point} />}
+  {honorific.correctIncorrect && <CorrectIncorrectList items={honorific.correctIncorrect} place={point} />}
 </section>

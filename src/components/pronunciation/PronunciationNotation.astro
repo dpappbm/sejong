@@ -1,0 +1,17 @@
+---
+// Pronunciation in square brackets.
+import { pronunciationParts } from '../../lib/pronunciation';
+
+interface Props {
+  value: string | string[];
+}
+
+const { parts, separator } = pronunciationParts(Astro.props.value);
+---
+
+{parts.map((part, index) => (
+  <>
+    {index > 0 && separator}
+    <span class="pronunciation-notation">[{part}]</span>
+  </>
+))}

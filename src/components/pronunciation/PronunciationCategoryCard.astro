@@ -1,0 +1,57 @@
+---
+// A collapsible card of the "Kiejtés" chapter: one rule type with every lesson's examples.
+import type { PronunciationCategory } from '../../data/types';
+import { lessonId } from '../../lib/content';
+import { categoryOf, lessonsOfCategory, pronunciationOf } from '../../lib/pronunciation';
+import DisclosureArrow from '../DisclosureArrow.astro';
+import OwnTag from '../OwnTag.astro';
+import Reference from '../text/Reference.astro';
+import PronunciationExtra from './PronunciationExtra.astro';
+import PronunciationRows from './PronunciationRows.astro';
+
+interface Props {
+  category: PronunciationCategory;
+}
+
+const { category } = Astro.props;
+const { number } = categoryOf(category.id);
+const lessons = lessonsOfCategory(category.id);
+---
+
+<details class="card pronunciation-category" open>
+  <summary>
+    <DisclosureArrow />
+    <h3 id={category.id}>
+      {number}. {category.hungarian} <span class="korean">({category.korean})</span>
+    </h3>
+  </summary>
+  <p>
+    {category.intro} <OwnTag />
+  </p>
+  <p class="pronunciation-category-lessons">
+    Tankönyvi leckék:{' '}
+    {lessons.map(({ book, lesson }, index) => (
+      <>
+        {index > 0 && ', '}
+        <Reference to={lessonId(book, lesson)}>{`${book} ${lesson}`}</Reference>
+      </>
+    ))}
+  </p>
+  <div class="table-wrapper">
+    <table class="plain pronunciation-table">
+      <thead>
+        <tr>
+          <th>Példa</th>
+          <th>Kiejtés</th>
+          <th>Magyarul</th>
+        </tr>
+      </thead>
+      <tbody>
+        {lessons.map(lesson => (
+          <PronunciationRows lesson={lesson} entry={pronunciationOf(lesson)!} />
+        ))}
+      </tbody>
+    </table>
+  </div>
+  {category.extra && <PronunciationExtra extra={category.extra} />}
+</details>

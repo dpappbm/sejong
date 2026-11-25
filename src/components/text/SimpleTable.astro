@@ -1,7 +1,10 @@
 ---
+import type { Text } from '../../lib/richText';
+import RichText from './RichText.astro';
+
 interface Props {
   headers: string[];
-  rows: string[][];
+  rows: Text[][];
 }
 
 const { headers, rows } = Astro.props;
@@ -20,7 +23,9 @@ const { headers, rows } = Astro.props;
       {rows.map(row => (
         <tr>
           {row.map(cell => (
-            <td set:html={cell} />
+            <td>
+              <RichText content={cell} />
+            </td>
           ))}
         </tr>
       ))}

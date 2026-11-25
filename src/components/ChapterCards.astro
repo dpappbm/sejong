@@ -1,9 +1,7 @@
 ---
 // Home page: one card per chapter (basic rules, pronunciation, honorific words) with its cards as link chips.
+import { chapters } from '../lib/chapters';
 import { withBase } from '../lib/content';
-import { chapterOutline } from '../lib/site';
-
-const chapters = chapterOutline();
 ---
 
 <section class="chapter-cards" id="general" aria-label="Általános fejezetek">

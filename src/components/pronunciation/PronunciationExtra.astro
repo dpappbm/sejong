@@ -1,0 +1,51 @@
+---
+// Own supplementary table of a category (e.g. the four cases of ㅢ): position | pronunciation | examples.
+import type { PronunciationCategory } from '../../data/types';
+import OwnTag from '../OwnTag.astro';
+import RichText from '../text/RichText.astro';
+import PronunciationNotation from './PronunciationNotation.astro';
+
+interface Props {
+  extra: NonNullable<PronunciationCategory['extra']>;
+}
+
+const { extra } = Astro.props;
+---
+
+<aside class="own pronunciation-category-extra">
+  <div class="own-heading">
+    <OwnTag /> <b>{extra.title}</b>
+  </div>
+  <div class="table-wrapper">
+    <table class="plain">
+      <thead>
+        <tr>
+          <th>Helyzet</th>
+          <th>Kiejtés</th>
+          <th>Példák</th>
+        </tr>
+      </thead>
+      <tbody>
+        {extra.rows.map(([position, pronunciation, examples]) => (
+          <tr>
+            <td>{position}</td>
+            <td class="korean">{pronunciation}</td>
+            <td>
+              {examples.map(([korean, value, hungarian], index) => (
+                <>
+                  {index > 0 && <br />}
+                  <span class="korean">
+                    <RichText content={korean} />
+                  </span>{' '}
+                  <PronunciationNotation value={value} />
+                  {` – ${hungarian}`}
+                </>
+              ))}
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  {extra.note && <p>{extra.note}</p>}
+</aside>

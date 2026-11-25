@@ -1,0 +1,75 @@
+---
+// The textbook "발음" box of a lesson, after its grammar points.
+import type { LessonInfo } from '../../lib/content';
+import { categoryOf, pronunciationOf } from '../../lib/pronunciation';
+import OwnTag from '../OwnTag.astro';
+import SoundButton from '../SoundButton.astro';
+import ForwardReferences from '../text/ForwardReferences.astro';
+import Reference from '../text/Reference.astro';
+import RichText from '../text/RichText.astro';
+import PronunciationNotation from './PronunciationNotation.astro';
+import PronunciationSample from './PronunciationSample.astro';
+
+interface Props {
+  lesson: LessonInfo;
+}
+
+const { lesson } = Astro.props;
+const { pronunciation, pronunciationHungarian } = lesson.title;
+const entry = pronunciationOf(lesson);
+const category = entry && categoryOf(entry.category);
+/** The label without the trailing explanation in parentheses. */
+const hungarian = pronunciationHungarian?.replace(/\s*\([^)]*\)\s*$/, '');
+---
+
+{entry && category && (
+  <div class="pronunciation-box">
+    <div class="pronunciation-heading">
+      <span>
+        Kiejtés: <span class="korean">{pronunciation}</span>
+        {hungarian && ` – ${hungarian}`}
+      </span>
+      <span class="source-page">SB {entry.studentBookPage}. o.</span>
+      <Reference to={`pronunciation-${category.id}`}>{`→ Kiejtés ${category.number}. ${category.hungarian}`}</Reference>
+    </div>
+    {entry.sampleWord && (
+      <div class="pronunciation-sample">
+        <PronunciationSample entry={entry} />
+        {entry.hungarian && (
+          <>
+            {' '}
+            <span class="hungarian">– {entry.hungarian}</span>
+          </>
+        )}
+      </div>
+    )}
+    <p class="pronunciation-rule">
+      <RichText content={entry.rule} />
+    </p>
+    <ul class="examples pronunciation-examples">
+      {entry.examples.map(([korean, value, hungarian, uses = []]) => (
+        <li>
+          <span class="korean">
+            <RichText content={korean} />
+            {value.length > 0 && (
+              <>
+                {' '}
+                <PronunciationNotation value={value} />
+              </>
+            )}
+            <SoundButton korean={korean} book={lesson.book} />
+          </span>
+          <span class="hungarian">
+            {hungarian}
+            <ForwardReferences uses={uses} place={lesson} />
+          </span>
+        </li>
+      ))}
+    </ul>
+    {entry.note && (
+      <aside class="own pronunciation-note">
+        <OwnTag /> <RichText content={entry.note} />
+      </aside>
+    )}
+  </div>
+)}

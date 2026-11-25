@@ -96,7 +96,9 @@ const pointHref = (point: number) => (linked ? `${pageUrl}#point-${point}` : `#p
   </div>
   <div class="lesson-forms">
     {lesson.points.map(point => (
-      <a class="lesson-form korean" href={pointHref(point.point)} set:html={point.form} />
+      <a class="lesson-form korean" href={pointHref(point.point)}>
+        {point.form}
+      </a>
     ))}
   </div>
 </header>

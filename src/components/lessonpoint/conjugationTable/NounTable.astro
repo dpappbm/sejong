@@ -33,12 +33,7 @@ const translations = columnTranslations(key) ?? [];
           <td>{description}</td>
           {table.nounColumns.map((column, index) => (
             <td>
-              <TranslatedCell
-                korean={column.conjugate(word)}
-                dictionaryForm={word}
-                translation={translations[index]}
-                where={`${key} [${column.header}] ${word}`}
-              />
+              <TranslatedCell korean={column.conjugate(word)} dictionaryForm={word} translation={translations[index]} />
             </td>
           ))}
         </tr>

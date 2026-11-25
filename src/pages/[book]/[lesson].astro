@@ -5,34 +5,32 @@ import LessonFlashcardDialog from '../../components/LessonFlashcardDialog.astro'
 import LessonHeader from '../../components/LessonHeader.astro';
 import LessonPoint from '../../components/lessonpoint/LessonPoint.astro';
 import PageNavigation from '../../components/PageNavigation.astro';
+import PronunciationBox from '../../components/pronunciation/PronunciationBox.astro';
 import Vocabulary from '../../components/Vocabulary.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { LEVELS, lessonPath } from '../../lib/content';
+import { LESSONS, LEVELS, lessonPath, type LessonInfo } from '../../lib/content';
 import { lessonExportEnabled } from '../../lib/features';
-import { stripTags } from '../../lib/html';
-import { getSite, localizeLinks, type LessonContent } from '../../lib/site';
 
 export function getStaticPaths() {
-  return getSite().lessons.map(lesson => ({
+  return LESSONS.map(lesson => ({
     params: { book: lesson.book.toLowerCase(), lesson: String(lesson.lesson) },
     props: { lesson },
   }));
 }
 
 interface Props {
-  lesson: LessonContent;
+  lesson: LessonInfo;
 }
 
 const { lesson } = Astro.props;
 const level = LEVELS.find(item => item.books.includes(lesson.book))!;
 const path = lessonPath(lesson.book, lesson.lesson);
-const html = localizeLinks(lesson.html, path);
 const label = `${lesson.book} ${lesson.lesson}. lecke`;
 ---
 
 <BaseLayout
   title={`${label}: ${lesson.title.korean} – 한국어 문법`}
-  description={`${label} (${lesson.title.hungarian}): ${lesson.points.map(point => stripTags(point.form)).join(', ')}`}
+  description={`${label} (${lesson.title.hungarian}): ${lesson.points.map(point => point.form).join(', ')}`}
   pageLabel={label}
   lesson={lesson}
 >
@@ -55,8 +53,8 @@ const label = `${lesson.book} ${lesson.lesson}. lecke`;
     {lesson.points.map(point => (
       <LessonPoint point={point} />
     ))}
-    <Fragment set:html={html} />
-    <Vocabulary book={lesson.book} lesson={lesson.lesson} path={path} />
+    <PronunciationBox lesson={lesson} />
+    <Vocabulary lesson={lesson} />
   </section>
   {lessonExportEnabled && <LessonExportDialog lesson={lesson} />}
   <LessonFlashcardDialog lesson={lesson} />

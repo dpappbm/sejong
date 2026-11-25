@@ -1,34 +1,40 @@
 ---
 // The ✅/❌ usage samples of grammar points, honorific sections, related-structure boxes and honorific word categories.
 import type { CorrectIncorrect } from '../../data/types';
+import type { TextPlace } from '../../lib/richText';
 import SoundButton from '../SoundButton.astro';
+import RichText from '../text/RichText.astro';
 
 interface Props {
   items: CorrectIncorrect[];
-  /** With a book, the correct samples get a play button (the incorrect ones never do). */
-  book?: string;
+  /** With a place, the correct samples get a play button (the incorrect ones never do). */
+  place?: TextPlace;
 }
 
-const { items, book } = Astro.props;
+const { items, place } = Astro.props;
 ---
 
 <ul class="correct-incorrect">
-  {items.map(item =>
-    'correct' in item ? (
-      <li class="correct">
+  {items.map(item => {
+    const { translation } = item;
+    const note = 'correct' in item ? item.note : item.reason;
+    return (
+      <li class={'correct' in item ? 'correct' : 'incorrect'}>
         <span class="korean">
-          {item.correct}
-          {book && <SoundButton korean={item.correct} />}
+          <RichText content={'correct' in item ? item.correct : item.incorrect} />
+          {'correct' in item && <SoundButton korean={item.correct} book={place?.book} />}
         </span>
-        <span class="hungarian">{item.translation}</span>
-        {item.note && <span class="correct-incorrect-note">{item.note}</span>}
+        {translation && (
+          <span class="hungarian">
+            <RichText content={translation} />
+          </span>
+        )}
+        {note && (
+          <span class="correct-incorrect-note">
+            <RichText content={note} />
+          </span>
+        )}
       </li>
-    ) : (
-      <li class="incorrect">
-        <span class="korean">{item.incorrect}</span>
-        {item.translation && <span class="hungarian">{item.translation}</span>}
-        <span class="correct-incorrect-note">{item.reason}</span>
-      </li>
-    )
-  )}
+    );
+  })}
 </ul>

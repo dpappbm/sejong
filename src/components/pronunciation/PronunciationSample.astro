@@ -1,0 +1,33 @@
+---
+// Sample word [pronunciation]; a list like "밝다 · 밝고 · 밝아요" pairwise.
+import type { LessonPronunciation } from '../../data/types';
+import RichText from '../text/RichText.astro';
+import PronunciationNotation from './PronunciationNotation.astro';
+
+interface Props {
+  entry: LessonPronunciation;
+}
+
+const { sampleWord, samplePronunciation } = Astro.props.entry;
+const samples = typeof sampleWord === 'string' ? sampleWord.split(' · ') : [sampleWord];
+const values = typeof samplePronunciation === 'string' ? samplePronunciation.split(' · ') : [];
+const isPairwise = samples.length > 1 && samples.length === values.length;
+const pairs = isPairwise
+  ? samples.map((sample, index) => ({ sample, value: values[index] }))
+  : [{ sample: sampleWord, value: samplePronunciation }];
+---
+
+{pairs.map(({ sample, value }, index) => (
+  <>
+    {index > 0 && ' · '}
+    <span class="korean">
+      <RichText content={sample} />
+    </span>
+    {value.length > 0 && (
+      <>
+        {' '}
+        <PronunciationNotation value={value} />
+      </>
+    )}
+  </>
+))}

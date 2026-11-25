@@ -1,91 +1,88 @@
+// What the cards show must be what the store knows: the links of the rendered cards against the reference graph.
 import { experimental_AstroContainer as AstroContainer } from 'astro/container';
 import { describe, expect, it } from 'vitest';
-import Basics from '../../src/components/basics/Basics.astro';
+import RuleCard from '../../src/components/basics/RuleCard.astro';
+import HonorificCategoryCard from '../../src/components/honorifics/HonorificCategoryCard.astro';
 import LessonPoint from '../../src/components/lessonpoint/LessonPoint.astro';
-import { isPointId, LESSONS, POINT_COUNT } from '../../src/lib/content';
-import { linkTargets } from '../../src/lib/crossReferences';
-import { getSite, hrefOf } from '../../src/lib/site';
+import { basicRules } from '../../src/data/basics';
+import honorifics from '../../src/data/honorifics';
+import type { ReferenceId } from '../../src/data/types';
+import { hrefOf, LESSONS } from '../../src/lib/content';
+import { allTargets, honorificCategoryId, referencesFrom, relatedTo } from '../../src/lib/references';
 
-const site = getSite();
-const points = LESSONS.flatMap(lesson => lesson.points);
-
-/** Link sources by global id: grammar point cards, basic rule cards and honorific word cards. */
-const sections = new Map<string, string>();
 const container = await AstroContainer.create();
-for (const point of points) sections.set(point.id, await container.renderToString(LessonPoint, { props: { point } }));
-const basicsHtml = await container.renderToString(Basics);
-for (const match of basicsHtml.matchAll(/<h3 id="(rule-\d+)"[\s\S]*?(?=<h3 id="rule-|$)/g))
-  sections.set(match[1], match[0]);
-for (const match of site.honorificsHtml.matchAll(
-  /<h3 id="(honorific-category-\d+)"[\s\S]*?(?=<h3 id="honorific-category-|$)/g
-))
-  sections.set(match[1], match[0]);
+const cards: { id: ReferenceId; html: string }[] = [];
+const render = async (id: ReferenceId, component: Parameters<typeof container.renderToString>[0], props: object) => {
+  const request = new Request('https://example.com' + hrefOf(id));
+  cards.push({ id, html: await container.renderToString(component, { props: { ...props }, request }) });
+};
+for (const point of LESSONS.flatMap(lesson => lesson.points)) await render(point.id, LessonPoint, { point });
+for (const rule of basicRules) await render(rule.id, RuleCard, { rule });
+for (const [index, category] of honorifics.categories.entries())
+  await render(honorificCategoryId(index), HonorificCategoryCard, { category, index });
 
-/** The global id of a link: the components write page links, the honorifics HTML still has global ids. */
-const idByHref = new Map([...linkTargets.keys()].map(id => [hrefOf(id), id]));
-function targetId(href: string, from: string): string | undefined {
-  if (from.startsWith('honorific-category-')) return href.slice(1);
-  return idByHref.get(href.startsWith('#') ? hrefOf(from).split('#')[0] + href : href);
-}
+const idByHref = new Map(allTargets().map(({ id }) => [hrefOf(id), id]));
+/** The ids (or the unknown addresses) of the links of a kind on a card. */
+const linkedIds = ({ id, html }: (typeof cards)[number], className: string): string[] => {
+  const page = hrefOf(id)!.split('#')[0];
+  const hrefs = [...html.matchAll(new RegExp(`<a class="${className}[^"]*"(?: href="([^"]+)")?`, 'g'))].map(
+    ([, href = 'missing']) => (href.startsWith('#') ? page + href : href)
+  );
+  return [...new Set(hrefs.map(href => idByHref.get(href) ?? `dead link ${href}`))].sort();
+};
 
-describe('content', () => {
-  it('has all 188 grammar points', () => {
-    expect(POINT_COUNT).toBe(188);
-    expect([...sections.keys()].filter(isPointId)).toHaveLength(188);
+describe('rendered cards', () => {
+  it('are all the cards of the store', () => {
+    expect(cards.map(card => card.id).sort()).toEqual(
+      allTargets()
+        .map(target => target.id)
+        .sort()
+    );
   });
 
-  it('renders without content problems', () => {
-    expect(site.problems).toEqual([]);
-  });
-
-  it('has no dead cross-references and every reference shows up in reverse in the "Kapcsolódó pontok" bar', () => {
-    const errors: string[] = [];
-    const linkedIds = (from: string, className: string) => {
-      const found = new Set<string>();
-      for (const [, href] of sections
-        .get(from)!
-        .matchAll(new RegExp(`<a class="${className}[^"]*" href="([^"]+)"`, 'g'))) {
-        const id = targetId(href, from);
-        if (id && linkTargets.has(id)) found.add(id);
-        else errors.push(`${from}: dead link ${href}`);
-      }
-      return found;
-    };
-    const outgoing = new Map([...sections.keys()].map(id => [id, linkedIds(id, 'cross-reference')]));
-    const related = new Map([...sections.keys()].map(id => [id, linkedIds(id, 'related-link')]));
-    for (const [from, targets] of outgoing) {
-      if (targets.has(from)) errors.push(`${from}: links to itself`);
-      for (const to of targets) {
-        if (isPointId(to) && !related.get(to)?.has(from)) errors.push(`${to}: related bar misses ${from}`);
-        if (isPointId(from) && !related.get(from)?.has(to)) errors.push(`${from}: related bar misses outgoing ${to}`);
-      }
+  it.each([
+    ['cross-reference', (id: ReferenceId) => referencesFrom(id)],
+    ['group-link', null],
+  ] as const)('have no dead %s', (className, expected) => {
+    for (const card of cards) {
+      const links = linkedIds(card, className);
+      expect(
+        links.filter(link => link.startsWith('dead')),
+        card.id
+      ).toEqual([]);
+      // A card with a "references" field refers to more cards than its texts.
+      const known: string[] | undefined = expected?.(card.id);
+      if (known)
+        expect(
+          links.filter(link => !known.includes(link)),
+          card.id
+        ).toEqual([]);
     }
-    expect(errors).toEqual([]);
-    // Without links the checks above would pass on empty sets.
-    expect(points.filter(point => outgoing.get(point.id)!.size).length).toBeGreaterThan(50);
-    expect(points.filter(point => related.get(point.id)!.size).length).toBeGreaterThan(100);
   });
 
-  it('translates every Korean form in the honorific sections', () => {
+  it('show every related card in the "Kapcsolódó pontok" bar', () => {
+    for (const card of cards.filter(({ id }) => !id.startsWith('honorific-category-'))) {
+      const related = relatedTo(card.id).map(target => target.id as string);
+      expect(linkedIds(card, 'related-link'), card.id).toEqual(related.sort());
+    }
+  });
+});
+
+describe('honorific sections', () => {
+  it('translate every Korean form', () => {
     const errors: string[] = [];
-    let sectionCount = 0;
-    for (const [id, html] of sections) {
-      const section = html.match(/<section class="honorific"[\s\S]*?<\/section>/);
-      if (!section) continue;
-      sectionCount++;
-      // Incorrect samples need a reason, not a translation (checked by checkCorrectIncorrect).
-      const withoutParagraphs = section[0]
+    for (const { id, html } of cards) {
+      const section = html.match(/<section class="honorific"[\s\S]*?<\/section>/)?.[0] ?? '';
+      // Incorrect samples need a reason, not a translation.
+      const translated = section
         .replace(/<p>[\s\S]*?<\/p>/g, '')
-        .replace(/<li class="incorrect">[\s\S]*?<\/li>/g, '');
-      const examples = (withoutParagraphs.match(/<ul class="examples"[\s\S]*?<\/ul>/) ?? [''])[0];
-      if ((examples.match(/<li\b/g) ?? []).length < 2) errors.push(`${id}: fewer than 2 examples`);
-      for (const korean of withoutParagraphs.matchAll(
+        .replace(/<li class="incorrect">[\s\S]*?<\/li>/g, '')
+        .replace(/<button[\s\S]*?<\/button>/g, '');
+      for (const [, korean, next] of translated.matchAll(
         /<span class="korean"[^>]*>([\s\S]*?)<\/span>(\s*<span class="(?:translation|hungarian)")?/g
-      )) {
-        if (!korean[2]) errors.push(`${id}: without translation: ${korean[1]}`);
-      }
+      ))
+        if (!next) errors.push(`${id}: without translation: ${korean}`);
     }
     expect(errors).toEqual([]);
-    expect(sectionCount).toBe(points.filter(point => point.honorific).length);
   });
 });

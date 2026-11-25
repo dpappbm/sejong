@@ -1,31 +1,24 @@
 ---
-import overrides from '../../scripts/audio/overrides.json';
-import { audioId, spokenText } from '../../scripts/audio/spoken-text.mjs';
-import { attributeText } from '../lib/html';
-import { soundFiles, VOICES } from '../lib/sound';
+// The play button of a Korean text of a book; nothing if there is no sound for it.
+import { plainText, type Text } from '../lib/richText';
+import { soundOf } from '../lib/sound';
 
 interface Props {
-  korean: string;
+  korean: Text;
+  book?: string;
 }
 
-const { korean } = Astro.props;
-
-const voices = VOICES.map(voice => voice.id);
-const files = soundFiles();
-
-const spokenForms = overrides.spokenForms as Record<string, string>;
-const spoken = spokenText(korean, spokenForms) as string;
-const id = audioId(spoken);
-
-const hasAudio = voices.some(voice => files.get(voice)!.has(id));
+const { korean, book } = Astro.props;
+const sound = soundOf(korean, book);
 ---
 
-{hasAudio && (
+{sound && (
   <button
     class="sound-button"
     type="button"
-    data-sound={id}
-    aria-label={`Meghallgatás: ${attributeText(korean)}`}
+    data-sound={sound.id}
+    data-without={sound.without.join(' ') || undefined}
+    aria-label={`Meghallgatás: ${plainText(korean)}`}
     title="Meghallgatás (gépi hang)"
-  ></button>
+  />
 )}

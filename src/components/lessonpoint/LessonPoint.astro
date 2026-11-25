@@ -1,12 +1,11 @@
 ---
 import { locate, type PointInfo } from '../../lib/content';
-import { relatedBar } from '../../lib/crossReferences';
-import { correctIncorrectList } from '../../lib/render/correctIncorrect';
-import { forwardMark } from '../../lib/render/forwardReferences';
-import { groupsFor } from '../../lib/render/groups';
-import { linkPointText, localizePointLinks } from '../../lib/site';
-import { soundButton, withSoundButtons } from '../../lib/sound';
+import { groupsFor } from '../../lib/groups';
 import OwnTag from '../OwnTag.astro';
+import RelatedBar from '../RelatedBar.astro';
+import CorrectIncorrectList from '../shared/CorrectIncorrectList.astro';
+import Blocks from '../text/Blocks.astro';
+import ExampleList from '../text/ExampleList.astro';
 import NounTable from './conjugationTable/NounTable.astro';
 import WordTable from './conjugationTable/WordTable.astro';
 import GroupBox from './groups/GroupBox.astro';
@@ -19,11 +18,6 @@ interface Props {
 const { point } = Astro.props;
 
 const key = `${point.book}-${point.lesson}-${point.point}`;
-
-/** Global ids → links of this page. */
-const local = (html: string) => localizePointLinks(html, point.id);
-/** Links the lesson references of the text too. */
-const linked = (html: string) => linkPointText(html, point.id);
 ---
 
 <article class="grammar-point" id={locate(point.id)!.anchor} data-book={point.book} data-lesson={point.lesson}>
@@ -44,8 +38,10 @@ const linked = (html: string) => linkPointText(html, point.id);
     </div>
   </header>
   <div class="grammar-point-body">
-    <div class="explanation" set:html={linked(point.explanation)} />
-    <Fragment set:html={linked(point.customHtml ?? '')} />
+    <div class="explanation">
+      <Blocks content={point.explanation} />
+    </div>
+    {point.customContent && <Blocks content={point.customContent} />}
     {point.table ? (
       <>
         <h5>Képzés</h5>
@@ -58,40 +54,26 @@ const linked = (html: string) => linkPointText(html, point.id);
     ) : (
       ''
     )}
-    {!!point.examples && (
+    {point.examples && (
       <>
         <h5>Példák</h5>
-        <ul class="examples">
-          {point.examples.map(([korean, hungarian, note]) => (
-            <li>
-              <span class="korean">
-                <Fragment set:html={korean} />
-                <Fragment set:html={soundButton(korean, point.book)} />
-              </span>
-              <span class="hungarian">
-                <Fragment set:html={hungarian} />
-                <Fragment set:html={local(forwardMark(point.id, korean))} />
-              </span>
-              {!!note && <span class="irregular-note">{note}</span>}
-            </li>
-          ))}
-        </ul>
+        <ExampleList items={point.examples} place={point} />
       </>
     )}
-    <Fragment set:html={linked(correctIncorrectList(point.correctIncorrect, point.book))} />
-    {point.honorific && <Honorifics book={point.book} honorific={point.honorific} pointId={point.id} />}
+    {point.correctIncorrect && <CorrectIncorrectList items={point.correctIncorrect} place={point} />}
+    {point.honorific && <Honorifics honorific={point.honorific} point={point} />}
     {point.ownNote && (
       <aside class="own">
         <div class="own-heading">
           <OwnTag label="＋ Saját kiegészítés" />
         </div>
-        <Fragment set:html={linked(withSoundButtons(point.ownNote, point.book))} />
+        <Blocks content={point.ownNote} place={point} />
       </aside>
     )}
 
     {groupsFor(point.id).map(group => (
       <GroupBox group={group} pointId={point.id} />
     ))}
-    <Fragment set:html={local(relatedBar(point.id))} />
+    <RelatedBar id={point.id} />
   </div>
 </article>

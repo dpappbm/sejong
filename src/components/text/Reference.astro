@@ -1,0 +1,19 @@
+---
+// A link to a point, rule or chapter card; the slot is its label.
+import type { ReferenceId } from '../../data/types';
+import { hrefFrom } from '../../lib/content';
+import { targetOf } from '../../lib/references';
+
+interface Props {
+  to: ReferenceId;
+  class?: string;
+  /** Hover title (default: the title of the target). */
+  title?: string;
+}
+
+const { to, class: className = 'cross-reference', title = targetOf(to)?.title } = Astro.props;
+---
+
+<a class={className} href={hrefFrom(to, Astro.url.pathname)} title={title}>
+  <slot />
+</a>

@@ -1,12 +1,14 @@
 ---
-import type { ScaleGroup } from '../../../data/types';
+import type { PointId, ScaleGroup } from '../../../data/types';
 import OwnTag from '../../OwnTag.astro';
 import CorrectIncorrectList from '../../shared/CorrectIncorrectList.astro';
+import Blocks from '../../text/Blocks.astro';
+import RichText from '../../text/RichText.astro';
 import GroupItem from './GroupItem.astro';
 
 interface Props {
   group: ScaleGroup;
-  pointId: string;
+  pointId: PointId;
 }
 
 const { group, pointId } = Astro.props;
@@ -33,13 +35,17 @@ const { group, pointId } = Astro.props;
         </span>
       ))}
     </div>
-    <Fragment set:html={group.explanation} />
+    <Blocks content={group.explanation} />
     {group.examples && (
       <ul class="examples group-examples">
         {group.examples.map(([korean, hungarian]) => (
           <li>
-            <span class="korean">{korean}</span>
-            <span class="hungarian">{hungarian}</span>
+            <span class="korean">
+              <RichText content={korean} />
+            </span>
+            <span class="hungarian">
+              <RichText content={hungarian} />
+            </span>
           </li>
         ))}
       </ul>
@@ -51,7 +57,7 @@ const { group, pointId } = Astro.props;
         <ul class="group-side">
           {group.side.map(([id, text]) => (
             <li>
-              <GroupItem id={id} pointId={pointId} /> – <Fragment set:html={text} />
+              <GroupItem id={id} pointId={pointId} /> – <RichText content={text} />
             </li>
           ))}
         </ul>

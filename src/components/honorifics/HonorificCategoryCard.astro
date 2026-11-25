@@ -1,0 +1,61 @@
+---
+// A collapsible card of the "Tiszteleti szavak" chapter (particles, nouns, verbs, humble forms, address).
+import type { HonorificCategory } from '../../data/types';
+import { locate } from '../../lib/content';
+import { honorificCategoryId, honorificCategoryTitle, targetOf } from '../../lib/references';
+import DisclosureArrow from '../DisclosureArrow.astro';
+import CorrectIncorrectList from '../shared/CorrectIncorrectList.astro';
+import Blocks from '../text/Blocks.astro';
+import Reference from '../text/Reference.astro';
+import HonorificCell from './HonorificCell.astro';
+
+interface Props {
+  category: HonorificCategory;
+  index: number;
+}
+
+const { category, index } = Astro.props;
+---
+
+<details class="card honorific-category" open>
+  <summary>
+    <DisclosureArrow />
+    <h3 id={locate(honorificCategoryId(index))!.anchor}>
+      {honorificCategoryTitle(category, index)} <span class="korean">({category.korean})</span>
+    </h3>
+  </summary>
+  {category.intro && <Blocks content={category.intro} />}
+  <div class="table-wrapper">
+    <table class="plain honorifics-table">
+      <thead>
+        <tr>
+          <th>Alap</th>
+          <th>{category.hungarian === 'Szerény alakok' ? 'Szerény' : 'Tiszteleti'}</th>
+          <th>Példa</th>
+          <th>Leckék</th>
+        </tr>
+      </thead>
+      <tbody>
+        {category.rows.map(({ base, honorific, example, references = [] }) => (
+          <tr class="honorific-row">
+            <HonorificCell pair={base} />
+            <HonorificCell pair={honorific} />
+            <HonorificCell pair={example} class="honorific-example" />
+            <td class:list={['honorific-lessons', !references.length && 'empty']}>
+              {references.length
+                ? references.map((id, referenceIndex) => (
+                    <>
+                      {referenceIndex > 0 && ', '}
+                      <Reference to={id}>{targetOf(id)!.label}</Reference>
+                    </>
+                  ))
+                : '–'}
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  {category.note && <Blocks content={category.note} />}
+  {category.correctIncorrect && <CorrectIncorrectList items={category.correctIncorrect} />}
+</details>

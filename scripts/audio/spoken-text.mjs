@@ -1,24 +1,16 @@
 // The text the voice reads for a Korean text of the site, and the name of its sound file.
 import { createHash } from 'node:crypto';
 
-const ENTITIES = { '&amp;': '&', '&lt;': '<', '&gt;': '>', '&quot;': '"', '&#39;': "'", '&nbsp;': ' ' };
-
-/** The text without markup, as the reader sees it. */
-export const plainText = html =>
-  html
-    .replace(/<br\s*\/?>/g, ' ')
-    .replace(/<[^>]+>/g, '')
-    .replace(/&[#\w]+;/g, entity => ENTITIES[entity] ?? entity)
-    .replace(/\s+/g, ' ')
-    .trim();
+/** The text with single spaces. */
+export const oneLine = text => text.replace(/\s+/g, ' ').trim();
 
 /**
  * The text to read. `spokenForms` (from overrides.json) gives the form of texts no rule can settle: numbers, Latin
  * letters and parentheses, which are sometimes read and sometimes not, and alternatives inside a phrase. Throws if
  * anything unreadable is left.
  */
-export function spokenText(html, spokenForms = {}) {
-  const text = plainText(html);
+export function spokenText(rawText, spokenForms = {}) {
+  const text = oneLine(rawText);
   // 놓고/두고 오다 and 다치다/부상을 당하다 look alike, but share different parts
   const isAmbiguous = text.includes(' ') && /[^ ][/][^ ]/.test(text) && !spokenForms[text];
   const spoken =

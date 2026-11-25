@@ -1,0 +1,24 @@
+---
+// The "Kapcsolódó pontok" bar of a card.
+import type { ReferenceId } from '../data/types';
+import { relatedTo } from '../lib/references';
+import Reference from './text/Reference.astro';
+
+interface Props {
+  id: ReferenceId;
+}
+
+const { id } = Astro.props;
+const related = relatedTo(id);
+---
+
+{related.length > 0 && (
+  <nav class="related" aria-label="Kapcsolódó pontok">
+    <span class="related-heading">Kapcsolódó pontok:</span>
+    {related.map(target => (
+      <Reference to={target.id} class="related-link">
+        <b>{target.label}</b> {target.plain ? target.form : <span class="korean">{target.form}</span>}
+      </Reference>
+    ))}
+  </nav>
+)}

@@ -39,7 +39,6 @@ const label = WORD_CLASS_LABELS[word.wordClass];
         korean={conjugatedForm(column, word)}
         dictionaryForm={word.dictionaryForm}
         translation={translations[index]}
-        where={`${key} [${column.header}] ${word.dictionaryForm}`}
       />
     </td>
   ))}

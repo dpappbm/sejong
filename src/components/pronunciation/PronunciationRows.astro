@@ -1,0 +1,57 @@
+---
+// The rows of a lesson in the table of a pronunciation category.
+import type { LessonPronunciation } from '../../data/types';
+import { lessonId, type LessonInfo } from '../../lib/content';
+import SoundButton from '../SoundButton.astro';
+import ForwardReferences from '../text/ForwardReferences.astro';
+import Reference from '../text/Reference.astro';
+import RichText from '../text/RichText.astro';
+import PronunciationNotation from './PronunciationNotation.astro';
+
+interface Props {
+  lesson: LessonInfo;
+  entry: LessonPronunciation;
+}
+
+const { lesson, entry } = Astro.props;
+const { book, lesson: lessonNumber } = lesson;
+const rowData = { 'data-book': book, 'data-lesson': lessonNumber };
+---
+
+<tr class="pronunciation-row pronunciation-row-first" {...rowData}>
+  <td colspan="3">
+    <Reference to={lessonId(book, lessonNumber)}>{`${book} ${lessonNumber}. lecke`}</Reference>{' '}
+    <span class="source-page">SB {entry.studentBookPage}. o.</span>{' '}
+    <span class="tag future-tag progress-tag">még nem vettük</span>
+    <br />
+    <RichText content={entry.rule} />
+  </td>
+</tr>
+{entry.sampleWord && (
+  <tr class="pronunciation-row" {...rowData}>
+    <td class="korean">
+      <b>
+        <RichText content={entry.sampleWord} />
+      </b>
+    </td>
+    <td class:list={['korean', !entry.samplePronunciation.length && 'empty']}>
+      {entry.samplePronunciation.length ? <PronunciationNotation value={entry.samplePronunciation} /> : '–'}
+    </td>
+    <td>{entry.hungarian}</td>
+  </tr>
+)}
+{entry.examples.map(([korean, value, hungarian, uses = []]) => (
+  <tr class="pronunciation-row" {...rowData}>
+    <td class="korean">
+      <RichText content={korean} />
+      <SoundButton korean={korean} book={book} />
+    </td>
+    <td class:list={['korean', !value.length && 'empty']}>
+      {value.length ? <PronunciationNotation value={value} /> : '–'}
+    </td>
+    <td>
+      {hungarian}
+      <ForwardReferences uses={uses} place={lesson} />
+    </td>
+  </tr>
+))}

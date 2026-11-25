@@ -1,21 +1,19 @@
 ---
 // One word list of the "Szókincs" bar: Korean, Hungarian and the mark of a structure taught later.
 import type { VocabularyRow } from '../data/types';
-import { forwardMark } from '../lib/render/forwardReferences';
-import { localizeLinks } from '../lib/site';
-import { soundButton } from '../lib/sound';
+import type { TextPlace } from '../lib/richText';
+import { vocabularyUses } from '../lib/vocabulary';
+import SoundButton from './SoundButton.astro';
+import ForwardReferences from './text/ForwardReferences.astro';
 
 interface Props {
   rows: VocabularyRow[];
-  book: string;
-  lesson: number;
-  path: string;
+  place: TextPlace;
   /** Whether the words get a play button. */
   hasSound?: boolean;
 }
 
-const { rows, book, lesson, path, hasSound = false } = Astro.props;
-const mark = (korean: string) => localizeLinks(forwardMark(`vocabulary ${book}-${lesson}`, korean), path);
+const { rows, place, hasSound = false } = Astro.props;
 ---
 
 <div class="table-wrapper">
@@ -27,18 +25,21 @@ const mark = (korean: string) => localizeLinks(forwardMark(`vocabulary ${book}-$
       </tr>
     </thead>
     <tbody>
-      {rows.map(([korean, hungarian]) => (
-        <tr class="vocabulary-row">
-          <td class="korean">
-            {korean}
-            {hasSound && <Fragment set:html={soundButton(korean, book)} />}
-          </td>
-          <td>
-            {hungarian}
-            <Fragment set:html={mark(korean)} />
-          </td>
-        </tr>
-      ))}
+      {rows.map(row => {
+        const [korean, hungarian] = row;
+        return (
+          <tr class="vocabulary-row">
+            <td class="korean">
+              {korean}
+              {hasSound && <SoundButton korean={korean} book={place.book} />}
+            </td>
+            <td>
+              {hungarian}
+              <ForwardReferences uses={vocabularyUses(row)} place={place} />
+            </td>
+          </tr>
+        );
+      })}
     </tbody>
   </table>
 </div>

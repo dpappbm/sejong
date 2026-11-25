@@ -1,25 +1,22 @@
 ---
 import type { ColumnTranslation } from '../../../data/types';
-import { fillHungarianPattern, lexiconEntry } from '../../../lib/translations';
+import { cellTranslation } from '../../../lib/translations';
 
 interface Props {
-  korean: string | null | undefined;
+  korean: string | null;
   dictionaryForm: string;
-  translation: ColumnTranslation | null | undefined;
-  where: string;
+  translation: ColumnTranslation | undefined;
 }
 
-const { korean, dictionaryForm, translation, where } = Astro.props;
-
-const entry = lexiconEntry(dictionaryForm);
-const pattern = translation?.[entry ? entry.wordClass : 'verb'];
+const { korean, dictionaryForm, translation } = Astro.props;
+const hungarian = cellTranslation(dictionaryForm, translation);
 ---
 
-{korean == null ? (
+{korean === null ? (
   <span class="not-applicable">—</span>
 ) : (
   <>
     <span class="korean">{korean}</span>
-    {entry && pattern && <span class="translation">{fillHungarianPattern(pattern, entry, where)}</span>}
+    {hungarian && <span class="translation">{hungarian}</span>}
   </>
 )}
