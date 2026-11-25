@@ -1,10 +1,10 @@
 import { experimental_AstroContainer as AstroContainer } from 'astro/container';
 import { describe, expect, it } from 'vitest';
-import Basics from '../components/basics/Basics.astro';
-import LessonPoint from '../components/lessonpoint/LessonPoint.astro';
-import { isPointId, LESSONS, POINT_COUNT } from './content';
-import { linkTargets } from './crossReferences';
-import { getSite, hrefOf } from './site';
+import Basics from '../../src/components/basics/Basics.astro';
+import LessonPoint from '../../src/components/lessonpoint/LessonPoint.astro';
+import { isPointId, LESSONS, POINT_COUNT } from '../../src/lib/content';
+import { linkTargets } from '../../src/lib/crossReferences';
+import { getSite, hrefOf } from '../../src/lib/site';
 
 const site = getSite();
 const points = LESSONS.flatMap(lesson => lesson.points);

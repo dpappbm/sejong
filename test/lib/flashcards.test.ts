@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { LESSONS } from './content';
+import { LESSONS } from '../../src/lib/content';
 import {
   buildRound,
   canPlay,
@@ -13,8 +13,8 @@ import {
   type Card,
   type CardKind,
   type Random,
-} from './flashcards';
-import { buildLessonExport, rowGroups } from './lessonExport';
+} from '../../src/lib/flashcards';
+import { buildLessonExport, rowGroups } from '../../src/lib/lessonExport';
 
 /** A seeded random source (mulberry32), so every run draws the same rounds. */
 function seededRandom(seed: number): Random {

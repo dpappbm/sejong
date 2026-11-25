@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
-import { audioSource, fetchAsset, openPack, packName, sha256, stalePacks } from './packs.mjs';
-import { packTar, unpackTar } from './tar.mjs';
+import { audioSource, fetchAsset, openPack, packName, sha256, stalePacks } from '../../../scripts/audio/packs.mjs';
+import { packTar, unpackTar } from '../../../scripts/audio/tar.mjs';
 
 const files = [
   ['NOTICE.txt', Buffer.from('machine voice')],

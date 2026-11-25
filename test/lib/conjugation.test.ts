@@ -8,7 +8,7 @@ import {
   withEu,
   withPast,
   withPlainStem,
-} from './conjugation';
+} from '../../src/lib/conjugation';
 
 const verb = (dictionaryForm: string) => createWord(dictionaryForm, 'verb');
 const adjective = (dictionaryForm: string) => createWord(dictionaryForm, 'adjective');

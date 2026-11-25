@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { audioId, plainText, spokenText } from './spoken-text.mjs';
+import { audioId, plainText, spokenText } from '../../../scripts/audio/spoken-text.mjs';
 
 describe('plainText', () => {
   it('drops the markup and decodes entities', () => {

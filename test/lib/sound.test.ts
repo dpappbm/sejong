@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { audioId } from '../../scripts/audio/spoken-text.mjs';
-import { createSoundButton, VOICES } from './sound';
+import { createSoundButton, VOICES } from '../../src/lib/sound';
 
 const settings = {
   books: new Set(['3A']),

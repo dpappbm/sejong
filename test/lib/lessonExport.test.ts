@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
-import { LESSONS } from './content';
-import { exportText } from './exportFormat';
-import { buildLessonExport } from './lessonExport';
+import { LESSONS } from '../../src/lib/content';
+import { exportText } from '../../src/lib/exportFormat';
+import { buildLessonExport } from '../../src/lib/lessonExport';
 
 const lessonExport = (key: string) => buildLessonExport(LESSONS.find(lesson => lesson.key === key)!);
 const allRows = (key: string) => {
