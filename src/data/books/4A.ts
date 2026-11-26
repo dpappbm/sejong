@@ -10,6 +10,7 @@ import {
   text,
 } from '../../lib/richText';
 import {
+  presentModifier,
   withPast,
   withEu,
   withPlainStem,
@@ -20,9 +21,6 @@ import {
 import type { BookData, PointSource } from '../types';
 const vocabularyGrammarPageOf = (lesson: number, point: number) => 20 + 2 * (lesson - 1) + (point - 1),
   studentBookPageOf = (lesson: number, point: number) => 8 * lesson + 6 + 2 * (point - 1);
-const isItdaOrEopda = (word: Word) => /(있|없)다$/.test(word.dictionaryForm);
-const presentModifier = (word: Word, ending: string) =>
-  word.wordClass === 'verb' || isItdaOrEopda(word) ? withPlainStem(word, '는' + ending) : withEu(word, 'ㄴ' + ending);
 const reportedStatementDaeyo = (word: Word) => plainStyleStatement(word).slice(0, -1) + '대요';
 
 const points: PointSource[] = [

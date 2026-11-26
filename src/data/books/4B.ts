@@ -1,11 +1,15 @@
 import { bold, korean, list, paragraph, reference, text } from '../../lib/richText';
-import { withAOrEo, withPast, withEu, withPlainStem, plainStyleStatement, type Word } from '../../lib/conjugation';
+import {
+  presentModifier,
+  withAOrEo,
+  withPast,
+  withEu,
+  withPlainStem,
+  plainStyleStatement,
+} from '../../lib/conjugation';
 import type { BookData, PointSource } from '../types';
 const vocabularyGrammarPageOf = (lesson: number, point: number) => 20 + 2 * (lesson - 1) + (point - 1),
   studentBookPageOf = (lesson: number, point: number) => 8 * lesson + 6 + 2 * (point - 1);
-const isItdaOrEopda = (word: Word) => /(있|없)다$/.test(word.dictionaryForm);
-const presentModifier = (word: Word, ending: string) =>
-  word.wordClass === 'verb' || isItdaOrEopda(word) ? withPlainStem(word, '는' + ending) : withEu(word, 'ㄴ' + ending);
 
 const points: PointSource[] = [
   {
@@ -520,6 +524,7 @@ const points: PointSource[] = [
       paragraph`${bold('받침')} után: ${bold('-을수록')}, magánhangzó után: ${bold('-ㄹ수록')}, ㄹ-tőnél: ${korean('살수록')}.`,
     ],
     table: {
+      existential: false,
       sampleSet: 'verbsAndAdjectives',
       columns: [
         { header: '-(으)ㄹ수록', conjugate: word => withEu(word, 'ㄹ수록') },

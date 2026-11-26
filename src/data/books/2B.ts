@@ -10,13 +10,10 @@ import {
   simpleTable,
   text,
 } from '../../lib/richText';
-import { withAOrEo, withPast, withEu, withPlainStem, type Word } from '../../lib/conjugation';
+import { presentModifier, withAOrEo, withPast, withEu, withPlainStem, type Word } from '../../lib/conjugation';
 import type { BookData, PointSource } from '../types';
 const vocabularyGrammarPageOf = (lesson: number, point: number) => 26 + 2 * (lesson - 1) + (point - 1),
   studentBookPageOf = (lesson: number, point: number) => 16 + 8 * (lesson - 1) + (point - 1);
-const isItdaOrEopda = (word: Word) => /(있|없)다$/.test(word.dictionaryForm);
-const presentModifier = (word: Word, ending: string) =>
-  word.wordClass === 'verb' || isItdaOrEopda(word) ? withPlainStem(word, '는' + ending) : withEu(word, 'ㄴ' + ending);
 const informalSpeech = (word: Word) => withAOrEo(word, '');
 
 const points: PointSource[] = [

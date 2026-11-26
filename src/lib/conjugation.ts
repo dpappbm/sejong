@@ -40,7 +40,8 @@ const FINAL_CONSONANTS = [
 ];
 const VOWELS = 'ㅏㅐㅑㅒㅓㅔㅕㅖㅗㅘㅙㅚㅛㅜㅝㅞㅟㅠㅡㅢㅣ';
 
-export type WordClass = 'verb' | 'adjective' | 'noun';
+/** existential: 있다 and 없다, conjugated like adjectives except where -는 follows (있는, 없는). */
+export type WordClass = 'verb' | 'adjective' | 'existential' | 'noun';
 /** The irregular class of a stem; the empty string means regular. */
 export type Irregularity = 'ㄷ' | 'ㅂ' | 'ㅅ' | 'ㅎ' | '르' | '으' | 'ㄹ' | '';
 export type ModifierTense = 'present' | 'past' | 'future';
@@ -79,7 +80,7 @@ export function composeSyllable(initial: number, vowel: number, final = 0): stri
 }
 
 const vowelIndex = (jamo: string) => VOWELS.indexOf(jamo);
-const finalIndex = (jamo: string) => FINAL_CONSONANTS.indexOf(jamo);
+export const finalIndex = (jamo: string) => FINAL_CONSONANTS.indexOf(jamo);
 
 /** Replaces the final consonant (받침) of the last syllable. */
 export function withFinalConsonant(text: string, final: number): string {
@@ -272,18 +273,24 @@ export function formalEnding(word: Word, question = false): string {
 
 /** Plain written style (한다체) statement, also used in reported speech: 간다, 먹는다, 바쁘다. */
 export function plainStyleStatement(word: Word): string {
-  if (word.wordClass === 'adjective' || word.wordClass === 'noun') return word.dictionaryForm;
+  if (word.wordClass !== 'verb') return word.dictionaryForm;
   const parts = decomposeSyllable(word.stem.slice(-1));
   if (word.irregularity === 'ㄹ' || parts.final === 0) return withFinalConsonant(word.stem, finalIndex('ㄴ')) + '다';
   return word.stem + '는다';
 }
 
+/** 있다, 없다 and the words ending in them (맛있다, 재미없다) take -는 like verbs: 있는, 맛있는. */
+export const isItdaOrEopda = (word: Word) => /(있|없)다$/.test(word.dictionaryForm);
+
+/** -는 for verbs and the 있다/없다 words, -(으)ㄴ for adjectives, with an ending after it. */
+export const presentModifier = (word: Word, ending: string) =>
+  word.wordClass === 'verb' || isItdaOrEopda(word) ? withPlainStem(word, '는' + ending) : withEu(word, 'ㄴ' + ending);
+
 /** Noun-modifying form: -는 / -(으)ㄴ / -(으)ㄹ. Returns null where the tense does not exist (past adjective). */
 export function modifierForm(word: Word, tense: ModifierTense): string | null {
-  const isItdaOrEopda = /(있|없)다$/.test(word.dictionaryForm);
   if (tense === 'future') return withEu(word, 'ㄹ');
   if (tense === 'past') return word.wordClass === 'verb' ? withEu(word, 'ㄴ') : null;
-  if (word.wordClass === 'verb' || isItdaOrEopda) return withPlainStem(word, '는');
+  if (word.wordClass === 'verb' || isItdaOrEopda(word)) return withPlainStem(word, '는');
   return withEu(word, 'ㄴ');
 }
 
@@ -326,6 +333,7 @@ export const SAMPLE_WORD_SETS = {
     createWord('작다', 'adjective'),
     createWord('피곤하다', 'adjective'),
     createWord('길다', 'adjective'),
+    createWord('맛있다', 'adjective'),
   ],
   irregularAdjectives: [
     createWord('덥다', 'adjective'),
@@ -342,6 +350,9 @@ export const SAMPLE_WORD_SETS = {
     createWord('작다', 'adjective'),
     createWord('피곤하다', 'adjective'),
     createWord('바쁘다', 'adjective'),
+    createWord('맛있다', 'adjective'),
+    createWord('있다', 'existential'),
+    createWord('없다', 'existential'),
   ],
   irregularVerbsAndAdjectives: [
     createWord('듣다', 'verb'),

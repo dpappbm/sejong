@@ -1,19 +1,16 @@
 import { bold, korean, koreanWithTranslation, list, paragraph, reference, simpleTable, text } from '../../lib/richText';
 import {
+  presentModifier,
   createWord,
   withAOrEo,
   withPast,
   withEu,
   withPlainStem,
   nounWithParticle,
-  type Word,
 } from '../../lib/conjugation';
 import type { BookData, PointSource } from '../types';
 const vocabularyGrammarPageOf = (lesson: number, point: number) => 24 + 2 * (lesson - 1) + (point - 1),
   studentBookPageOf = (lesson: number, point: number) => 16 + 8 * (lesson - 1) + (point - 1);
-const isItdaOrEopda = (word: Word) => /(있|없)다$/.test(word.dictionaryForm);
-const presentModifier = (word: Word, ending: string) =>
-  word.wordClass === 'verb' || isItdaOrEopda(word) ? withPlainStem(word, '는' + ending) : withEu(word, 'ㄴ' + ending);
 
 const points: PointSource[] = [
   {
@@ -289,6 +286,7 @@ const points: PointSource[] = [
       paragraph`A tő végétől függetlenül ${korean('-지')}; a ${korean('않다 / 못하다')} ragozódik.`,
     ],
     table: {
+      existential: false,
       sampleSet: 'verbsAndAdjectives',
       columns: [
         { header: '-지 않아요', conjugate: word => withPlainStem(word, '지 않아요') },

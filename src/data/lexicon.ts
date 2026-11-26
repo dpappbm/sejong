@@ -1,4 +1,4 @@
-import type { AdjectiveEntry, NounEntry, VerbEntry } from './types';
+import type { AdjectiveEntry, ExistentialEntry, NounEntry, VerbEntry } from './types';
 
 const VERB_FORM_FIELDS = [
   'infinitive',
@@ -34,7 +34,12 @@ const createAdjective = (hungarian: string, base: string, comparative: string): 
   comparative,
 });
 
-export const words: Record<string, VerbEntry | AdjectiveEntry> = {
+const createExistential = (
+  hungarian: string,
+  forms: Omit<ExistentialEntry, 'wordClass' | 'hungarian'>
+): ExistentialEntry => ({ wordClass: 'existential', hungarian, ...forms });
+
+export const words: Record<string, VerbEntry | AdjectiveEntry | ExistentialEntry> = {
   '가다': createVerb(
     'megy',
     'menni|mennem|megyek|mész|megy|mentem|mentél|ment|menj|menjen|menjek|menjünk|mennék|menne|menés|ahová|ment',
@@ -305,6 +310,24 @@ export const words: Record<string, VerbEntry | AdjectiveEntry> = {
   '다르다': createAdjective('más, különböző', 'más', 'eltérőbb'),
   '좋다': createAdjective('jó', 'jó', 'jobb'),
   '맛있다': createAdjective('finom', 'finom', 'finomabb'),
+  '있다': createExistential('van (valahol, valakinek)', {
+    base: 'van',
+    past: 'volt',
+    future: 'lesz',
+    subjunctive: 'legyen',
+    conditional: 'lenne',
+    pastConditional: 'lett volna',
+    negation: 'nincs',
+  }),
+  '없다': createExistential('nincs (valahol, valakinek)', {
+    base: 'nincs',
+    past: 'nem volt',
+    future: 'nem lesz',
+    subjunctive: 'ne legyen',
+    conditional: 'nem lenne',
+    pastConditional: 'nem lett volna',
+    negation: 'van',
+  }),
   // ---- additional table words (3A) ----
   '넓다': createAdjective('tágas, széles', 'tágas', 'tágasabb'),
   '편안하다': createAdjective('kényelmes, nyugodt', 'kényelmes', 'kényelmesebb'),
