@@ -3,6 +3,7 @@
 // the summary. Three screens (selection, round, summary) toggled with "hidden"; src/scripts/flashcards.ts drives it.
 // A click beside the dialog does not close it, and neither does Esc during a round: only ✕ does.
 import type { LessonInfo } from '../lib/content';
+import FlashcardGameScreens from './FlashcardGameScreens.astro';
 import LessonRowTree from './LessonRowTree.astro';
 
 interface Props {
@@ -16,6 +17,7 @@ const { lesson } = Astro.props;
   class="export-dialog flashcard-dialog"
   id="lesson-flashcard-dialog"
   aria-labelledby="lesson-flashcard-title"
+  data-flashcard-scope="lesson"
   data-flashcard-screen="selection"
 >
   <header class="export-dialog-header">
@@ -48,43 +50,5 @@ const { lesson } = Astro.props;
     </footer>
   </section>
 
-  <section class="flashcard-screen" data-flashcard-section="round" hidden>
-    <div class="export-dialog-body">
-      <p class="flashcard-progress" data-flashcard-progress></p>
-      <p class="flashcard-question" data-flashcard-question></p>
-      <div class="flashcard-answers" data-flashcard-answers role="group" aria-label="Válaszok"></div>
-    </div>
-    <footer class="export-dialog-footer">
-      <span class="flashcard-feedback" data-flashcard-feedback role="status" aria-live="polite"></span>
-      <button
-        class="dialog-button dialog-primary-button flashcard-next-button"
-        type="button"
-        data-flashcard-next
-        hidden
-      >
-        Következő
-      </button>
-    </footer>
-  </section>
-
-  <section class="flashcard-screen" data-flashcard-section="summary" hidden>
-    <div class="export-dialog-body">
-      <p class="flashcard-score" data-flashcard-score></p>
-      <div data-flashcard-mistakes></div>
-    </div>
-    <footer class="export-dialog-footer">
-      <button class="dialog-button dialog-primary-button" type="button" data-flashcard-restart>
-        Újra
-      </button>
-      <button class="dialog-button" type="button" data-flashcard-retry-mistakes>
-        Csak a hibásak
-      </button>
-      <button class="dialog-button" type="button" data-flashcard-back>
-        Szavak választása
-      </button>
-      <button class="dialog-button dialog-close-button" type="button" data-flashcard-close>
-        Bezárás
-      </button>
-    </footer>
-  </section>
+  <FlashcardGameScreens />
 </dialog>

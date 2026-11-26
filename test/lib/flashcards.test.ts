@@ -6,8 +6,10 @@ import {
   cardKind,
   cardText,
   distractorCandidates,
+  drawBatch,
   hideKoreanHints,
   otherLanguage,
+  putMistakesFirst,
   retryPool,
   shuffle,
   type Card,
@@ -177,6 +179,38 @@ describe('flash cards', () => {
       expect(cards.length, lesson.key).toBeGreaterThanOrEqual(4);
       expect(canPlay(cards, cards), lesson.key).toBe(true);
     }
+  });
+
+  it('draws batches that together ask every row once', () => {
+    const rows = Array.from({ length: 300 }, (_, index) => index);
+    const batches: number[][] = [];
+    let remaining = rows;
+    while (remaining.length) {
+      const next = drawBatch(remaining, 20);
+      batches.push(next.batch);
+      remaining = next.remaining;
+    }
+    expect(batches).toHaveLength(15);
+    expect(batches.flat()).toEqual(rows);
+    expect(drawBatch(rows.slice(0, 45), 20).remaining).toHaveLength(25);
+    expect(drawBatch(rows.slice(0, 5), 20)).toEqual({ batch: rows.slice(0, 5), remaining: [] });
+    expect(drawBatch(rows, Infinity).batch).toHaveLength(300);
+  });
+
+  it('starts the next batch with the mistakes when they may come again', () => {
+    const cards = Array.from({ length: 30 }, (_, index) => card(`단어${index}`, `szó ${index}`));
+    const mistakes = [cards[2], cards[5], cards[5]];
+    const remaining = putMistakesFirst(cards.slice(10), mistakes, seededRandom(5));
+    expect(remaining).toHaveLength(22);
+    expect(new Set(remaining.slice(0, 2))).toEqual(new Set([cards[2], cards[5]]));
+    expect(remaining.slice(2)).toEqual(cards.slice(10));
+    // More mistakes than a batch: the rest opens the batch after.
+    const many = putMistakesFirst(cards.slice(20), cards.slice(0, 15), seededRandom(6));
+    const first = drawBatch(many, 10);
+    const second = drawBatch(first.remaining, 10);
+    expect(first.batch.every(asked => cards.indexOf(asked) < 15)).toBe(true);
+    expect(second.batch.slice(0, 5).every(asked => cards.indexOf(asked) < 15)).toBe(true);
+    expect(second.batch.slice(5)).toEqual(cards.slice(20, 25));
   });
 
   it('switches languages', () => {

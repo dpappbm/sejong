@@ -1,12 +1,18 @@
-// The flash-card game of a lesson (src/components/LessonFlashcardDialog.astro): choose rows, answer a multiple-choice
-// round per row, see the summary. The dialog is part of the swapped page content, so it is looked up on every event;
-// the listeners are bound once.
+// The flash-card games: a lesson's (src/components/LessonFlashcardDialog.astro) and a whole book's
+// (src/components/BookFlashcardDialog.astro, on the home page). Choose rows, answer a multiple-choice round per row,
+// see the summary. A book game asks its selection in batches: "Újra" draws the rows not asked yet.
+// The dialogs are part of the swapped page content, so they are looked up on every event; the listeners are bound once.
+import type { BookPractice, PracticeRowKind } from '../lib/bookPractice';
 import {
+  bookCards,
   buildRound,
   canPlay,
   cardKind,
+  drawBatch,
+  learnedLessonKeys,
   OPTION_COUNT,
   otherLanguage,
+  putMistakesFirst,
   retryPool,
   shuffle,
   type Card,
@@ -16,19 +22,27 @@ import {
 import { applyTreeChange, isTreeCheckbox, resetTree, selectedGroups } from './rowTree';
 
 type Screen = 'selection' | 'round' | 'summary';
+type Scope = 'lesson' | 'book';
 
 interface Mistake {
   round: Round;
   chosenIndex: number;
 }
 
-interface Game {
+interface GameSetup {
   /** The cards asked, in question order. */
   questions: Card[];
   /** The cards the wrong answers are drawn from. */
   pool: Card[];
   /** The rows chosen on the selection screen; "Csak a hibásak" draws wrong answers from here if its own are too few. */
   selection: Card[];
+  /** A book game: the rows of the selection not asked yet, in asking order. null in a lesson game. */
+  remaining: Card[] | null;
+  /** A book game: the questions of a round. */
+  batchSize: number;
+}
+
+interface Game extends GameSetup {
   index: number;
   round: Round | null;
   answered: boolean;
@@ -40,15 +54,42 @@ const ANSWER_LETTERS = ['A', 'B', 'C', 'D'];
 const MINIMUM_ROWS = OPTION_COUNT;
 
 let game: Game | null = null;
+/** The rows of the open book dialog, once fetched. */
+let bookPractice: BookPractice | null = null;
+/** The fetched books, by book code: each is fetched once per visit. */
+const practiceRequests = new Map<string, Promise<BookPractice>>();
 
-const flashcardDialog = () => document.getElementById('lesson-flashcard-dialog') as HTMLDialogElement | null;
+const lessonDialog = () => document.getElementById('lesson-flashcard-dialog') as HTMLDialogElement | null;
+const bookDialog = () => document.getElementById('book-flashcard-dialog') as HTMLDialogElement | null;
+const openDialog = () => document.querySelector<HTMLDialogElement>('dialog.flashcard-dialog[open]');
+const scopeOf = (dialog: HTMLDialogElement) => dialog.dataset.flashcardScope as Scope;
 const part = <T extends Element = HTMLElement>(dialog: HTMLDialogElement, name: string) =>
   dialog.querySelector<T>(`[data-flashcard-${name}]`);
+const practicePart = <T extends Element = HTMLElement>(dialog: HTMLDialogElement, name: string) =>
+  dialog.querySelector<T>(`[data-practice-${name}]`);
+const progress = () => (document.getElementById('progress-select') as HTMLSelectElement | null)?.value ?? '';
+
+/** The values of the checked checkboxes that carry the attribute. */
+const checkedValues = (dialog: HTMLDialogElement, attribute: string) =>
+  Array.from(dialog.querySelectorAll<HTMLInputElement>(`input[${attribute}]:checked`)).map(checkbox =>
+    checkbox.getAttribute(attribute)!
+  );
+
+const selectedLessonKeys = (dialog: HTMLDialogElement) => checkedValues(dialog, 'data-practice-lesson');
+const selectedKinds = (dialog: HTMLDialogElement) => checkedValues(dialog, 'data-practice-kind') as PracticeRowKind[];
 
 function selectedCards(dialog: HTMLDialogElement): Card[] {
+  if (scopeOf(dialog) === 'book')
+    return bookPractice ? bookCards(bookPractice, selectedLessonKeys(dialog), selectedKinds(dialog)) : [];
   return selectedGroups(dialog).flatMap(group =>
     group.rows.map(([korean, hungarian]): Card => ({ korean, hungarian, kind: cardKind(group.key) }))
   );
+}
+
+/** The questions per round chosen in the book dialog ("Mind": all of them). */
+function selectedBatchSize(dialog: HTMLDialogElement): number {
+  const value = practicePart<HTMLSelectElement>(dialog, 'batch-size')?.value ?? 'all';
+  return value === 'all' ? Infinity : Number(value);
 }
 
 function showScreen(dialog: HTMLDialogElement, screen: Screen): void {
@@ -64,41 +105,87 @@ function setText(element: HTMLElement, text: string, language: Language): void {
   element.classList.toggle('korean', language === 'korean');
 }
 
+function selectionStatus(dialog: HTMLDialogElement, count: number, playable: boolean): string {
+  if (count < MINIMUM_ROWS) return `${count} sor – legalább ${MINIMUM_ROWS} sor kell`;
+  if (!playable) return `${count} sor – túl sok az azonos jelentésű sor, jelölj ki többet`;
+  if (scopeOf(dialog) === 'lesson') return `${count} sor, ${count} kör`;
+  const batchSize = selectedBatchSize(dialog);
+  if (batchSize >= count) return `${count} sor, egy körben`;
+  return `${count} sor · ${batchSize} kérdés körönként (${Math.ceil(count / batchSize)} kör)`;
+}
+
+/** The book dialog: the row counts of the kinds in the chosen lessons, and the "Amit már vettem" button. */
+function updateBookChoices(dialog: HTMLDialogElement): void {
+  if (!bookPractice) return;
+  const lessonKeys = selectedLessonKeys(dialog);
+  for (const count of dialog.querySelectorAll<HTMLElement>('[data-practice-kind-count]')) {
+    const kind = count.dataset.practiceKindCount as PracticeRowKind;
+    count.textContent = `(${bookCards(bookPractice, lessonKeys, [kind]).length})`;
+  }
+  const learnedButton = practicePart(dialog, 'learned-lessons');
+  if (learnedButton) learnedButton.hidden = !learnedLessonKeys(bookPractice, progress()).length;
+}
+
 function updateSelection(dialog: HTMLDialogElement): void {
+  if (scopeOf(dialog) === 'book') updateBookChoices(dialog);
   const cards = selectedCards(dialog);
   const playable = cards.length >= MINIMUM_ROWS && canPlay(cards, cards);
   const status = part(dialog, 'selection-status');
   if (status) {
     status.textContent =
-      cards.length < MINIMUM_ROWS
-        ? `${cards.length} sor – legalább ${MINIMUM_ROWS} sor kell`
-        : !playable
-          ? `${cards.length} sor – túl sok az azonos jelentésű sor, jelölj ki többet`
-          : `${cards.length} sor, ${cards.length} kör`;
+      scopeOf(dialog) === 'book' && !bookPractice ? '' : selectionStatus(dialog, cards.length, playable);
     status.classList.toggle('is-warning', !playable);
   }
   const start = part<HTMLButtonElement>(dialog, 'start');
   if (start) start.disabled = !playable;
 }
 
-function startGame(dialog: HTMLDialogElement, questions: Card[], pool: Card[], selection: Card[]): void {
-  game = {
-    questions: shuffle(questions),
-    pool,
-    selection,
-    index: 0,
-    round: null,
-    answered: false,
-    correctCount: 0,
-    mistakes: [],
-  };
+function startGame(dialog: HTMLDialogElement, setup: GameSetup): void {
+  game = { ...setup, index: 0, round: null, answered: false, correctCount: 0, mistakes: [] };
   showScreen(dialog, 'round');
   showRound(dialog);
 }
 
+/** The first round of a selection: a lesson game asks all of it, a book game its first batch. */
+function startSelection(dialog: HTMLDialogElement): void {
+  const cards = selectedCards(dialog);
+  if (scopeOf(dialog) === 'lesson') {
+    startGame(dialog, {
+      questions: shuffle(cards),
+      pool: cards,
+      selection: cards,
+      remaining: null,
+      batchSize: Infinity,
+    });
+    return;
+  }
+  const batchSize = selectedBatchSize(dialog);
+  const { batch, remaining } = drawBatch(shuffle(cards), batchSize);
+  startGame(dialog, { questions: batch, pool: cards, selection: cards, remaining, batchSize });
+}
+
+const includeMistakes = (dialog: HTMLDialogElement) => !!part<HTMLInputElement>(dialog, 'include-mistakes')?.checked;
+
+/** "Újra": a lesson game asks the same rows again; a book game the next batch (the mistakes first, if chosen). */
+function restart(dialog: HTMLDialogElement): void {
+  if (!game) return;
+  const { selection, batchSize } = game;
+  if (!game.remaining) {
+    startGame(dialog, { ...game, questions: shuffle(game.questions) });
+    return;
+  }
+  const mistakes = game.mistakes.map(mistake => mistake.round.card);
+  let remaining = includeMistakes(dialog) ? putMistakesFirst(game.remaining, mistakes) : game.remaining;
+  // Every row has been asked: start the selection over.
+  if (!remaining.length) remaining = shuffle(selection);
+  const next = drawBatch(remaining, batchSize);
+  startGame(dialog, { questions: next.batch, pool: selection, selection, remaining: next.remaining, batchSize });
+}
+
 function updateProgress(dialog: HTMLDialogElement): void {
-  const progress = part(dialog, 'progress');
-  if (progress && game) progress.textContent = `${game.index + 1} / ${game.questions.length} · ${game.correctCount} jó`;
+  const progressLine = part(dialog, 'progress');
+  if (progressLine && game)
+    progressLine.textContent = `${game.index + 1} / ${game.questions.length} · ${game.correctCount} jó`;
 }
 
 function showRound(dialog: HTMLDialogElement): void {
@@ -200,6 +287,27 @@ function mistakeLine(className: string, label: string, text: string, language: L
 
 const fullText = (card: Card, language: Language) => (language === 'korean' ? card.korean : card.hungarian);
 
+/** A book game: "Elölről" instead of "Újra" when no row is left to ask (the mistakes count if they come again). */
+function updateRestartLabel(dialog: HTMLDialogElement): void {
+  const restartButton = part<HTMLButtonElement>(dialog, 'restart');
+  if (!restartButton || !game) return;
+  const nothingLeft = !!game.remaining && !game.remaining.length && !(includeMistakes(dialog) && game.mistakes.length);
+  restartButton.textContent = nothingLeft ? 'Elölről' : 'Újra';
+}
+
+/** A book game: how far the selection has been asked. */
+function showRemaining(dialog: HTMLDialogElement): void {
+  const line = part(dialog, 'remaining');
+  if (!line || !game?.remaining) return;
+  const total = game.selection.length;
+  const left = game.remaining.length;
+  line.textContent = left
+    ? `Eddig ${total - left} / ${total} sor volt, ${left} van hátra.`
+    : `Mind a ${total} sor sorra került.`;
+  const includeLabel = part(dialog, 'include-mistakes-label');
+  if (includeLabel) includeLabel.hidden = !game.mistakes.length;
+}
+
 function showSummary(dialog: HTMLDialogElement): void {
   if (!game) return;
   showScreen(dialog, 'summary');
@@ -207,6 +315,7 @@ function showSummary(dialog: HTMLDialogElement): void {
   const score = part(dialog, 'score');
   if (score)
     score.textContent = `${game.correctCount} / ${total} helyes (${Math.round((game.correctCount / total) * 100)}%)`;
+  showRemaining(dialog);
   const mistakes = part(dialog, 'mistakes');
   if (mistakes) {
     if (!game.mistakes.length) {
@@ -243,17 +352,99 @@ function showSummary(dialog: HTMLDialogElement): void {
       mistakes.replaceChildren(heading, list);
     }
   }
+  updateRestartLabel(dialog);
   const retry = part<HTMLButtonElement>(dialog, 'retry-mistakes');
   if (retry) retry.hidden = !game.mistakes.length;
   part<HTMLButtonElement>(dialog, 'restart')?.focus();
 }
 
-function openFlashcardDialog(dialog: HTMLDialogElement): void {
+function openLessonDialog(dialog: HTMLDialogElement): void {
   game = null;
   resetTree(dialog);
   showScreen(dialog, 'selection');
   updateSelection(dialog);
   dialog.showModal();
+}
+
+function loadBookPractice(book: string): Promise<BookPractice> {
+  let request = practiceRequests.get(book);
+  if (!request) {
+    request = fetch(`${document.body.dataset.base ?? ''}/${book.toLowerCase()}/practice.json`).then(response => {
+      if (!response.ok) throw new Error(`${response.status} ${response.statusText}`);
+      return response.json() as Promise<BookPractice>;
+    });
+    practiceRequests.set(book, request);
+  }
+  return request;
+}
+
+function setLessons(dialog: HTMLDialogElement, lessonKeys: readonly string[]): void {
+  for (const checkbox of dialog.querySelectorAll<HTMLInputElement>('input[data-practice-lesson]'))
+    checkbox.checked = lessonKeys.includes(checkbox.dataset.practiceLesson!);
+}
+
+function fillLessons(dialog: HTMLDialogElement, practice: BookPractice): void {
+  practicePart(dialog, 'lessons')?.replaceChildren(
+    ...practice.lessons.map(lesson => {
+      const item = document.createElement('li');
+      const label = document.createElement('label');
+      const checkbox = document.createElement('input');
+      checkbox.type = 'checkbox';
+      checkbox.dataset.practiceLesson = lesson.key;
+      const number = document.createElement('b');
+      number.textContent = `${lesson.lesson}. lecke`;
+      label.append(checkbox, ' ', number);
+      if (lesson.title) {
+        const title = document.createElement('span');
+        setText(title, lesson.title, 'korean');
+        label.append(' ', title);
+      }
+      const forms = document.createElement('small');
+      setText(forms, lesson.forms.join(' · '), 'korean');
+      label.append(' ', forms);
+      item.append(label);
+      return item;
+    })
+  );
+}
+
+/** Opens the book dialog at once, with "Betöltés…" until the rows of the book arrive. */
+async function openBookDialog(dialog: HTMLDialogElement, book: string): Promise<void> {
+  game = null;
+  bookPractice = null;
+  dialog.dataset.book = book;
+  const bookLabel = practicePart(dialog, 'book-label');
+  if (bookLabel) bookLabel.textContent = `${book} könyv`;
+  const loading = practicePart(dialog, 'loading');
+  const choices = practicePart(dialog, 'choices');
+  if (loading) {
+    loading.hidden = false;
+    loading.textContent = 'Betöltés…';
+  }
+  if (choices) choices.hidden = true;
+  showScreen(dialog, 'selection');
+  updateSelection(dialog);
+  dialog.showModal();
+  let practice: BookPractice;
+  try {
+    practice = await loadBookPractice(book);
+  } catch {
+    practiceRequests.delete(book);
+    if (loading && dialog.dataset.book === book)
+      loading.textContent = 'Nem sikerült betölteni a könyv sorait. Zárd be, és próbáld újra.';
+    return;
+  }
+  // Closed or another book opened in the meantime.
+  if (!dialog.open || dialog.dataset.book !== book) return;
+  bookPractice = practice;
+  fillLessons(dialog, practice);
+  const learned = learnedLessonKeys(practice, progress());
+  setLessons(dialog, learned.length ? learned : practice.lessons.map(lesson => lesson.key));
+  for (const checkbox of dialog.querySelectorAll<HTMLInputElement>('input[data-practice-kind]'))
+    checkbox.checked = true;
+  if (loading) loading.hidden = true;
+  if (choices) choices.hidden = false;
+  updateSelection(dialog);
 }
 
 function closeFlashcardDialog(dialog: HTMLDialogElement): void {
@@ -263,35 +454,63 @@ function closeFlashcardDialog(dialog: HTMLDialogElement): void {
 
 document.addEventListener('click', event => {
   const target = event.target as Element;
-  const dialog = flashcardDialog();
-  if (!dialog) return;
+  const bookButton = target.closest<HTMLElement>('.book-flashcard-open-button');
+  if (bookButton) {
+    // The button sits in the <summary> of the book: the book must not fold up.
+    event.preventDefault();
+    const dialog = bookDialog();
+    if (dialog && bookButton.dataset.book) void openBookDialog(dialog, bookButton.dataset.book);
+    return;
+  }
+  if (target.closest('.flashcard-open-button')) {
+    const dialog = lessonDialog();
+    if (dialog) openLessonDialog(dialog);
+    return;
+  }
   // A click beside the dialog (on its backdrop) intentionally does nothing.
-  if (target.closest('.flashcard-open-button')) openFlashcardDialog(dialog);
-  else if (!dialog.contains(target)) return;
-  else if (target.closest('[data-flashcard-close]')) closeFlashcardDialog(dialog);
-  else if (target.closest('[data-flashcard-start]')) {
-    const cards = selectedCards(dialog);
-    startGame(dialog, cards, cards, cards);
-  } else if (target.closest('[data-flashcard-answer]')) {
+  const dialog = target.closest<HTMLDialogElement>('dialog.flashcard-dialog');
+  if (!dialog) return;
+  if (target.closest('[data-flashcard-close]')) closeFlashcardDialog(dialog);
+  else if (target.closest('[data-flashcard-start]')) startSelection(dialog);
+  else if (target.closest('[data-flashcard-answer]')) {
     answer(dialog, Number(target.closest<HTMLElement>('[data-flashcard-answer]')!.dataset.flashcardAnswer));
   } else if (target.closest('[data-flashcard-next]')) nextRound(dialog);
-  else if (game && target.closest('[data-flashcard-restart]'))
-    startGame(dialog, game.questions, game.pool, game.selection);
+  else if (game && target.closest('[data-flashcard-restart]')) restart(dialog);
   else if (game && target.closest('[data-flashcard-retry-mistakes]')) {
     const mistakes = game.mistakes.map(mistake => mistake.round.card);
-    startGame(dialog, mistakes, retryPool(mistakes, game.selection), game.selection);
+    startGame(dialog, {
+      ...game,
+      questions: shuffle(mistakes),
+      pool: retryPool(mistakes, game.selection),
+    });
   } else if (target.closest('[data-flashcard-back]')) {
     game = null;
     showScreen(dialog, 'selection');
+    updateSelection(dialog);
+  } else if (bookPractice && target.closest('[data-practice-all-lessons]')) {
+    setLessons(
+      dialog,
+      bookPractice.lessons.map(lesson => lesson.key)
+    );
+    updateSelection(dialog);
+  } else if (bookPractice && target.closest('[data-practice-learned-lessons]')) {
+    setLessons(dialog, learnedLessonKeys(bookPractice, progress()));
     updateSelection(dialog);
   }
 });
 
 document.addEventListener('change', event => {
-  const dialog = flashcardDialog();
-  if (!dialog || !isTreeCheckbox(dialog, event.target)) return;
-  applyTreeChange(dialog, event.target);
-  updateSelection(dialog);
+  const target = event.target;
+  if (!(target instanceof HTMLElement)) return;
+  const dialog = target.closest<HTMLDialogElement>('dialog.flashcard-dialog');
+  if (!dialog) return;
+  if (scopeOf(dialog) === 'lesson') {
+    if (!isTreeCheckbox(dialog, target)) return;
+    applyTreeChange(dialog, target);
+    updateSelection(dialog);
+  } else if (target.matches('[data-practice-lesson], [data-practice-kind], [data-practice-batch-size]'))
+    updateSelection(dialog);
+  else if (target.matches('[data-flashcard-include-mistakes]')) updateRestartLabel(dialog);
 });
 
 /** The answer a key stands for: 1–4 or A–D (by key position, so a Korean keyboard layout works too). */
@@ -303,8 +522,8 @@ function answerIndexOfKey(event: KeyboardEvent): number {
 }
 
 document.addEventListener('keydown', event => {
-  const dialog = flashcardDialog();
-  if (!dialog?.open || dialog.dataset.flashcardScreen !== 'round') return;
+  const dialog = openDialog();
+  if (!dialog || dialog.dataset.flashcardScreen !== 'round') return;
   if (event.key === 'Escape') {
     // Esc does not end a game; ✕ does.
     event.preventDefault();
@@ -318,12 +537,14 @@ document.addEventListener('keydown', event => {
   }
 });
 
+const isFlashcardDialog = (target: EventTarget | null): target is HTMLDialogElement =>
+  target instanceof HTMLDialogElement && target.classList.contains('flashcard-dialog');
+
 // "cancel" (Esc) does not bubble, so it is caught on the way down.
 document.addEventListener(
   'cancel',
   event => {
-    const dialog = flashcardDialog();
-    if (event.target === dialog && dialog?.dataset.flashcardScreen === 'round') event.preventDefault();
+    if (isFlashcardDialog(event.target) && event.target.dataset.flashcardScreen === 'round') event.preventDefault();
   },
   true
 );
@@ -331,13 +552,13 @@ document.addEventListener(
 document.addEventListener(
   'close',
   event => {
-    if (event.target === flashcardDialog()) game = null;
+    if (isFlashcardDialog(event.target)) game = null;
   },
   true
 );
 
-// A page change swaps the dialog away; close it first so the modal state does not linger.
+// A page change swaps the dialogs away; close the open one first so the modal state does not linger.
 document.addEventListener('astro:before-swap', () => {
-  const dialog = flashcardDialog();
-  if (dialog?.open) closeFlashcardDialog(dialog);
+  const dialog = openDialog();
+  if (dialog) closeFlashcardDialog(dialog);
 });

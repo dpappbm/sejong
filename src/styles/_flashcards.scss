@@ -213,3 +213,83 @@
     color: var(--incorrect);
   }
 }
+
+// the book practice dialog: lesson and row kind lists, questions per round, rows left
+.practice-loading {
+  margin: 8px 0;
+  color: var(--muted);
+}
+
+.practice-group {
+  margin: 0 0 12px;
+  padding: 0;
+  border: none;
+
+  legend {
+    padding: 0;
+    margin-bottom: 4px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--muted);
+    @include uppercase-label;
+  }
+}
+
+.practice-quick-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+.practice-quick-button {
+  padding: 4px 10px;
+  font-size: 0.82rem;
+}
+
+.practice-lessons {
+  max-height: 34vh;
+  overflow-y: auto;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 0 10px;
+}
+
+.practice-batch-size {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 0.92rem;
+
+  select {
+    font: inherit;
+    font-weight: 400;
+    padding: 3px 6px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    background: var(--card);
+    color: var(--foreground);
+  }
+}
+
+.flashcard-remaining {
+  margin: -6px 0 10px;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.flashcard-include-mistakes {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.86rem;
+  cursor: pointer;
+
+  input {
+    width: 16px;
+    height: 16px;
+    margin: 0;
+    accent-color: var(--accent);
+  }
+}

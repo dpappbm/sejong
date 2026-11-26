@@ -1,6 +1,8 @@
-// Logic of the flash-card game (src/components/LessonFlashcardDialog.astro), shared by the browser script and the tests.
-// Every selected row is asked once, in random order, in a random language; the answer has to be picked from four
-// buttons: the row's other side and three other rows' texts in the same language.
+// Logic of the flash-card game (src/components/LessonFlashcardDialog.astro, BookFlashcardDialog.astro), shared by the
+// browser script and the tests. Every row of a round is asked once, in a random language; the answer has to be picked
+// from four buttons: the row's other side and three other rows' texts in the same language.
+// A lesson game asks every selected row; a book game asks the selection in batches, each "Újra" drawing rows not asked yet.
+import type { BookPractice, PracticeRowKind } from './bookPractice';
 
 export type CardKind = 'rule' | 'example' | 'vocabulary';
 export type Language = 'korean' | 'hungarian';
@@ -71,7 +73,13 @@ export function shuffle<T>(items: readonly T[], random: Random = Math.random): T
  * Left out: a card whose answer text is the correct one, and a card whose question-side text is the question
  * (its answer would be correct, too).
  */
-export function distractorCandidates(card: Card, questionLanguage: Language, pool: readonly Card[]): Card[] {
+export function distractorCandidates(
+  card: Card,
+  questionLanguage: Language,
+  pool: readonly Card[],
+  /** Stop after this many: enough to know that a card can be asked. */
+  limit = Infinity
+): Card[] {
   const answerLanguage = otherLanguage(questionLanguage);
   const question = sameText(cardText(card, questionLanguage));
   const seen = new Set([sameText(cardText(card, answerLanguage))]);
@@ -82,6 +90,7 @@ export function distractorCandidates(card: Card, questionLanguage: Language, poo
     if (seen.has(answer)) continue;
     seen.add(answer);
     candidates.push(other);
+    if (candidates.length >= limit) break;
   }
   return candidates;
 }
@@ -89,7 +98,7 @@ export function distractorCandidates(card: Card, questionLanguage: Language, poo
 /** The languages a card can be asked in: those with enough distinct wrong answers in the pool. */
 const playableLanguages = (card: Card, pool: readonly Card[]) =>
   (['korean', 'hungarian'] as const).filter(
-    language => distractorCandidates(card, language, pool).length >= OPTION_COUNT - 1
+    language => distractorCandidates(card, language, pool, OPTION_COUNT - 1).length >= OPTION_COUNT - 1
   );
 
 /** Every card has four distinct answers in at least one language. */
@@ -137,3 +146,61 @@ export function buildRound(card: Card, pool: readonly Card[], random: Random = M
  */
 export const retryPool = (mistakes: readonly Card[], selection: readonly Card[]): Card[] =>
   canPlay(mistakes, mistakes) ? [...mistakes] : [...selection];
+
+/** The next batch of a book game and the rows still left after it. */
+export function drawBatch<T>(remaining: readonly T[], size: number): { batch: T[]; remaining: T[] } {
+  return { batch: remaining.slice(0, size), remaining: remaining.slice(size) };
+}
+
+/** The rows left, with the last round's mistakes in front (shuffled), so the next batch starts with them. */
+export function putMistakesFirst(
+  remaining: readonly Card[],
+  mistakes: readonly Card[],
+  random: Random = Math.random
+): Card[] {
+  const unique = [...new Set(mistakes)];
+  return [...shuffle(unique, random), ...remaining.filter(card => !unique.includes(card))];
+}
+
+const CARD_KIND_OF_ROWS: Record<PracticeRowKind, CardKind> = {
+  rules: 'rule',
+  examples: 'example',
+  textbookVocabulary: 'vocabulary',
+  ownVocabulary: 'vocabulary',
+};
+
+/** The cards of the chosen lessons and row kinds in book order; a row that occurs twice is kept once, at its first place. */
+export function bookCards(
+  practice: BookPractice,
+  lessonKeys: readonly string[],
+  kinds: readonly PracticeRowKind[]
+): Card[] {
+  const seen = new Set<string>();
+  const cards: Card[] = [];
+  for (const lesson of practice.lessons) {
+    if (!lessonKeys.includes(lesson.key)) continue;
+    for (const kind of kinds) {
+      for (const [korean, hungarian] of lesson.rows[kind]) {
+        const rowKey = `${korean}\t${hungarian}`;
+        if (seen.has(rowKey)) continue;
+        seen.add(rowKey);
+        cards.push({ korean, hungarian, kind: CARD_KIND_OF_ROWS[kind] });
+      }
+    }
+  }
+  return cards;
+}
+
+/**
+ * The lessons of a book learned so far by the "Hol tartasz?" value ("": none, "ALL": all, "3A-9": up to and including
+ * that lesson). Book codes ("1A" … "4B") sort in textbook order.
+ */
+export function learnedLessonKeys(practice: BookPractice, progress: string): string[] {
+  if (progress === 'ALL') return practice.lessons.map(lesson => lesson.key);
+  const match = /^([1-4][AB])-(\d+)$/.exec(progress);
+  if (!match) return [];
+  const [, book, lesson] = match;
+  return practice.lessons
+    .filter(item => practice.book < book || (practice.book === book && item.lesson <= Number(lesson)))
+    .map(item => item.key);
+}
