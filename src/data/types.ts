@@ -78,11 +78,15 @@ export interface WordTable {
   additionalWords?: string[];
   /** false: no irregular rows. */
   irregular?: false;
+  /** false: no 있다/없다 rows, where the form makes no sense for them. */
+  existential?: false;
   columns: WordColumn[];
 }
 export interface NounTable {
   kind: 'noun';
   nouns?: NounRow[];
+  /** Further nouns; the ones not yet in the table get a row described by their ending. */
+  additionalNouns?: string[];
   nounColumns: NounColumn[];
 }
 
@@ -297,6 +301,25 @@ export interface AdjectiveEntry {
   base: string;
   comparative: string;
 }
+/** 있다 / 없다: Hungarian "van" / "nincs" in the tenses and moods the tables use. */
+export interface ExistentialEntry {
+  wordClass: 'existential';
+  hungarian: string;
+  /** van / nincs */
+  base: string;
+  /** volt / nem volt */
+  past: string;
+  /** lesz / nem lesz */
+  future: string;
+  /** legyen / ne legyen */
+  subjunctive: string;
+  /** lenne / nem lenne */
+  conditional: string;
+  /** lett volna / nem lett volna */
+  pastConditional: string;
+  /** The opposite: nincs / van (for "feltéve, hogy nem …"-like patterns). */
+  negation: string;
+}
 export interface NounEntry {
   wordClass: 'noun';
   hungarian: string;
@@ -308,7 +331,7 @@ export interface NounEntry {
   /** The typical meaning of the (으)로 particle with this noun. */
   roMeaning: string;
 }
-export type LexiconEntry = VerbEntry | AdjectiveEntry | NounEntry;
+export type LexiconEntry = VerbEntry | AdjectiveEntry | ExistentialEntry | NounEntry;
 
 /** Hungarian pattern per word class for one table column, e.g. { verb: '{presentFirstSingular}, de …' }. */
 export type ColumnTranslation = Partial<Record<WordClass, string>>;

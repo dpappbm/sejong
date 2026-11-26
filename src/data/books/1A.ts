@@ -588,7 +588,11 @@ export default {
       explanation: [
         paragraph`Az ige vagy melléknév ${bold('elé')} téve tagad: ${korean('안 가요')} „nem megyek”. ${bold('Főnév + 하다')} igéknél a ${korean('안')} a ${korean('하다')} elé kerül: ${korean('공부 안 해요')}. A ${korean('있다, 없다')} nem kap ${korean('안')}-t (${korean('있다')} tagadása: ${korean('없다')}).`,
       ],
-      table: { sampleSet: 'verbsAndAdjectives', columns: [{ header: '안 + -아요/어요', conjugate: negateWithAn }] },
+      table: {
+        existential: false,
+        sampleSet: 'verbsAndAdjectives',
+        columns: [{ header: '안 + -아요/어요', conjugate: negateWithAn }],
+      },
       examples: [
         [text`오늘은 날씨가 ${bold('안')} 추워요.`, 'Ma nincs hideg.', 'ㅂ-rendhagyó: 춥다 → 추워요'],
         [text`저는 커피를 ${bold('안')} 마셔요.`, 'Nem iszom kávét.'],

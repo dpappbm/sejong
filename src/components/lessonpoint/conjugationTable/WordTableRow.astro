@@ -13,7 +13,7 @@ interface Props {
 
 const { columns, word, key } = Astro.props;
 
-const WORD_CLASS_LABELS: Record<WordClass, string> = { adjective: 'mn.', verb: 'ige', noun: '' };
+const WORD_CLASS_LABELS: Record<WordClass, string> = { adjective: 'mn.', verb: 'ige', existential: 'létige', noun: '' };
 const translations = columnTranslations(key) ?? [];
 const gloss = lexiconEntry(word.dictionaryForm)?.hungarian;
 const label = WORD_CLASS_LABELS[word.wordClass];

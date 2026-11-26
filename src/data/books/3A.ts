@@ -10,20 +10,18 @@ import {
   text,
 } from '../../lib/richText';
 import {
+  isItdaOrEopda,
+  presentModifier,
   createWord,
   plainStyleStatement,
   withAOrEo,
   withEu,
   withPast,
   withPlainStem,
-  type Word,
 } from '../../lib/conjugation';
 import type { BookData, PointSource } from '../types';
 const vocabularyGrammarPageOf = (lesson: number, point: number) => 24 + 2 * (lesson - 1) + (point - 1),
   studentBookPageOf = (lesson: number, point: number) => 16 + 8 * (lesson - 1) + (point - 1);
-const isItdaOrEopda = (word: Word) => /(있|없)다$/.test(word.dictionaryForm);
-const presentModifier = (word: Word, ending: string) =>
-  word.wordClass === 'verb' || isItdaOrEopda(word) ? withPlainStem(word, '는' + ending) : withEu(word, 'ㄴ' + ending);
 const VERBS_WITH_BODA = [
   createWord('가다', 'verb'),
   createWord('먹다', 'verb'),
