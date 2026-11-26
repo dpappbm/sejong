@@ -338,6 +338,33 @@ export const words: Record<string, VerbEntry | AdjectiveEntry | ExistentialEntry
     'fényképez (fotót készít)',
     'fényképezni|fényképeznem|fényképezek|fényképezel|fényképez|fényképeztem|fényképeztél|fényképezett|fényképezz|fényképezzen|fényképezzek|fényképezzünk|fényképeznék|fényképezne|fényképezés|amit|fényképezett'
   ),
+  // ---- additional table words (1B) ----
+  '치다': createVerb(
+    'játszik (sportot, hangszeren), üt',
+    'játszani|játszanom|játszom|játszol|játszik|játszottam|játszottál|játszott|játssz|játsszon|játsszak|játsszunk|játszanék|játszana|játék|amin|játszott'
+  ),
+  '타다': createVerb(
+    'utazik (járművön), felszáll; (kerékpárt) hajt',
+    'utazni|utaznom|utazom|utazol|utazik|utaztam|utaztál|utazott|utazz|utazzon|utazzak|utazzunk|utaznék|utazna|utazás|amin|utazott'
+  ),
+  '이야기하다': createVerb(
+    'beszélget, mesél',
+    'beszélgetni|beszélgetnem|beszélgetek|beszélgetsz|beszélget|beszélgettem|beszélgettél|beszélgetett|beszélgess|beszélgessen|beszélgessek|beszélgessünk|beszélgetnék|beszélgetne|beszélgetés|akivel|beszélgetett'
+  ),
+  '초대하다': createVerb(
+    'meghív',
+    'meghívni|meghívnom|meghívok|meghívsz|meghív|meghívtam|meghívtál|meghívott|hívj meg|hívjon meg|hívjak meg|hívjunk meg|meghívnék|meghívna|meghívás|akit|meghívott',
+    { hasPreverb: true }
+  ),
+  '일어나다': createVerb(
+    'felkel',
+    'felkelni|felkelnem|felkelek|felkelsz|felkel|felkeltem|felkeltél|felkelt|kelj fel|keljen fel|keljek fel|keljünk fel|felkelnék|felkelne|felkelés|amikor|felkelt',
+    { hasPreverb: true }
+  ),
+  '하다': createVerb(
+    'csinál, tesz',
+    'csinálni|csinálnom|csinálok|csinálsz|csinál|csináltam|csináltál|csinált|csinálj|csináljon|csináljak|csináljunk|csinálnék|csinálna|csinálás|amit|csinált'
+  ),
   '있다': createExistential('van (valahol, valakinek)', {
     base: 'van',
     past: 'volt',
@@ -376,6 +403,11 @@ export const words: Record<string, VerbEntry | AdjectiveEntry | ExistentialEntry
   '어렵다': createAdjective('nehéz (nem könnyű)', 'nehéz', 'nehezebb'),
   '아름답다': createAdjective('gyönyörű, szép', 'gyönyörű', 'gyönyörűbb'),
   '따뜻하다': createAdjective('meleg, kellemesen meleg', 'meleg', 'melegebb'),
+  // ---- additional table words (1B) ----
+  '시원하다': createAdjective('hűvös, kellemesen friss', 'hűvös', 'hűvösebb'),
+  '낮다': createAdjective('alacsony', 'alacsony', 'alacsonyabb'),
+  '편하다': createAdjective('kényelmes', 'kényelmes', 'kényelmesebb'),
+  '짧다': createAdjective('rövid', 'rövid', 'rövidebb'),
 };
 
 // Nouns: base form, with article, accusative, dative, essive (-ként), and the typical meaning of (으)로 with the noun.
@@ -482,4 +514,34 @@ export const nouns: Record<string, NounEntry> = {
   '책': createNoun('könyv', 'a könyv', 'könyvet', 'könyvnek', 'könyvként', 'könyvvel'),
   '영화': createNoun('film', 'a film', 'filmet', 'filmnek', 'filmként', 'filmmel'),
   '음악': createNoun('zene', 'a zene', 'zenét', 'zenének', 'zeneként', 'zenével'),
+  // ---- additional table nouns (1B) ----
+  '안': createNoun('belső rész, bent', 'a belseje', 'a belsejét', 'belsejének', 'belsőként', 'befelé'),
+  '뒤': createNoun('hátsó rész, mögött', 'a hátulja', 'a hátulját', 'hátuljának', 'hátulként', 'hátra'),
+  '앞': createNoun('elülső rész, előtt', 'az eleje', 'az elejét', 'elejének', 'elölként', 'előre'),
+  '1층': createNoun(
+    'földszint (1. szint)',
+    'a földszint',
+    'a földszintet',
+    'földszintnek',
+    'földszintként',
+    'a földszintre'
+  ),
+  '지하': createNoun(
+    'alagsor, föld alatti szint',
+    'az alagsor',
+    'az alagsort',
+    'alagsornak',
+    'alagsorként',
+    'le az alagsorba'
+  ),
+  '이쪽': createNoun(
+    'ez az oldal, erre',
+    'ez az oldal',
+    'ezt az oldalt',
+    'ennek az oldalnak',
+    'ezen az oldalon',
+    'erre'
+  ),
+  '오른쪽': createNoun('jobb oldal', 'a jobb oldal', 'a jobb oldalt', 'jobb oldalnak', 'jobb oldalként', 'jobbra'),
+  '사무실': createNoun('iroda', 'az iroda', 'az irodát', 'irodának', 'irodaként', 'az irodába'),
 };
