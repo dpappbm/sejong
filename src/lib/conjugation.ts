@@ -102,6 +102,7 @@ const IRREGULAR_WORDS: Record<Exclude<Irregularity, '으' | 'ㄹ' | ''>, string[
     '쉽다',
     '어렵다',
     '무겁다',
+    '무섭다',
     '가볍다',
     '돕다',
     '곱다',
@@ -339,6 +340,7 @@ export const SAMPLE_WORD_SETS = {
     createWord('공부하다', 'verb'),
     createWord('만들다', 'verb'),
     createWord('작다', 'adjective'),
+    createWord('피곤하다', 'adjective'),
     createWord('바쁘다', 'adjective'),
   ],
   irregularVerbsAndAdjectives: [
