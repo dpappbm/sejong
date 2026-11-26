@@ -382,6 +382,66 @@ export const words: Record<string, VerbEntry | AdjectiveEntry | ExistentialEntry
     'vár',
     'várni|várnom|várok|vársz|vár|vártam|vártál|várt|várj|várjon|várjak|várjunk|várnék|várna|várakozás|akit|várt'
   ),
+  // ---- additional table words (2B) ----
+  '말하다': createVerb(
+    'mond, beszél',
+    'mondani|mondanom|mondok|mondasz|mond|mondtam|mondtál|mondott|mondj|mondjon|mondjak|mondjunk|mondanék|mondana|beszéd|amit|mondott'
+  ),
+  '닫다': createVerb(
+    'bezár, becsuk',
+    'bezárni|bezárnom|bezárok|bezársz|bezár|bezártam|bezártál|bezárt|zárj be|zárjon be|zárjak be|zárjunk be|bezárnék|bezárna|bezárás|amit|bezárt',
+    { hasPreverb: true }
+  ),
+  '빌리다': createVerb(
+    'kölcsönvesz, kölcsönkér (빌려 주다: kölcsönad)',
+    'kölcsönvenni|kölcsönvennem|kölcsönveszek|kölcsönveszel|kölcsönvesz|kölcsönvettem|kölcsönvettél|kölcsönvett|vegyél kölcsön|vegyen kölcsön|vegyek kölcsön|vegyünk kölcsön|kölcsönvennék|kölcsönvenne|kölcsönzés|amit|kölcsönvett',
+    { hasPreverb: true }
+  ),
+  '예약하다': createVerb(
+    'lefoglal, foglal (asztalt, szállást)',
+    'foglalni|foglalnom|foglalok|foglalsz|foglal|foglaltam|foglaltál|foglalt|foglalj|foglaljon|foglaljak|foglaljunk|foglalnék|foglalna|foglalás|amit|foglalt'
+  ),
+  '가르치다': createVerb(
+    'tanít',
+    'tanítani|tanítanom|tanítok|tanítasz|tanít|tanítottam|tanítottál|tanított|taníts|tanítson|tanítsak|tanítsunk|tanítanék|tanítana|tanítás|amit|tanított'
+  ),
+  '축하하다': createVerb(
+    'gratulál, megünnepel',
+    'gratulálni|gratulálnom|gratulálok|gratulálsz|gratulál|gratuláltam|gratuláltál|gratulált|gratulálj|gratuláljon|gratuláljak|gratuláljunk|gratulálnék|gratulálna|gratuláció|akinek|gratulált'
+  ),
+  '사용하다': createVerb(
+    'használ',
+    'használni|használnom|használok|használsz|használ|használtam|használtál|használt|használj|használjon|használjak|használjunk|használnék|használna|használat|amit|használt'
+  ),
+  '버리다': createVerb(
+    'kidob, eldob',
+    'kidobni|kidobnom|kidobok|kidobsz|kidob|kidobtam|kidobtál|kidobott|dobj ki|dobjon ki|dobjak ki|dobjunk ki|kidobnék|kidobna|kidobás|amit|kidobott',
+    { hasPreverb: true }
+  ),
+  '퇴근하다': createVerb(
+    'hazamegy (a munkából)',
+    'hazamenni|hazamennem|hazamegyek|hazamész|hazamegy|hazamentem|hazamentél|hazament|menj haza|menjen haza|menjek haza|menjünk haza|hazamennék|hazamenne|hazamenetel|ahonnan|hazament',
+    { hasPreverb: true }
+  ),
+  '들어가다': createVerb(
+    'bemegy',
+    'bemenni|bemennem|bemegyek|bemész|bemegy|bementem|bementél|bement|menj be|menjen be|menjek be|menjünk be|bemennék|bemenne|bemenetel|ahová|bement',
+    { hasPreverb: true }
+  ),
+  '끝내다': createVerb(
+    'befejez',
+    'befejezni|befejeznem|befejezek|befejezel|befejez|befejeztem|befejeztél|befejezett|fejezz be|fejezzen be|fejezzek be|fejezzünk be|befejeznék|befejezne|befejezés|amit|befejezett',
+    { hasPreverb: true }
+  ),
+  '도착하다': createVerb(
+    'megérkezik',
+    'megérkezni|megérkeznem|megérkezem|megérkezel|megérkezik|megérkeztem|megérkeztél|megérkezett|érkezz meg|érkezzen meg|érkezzek meg|érkezzünk meg|megérkeznék|megérkezne|érkezés|ahová|megérkezett',
+    { hasPreverb: true }
+  ),
+  '잘하다': createVerb(
+    'jól csinál, ügyes valamiben',
+    'jól csinálni|jól csinálnom|jól csinálom|jól csinálod|jól csinálja|jól csináltam|jól csináltad|jól csinálta|csináld jól|csinálja jól|csináljam jól|csináljuk jól|jól csinálnám|jól csinálná|ügyesség|amit|jól csinált'
+  ),
   '있다': createExistential('van (valahol, valakinek)', {
     base: 'van',
     past: 'volt',
@@ -431,6 +491,16 @@ export const words: Record<string, VerbEntry | AdjectiveEntry | ExistentialEntry
   '심심하다': createAdjective('unatkozik; unalmas', 'unalmas', 'unalmasabb'),
   '괜찮다': createAdjective('rendben van, nem rossz', 'nem rossz', 'jobb'),
   '짜다': createAdjective('sós', 'sós', 'sósabb'),
+  // ---- additional table words (2B) ----
+  '날씬하다': createAdjective('karcsú', 'karcsú', 'karcsúbb'),
+  '적다': createAdjective('kevés', 'kevés', 'kevesebb'),
+  '재미없다': createAdjective('unalmas, nem érdekes', 'unalmas', 'unalmasabb'),
+  '빠르다': createAdjective('gyors', 'gyors', 'gyorsabb'),
+  '활발하다': createAdjective('élénk, aktív', 'élénk', 'élénkebb'),
+  '같다': createAdjective('ugyanolyan, azonos', 'ugyanolyan', 'hasonlóbb'),
+  '답답하다': createAdjective('nyomasztó; szorong', 'nyomasztó', 'nyomasztóbb'),
+  '부족하다': createAdjective('kevés, nem elég', 'nem elég', 'kevesebb'),
+  '행복하다': createAdjective('boldog', 'boldog', 'boldogabb'),
 };
 
 // Nouns: base form, with article, accusative, dative, essive (-ként), and the typical meaning of (으)로 with the noun.
