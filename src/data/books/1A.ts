@@ -1,4 +1,13 @@
 import {
+  createWord,
+  nounWithParticle,
+  withAOrEo,
+  withEu,
+  withPast,
+  withPlainStem,
+  type Word,
+} from '../../lib/conjugation';
+import {
   bold,
   korean,
   koreanGlossedInRow,
@@ -9,21 +18,14 @@ import {
   simpleTable,
   text,
 } from '../../lib/richText';
-import {
-  createWord,
-  withAOrEo,
-  withPast,
-  withEu,
-  withPlainStem,
-  nounWithParticle,
-  type Word,
-} from '../../lib/conjugation';
 import type { BookData } from '../types';
 /** Noun + 하다 verbs (공부하다) take 안 before 하다; -아/어하다 verbs (좋아하다) are not split. */
 const isNounPlusHada = (word: Word) =>
   word.wordClass === 'verb' && word.stem.endsWith('하') && word.stem.length > 1 && !/[아어]하$/.test(word.stem);
 const negateWithAn = (word: Word) =>
-  isNounPlusHada(word) ? word.stem.slice(0, -1) + ' 안 해요' : '안 ' + withAOrEo(word, '요');
+  isNounPlusHada(word)
+    ? nounWithParticle(word.stem.slice(0, -1), '을', '를') + ' 안 해요'
+    : '안 ' + withAOrEo(word, '요');
 
 export default {
   lessons: {
