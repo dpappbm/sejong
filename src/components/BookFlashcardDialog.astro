@@ -1,0 +1,96 @@
+---
+// The "Gyakorlás" dialog of a whole book, opened from the book headings of the home page. The rows come from
+// /<book>/practice.json (src/pages/[book]/practice.json.ts), fetched on opening; src/scripts/flashcards.ts fills the
+// lesson list and drives the game. Each "Újra" asks the next batch of rows not asked yet.
+import { PRACTICE_ROW_KINDS, type PracticeRowKind } from '../lib/bookPractice';
+import FlashcardGameScreens from './FlashcardGameScreens.astro';
+
+const KIND_LABELS: Record<PracticeRowKind, string> = {
+  rules: 'Szabályok',
+  examples: 'Példák',
+  textbookVocabulary: 'Tankönyvi szavak',
+  ownVocabulary: 'További szavak',
+};
+const BATCH_SIZES = [
+  { value: '20', label: '20' },
+  { value: '50', label: '50' },
+  { value: '100', label: '100' },
+  { value: 'all', label: 'Mind' },
+];
+const DEFAULT_BATCH_SIZE = '50';
+---
+
+<dialog
+  class="export-dialog flashcard-dialog"
+  id="book-flashcard-dialog"
+  aria-labelledby="book-flashcard-title"
+  data-flashcard-scope="book"
+  data-flashcard-screen="selection"
+>
+  <header class="export-dialog-header">
+    <h2 id="book-flashcard-title">
+      Gyakorlás
+      <span class="export-dialog-lesson" data-practice-book-label></span>
+    </h2>
+    <button class="export-close-icon" type="button" data-flashcard-close aria-label="Bezárás" title="Bezárás">
+      ✕
+    </button>
+  </header>
+
+  <section class="flashcard-screen" data-flashcard-section="selection">
+    <div class="export-dialog-body">
+      <p class="flashcard-intro">
+        Mi kerüljön a kártyák közé? Minden kör a még nem kérdezett sorokból húz, véletlen sorrendben.
+      </p>
+      <p class="practice-loading" data-practice-loading role="status" aria-live="polite"></p>
+      <div class="practice-choices" data-practice-choices hidden>
+        <fieldset class="practice-group">
+          <legend>Leckék</legend>
+          <div class="practice-quick-buttons">
+            <button class="dialog-button practice-quick-button" type="button" data-practice-all-lessons>
+              Mind
+            </button>
+            <button class="dialog-button practice-quick-button" type="button" data-practice-learned-lessons>
+              Amit már vettem
+            </button>
+          </div>
+          <ul class="row-tree practice-lessons" data-practice-lessons></ul>
+        </fieldset>
+        <fieldset class="practice-group">
+          <legend>Sorok</legend>
+          <ul class="row-tree">
+            {PRACTICE_ROW_KINDS.map(kind => (
+              <li>
+                <label>
+                  <input type="checkbox" data-practice-kind={kind} checked /> {KIND_LABELS[kind]}
+                  <small data-practice-kind-count={kind} />
+                </label>
+              </li>
+            ))}
+          </ul>
+        </fieldset>
+        <label class="practice-batch-size">
+          Kérdések körönként
+          <select data-practice-batch-size>
+            {BATCH_SIZES.map(size => (
+              <option value={size.value} selected={size.value === DEFAULT_BATCH_SIZE}>
+                {size.label}
+              </option>
+            ))}
+          </select>
+        </label>
+      </div>
+    </div>
+    <footer class="export-dialog-footer">
+      <span class="flashcard-selection-status" data-flashcard-selection-status role="status" aria-live="polite"></span>
+      <button class="dialog-button dialog-primary-button" type="button" data-flashcard-start disabled>
+        Indítás
+      </button>
+      <button class="dialog-button dialog-close-button" type="button" data-flashcard-close>
+        Bezárás
+      </button>
+    </footer>
+  </section>
+
+  <FlashcardGameScreens book />
+</dialog>
