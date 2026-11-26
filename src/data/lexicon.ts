@@ -365,6 +365,23 @@ export const words: Record<string, VerbEntry | AdjectiveEntry | ExistentialEntry
     'csinál, tesz',
     'csinálni|csinálnom|csinálok|csinálsz|csinál|csináltam|csináltál|csinált|csinálj|csináljon|csináljak|csináljunk|csinálnék|csinálna|csinálás|amit|csinált'
   ),
+  // ---- additional table words (2A) ----
+  '그리다': createVerb(
+    'rajzol, fest',
+    'rajzolni|rajzolnom|rajzolok|rajzolsz|rajzol|rajzoltam|rajzoltál|rajzolt|rajzolj|rajzoljon|rajzoljak|rajzoljunk|rajzolnék|rajzolna|rajzolás|amit|rajzolt'
+  ),
+  '춤추다': createVerb(
+    'táncol',
+    'táncolni|táncolnom|táncolok|táncolsz|táncol|táncoltam|táncoltál|táncolt|táncolj|táncoljon|táncoljak|táncoljunk|táncolnék|táncolna|tánc|ahol|táncolt'
+  ),
+  '구경하다': createVerb(
+    'nézelődik, megnéz (látnivalót)',
+    'nézelődni|nézelődnöm|nézelődöm|nézelődsz|nézelődik|nézelődtem|nézelődtél|nézelődött|nézelődj|nézelődjön|nézelődjek|nézelődjünk|nézelődnék|nézelődne|nézelődés|ahol|nézelődött'
+  ),
+  '기다리다': createVerb(
+    'vár',
+    'várni|várnom|várok|vársz|vár|vártam|vártál|várt|várj|várjon|várjak|várjunk|várnék|várna|várakozás|akit|várt'
+  ),
   '있다': createExistential('van (valahol, valakinek)', {
     base: 'van',
     past: 'volt',
@@ -395,7 +412,7 @@ export const words: Record<string, VerbEntry | AdjectiveEntry | ExistentialEntry
   '재미있다': createAdjective('érdekes, szórakoztató', 'érdekes', 'érdekesebb'),
   '많다': createAdjective('sok', 'sok', 'több'),
   '흐리다': createAdjective('borús, felhős', 'borús', 'borúsabb'),
-  '멀다': createAdjective('messze van, távoli', 'messze van', 'messzebb'),
+  '멀다': createAdjective('messze van, távoli', 'messze', 'messzebb'),
   '예쁘다': createAdjective('szép, csinos', 'szép', 'szebb'),
   '깨끗하다': createAdjective('tiszta', 'tiszta', 'tisztább'),
   // ---- additional table words (1A) ----
@@ -408,6 +425,12 @@ export const words: Record<string, VerbEntry | AdjectiveEntry | ExistentialEntry
   '낮다': createAdjective('alacsony', 'alacsony', 'alacsonyabb'),
   '편하다': createAdjective('kényelmes', 'kényelmes', 'kényelmesebb'),
   '짧다': createAdjective('rövid', 'rövid', 'rövidebb'),
+  // ---- additional table words (2A) ----
+  '힘들다': createAdjective('nehéz, fárasztó', 'fárasztó', 'fárasztóbb'),
+  '고프다': createAdjective('éhes (배가 고프다)', 'éhes', 'éhesebb'),
+  '심심하다': createAdjective('unatkozik; unalmas', 'unalmas', 'unalmasabb'),
+  '괜찮다': createAdjective('rendben van, nem rossz', 'nem rossz', 'jobb'),
+  '짜다': createAdjective('sós', 'sós', 'sósabb'),
 };
 
 // Nouns: base form, with article, accusative, dative, essive (-ként), and the typical meaning of (으)로 with the noun.
@@ -544,4 +567,35 @@ export const nouns: Record<string, NounEntry> = {
   ),
   '오른쪽': createNoun('jobb oldal', 'a jobb oldal', 'a jobb oldalt', 'jobb oldalnak', 'jobb oldalként', 'jobbra'),
   '사무실': createNoun('iroda', 'az iroda', 'az irodát', 'irodának', 'irodaként', 'az irodába'),
+  // ---- additional table nouns (2A) ----
+  '유진': createNoun('Judzsin', 'Judzsin', 'Judzsint', 'Judzsinnak', 'Judzsinként', 'Judzsinként'),
+  '마리': createNoun('Mari', 'Mari', 'Marit', 'Marinak', 'Mariként', 'Mariként'),
+  '재민': createNoun('Dzsemin', 'Dzsemin', 'Dzsemint', 'Dzseminnek', 'Dzseminként', 'Dzseminként'),
+  '주노': createNoun('Dzsuno', 'Dzsuno', 'Dzsunót', 'Dzsunónak', 'Dzsunóként', 'Dzsunóként'),
+  '한복': createNoun('hanbok (koreai népviselet)', 'a hanbok', 'a hanbokot', 'hanboknak', 'hanbokként', 'hanbokban'),
+  '불고기': createNoun(
+    'pulgogi (pácolt, sült hús)',
+    'a pulgogi',
+    'a pulgogit',
+    'pulgoginak',
+    'pulgogiként',
+    'pulgogival'
+  ),
+  '비빔밥': createNoun(
+    'pibimbap (zöldséges rizstál)',
+    'a pibimbap',
+    'a pibimbapot',
+    'pibimbapnak',
+    'pibimbapként',
+    'pibimbappal'
+  ),
+  '김치': createNoun('kimcsi', 'a kimcsi', 'a kimcsit', 'kimcsinek', 'kimcsiként', 'kimcsivel'),
+  '한국어': createNoun(
+    'koreai nyelv',
+    'a koreai nyelv',
+    'a koreai nyelvet',
+    'koreai nyelvnek',
+    'koreai nyelvként',
+    'koreaiul'
+  ),
 };

@@ -87,7 +87,7 @@ describe('conjugation tables', () => {
   });
 
   it('do not build broken Hungarian from van / nincs', () => {
-    const broken = /(nincs (volt|lesz|lenne)|nem nincs|ne nincs|nem van|van volt|van lesz)/;
+    const broken = /(nincs (volt|lesz|lenne)|nem nincs|ne nincs|nem van|van volt|van lesz)/;
     expect(failing(cell => broken.test(cellTranslation(cell.word, cell.translation) ?? ''))).toEqual([]);
   });
 });
