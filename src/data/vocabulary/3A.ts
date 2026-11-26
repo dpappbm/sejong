@@ -571,6 +571,23 @@ export default {
       ['성취감을 느끼다', 'sikerélménye van'],
       ['자기 계발을 하다', 'fejleszti önmagát'],
     ],
+    own: [
+      ['여가 활동', 'szabadidős tevékenység', 'classNotes'],
+      ['장점', 'előny (↔ 단점)', 'classNotes'],
+      ['단점', 'hátrány (↔ 장점)', 'classNotes'],
+      ['집중하다', 'koncentrál, összpontosít', 'classNotes'],
+      ['능력', 'képesség (általában: hogy képes valamire; vö. 실력)', 'classNotes'],
+      ['실력', 'tudás, felkészültség (gyakorlással megszerzett; pl. 한국어 실력: koreai nyelvtudás)', 'classNotes'],
+      ['금방', 'hamar, mindjárt (múlt idővel: épp az imént)', 'classNotes'],
+      [
+        '빠지다',
+        'beleesik, belemerül (물에 빠지다: vízbe esik; 사랑에 빠지다: beleszeret; 취미에 빠지다: belemerül egy hobbiba)',
+        'classNotes',
+      ],
+      ['속상하다', 'el van keseredve, bántja valami, rosszul esik neki', 'classNotes'],
+      ['직진하다', 'egyenesen megy (előre), egyenesen halad', 'classNotes'],
+      ['규칙적으로 (규칙적이다)', 'rendszeresen (규칙적이다: rendszeres, szabályos)', 'classNotes'],
+    ],
   },
   12: {
     textbook: [
