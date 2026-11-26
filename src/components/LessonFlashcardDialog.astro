@@ -40,10 +40,10 @@ const { lesson } = Astro.props;
       <LessonRowTree lesson={lesson} />
     </div>
     <footer class="export-dialog-footer">
+      <span class="flashcard-selection-status" data-flashcard-selection-status role="status" aria-live="polite"></span>
       <button class="dialog-button dialog-primary-button" type="button" data-flashcard-start>
         Indítás
       </button>
-      <span class="flashcard-selection-status" data-flashcard-selection-status role="status" aria-live="polite"></span>
       <button class="dialog-button dialog-close-button" type="button" data-flashcard-close>
         Bezárás
       </button>
