@@ -134,7 +134,7 @@ export default {
           base: ['먹다 / 마시다', 'eszik / iszik'],
           honorific: ['드시다', 'eszik, iszik (tiszteleti)'],
           example: ['맛있게 드세요.', 'Jó étvágyat!'],
-          references: ['2B-03-1'],
+          references: ['2B-01-1', '2B-03-1'],
         },
         {
           base: ['말하다', 'mond, beszél'],
@@ -182,7 +182,7 @@ export default {
           base: ['-아/어 주다', 'megteszi valakinek'],
           honorific: ['-아/어 드리다', 'megteszi (tisztelt személynek)'],
           example: ['할머니 가방을 들어 드렸어요.', 'Vittem a nagymama táskáját.'],
-          references: ['2B-04-2', '3B-01-2'],
+          references: ['2B-04-2', '3A-12-2', '3B-01-2'],
         },
         {
           base: ['말하다', 'mond, szól'],
