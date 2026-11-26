@@ -21,11 +21,11 @@ const SAMPLE_NOUNS = {
 export const columnTranslations = (key: string): ColumnTranslation[] | undefined =>
   (hungarianTables as Record<string, ColumnTranslation[]>)[key];
 
-/** The sample-noun description that matches a noun's last syllable. */
-function nounEndingDescription(noun: string): string {
+/** The sample-noun description that matches a noun's last syllable; ㄹ counts apart only where the table has a ㄹ row. */
+function nounEndingDescription(noun: string, rieulApart: boolean): string {
   const final = decomposeSyllable(noun.slice(-1)).final;
   if (final === 0) return SAMPLE_NOUNS.vowelEnding.description;
-  if (final === finalIndex('ㄹ')) return SAMPLE_NOUNS.rieulEnding.description;
+  if (rieulApart && final === finalIndex('ㄹ')) return SAMPLE_NOUNS.rieulEnding.description;
   return SAMPLE_NOUNS.consonantEnding.description;
 }
 
@@ -34,9 +34,10 @@ export function nounRows(table: NounTable): { word: string; description: string 
     typeof row === 'string' ? SAMPLE_NOUNS[row] : row
   );
   const listed = new Set(rows.map(row => row.word));
+  const rieulApart = (table.nouns ?? []).includes('rieulEnding');
   const additional = (table.additionalNouns ?? [])
     .filter(noun => !listed.has(noun))
-    .map(noun => ({ word: noun, description: nounEndingDescription(noun) }));
+    .map(noun => ({ word: noun, description: nounEndingDescription(noun, rieulApart) }));
   return [...rows, ...additional];
 }
 
@@ -51,6 +52,13 @@ function additionalWord(dictionaryForm: string): Word {
 /** Irregular rows hold the irregular stems; ㄹ-stems stay among the regular ones, as in the sample sets. */
 const isIrregularRow = (word: Word) => word.irregularity !== '' && word.irregularity !== 'ㄹ';
 
+/** An additional word joins the block that already has a word of its stem type (in the ㅂ 불규칙 table the main rows are the irregular ones). */
+function belongsToIrregularRows(word: Word, regular: Word[], irregular: Word[]): boolean {
+  if (regular.some(other => other.irregularity === word.irregularity)) return false;
+  if (irregular.some(other => other.irregularity === word.irregularity)) return true;
+  return isIrregularRow(word);
+}
+
 export function wordRows(table: WordTable): { regular: Word[]; irregular: Word[] } {
   const sampleSet = table.sampleSet ?? 'verbsAndAdjectives';
   const sampleWords = table.words ?? SAMPLE_WORD_SETS[sampleSet];
@@ -60,9 +68,10 @@ export function wordRows(table: WordTable): { regular: Word[]; irregular: Word[]
   const listed = new Set([...regular, ...irregular].map(word => word.dictionaryForm));
   const additional = (table.additionalWords ?? []).filter(form => !listed.has(form)).map(additionalWord);
   if (table.irregular === false) return { regular: [...regular, ...additional], irregular };
+  const toIrregular = (word: Word) => belongsToIrregularRows(word, regular, irregular);
   return {
-    regular: [...regular, ...additional.filter(word => !isIrregularRow(word))],
-    irregular: [...irregular, ...additional.filter(isIrregularRow)],
+    regular: [...regular, ...additional.filter(word => !toIrregular(word))],
+    irregular: [...irregular, ...additional.filter(toIrregular)],
   };
 }
 

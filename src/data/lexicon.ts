@@ -310,6 +310,34 @@ export const words: Record<string, VerbEntry | AdjectiveEntry | ExistentialEntry
   '다르다': createAdjective('más, különböző', 'más', 'eltérőbb'),
   '좋다': createAdjective('jó', 'jó', 'jobb'),
   '맛있다': createAdjective('finom', 'finom', 'finomabb'),
+  // ---- additional table words (1A) ----
+  '요리하다': createVerb(
+    'főz',
+    'főzni|főznöm|főzök|főzöl|főz|főztem|főztél|főzött|főzz|főzzön|főzzek|főzzünk|főznék|főzne|főzés|amit|főzött',
+    { timeNoun: 'főzés' }
+  ),
+  '좋아하다': createVerb(
+    'szeret, kedvel',
+    'szeretni|szeretnem|szeretek|szeretsz|szeret|szerettem|szerettél|szeretett|szeress|szeressen|szeressek|szeressünk|szeretnék|szeretne|szeretet|amit|szeretett'
+  ),
+  '앉다': createVerb(
+    'leül, ül',
+    'leülni|leülnöm|leülök|leülsz|leül|leültem|leültél|leült|ülj le|üljön le|üljek le|üljünk le|leülnék|leülne|leülés|ahová|leült',
+    { hasPreverb: true }
+  ),
+  '대답하다': createVerb(
+    'válaszol',
+    'válaszolni|válaszolnom|válaszolok|válaszolsz|válaszol|válaszoltam|válaszoltál|válaszolt|válaszolj|válaszoljon|válaszoljak|válaszoljunk|válaszolnék|válaszolna|válasz|amire|válaszolt'
+  ),
+  '수영하다': createVerb(
+    'úszik',
+    'úszni|úsznom|úszom|úszol|úszik|úsztam|úsztál|úszott|ússz|ússzon|ússzak|ússzunk|úsznék|úszna|úszás|ahol|úszott',
+    { timeNoun: 'úszás' }
+  ),
+  '찍다': createVerb(
+    'fényképez (fotót készít)',
+    'fényképezni|fényképeznem|fényképezek|fényképezel|fényképez|fényképeztem|fényképeztél|fényképezett|fényképezz|fényképezzen|fényképezzek|fényképezzünk|fényképeznék|fényképezne|fényképezés|amit|fényképezett'
+  ),
   '있다': createExistential('van (valahol, valakinek)', {
     base: 'van',
     past: 'volt',
@@ -343,6 +371,11 @@ export const words: Record<string, VerbEntry | AdjectiveEntry | ExistentialEntry
   '멀다': createAdjective('messze van, távoli', 'messze van', 'messzebb'),
   '예쁘다': createAdjective('szép, csinos', 'szép', 'szebb'),
   '깨끗하다': createAdjective('tiszta', 'tiszta', 'tisztább'),
+  // ---- additional table words (1A) ----
+  '가볍다': createAdjective('könnyű (súlyra)', 'könnyű', 'könnyebb'),
+  '어렵다': createAdjective('nehéz (nem könnyű)', 'nehéz', 'nehezebb'),
+  '아름답다': createAdjective('gyönyörű, szép', 'gyönyörű', 'gyönyörűbb'),
+  '따뜻하다': createAdjective('meleg, kellemesen meleg', 'meleg', 'melegebb'),
 };
 
 // Nouns: base form, with article, accusative, dative, essive (-ként), and the typical meaning of (으)로 with the noun.
@@ -406,4 +439,47 @@ export const nouns: Record<string, NounEntry> = {
   '사고': createNoun('baleset', 'a baleset', 'a balesetet', 'balesetnek', 'balesetként', 'a baleset miatt'),
   '부모': createNoun('szülő', 'a szülő', 'a szülőt', 'szülőnek', 'szülőként', 'szülőként'),
   '대표': createNoun('képviselő', 'a képviselő', 'a képviselőt', 'képviselőnek', 'képviselőként', 'képviselőként'),
+  // ---- additional table nouns (1A) ----
+  '물': createNoun('víz', 'a víz', 'vizet', 'víznek', 'vízként', 'vízzel'),
+  '사과': createNoun('alma', 'az alma', 'almát', 'almának', 'almaként', 'almával'),
+  '책상': createNoun('íróasztal', 'az íróasztal', 'az íróasztalt', 'íróasztalnak', 'íróasztalként', 'íróasztallal'),
+  '의자': createNoun('szék', 'a szék', 'a széket', 'széknek', 'székként', 'székkel'),
+  '요리사': createNoun('szakács', 'a szakács', 'a szakácsot', 'szakácsnak', 'szakácsként', 'szakácsként'),
+  '회사원': createNoun(
+    'irodai dolgozó',
+    'az irodai dolgozó',
+    'az irodai dolgozót',
+    'irodai dolgozónak',
+    'irodai dolgozóként',
+    'irodai dolgozóként'
+  ),
+  '안나 씨': createNoun('Anna', 'Anna', 'Annát', 'Annának', 'Annaként', 'Annaként'),
+  '동생': createNoun(
+    'kistestvér (öcs, húg)',
+    'a kistestvér',
+    'a kistestvért',
+    'kistestvérnek',
+    'kistestvérként',
+    'kistestvérként'
+  ),
+  '모자': createNoun('sapka, kalap', 'a sapka', 'a sapkát', 'sapkának', 'sapkaként', 'sapkával'),
+  '서울': createNoun('Szöul', 'Szöul', 'Szöult', 'Szöulnak', 'Szöulként', 'Szöulba'),
+  '이 사람': createNoun(
+    'ez az ember',
+    'ez az ember',
+    'ezt az embert',
+    'ennek az embernek',
+    'emberként',
+    'ezzel az emberrel'
+  ),
+  '주노 씨': createNoun('Dzsuno', 'Dzsuno', 'Dzsunót', 'Dzsunónak', 'Dzsunóként', 'Dzsunóként'),
+  '카페': createNoun('kávézó', 'a kávézó', 'a kávézót', 'kávézónak', 'kávézóként', 'a kávézóba'),
+  '구두': createNoun('cipő', 'a cipő', 'a cipőt', 'cipőnek', 'cipőként', 'cipővel'),
+  '식당': createNoun('étterem', 'az étterem', 'az éttermet', 'étteremnek', 'étteremként', 'az étterembe'),
+  '한국 사람': createNoun('koreai (ember)', 'a koreai', 'a koreait', 'koreainak', 'koreaiként', 'koreaiként'),
+  '옷 가게': createNoun('ruhabolt', 'a ruhabolt', 'a ruhaboltot', 'ruhaboltnak', 'ruhaboltként', 'a ruhaboltba'),
+  '밥': createNoun('étel, főtt rizs', 'az étel', 'ételt', 'ételnek', 'ételként', 'étellel'),
+  '책': createNoun('könyv', 'a könyv', 'könyvet', 'könyvnek', 'könyvként', 'könyvvel'),
+  '영화': createNoun('film', 'a film', 'filmet', 'filmnek', 'filmként', 'filmmel'),
+  '음악': createNoun('zene', 'a zene', 'zenét', 'zenének', 'zeneként', 'zenével'),
 };
