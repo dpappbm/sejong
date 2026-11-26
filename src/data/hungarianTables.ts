@@ -307,7 +307,7 @@ export default {
       existential: 'régen {past} (de már más a helyzet)',
     },
   ],
-  '3B-6-2': [{ verb: 'bárcsak {pastFirstSingular} volna' }, { verb: 'bárcsak ne {pastFirstSingular} volna' }],
+  '3B-6-2': [{ verb: 'bárcsak {pastFirstSingular} volna' }, { verb: 'kár, hogy {pastFirstSingular}' }],
   '3B-7-1': [
     { verb: '{presentFirstSingular}, és ezért …', adjective: '{base}, ezért …', existential: '{base}, ezért …' },
   ],
