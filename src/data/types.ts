@@ -74,6 +74,8 @@ export interface WordTable {
   sampleSet?: SampleSetName;
   words?: Word[];
   irregularWords?: Word[];
+  /** Further dictionary forms to conjugate; the ones not yet in the table are added to the regular or irregular rows. */
+  additionalWords?: string[];
   /** false: no irregular rows. */
   irregular?: false;
   columns: WordColumn[];

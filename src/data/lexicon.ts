@@ -174,6 +174,113 @@ export const words: Record<string, VerbEntry | AdjectiveEntry> = {
     'nem tudni|nem tudnom|nem tudom|nem tudod|nem tudja|nem tudtam|nem tudtad|nem tudta|ne tudd|ne tudja|ne tudjam|ne tudjuk|nem tudnám|nem tudná|nem tudás|amit|nem tudott',
     { hasNegativeMeaning: true }
   ),
+  // ---- additional table words (3A) ----
+  '자다': createVerb(
+    'alszik',
+    'aludni|aludnom|alszom|alszol|alszik|aludtam|aludtál|aludt|aludj|aludjon|aludjak|aludjunk|aludnék|aludna|alvás|ahol|aludt',
+    { timeNoun: 'alvás' }
+  ),
+  '오다': createVerb(
+    'jön',
+    'jönni|jönnöm|jövök|jössz|jön|jöttem|jöttél|jött|gyere|jöjjön|jöjjek|jöjjünk|jönnék|jönne|jövés|ahová|jött',
+    { perfectiveFirstSingular: 'eljöttem' }
+  ),
+  '늦다': createVerb(
+    'késik, elkésik',
+    'késni|késnem|késem|késel|késik|késtem|késtél|késett|késs|késsen|késsek|késsünk|késnék|késne|késés|ahonnan|késett',
+    { perfectiveFirstSingular: 'elkéstem' }
+  ),
+  '전화하다': createVerb(
+    'telefonál, felhív',
+    'telefonálni|telefonálnom|telefonálok|telefonálsz|telefonál|telefonáltam|telefonáltál|telefonált|telefonálj|telefonáljon|telefonáljak|telefonáljunk|telefonálnék|telefonálna|telefonálás|akinek|telefonált'
+  ),
+  '읽다': createVerb(
+    'olvas',
+    'olvasni|olvasnom|olvasok|olvasol|olvas|olvastam|olvastál|olvasott|olvass|olvasson|olvassak|olvassunk|olvasnék|olvasna|olvasás|amit|olvasott',
+    { perfectiveFirstSingular: 'elolvastam', timeNoun: 'olvasás' }
+  ),
+  '묻다': createVerb(
+    'kérdez',
+    'kérdezni|kérdeznem|kérdezek|kérdezel|kérdez|kérdeztem|kérdeztél|kérdezett|kérdezz|kérdezzen|kérdezzek|kérdezzünk|kérdeznék|kérdezne|kérdezés|amit|kérdezett',
+    { perfectiveFirstSingular: 'megkérdeztem' }
+  ),
+  '놀다': createVerb(
+    'játszik, szórakozik',
+    'játszani|játszanom|játszom|játszol|játszik|játszottam|játszottál|játszott|játssz|játsszon|játsszak|játsszunk|játszanék|játszana|játék|ahol|játszott'
+  ),
+  '운동하다': createVerb(
+    'sportol, edz',
+    'sportolni|sportolnom|sportolok|sportolsz|sportol|sportoltam|sportoltál|sportolt|sportolj|sportoljon|sportoljak|sportoljunk|sportolnék|sportolna|sportolás|ahol|sportolt',
+    { timeNoun: 'edzés' }
+  ),
+  '사다': createVerb(
+    'vesz, vásárol',
+    'venni|vennem|veszek|veszel|vesz|vettem|vettél|vett|vegyél|vegyen|vegyek|vegyünk|vennék|venne|vásárlás|amit|megvett',
+    { perfectiveFirstSingular: 'megvettem' }
+  ),
+  '준비하다': createVerb(
+    'készül, előkészít',
+    'készülni|készülnöm|készülök|készülsz|készül|készültem|készültél|készült|készülj|készüljön|készüljek|készüljünk|készülnék|készülne|készülődés|amire|készült',
+    { perfectiveFirstSingular: 'felkészültem' }
+  ),
+  '배우다': createVerb(
+    'tanul (valamit)',
+    'tanulni|tanulnom|tanulok|tanulsz|tanul|tanultam|tanultál|tanult|tanulj|tanuljon|tanuljak|tanuljunk|tanulnék|tanulna|tanulás|amit|tanult',
+    { perfectiveFirstSingular: 'megtanultam' }
+  ),
+  '신다': createVerb(
+    'felvesz (cipőt, zoknit)',
+    'felvenni|felvennem|felveszek|felveszel|felvesz|felvettem|felvettél|felvett|vegyél fel|vegyen fel|vegyek fel|vegyünk fel|felvennék|felvenne|felvétel|amit|felvett',
+    { hasPreverb: true }
+  ),
+  '여행하다': createVerb(
+    'utazik',
+    'utazni|utaznom|utazom|utazol|utazik|utaztam|utaztál|utazott|utazz|utazzon|utazzak|utazzunk|utaznék|utazna|utazás|ahová|utazott',
+    { timeNoun: 'utazás' }
+  ),
+  '운전하다': createVerb(
+    'vezet (autót)',
+    'vezetni|vezetnem|vezetek|vezetsz|vezet|vezettem|vezettél|vezetett|vezess|vezessen|vezessek|vezessünk|vezetnék|vezetne|vezetés|amit|vezetett'
+  ),
+  '모으다': createVerb(
+    'gyűjt',
+    'gyűjteni|gyűjtenem|gyűjtök|gyűjtesz|gyűjt|gyűjtöttem|gyűjtöttél|gyűjtött|gyűjts|gyűjtsön|gyűjtsek|gyűjtsünk|gyűjtenék|gyűjtene|gyűjtés|amit|gyűjtött',
+    { perfectiveFirstSingular: 'összegyűjtöttem' }
+  ),
+  '만나다': createVerb(
+    'találkozik',
+    'találkozni|találkoznom|találkozom|találkozol|találkozik|találkoztam|találkoztál|találkozott|találkozz|találkozzon|találkozzak|találkozzunk|találkoznék|találkozna|találkozás|akivel|találkozott',
+    { timeNoun: 'találkozás' }
+  ),
+  '일하다': createVerb(
+    'dolgozik',
+    'dolgozni|dolgoznom|dolgozom|dolgozol|dolgozik|dolgoztam|dolgoztál|dolgozott|dolgozz|dolgozzon|dolgozzak|dolgozzunk|dolgoznék|dolgozna|munka|ahol|dolgozott',
+    { timeNoun: 'munka' }
+  ),
+  '등산하다': createVerb(
+    'túrázik (hegyre megy)',
+    'túrázni|túráznom|túrázom|túrázol|túrázik|túráztam|túráztál|túrázott|túrázz|túrázzon|túrázzak|túrázzunk|túráznék|túrázna|túrázás|ahol|túrázott',
+    { timeNoun: 'túrázás' }
+  ),
+  '찾다': createVerb(
+    'keres; megtalál',
+    'keresni|keresnem|keresek|keresel|keres|kerestem|kerestél|keresett|keress|keressen|keressek|keressünk|keresnék|keresne|keresés|amit|keresett',
+    { perfectiveFirstSingular: 'megtaláltam' }
+  ),
+  '게임하다': createVerb(
+    'játszik (videojátékkal)',
+    'játszani|játszanom|játszom|játszol|játszik|játszottam|játszottál|játszott|játssz|játsszon|játsszak|játsszunk|játszanék|játszana|játék|amivel|játszott'
+  ),
+  '산책하다': createVerb(
+    'sétál, sétálni megy',
+    'sétálni|sétálnom|sétálok|sétálsz|sétál|sétáltam|sétáltál|sétált|sétálj|sétáljon|sétáljak|sétáljunk|sétálnék|sétálna|séta|ahol|sétált',
+    { timeNoun: 'séta' }
+  ),
+  '열다': createVerb(
+    'nyit, kinyit',
+    'nyitni|nyitnom|nyitok|nyitsz|nyit|nyitottam|nyitottál|nyitott|nyiss|nyisson|nyissak|nyissunk|nyitnék|nyitna|nyitás|amit|nyitott',
+    { perfectiveFirstSingular: 'kinyitottam' }
+  ),
 
   '작다': createAdjective('kicsi', 'kicsi', 'kisebb'),
   '크다': createAdjective('nagy', 'nagy', 'nagyobb'),
@@ -198,6 +305,21 @@ export const words: Record<string, VerbEntry | AdjectiveEntry> = {
   '다르다': createAdjective('más, különböző', 'más', 'eltérőbb'),
   '좋다': createAdjective('jó', 'jó', 'jobb'),
   '맛있다': createAdjective('finom', 'finom', 'finomabb'),
+  // ---- additional table words (3A) ----
+  '넓다': createAdjective('tágas, széles', 'tágas', 'tágasabb'),
+  '편안하다': createAdjective('kényelmes, nyugodt', 'kényelmes', 'kényelmesebb'),
+  '무섭다': createAdjective('ijesztő, félelmetes', 'ijesztő', 'ijesztőbb'),
+  '친절하다': createAdjective('kedves, barátságos', 'kedves', 'kedvesebb'),
+  '비싸다': createAdjective('drága', 'drága', 'drágább'),
+  '슬프다': createAdjective('szomorú', 'szomorú', 'szomorúbb'),
+  '아프다': createAdjective('beteg; fáj', 'beteg', 'betegebb'),
+  '맑다': createAdjective('tiszta, derült (idő)', 'derült', 'derültebb'),
+  '재미있다': createAdjective('érdekes, szórakoztató', 'érdekes', 'érdekesebb'),
+  '많다': createAdjective('sok', 'sok', 'több'),
+  '흐리다': createAdjective('borús, felhős', 'borús', 'borúsabb'),
+  '멀다': createAdjective('messze van, távoli', 'messze van', 'messzebb'),
+  '예쁘다': createAdjective('szép, csinos', 'szép', 'szebb'),
+  '깨끗하다': createAdjective('tiszta', 'tiszta', 'tisztább'),
 };
 
 // Nouns: base form, with article, accusative, dative, essive (-ként), and the typical meaning of (으)로 with the noun.
