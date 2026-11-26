@@ -2,10 +2,10 @@ import type { ColumnTranslation } from './types';
 
 export default {
   // ---------- 1A ----------
-  '1A-1-1': [{ noun: 'ő egy {base}' }, { noun: 'ő egy {base}?' }],
+  '1A-1-1': [{ noun: '(ez / ő) {base}' }, { noun: '(ez / ő) {base}?' }],
   '1A-1-2': [{ noun: '{definite} (pedig) …' }],
   '1A-2-1': [{ noun: '{definite} … (alany)' }],
-  '1A-2-2': [{ noun: '(ő) nem {base}' }],
+  '1A-2-2': [{ noun: '(ez / ő) nem {base}' }],
   '1A-4-1': [{ verb: '{presentFirstSingular}', adjective: '{base}', existential: '{base}' }],
   '1A-4-2': [{ noun: '{accusative} …' }],
   '1A-5-2': [{ noun: '{base} és …' }, { noun: '{base} és …' }],

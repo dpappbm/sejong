@@ -19,10 +19,11 @@ import {
   type Word,
 } from '../../lib/conjugation';
 import type { BookData } from '../types';
+/** Noun + 하다 verbs (공부하다) take 안 before 하다; -아/어하다 verbs (좋아하다) are not split. */
+const isNounPlusHada = (word: Word) =>
+  word.wordClass === 'verb' && word.stem.endsWith('하') && word.stem.length > 1 && !/[아어]하$/.test(word.stem);
 const negateWithAn = (word: Word) =>
-  word.wordClass === 'verb' && word.stem.endsWith('하') && word.stem.length > 1
-    ? word.stem.slice(0, -1) + ' 안 해요'
-    : '안 ' + withAOrEo(word, '요');
+  isNounPlusHada(word) ? word.stem.slice(0, -1) + ' 안 해요' : '안 ' + withAOrEo(word, '요');
 
 export default {
   lessons: {
@@ -75,6 +76,7 @@ export default {
         paragraph`Ha a főnév ${bold('mássalhangzóra (받침)')} végződik: ${bold('이에요')}, ha ${bold('magánhangzóra')}: ${bold('예요')}. Egybeírjuk a főnévvel.`,
       ],
       table: {
+        additionalNouns: ['물', '사과', '책상', '의자', '선생님', '요리사', '회사원', '안나 씨'],
         kind: 'noun',
         nouns: [
           'vowelEnding',
@@ -109,6 +111,7 @@ export default {
         paragraph`${bold('받침')} után: ${bold('은')}, magánhangzó után: ${bold('는')}.`,
       ],
       table: {
+        additionalNouns: ['가방', '저', '동생', '모자', '서울', '친구', '이 사람', '주노 씨'],
         kind: 'noun',
         nouns: [
           'vowelEnding',
@@ -154,6 +157,7 @@ export default {
         paragraph`${bold('받침')} után: ${bold('이')}, magánhangzó után: ${bold('가')}.`,
       ],
       table: {
+        additionalNouns: ['가방', '카페', '동생', '요리사', '이름', '안나 씨', '선생님', '전화번호'],
         kind: 'noun',
         nouns: [
           'vowelEnding',
@@ -201,6 +205,7 @@ export default {
         paragraph`${bold('받침')} után: ${bold('이 아니에요')}, magánhangzó után: ${bold('가 아니에요')}.`,
       ],
       table: {
+        additionalNouns: ['물', '구두', '식당', '의자', '학생', '친구', '한국 사람', '옷 가게'],
         kind: 'noun',
         nouns: [
           'vowelEnding',
@@ -338,6 +343,20 @@ export default {
         paragraph`Ha a tő utolsó magánhangzója ${bold('ㅏ vagy ㅗ')}: ${bold('-아요')}, minden más magánhangzó után: ${bold('-어요')}, a ${bold('하다')} → ${bold('해요')}. A magánhangzók összevonásáról az ${reference('rule-2')} pontja szól.`,
       ],
       table: {
+        additionalWords: [
+          '보다',
+          '먹다',
+          '일하다',
+          '사다',
+          '읽다',
+          '공부하다',
+          '자다',
+          '마시다',
+          '요리하다',
+          '만나다',
+          '듣다',
+          '좋아하다',
+        ],
         sampleSet: 'verbsAndAdjectives',
         columns: [{ header: '-아요/어요', conjugate: word => withAOrEo(word, '요') }],
       },
@@ -360,6 +379,7 @@ export default {
         paragraph`Főnév után jelöli a mondat ${bold('tárgyát')} (kit? mit?). ${bold('받침')} után: ${bold('을')}, magánhangzó után: ${bold('를')}.`,
       ],
       table: {
+        additionalNouns: ['밥', '사과', '책', '영화', '음악', '친구', '학생', '커피'],
         kind: 'noun',
         nouns: [
           'vowelEnding',
@@ -493,7 +513,11 @@ export default {
         paragraph`Igéhez kapcsolódik, és udvarias ${bold('kérést vagy felszólítást')} fejez ki („tessék …”, „kérem, …”).`,
         paragraph`${bold('받침')} után: ${bold('-으세요')}, magánhangzó után: ${bold('-세요')}, ${bold('ㄹ-tőnél')} az ㄹ kiesik, és ${bold('-세요')} jön: ${korean('만들다 → 만드세요')}.`,
       ],
-      table: { sampleSet: 'verbs', columns: [{ header: '-(으)세요', conjugate: word => withEu(word, '세요') }] },
+      table: {
+        additionalWords: ['앉다', '가다', '읽다', '보다', '듣다', '대답하다'],
+        sampleSet: 'verbs',
+        columns: [{ header: '-(으)세요', conjugate: word => withEu(word, '세요') }],
+      },
       examples: [
         [text`여기 앉${bold('으세요')}.`, 'Kérem, üljön le ide.'],
         [text`사과 다섯 개 주${bold('세요')}.`, 'Öt almát kérek.'],
@@ -589,6 +613,20 @@ export default {
         paragraph`Az ige vagy melléknév ${bold('elé')} téve tagad: ${korean('안 가요')} „nem megyek”. ${bold('Főnév + 하다')} igéknél a ${korean('안')} a ${korean('하다')} elé kerül: ${korean('공부 안 해요')}. A ${korean('있다, 없다')} nem kap ${korean('안')}-t (${korean('있다')} tagadása: ${korean('없다')}).`,
       ],
       table: {
+        additionalWords: [
+          '가다',
+          '일하다',
+          '좋다',
+          '먹다',
+          '공부하다',
+          '비싸다',
+          '오다',
+          '요리하다',
+          '덥다',
+          '좋아하다',
+          '운동하다',
+          '춥다',
+        ],
         existential: false,
         sampleSet: 'verbsAndAdjectives',
         columns: [{ header: '안 + -아요/어요', conjugate: negateWithAn }],
@@ -624,6 +662,7 @@ export default {
         paragraph`Nem minden ㅂ-végű szó rendhagyó: ${korean('입다, 잡다, 좁다')} szabályos (${korean('입어요')}).`,
       ],
       table: {
+        additionalWords: ['덥다', '맵다', '쉽다', '가볍다', '춥다', '무겁다', '어렵다', '아름답다'],
         words: [
           createWord('덥다', 'adjective'),
           createWord('춥다', 'adjective'),
@@ -693,6 +732,20 @@ export default {
         paragraph`${bold('ㅏ, ㅗ')} után: ${bold('-았-')}, egyéb magánhangzó után: ${bold('-었-')}, ${bold('하다')} → ${bold('했-')}. Ugyanúgy vonódik össze, mint a ${korean('-아요/어요')}.`,
       ],
       table: {
+        additionalWords: [
+          '가다',
+          '먹다',
+          '일하다',
+          '보다',
+          '쉬다',
+          '공부하다',
+          '좋다',
+          '읽다',
+          '따뜻하다',
+          '만나다',
+          '춥다',
+          '수영하다',
+        ],
         sampleSet: 'verbsAndAdjectives',
         columns: [{ header: '-았어요/었어요', conjugate: word => withPast(word, '어요') }],
       },
@@ -717,6 +770,7 @@ export default {
         paragraph`Ige után azt fejezi ki, amit a beszélő ${bold('szeretne, kíván')}. A tő végétől függetlenül mindig ${korean('-고 싶다')}. Ha az alany ${bold('harmadik személy')}: ${korean('-고 싶어 하다')}.`,
       ],
       table: {
+        additionalWords: ['가다', '먹다', '만들다', '요리하다'],
         sampleSet: 'verbs',
         columns: [
           { header: '-고 싶어요', conjugate: word => withPlainStem(word, '고 싶어요') },
@@ -748,7 +802,11 @@ export default {
         paragraph`Ige után a hallgató ${bold('véleményét kérdezi')} egy közös cselekvésről: „Menjünk…?”, „Együnk…?”.`,
         paragraph`${bold('받침')} után: ${bold('-을까요?')}, magánhangzó után: ${bold('-ㄹ까요?')}, ${bold('ㄹ-tőnél')}: ${bold('-까요?')} (${korean('만들다 → 만들까요?')}).`,
       ],
-      table: { sampleSet: 'verbs', columns: [{ header: '-(으)ㄹ까요?', conjugate: word => withEu(word, 'ㄹ까요?') }] },
+      table: {
+        additionalWords: ['먹다', '가다', '앉다', '배우다', '찍다', '산책하다', '걷다', '만들다'],
+        sampleSet: 'verbs',
+        columns: [{ header: '-(으)ㄹ까요?', conjugate: word => withEu(word, 'ㄹ까요?') }],
+      },
       examples: [
         [text`우리 같이 놀이공원에 ${bold('갈까요')}?`, 'Elmenjünk együtt a vidámparkba?'],
         [text`뭐 먹${bold('을까요')}?`, 'Mit együnk?'],
