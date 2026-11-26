@@ -21,6 +21,7 @@ const points: PointSource[] = [
       paragraph`Ige vagy melléknév után azt fejezi ki, hogy az első részben mondott tény vagy feltételezés ${bold('ellenére')} a várttal ellentétes dolog történik: „Hiába esik, elmegyek.” Gyakran ${korean('아무리')} („bármennyire”) erősíti. A ${bold('-아/어')} szabály szerint (${korean('가도, 먹어도, 해도')}). Főnévvel: ${korean('N(이)라도')}.`,
     ],
     table: {
+      additionalWords: ['가다', '앉다', '먹다', '작다', '돕다', '보다', '듣다', '덥다', '좋다', '쓰다'],
       sampleSet: 'verbsAndAdjectives',
       columns: [{ header: '-아도/어도', conjugate: word => withAOrEo(word, '도') }],
     },
@@ -51,6 +52,7 @@ const points: PointSource[] = [
       paragraph`A ${korean('-아/어 주다')} (${reference('2B-04-2')}) ${bold('tiszteleti')} párja: akkor használjuk, ha a cselekvést ${bold('idősebb, tisztelt személy javára')} végezzük. A címzett gyakran ${korean('께')} vagy ${korean('에게')} partikulát kap. A ${bold('-아/어')} szabály szerint.`,
     ],
     table: {
+      additionalWords: ['사다', '찾다', '세우다', '읽다', '치우다', '부르다', '만들다', '돕다', '듣다', '보다'],
       sampleSet: 'verbs',
       columns: [
         { header: '-아/어 드릴게요', conjugate: word => withAOrEo(word, ' 드릴게요') },
@@ -85,6 +87,7 @@ const points: PointSource[] = [
       paragraph`${bold('받침')} után: ${bold('-을까 봐')}, magánhangzó után: ${bold('-ㄹ까 봐')}, ㄹ-tőnél: ${korean('멀까 봐')}. Múltra: ${korean('-았을까/었을까 봐')}.`,
     ],
     table: {
+      additionalWords: ['입다', '보다', '읽다', '쉬다', '예쁘다', '크다', '작다', '아프다', '맵다', '살다'],
       sampleSet: 'verbsAndAdjectives',
       columns: [
         { header: '-(으)ㄹ까 봐', conjugate: word => withEu(word, 'ㄹ까 봐') },
@@ -115,6 +118,7 @@ const points: PointSource[] = [
       paragraph`${bold('받침')} után: ${bold('-을 텐데')}, magánhangzó után: ${bold('-ㄹ 텐데')}. Múltra: ${korean('-았을/었을 텐데')}.`,
     ],
     table: {
+      additionalWords: ['먹다', '가다', '읽다', '배우다', '만들다', '가르치다', '덥다', '예쁘다', '있다', '없다'],
       sampleSet: 'verbsAndAdjectives',
       columns: [
         { header: '-(으)ㄹ 텐데', conjugate: word => withEu(word, 'ㄹ 텐데') },
@@ -184,6 +188,7 @@ const points: PointSource[] = [
       paragraph`${bold('Ige')}: ${korean('-는구나')} (ㄹ kiesik: ${korean('사는구나')}), ${bold('melléknév')} és ${korean('있다/없다')}: ${korean('-구나')} (a ${korean('있다/없다')} lehet ${korean('-는구나')} is); ${bold('főnév')}: ${korean('-(이)구나')}; ${bold('múlt')}: ${korean('-았구나/었구나')}.`,
     ],
     table: {
+      additionalWords: ['가다', '보다', '크다', '먹다', '바쁘다', '작다', '많다', '듣다', '팔다', '춥다'],
       sampleSet: 'verbsAndAdjectives',
       columns: [
         {
@@ -212,6 +217,7 @@ const points: PointSource[] = [
       paragraph`Ige után azt fejezi ki, hogy egy cselekvést ${bold('befejeztünk')}, és az ${bold('eredménye megmarad')}, úgy is hagyjuk; gyakran előkészületként. A ${bold('-아/어')} szabály szerint (${korean('사 놓다, 씻어 놓다, 해 놓다')}).`,
     ],
     table: {
+      additionalWords: ['사다', '켜다', '보다', '고치다', '모으다', '만들다', '찾다', '굽다', '닫다', '짓다'],
       sampleSet: 'verbs',
       columns: [
         { header: '-아/어 놓았어요', conjugate: word => withAOrEo(word, ' 놓았어요') },
@@ -239,6 +245,7 @@ const points: PointSource[] = [
       paragraph`${bold('받침')} után: ${bold('-은 다음에')}, magánhangzó után: ${bold('-ㄴ 다음에')}, ㄹ-tőnél az ㄹ kiesik: ${korean('만든 다음에')}.`,
     ],
     table: {
+      additionalWords: ['사다', '볶다', '보다', '먹다', '쓰다', '만들다', '만나다', '굽다', '청소하다', '공부하다'],
       sampleSet: 'verbs',
       columns: [{ header: '-(으)ㄴ 다음에', conjugate: word => withEu(word, 'ㄴ 다음에') }],
     },
@@ -289,6 +296,7 @@ const points: PointSource[] = [
       paragraph`Ige után azt fejezi ki, hogy egy cselekvés ${bold('teljesen befejeződött')}, semmi nem maradt belőle. Gyakran a beszélő érzését is mutatja: ${bold('megkönnyebbülést')} (letudtam), vagy ${bold('sajnálatot')} (sajnos megtörtént). A ${bold('-아/어')} szabály szerint.`,
     ],
     table: {
+      additionalWords: ['가다', '끊다', '먹다', '바르다', '만들다', '하다', '듣다', '잡다', '눕다', '앉다'],
       sampleSet: 'verbs',
       columns: [{ header: '-아/어 버렸어요', conjugate: word => withAOrEo(word, ' 버렸어요') }],
     },
@@ -313,6 +321,7 @@ const points: PointSource[] = [
       paragraph`Ige vagy melléknév után azt fejezi ki, hogy egy helyzet ${bold('a múltban fennállt, de már nem tart')}: „régen …, (de most már nem)”. ㅏ, ㅗ után ${korean('-았었-')}, egyébként ${korean('-었었-')}, 하다 → ${korean('했었-')}. Főnévvel: 받침 után ${korean('-이었었-')}, magánhangzó után ${korean('-였었-')}.`,
     ],
     table: {
+      additionalWords: ['시원하다', '작다', '살다', '많다', '춥다', '아프다', '오다', '먹다', '크다', '운전하다'],
       sampleSet: 'verbsAndAdjectives',
       columns: [{ header: '-았었어요/었었어요', conjugate: word => withPast(word, '었어요') }],
     },
@@ -340,6 +349,7 @@ const points: PointSource[] = [
       paragraph`${bold('받침')} után: ${bold('-을걸 그랬다')}, magánhangzó után: ${bold('-ㄹ걸 그랬다')}, ㄹ-tőnél: ${korean('만들걸')}.`,
     ],
     table: {
+      additionalWords: ['사다', '읽다', '공부하다', '만들다', '바르다', '보다', '기다리다', '넣다', '닫다', '돕다'],
       sampleSet: 'verbs',
       columns: [
         { header: '-(으)ㄹ걸 그랬어요', conjugate: word => withEu(word, 'ㄹ걸 그랬어요') },
@@ -369,6 +379,7 @@ const points: PointSource[] = [
       paragraph`Ige vagy melléknév után azt fejezi ki, hogy az első rész a második ${bold('oka')}, vagy hogy az első cselekvés eredményével folytatjuk. A ${korean('-아서/어서')} ${bold('beszélt nyelvi')}, lazább párja. A ${bold('-아/어')} szabály szerint.`,
     ],
     table: {
+      additionalWords: ['운동하다', '보다', '크다', '연습하다', '좋다', '많다', '입다', '착하다', '싫다', '바쁘다'],
       sampleSet: 'verbsAndAdjectives',
       columns: [{ header: '-아/어 가지고', conjugate: word => withAOrEo(word, ' 가지고') }],
     },
@@ -400,6 +411,7 @@ const points: PointSource[] = [
       ),
     ],
     table: {
+      additionalWords: ['힘들다', '전화하다', '듣다', '입다', '착하다', '재미있다', '슬프다', '읽다', '먹다', '만들다'],
       sampleSet: 'verbsAndAdjectives',
       columns: [{ header: '-는다거나/ㄴ다거나/다거나', conjugate: word => plainStyleStatement(word) + '거나' }],
     },
@@ -507,6 +519,7 @@ const points: PointSource[] = [
       ),
     ],
     table: {
+      additionalWords: ['가다', '보다', '좋다', '작다', '입다', '자다', '기쁘다', '피곤하다', '살다', '따뜻하다'],
       sampleSet: 'verbsAndAdjectives',
       columns: [
         { header: 'Jelen', conjugate: word => presentModifier(word, ' 모양이에요') },
@@ -590,7 +603,11 @@ const points: PointSource[] = [
     explanation: [
       paragraph`Ige után azt fejezi ki, hogy a beszélő ${bold('valamit megtett')}, és ennek ${bold('eredményeként vagy reakcióként')} valami történt / kiderült. Az első tagmondat alanya általában a beszélő. ㅏ, ㅗ után ${korean('-았더니')}, egyébként ${korean('-었더니')}, 하다 → ${korean('했더니')}.`,
     ],
-    table: { sampleSet: 'verbs', columns: [{ header: '-았더니/었더니', conjugate: word => withPast(word, '더니') }] },
+    table: {
+      additionalWords: ['읽다', '만들다', '쓰다', '돕다', '마시다', '청소하다', '운동하다', '듣다', '보다', '부르다'],
+      sampleSet: 'verbs',
+      columns: [{ header: '-았더니/었더니', conjugate: word => withPast(word, '더니') }],
+    },
     examples: [
       [
         text`떡국을 한 그릇 다 먹${bold('었더니')} 배가 불러요.`,
@@ -617,7 +634,11 @@ const points: PointSource[] = [
     explanation: [
       paragraph`Ige (vagy ${korean('-아지다')}-s melléknév) után azt fejezi ki, hogy egy cselekvés vagy változás ${bold('folyamatosan halad előre')}, egy végpont felé: „egyre jobban …”, „folyamatosan …”. A ${bold('-아/어')} szabály szerint.`,
     ],
-    table: { sampleSet: 'verbs', columns: [{ header: '-아/어 가요', conjugate: word => withAOrEo(word, ' 가요') }] },
+    table: {
+      additionalWords: ['닮다', '변하다', '먹다', '쓰다', '만들다', '알다', '정리하다', '끝나다', '모으다', '완성하다'],
+      sampleSet: 'verbs',
+      columns: [{ header: '-아/어 가요', conjugate: word => withAOrEo(word, ' 가요') }],
+    },
     examples: [
       [text`숙제를 거의 다 해 ${bold('가요')}.`, 'Már majdnem kész vagyok a házival.'],
       [text`날씨가 점점 추워져 ${bold('가요')}.`, 'Egyre hidegebb lesz.', 'ㅂ-rendhagyó: 춥다 → 추워져 가요'],
@@ -637,6 +658,7 @@ const points: PointSource[] = [
       paragraph`Ige után azt fejezi ki, hogy egy cselekvés eredményét ${bold('megtartjuk')}, vagy valamit ${bold('előre elvégzünk')}, hogy később felhasználjuk, felkészüljünk. A ${bold('-아/어')} szabály szerint.`,
     ],
     table: {
+      additionalWords: ['쓰다', '받다', '알다', '보다', '만들다', '세우다', '말하다', '고치다', '정리하다', '예약하다'],
       sampleSet: 'verbs',
       columns: [
         { header: '-아/어 두세요', conjugate: word => withAOrEo(word, ' 두세요') },

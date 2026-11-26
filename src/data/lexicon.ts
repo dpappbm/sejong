@@ -97,7 +97,7 @@ export const words: Record<string, VerbEntry | AdjectiveEntry | ExistentialEntry
   '잡다': createVerb(
     'megfog, elkap',
     'megfogni|megfognom|megfogok|megfogsz|megfog|megfogtam|megfogtál|megfogott|fogj meg|fogjon meg|fogjak meg|fogjunk meg|megfognék|megfogna|megfogás|amit|megfogott',
-    { hasPreverb: true }
+    { hasPreverb: true, perfectiveFirstSingular: 'elkaptam' }
   ),
   '붓다': createVerb(
     'önt; (meg)dagad',
@@ -152,7 +152,7 @@ export const words: Record<string, VerbEntry | AdjectiveEntry | ExistentialEntry
   '켜다': createVerb(
     'bekapcsol, felkapcsol',
     'bekapcsolni|bekapcsolnom|bekapcsolok|bekapcsolsz|bekapcsol|bekapcsoltam|bekapcsoltál|bekapcsolt|kapcsolj be|kapcsoljon be|kapcsoljak be|kapcsoljunk be|bekapcsolnék|bekapcsolna|bekapcsolás|amit|bekapcsolt',
-    { hasPreverb: true }
+    { hasPreverb: true, perfectiveFirstSingular: 'bekapcsoltam' }
   ),
   '쉬다': createVerb(
     'pihen',
@@ -323,7 +323,7 @@ export const words: Record<string, VerbEntry | AdjectiveEntry | ExistentialEntry
   '앉다': createVerb(
     'leül, ül',
     'leülni|leülnöm|leülök|leülsz|leül|leültem|leültél|leült|ülj le|üljön le|üljek le|üljünk le|leülnék|leülne|leülés|ahová|leült',
-    { hasPreverb: true }
+    { hasPreverb: true, perfectiveFirstSingular: 'leültem' }
   ),
   '대답하다': createVerb(
     'válaszol',
@@ -363,7 +363,8 @@ export const words: Record<string, VerbEntry | AdjectiveEntry | ExistentialEntry
   ),
   '하다': createVerb(
     'csinál, tesz',
-    'csinálni|csinálnom|csinálok|csinálsz|csinál|csináltam|csináltál|csinált|csinálj|csináljon|csináljak|csináljunk|csinálnék|csinálna|csinálás|amit|csinált'
+    'csinálni|csinálnom|csinálok|csinálsz|csinál|csináltam|csináltál|csinált|csinálj|csináljon|csináljak|csináljunk|csinálnék|csinálna|csinálás|amit|csinált',
+    { perfectiveFirstSingular: 'megcsináltam' }
   ),
   // ---- additional table words (2A) ----
   '그리다': createVerb(
@@ -390,7 +391,7 @@ export const words: Record<string, VerbEntry | AdjectiveEntry | ExistentialEntry
   '닫다': createVerb(
     'bezár, becsuk',
     'bezárni|bezárnom|bezárok|bezársz|bezár|bezártam|bezártál|bezárt|zárj be|zárjon be|zárjak be|zárjunk be|bezárnék|bezárna|bezárás|amit|bezárt',
-    { hasPreverb: true }
+    { hasPreverb: true, perfectiveFirstSingular: 'bezártam' }
   ),
   '빌리다': createVerb(
     'kölcsönvesz, kölcsönkér (빌려 주다: kölcsönad)',
@@ -441,6 +442,84 @@ export const words: Record<string, VerbEntry | AdjectiveEntry | ExistentialEntry
   '잘하다': createVerb(
     'jól csinál, ügyes valamiben',
     'jól csinálni|jól csinálnom|jól csinálom|jól csinálod|jól csinálja|jól csináltam|jól csináltad|jól csinálta|csináld jól|csinálja jól|csináljam jól|csináljuk jól|jól csinálnám|jól csinálná|ügyesség|amit|jól csinált'
+  ),
+  // ---- additional table words (3B) ----
+  '세우다': createVerb(
+    'megállít, leparkol; felállít',
+    'megállítani|megállítanom|megállítok|megállítasz|megállít|megállítottam|megállítottál|megállított|állíts meg|állítson meg|állítsak meg|állítsunk meg|megállítanék|megállítana|megállítás|amit|megállított',
+    { hasPreverb: true, perfectiveFirstSingular: 'megállítottam' }
+  ),
+  '치우다': createVerb(
+    'elpakol, rendet rak',
+    'elpakolni|elpakolnom|elpakolok|elpakolsz|elpakol|elpakoltam|elpakoltál|elpakolt|pakolj el|pakoljon el|pakoljak el|pakoljunk el|elpakolnék|elpakolna|elpakolás|amit|elpakolt',
+    { hasPreverb: true, perfectiveFirstSingular: 'elpakoltam' }
+  ),
+  '팔다': createVerb(
+    'elad, árul',
+    'árulni|árulnom|árulok|árulsz|árul|árultam|árultál|árult|árulj|áruljon|áruljak|áruljunk|árulnék|árulna|árusítás|amit|árult',
+    { perfectiveFirstSingular: 'eladtam' }
+  ),
+  '고치다': createVerb(
+    'megjavít',
+    'megjavítani|megjavítanom|megjavítok|megjavítasz|megjavít|megjavítottam|megjavítottál|megjavított|javíts meg|javítson meg|javítsak meg|javítsunk meg|megjavítanék|megjavítana|javítás|amit|megjavított',
+    { hasPreverb: true, perfectiveFirstSingular: 'megjavítottam' }
+  ),
+  '굽다': createVerb(
+    'süt, grillez',
+    'sütni|sütnöm|sütök|sütsz|süt|sütöttem|sütöttél|sütött|süss|süssön|süssek|süssünk|sütnék|sütne|sütés|amit|sütött',
+    { perfectiveFirstSingular: 'megsütöttem', timeNoun: 'sütés' }
+  ),
+  '볶다': createVerb(
+    'pirít, megpirít (serpenyőben)',
+    'pirítani|pirítanom|pirítok|pirítasz|pirít|pirítottam|pirítottál|pirított|piríts|pirítson|pirítsak|pirítsunk|pirítanék|pirítana|pirítás|amit|pirított',
+    { perfectiveFirstSingular: 'megpirítottam', timeNoun: 'pirítás' }
+  ),
+  '청소하다': createVerb(
+    'takarít',
+    'takarítani|takarítanom|takarítok|takarítasz|takarít|takarítottam|takarítottál|takarított|takaríts|takarítson|takarítsak|takarítsunk|takarítanék|takarítana|takarítás|amit|takarított',
+    { perfectiveFirstSingular: 'kitakarítottam', timeNoun: 'takarítás' }
+  ),
+  '끊다': createVerb(
+    'abbahagy; elvág; (telefont) lerak',
+    'abbahagyni|abbahagynom|abbahagyok|abbahagysz|abbahagy|abbahagytam|abbahagytál|abbahagyott|hagyj abba|hagyjon abba|hagyjak abba|hagyjunk abba|abbahagynék|abbahagyna|abbahagyás|amit|abbahagyott',
+    { hasPreverb: true, perfectiveFirstSingular: 'abbahagytam' }
+  ),
+  '바르다': createVerb(
+    'ken, felken',
+    'kenni|kennem|kenek|kensz|ken|kentem|kentél|kent|kenj|kenjen|kenjek|kenjünk|kennék|kenne|kenés|amit|kent',
+    { perfectiveFirstSingular: 'bekentem' }
+  ),
+  '눕다': createVerb(
+    'lefekszik',
+    'lefeküdni|lefeküdnöm|lefekszem|lefekszel|lefekszik|lefeküdtem|lefeküdtél|lefeküdt|feküdj le|feküdjön le|feküdjek le|feküdjünk le|lefeküdnék|lefeküdne|lefekvés|ahová|lefeküdt',
+    { hasPreverb: true, perfectiveFirstSingular: 'lefeküdtem' }
+  ),
+  '연습하다': createVerb(
+    'gyakorol',
+    'gyakorolni|gyakorolnom|gyakorlok|gyakorolsz|gyakorol|gyakoroltam|gyakoroltál|gyakorolt|gyakorolj|gyakoroljon|gyakoroljak|gyakoroljunk|gyakorolnék|gyakorolna|gyakorlás|amit|gyakorolt'
+  ),
+  '닮다': createVerb(
+    'hasonlít (valakire)',
+    'hasonlítani|hasonlítanom|hasonlítok|hasonlítasz|hasonlít|hasonlítottam|hasonlítottál|hasonlított|hasonlíts|hasonlítson|hasonlítsak|hasonlítsunk|hasonlítanék|hasonlítana|hasonlóság|akire|hasonlított'
+  ),
+  '변하다': createVerb(
+    'változik',
+    'változni|változnom|változom|változol|változik|változtam|változtál|változott|változz|változzon|változzak|változzunk|változnék|változna|változás|ami|változott'
+  ),
+  '정리하다': createVerb(
+    'rendbe tesz, rendez',
+    'rendezni|rendeznem|rendezek|rendezel|rendez|rendeztem|rendeztél|rendezett|rendezz|rendezzen|rendezzek|rendezzünk|rendeznék|rendezne|rendezés|amit|rendezett',
+    { perfectiveFirstSingular: 'elrendeztem' }
+  ),
+  '끝나다': createVerb(
+    'véget ér, befejeződik',
+    'befejeződni|befejeződnöm|befejeződöm|befejeződsz|befejeződik|befejeződtem|befejeződtél|befejeződött|fejeződj be|fejeződjön be|fejeződjek be|fejeződjünk be|befejeződnék|befejeződne|befejeződés|amikor|befejeződött',
+    { hasPreverb: true }
+  ),
+  '완성하다': createVerb(
+    'elkészít, befejez (teljesen)',
+    'elkészíteni|elkészítenem|elkészítek|elkészítesz|elkészít|elkészítettem|elkészítettél|elkészített|készíts el|készítsen el|készítsek el|készítsünk el|elkészítenék|elkészítene|elkészítés|amit|elkészített',
+    { hasPreverb: true }
   ),
   '있다': createExistential('van (valahol, valakinek)', {
     base: 'van',
@@ -501,6 +580,10 @@ export const words: Record<string, VerbEntry | AdjectiveEntry | ExistentialEntry
   '답답하다': createAdjective('nyomasztó; szorong', 'nyomasztó', 'nyomasztóbb'),
   '부족하다': createAdjective('kevés, nem elég', 'nem elég', 'kevesebb'),
   '행복하다': createAdjective('boldog', 'boldog', 'boldogabb'),
+  // ---- additional table words (3B) ----
+  '착하다': createAdjective('jószívű, kedves', 'jószívű', 'jószívűbb'),
+  '싫다': createAdjective('nem szeret, utál; ellenszenves', 'ellenszenves', 'ellenszenvesebb'),
+  '기쁘다': createAdjective('örül, boldog', 'boldog', 'boldogabb'),
 };
 
 // Nouns: base form, with article, accusative, dative, essive (-ként), and the typical meaning of (으)로 with the noun.
