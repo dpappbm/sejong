@@ -8,6 +8,7 @@ export type TextElement =
   | { kind: 'korean'; content: Text; glossedInRow?: boolean }
   | { kind: 'translation'; content: Text }
   | { kind: 'reference'; to: ReferenceId; label: string }
+  | { kind: 'warning'; content: Text }
   | { kind: 'lineBreak' };
 
 export type Text = string | TextElement | readonly Text[];
@@ -53,6 +54,9 @@ export const koreanWithTranslation = (koreanText: Text, hungarian: Text): Text =
 ];
 
 export const lineBreak: TextElement = { kind: 'lineBreak' };
+
+/** A highlighted caution: an amber label with a ⚠ mark before the text. */
+export const warning = (content: Text): TextElement => ({ kind: 'warning', content });
 
 /** "3A 9. lecke" for a point, "Alapszabályok 2." for a basic rule. */
 export function referenceLabel(to: PointId | RuleId): string {
@@ -103,6 +107,7 @@ export function plainText(value: Text): string {
   if (typeof value === 'string') return value;
   if ('kind' in value) {
     if (value.kind === 'lineBreak') return ' ';
+    if (value.kind === 'warning') return `⚠ ${plainText(value.content)}`;
     return value.kind === 'reference' ? value.label : plainText(value.content);
   }
   return value.map(plainText).join('');

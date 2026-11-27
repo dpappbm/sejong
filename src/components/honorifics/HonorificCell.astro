@@ -1,8 +1,9 @@
 ---
-import type { KoreanHungarian } from '../../data/types';
+import type { HonorificPair } from '../../data/types';
+import RichText from '../text/RichText.astro';
 
 interface Props {
-  pair: KoreanHungarian | null;
+  pair: HonorificPair | null;
   class?: string;
 }
 
@@ -12,7 +13,9 @@ const { pair, class: className } = Astro.props;
 {pair ? (
   <td class={className}>
     <span class="korean">{pair[0]}</span>
-    <span class="translation">{pair[1]}</span>
+    <span class="translation">
+      <RichText content={pair[1]} />
+    </span>
   </td>
 ) : (
   <td class="empty">–</td>

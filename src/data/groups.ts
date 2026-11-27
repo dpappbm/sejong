@@ -227,7 +227,7 @@ export default [
       ],
       [
         `3B-01-2`,
-        text`-아/어 + ${bold('드리다')} (a 주다 tiszteleti párja)`,
+        text`-아/어 + ${bold('드리다')} (a 주다 szerény párja)`,
         `megteszi (tisztelt) valakinek`,
         [text`할머니께 편지를 읽${bold('어 드렸어요')}.`, `Felolvastam a levelet a nagymamának.`],
       ],

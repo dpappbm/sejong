@@ -229,7 +229,7 @@ const points: PointSource[] = [
         ['에게도', 'neki is', '께도', 'neki is (tiszteleti)'],
       ],
       note: [
-        paragraph`Tisztelt személynél az ${korean('에게')} helyére ${korean('께')} kerül (${reference('2B-07-1')}), a ${korean('만')} és a ${korean('도')} ugyanúgy hozzájárul. Az „ad” ilyenkor ${korean('드리다')}, a „mond” ${korean('말씀드리다')}.`,
+        paragraph`Tisztelt személynél az ${korean('에게')} helyére ${korean('께')} kerül (${reference('2B-07-1')}), a ${korean('만')} és a ${korean('도')} ugyanúgy hozzájárul. Ha mi adunk neki, az „ad” ${korean('드리다')}, a „mond” ${korean('말씀드리다')}.`,
       ],
       examples: [
         [text`부모님${bold('께도')} 편지를 썼어요.`, 'A szüleimnek is írtam levelet.'],
@@ -326,7 +326,15 @@ const points: PointSource[] = [
         [text`할머니께 책을 읽어 ${bold('드렸어요')}.`, 'Felolvastam egy könyvet a nagymamának.'],
         [text`선생님께서 길을 가르쳐 ${bold('주셨어요')}.`, 'A tanár úr megmutatta nekem az utat.'],
         [text`제가 가방을 들어 ${bold('드릴게요')}.`, 'Majd én viszem a táskáját.'],
+        [text`할머니께서 제 가방을 들어 ${bold('주셨어요')}.`, 'A nagymama vitte a táskámat.'],
         [text`사진 좀 찍어 ${bold('주시겠어요')}?`, 'Lefényképezne, kérem?'],
+      ],
+      correctIncorrect: [
+        {
+          incorrect: '할머니께서 제 가방을 들어 드렸어요.',
+          reason: 'a cselekvő a nagymama; a 드리다 csak akkor áll, ha mi teszünk érte valamit',
+          correction: { correct: '할머니께서 제 가방을 들어 주셨어요.', translation: 'A nagymama vitte a táskámat.' },
+        },
       ],
     },
   },

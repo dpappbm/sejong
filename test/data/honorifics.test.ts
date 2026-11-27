@@ -1,14 +1,15 @@
 import { describe, expect, it } from 'vitest';
 import honorifics from '../../src/data/honorifics';
-import type { HonorificsData, KoreanHungarian } from '../../src/data/types';
+import type { HonorificPair, HonorificsData } from '../../src/data/types';
 import { POINTS_BY_ID } from '../../src/lib/content';
+import { plainText } from '../../src/lib/richText';
 import { incompleteSamples } from '../helpers';
 
 const { categories }: HonorificsData = honorifics;
 const rows = categories.flatMap(category =>
   category.rows.map((row, index) => ({ where: `${category.hungarian}, row ${index + 1}`, ...row }))
 );
-const isIncomplete = (pair: KoreanHungarian | null) => !!pair && (!pair[0] || !pair[1]);
+const isIncomplete = (pair: HonorificPair | null) => !!pair && (!pair[0] || !plainText(pair[1]).trim());
 
 describe('honorific words', () => {
   it('have Korean and Hungarian in every cell', () => {
@@ -23,6 +24,10 @@ describe('honorific words', () => {
       references.filter(id => !POINTS_BY_ID.has(id)).map(id => `${where}: ${id}`)
     );
     expect(missing).toEqual([]);
+  });
+
+  it('mark a warning with warning(), not with a bare ⚠ character', () => {
+    expect(JSON.stringify(honorifics)).not.toContain('⚠');
   });
 
   it('have correct samples with a translation and incorrect ones with a reason', () => {

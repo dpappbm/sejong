@@ -778,15 +778,18 @@ const points: PointSource[] = [
     honorific: {
       rows: [
         ['에게 / 한테', '-nak/-nek', '께', '-nak/-nek (tiszteleti)'],
-        ['주다', 'ad', '드리다', 'ad (tiszteleti)'],
+        ['주다', 'ad', '드리다', 'ad (tisztelt személynek)'],
+        ['주다', '(ő) ad nekem', '주시다', 'a tisztelt személy ad (nekem)'],
       ],
       note: [
         paragraph`Tisztelt személynek (szülő, nagyszülő, tanár) a ${korean('에게/한테')} helyett ${korean('께')} jár, és ilyenkor az „ad” sem ${korean('주다')}, hanem ${korean('드리다')}. Részletesen a ${reference('2B-07-1')} tanítja.`,
+        paragraph`Ha viszont ${bold('a tisztelt személy')} ad nekünk, az „ad” ${korean('주시다')} (${korean('-(으)시-')}, ${reference('2B-03-1')}).`,
       ],
       examples: [
         [text`할머니${bold('께')} 선물을 드렸어요.`, 'Ajándékot adtam a nagymamának.'],
         [text`선생님${bold('께')} 전화했어요.`, 'Felhívtam a tanár urat.'],
         [text`부모님${bold('께')} 편지를 썼어요.`, 'Levelet írtam a szüleimnek.'],
+        [text`할머니께서 용돈을 ${bold('주셨어요')}.`, 'A nagymama zsebpénzt adott.'],
       ],
     },
   },

@@ -20,6 +20,7 @@ import {
   simpleTable,
   text,
   textsOf,
+  warning,
   type Content,
 } from '../../src/lib/richText';
 
@@ -36,6 +37,7 @@ describe('plainText', () => {
     expect(plainText(text`어떻게 지냈${bold('니')}?`)).toBe('어떻게 지냈니?');
     expect(plainText(text`Lásd ${reference('3A-09-1')}, ${bold(korean('가다'))}`)).toBe('Lásd 3A 9. lecke, 가다');
     expect(plainText(text`가${lineBreak}나`)).toBe('가 나');
+    expect(plainText(text`ad; ${warning('csak ha mi adunk')}`)).toBe('ad; ⚠ csak ha mi adunk');
   });
 });
 
@@ -93,6 +95,9 @@ describe('Blocks', () => {
   it('renders the formatting and escapes the texts', async () => {
     expect(await render([paragraph`a < b ${bold('c')} ${korean(text`가${bold('나')}`)}`])).toBe(
       '<p>a &lt; b<b>c</b><span class="korean">가<b>나</b></span></p>'
+    );
+    expect(await render([paragraph`${warning('Figyelem')} szöveg`])).toBe(
+      '<p><span class="warning">⚠ Figyelem</span>szöveg</p>'
     );
     expect(await render([list('egy', text`${bold('két')}tő`), heading('Cím')])).toBe(
       '<ul><li>egy</li><li><b>két</b>tő</li></ul><h5>Cím</h5>'

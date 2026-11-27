@@ -254,7 +254,7 @@ export default {
       ['오곡밥을 먹다', 'ötgabonás rizst eszik'],
       ['부럼 깨물기', 'dióféléket roppantani (kelések ellen, hagyomány)'],
       ['세배를 하다', 'újévi meghajlással köszönti (az időseket)'],
-      ['세배를 드리다', 'újévi meghajlással köszönti (tiszteleti)'],
+      ['세배를 드리다', 'újévi meghajlással köszönti (szerény)'],
       ['세뱃돈을 주다', 'újévi pénzajándékot ad'],
       ['세뱃돈을 받다', 'újévi pénzajándékot kap'],
       ['덕담을 하다', 'jókívánságokat, bölcs tanácsokat mond'],

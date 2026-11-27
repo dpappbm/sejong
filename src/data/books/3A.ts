@@ -1355,7 +1355,7 @@ const points: PointSource[] = [
         ['-(으)라고 했어요', 'azt mondta, hogy …', '-(으)라고 하셨어요', 'azt mondta (tisztelt személy mondta)'],
       ],
       note: [
-        paragraph`Ha a felszólítás egy ${bold('tisztelt harmadik személy javára')} szól, a ${korean('주라고')} helyett ${korean('드리라고')} áll (vö. ${korean('-아/어 드리다')}, ${reference('3B-01-2')}). Ha a felszólítást ${bold('tisztelt személy mondta')}, az idéző ige kap tiszteleti alakot: ${korean('하셨어요')}, ${korean('말씀하셨어요')}.`,
+        paragraph`Ha a felszólítás egy ${bold('tisztelt harmadik személy javára')} szól, a ${korean('주라고')} helyett ${korean('드리라고')} áll (vö. ${korean('-아/어 드리다')}, ${reference('3B-01-2')}). Ha a felszólítást ${bold('tisztelt személy mondta')}, az idéző ige kap tiszteleti alakot: ${korean('하셨어요')}, ${korean('말씀하셨어요')}. Ha a beszélő ${bold('egy tisztelt személyt kért meg')} valamire, a ${korean('달라고')} marad, és az idéző ige lesz szerény: ${korean('말씀드렸어요')}.`,
       ],
       examples: [
         [
@@ -1365,6 +1365,11 @@ const points: PointSource[] = [
         ],
         [text`선생님께서 내일 다시 오${bold('라고 하셨어요')}.`, 'A tanár úr azt mondta, jöjjek vissza holnap.'],
         [text`아버지께서 할아버지께 전화 ${bold('드리라고 하셨어요')}.`, 'Apa azt mondta, hívjam fel a nagyapát.'],
+        [
+          text`선생님께 도와 ${bold('달라고 말씀드렸어요')}.`,
+          'Megkértem a tanár urat, hogy segítsen.',
+          'ㅂ-rendhagyó: 돕다 → 도와 달라고',
+        ],
       ],
     },
     ownNote: [

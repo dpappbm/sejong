@@ -25,6 +25,13 @@ const { content } = Astro.props;
         <Astro.self content={content.content} />
       </span>
     )}
+    {content.kind === 'warning' && (
+      <span class="warning">
+        {/* A no-break space keeps the mark with its first word. */}
+        {'⚠ '}
+        <Astro.self content={content.content} />
+      </span>
+    )}
     {content.kind === 'translation' && (
       <span class="translation">
         <Astro.self content={content.content} />
