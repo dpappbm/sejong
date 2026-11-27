@@ -8,6 +8,7 @@
 
   .sidebar {
     position: static;
+    display: block;
     height: auto;
     border-right: none;
     border-bottom: 1px solid var(--line);
@@ -15,7 +16,10 @@
 
     nav {
       display: none;
-      margin-top: 10px;
+      overflow-y: visible;
+      margin: 10px 0 0;
+      padding: 0;
+      border-top: none;
     }
 
     &.open nav {
