@@ -45,7 +45,7 @@ const points: PointSource[] = [
       ],
       [
         text`아침을 못 먹${bold('은 데다가')} 점심도 늦게 먹었어요.`,
-        'Nem reggeliztem, ráadásul ebédelni is későn ebédeltem.',
+        'Nem reggeliztem, ráadásul az ebédet is későn ettem.',
       ],
     ],
     ownNote: [
@@ -414,7 +414,7 @@ const points: PointSource[] = [
       [text`집을 구하${bold('는 데')} 한 달이 걸렸어요.`, 'Egy hónapba telt, mire lakást találtam.'],
       [
         text`이 음식을 만드${bold('는 데')} 두 시간이 걸려요.`,
-        'Ennek az ételnek az elkészítése két óra.',
+        'Ennek az ételnek az elkészítése két órát vesz igénybe.',
         'ㄹ-tő: 만들다 → 만드는',
       ],
     ],
@@ -603,7 +603,7 @@ const points: PointSource[] = [
       [text`저는 혼자 사는 게 더 ${bold('편하다고 생각해요')}.`, 'Szerintem egyedül élni kényelmesebb.'],
       [
         text`한국어를 잘하려면 많이 들${bold('어야 한다고 생각해요')}.`,
-        'Úgy gondolom, ha jól akarsz koreaiul, sokat kell hallgatnod.',
+        'Úgy gondolom, ha jól akarsz tudni koreaiul, sokat kell hallgatnod.',
         'ㄷ-rendhagyó: 듣다 → 들어야',
       ],
     ],
