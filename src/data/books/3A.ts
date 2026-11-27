@@ -329,7 +329,10 @@ const points: PointSource[] = [
         text`나는 거실 청소를 ${bold('할 테니까')} 넌 주방 청소를 해 줘.`,
         'Én kitakarítom a nappalit, te csináld meg a konyhát.',
       ],
-      [text`제가 음식을 ${bold('만들 테니까')} 마크 씨는 음료수를 사 오세요.`, 'Én megfőzöm az ételt, te hozz italt.'],
+      [
+        text`제가 음식을 ${bold('만들 테니까')} 마크 씨는 음료수를 사 오세요.`,
+        'Én megfőzöm az ételt, Mark, te pedig hozz italt.',
+      ],
       [text`제가 짐을 들어 ${bold('줄 테니까')} 문 좀 열어 주세요.`, 'Én viszem a csomagokat, te nyisd ki az ajtót.'],
       [text`길이 많이 ${bold('막힐 테니까')} 지하철을 타세요.`, 'Biztos nagy lesz a dugó, menj metróval.'],
       [
@@ -417,7 +420,7 @@ const points: PointSource[] = [
       [text`명동에 가${bold('려면')} 4호선을 타세요.`, 'Ha Myeongdongba akarsz menni, szállj fel a 4-es metróra.'],
       [
         text`한국어를 잘하${bold('려면')} 매일 들${bold('어야 돼요')}.`,
-        'Ha jól akarsz koreaiul, minden nap hallgatnod kell.',
+        'Ha jól akarsz tudni koreaiul, minden nap hallgatnod kell.',
         'ㄷ-rendhagyó: 듣다 → 들어야',
       ],
       [
@@ -615,7 +618,7 @@ const points: PointSource[] = [
     examples: [
       [
         text`한글날을 기념하${bold('기 위해서')} 여러 가지 행사를 한다고 해.`,
-        'A hangul napja alkalmából (megünneplésére) sokféle rendezvényt tartanak.',
+        'Azt mondják, a hangul napja alkalmából (megünneplésére) sokféle rendezvényt tartanak.',
       ],
       [
         text`건강해지${bold('기 위해서')} 매일 운동해요.`,
@@ -830,7 +833,7 @@ const points: PointSource[] = [
         ['월급이 많은 대신에 일이 힘들어요.', 'Jó a fizetés, cserébe nehéz a munka.'],
         [
           '일찍 출근하는 대신에 일찍 퇴근할 수 있어서 좋아요.',
-          'Jó, hogy korán kell bejönnöm, mert cserébe korán is mehetek haza.',
+          'Korán kezdek, de cserébe korán is mehetek haza – ez jó.',
         ],
       ]),
       paragraph`Ha az első cselekvés ${bold('már megtörtént')}, az ige múlt idejű jelzői alakja áll: ${korean('-(으)ㄴ 대신에')} (${korean('먹은, 본, 한')}; ㄹ-tő: ${korean('산, 만든')}). Ez mindig kompenzáció:`,

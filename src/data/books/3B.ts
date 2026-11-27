@@ -703,7 +703,7 @@ const points: PointSource[] = [
     examples: [
       [
         text`가: 유학 준비가 힘들죠? 나: 힘들${bold('기는 해요')}. 그래도 재미있어요.`,
-        '– Nehéz a tanulmányi út előkészítése, ugye? – Nehéz, az igaz. De azért érdekes.',
+        '– Nehéz a külföldi tanulmányokra való felkészülés, ugye? – Nehéz, az igaz. De azért érdekes.',
       ],
       [text`이 옷이 예쁘${bold('기는 한데')} 너무 비싸요.`, 'Szép ez a ruha, de túl drága.'],
       [

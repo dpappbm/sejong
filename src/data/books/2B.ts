@@ -203,7 +203,7 @@ const points: PointSource[] = [
       ],
       [text`아버지께서는 회사에 다니${bold('세요')}.`, 'Édesapám egy cégnél dolgozik.'],
       [text`선생님께서 음악을 들${bold('으세요')}.`, 'A tanár úr zenét hallgat.', 'ㄷ-rendhagyó: 듣다 → 들으세요'],
-      [text`할아버지께서 진지를 ${bold('드셨어요')}.`, 'Nagyapa megebédelt (tiszteleti szavakkal).'],
+      [text`할아버지께서 진지를 ${bold('드셨어요')}.`, 'Nagyapa evett (tiszteleti szavakkal).'],
     ],
     ownNote: [
       paragraph`Magunkra soha nem használjuk. A ${korean('-(으)세요')} lehet kijelentés („ő …”), kérdés és felszólítás is (${reference('1A-06-2')}). A rendhagyók a 으-kezdetű végződés szabályait követik: ${korean('덥다 → 더우세요, 짓다 → 지으세요')}.`,

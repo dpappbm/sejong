@@ -670,7 +670,7 @@ const points: PointSource[] = [
       ],
       [
         text`마크 씨가 아까부터 음악을 듣${bold('더니')} 갑자기 노래를 불러요.`,
-        'Mark egy ideje zenét hallgatott, aztán hirtelen énekelni kezdett.',
+        'Mark egy ideje zenét hallgatott, most meg hirtelen énekel.',
       ],
     ],
     ownNote: [
