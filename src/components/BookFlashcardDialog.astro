@@ -1,5 +1,6 @@
 ---
-// The "Gyakorlás" dialog of a whole book, opened from the book headings of the home page. The rows come from
+// The "Gyakorlás" dialog of a whole book, opened from the book headings of the home page, or from a lesson row there
+// with only that lesson chosen. The rows come from
 // /<book>/practice.json (src/pages/[book]/practice.json.ts), fetched on opening; src/scripts/flashcards.ts fills the
 // lesson list and drives the game. Each "Újra" asks the next batch of rows not asked yet.
 import { PRACTICE_ROW_KINDS, type PracticeRowKind } from '../lib/bookPractice';
@@ -52,6 +53,9 @@ const DEFAULT_BATCH_SIZE = '50';
             </button>
             <button class="dialog-button practice-quick-button" type="button" data-practice-learned-lessons>
               Amit már vettem
+            </button>
+            <button class="dialog-button practice-quick-button" type="button" data-practice-none>
+              Egyik sem
             </button>
           </div>
           <ul class="row-tree practice-lessons" data-practice-lessons></ul>

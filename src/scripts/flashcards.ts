@@ -1,6 +1,6 @@
 // The flash-card games: a lesson's (src/components/LessonFlashcardDialog.astro) and a whole book's
-// (src/components/BookFlashcardDialog.astro, on the home page). Choose rows, answer a multiple-choice round per row,
-// see the summary. A book game asks its selection in batches: "Újra" draws the rows not asked yet.
+// (src/components/BookFlashcardDialog.astro, on the home page; a lesson row there opens it with only that lesson chosen).
+// Choose rows, answer a multiple-choice round per row, see the summary. A book game asks its selection in batches: "Újra" draws the rows not asked yet.
 // The dialogs are part of the swapped page content, so they are looked up on every event; the listeners are bound once.
 import type { BookPractice, PracticeRowKind } from '../lib/bookPractice';
 import {
@@ -455,8 +455,11 @@ function fillLessons(dialog: HTMLDialogElement, practice: BookPractice): void {
   );
 }
 
-/** Opens the book dialog at once, with "Betöltés…" until the rows of the book arrive. */
-async function openBookDialog(dialog: HTMLDialogElement, book: string): Promise<void> {
+/**
+ * Opens the book dialog at once, with "Betöltés…" until the rows of the book arrive. The given lessons are chosen;
+ * without them the learned ones, or all if none is learned yet.
+ */
+async function openBookDialog(dialog: HTMLDialogElement, book: string, lessonKeys?: readonly string[]): Promise<void> {
   game = null;
   bookPractice = null;
   dialog.dataset.book = book;
@@ -486,7 +489,7 @@ async function openBookDialog(dialog: HTMLDialogElement, book: string): Promise<
   bookPractice = practice;
   fillLessons(dialog, practice);
   const learned = learnedLessonKeys(practice, progress());
-  setLessons(dialog, learned.length ? learned : practice.lessons.map(lesson => lesson.key));
+  setLessons(dialog, lessonKeys ?? (learned.length ? learned : practice.lessons.map(lesson => lesson.key)));
   for (const checkbox of dialog.querySelectorAll<HTMLInputElement>('input[data-practice-kind]'))
     checkbox.checked = true;
   if (loading) loading.hidden = true;
@@ -509,9 +512,17 @@ document.addEventListener('click', event => {
     if (dialog && bookButton.dataset.book) void openBookDialog(dialog, bookButton.dataset.book);
     return;
   }
-  if (target.closest('.flashcard-open-button')) {
-    const dialog = lessonDialog();
-    if (dialog) openLessonDialog(dialog);
+  const lessonButton = target.closest<HTMLElement>('.flashcard-open-button');
+  if (lessonButton) {
+    const { book, lessonKey } = lessonButton.dataset;
+    if (book && lessonKey) {
+      // Home page: the book dialog with only this lesson chosen.
+      const dialog = bookDialog();
+      if (dialog) void openBookDialog(dialog, book, [lessonKey]);
+    } else {
+      const dialog = lessonDialog();
+      if (dialog) openLessonDialog(dialog);
+    }
     return;
   }
   // A click beside the dialog (on its backdrop) intentionally does nothing.
@@ -543,6 +554,9 @@ document.addEventListener('click', event => {
     updateSelection(dialog);
   } else if (bookPractice && target.closest('[data-practice-learned-lessons]')) {
     setLessons(dialog, learnedLessonKeys(bookPractice, progress()));
+    updateSelection(dialog);
+  } else if (bookPractice && target.closest('[data-practice-none]')) {
+    setLessons(dialog, []);
     updateSelection(dialog);
   }
 });
