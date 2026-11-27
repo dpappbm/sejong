@@ -12,6 +12,8 @@ interface Props {
   pageLabel: string;
   /** The lesson shown on this page, if it is a lesson page. */
   lesson?: LessonInfo;
+  /** The page shown for a missing address: the next page gets no "← Vissza" button back to it. */
+  notFound?: boolean;
 }
 
 const {
@@ -19,6 +21,7 @@ const {
   description = 'A Sejong-tankönyvek (세종한국어 1A–4B) teljes nyelvtana magyarul.',
   pageLabel,
   lesson,
+  notFound = false,
 } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
@@ -44,7 +47,13 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       } catch (error) {}
     </script>
   </head>
-  <body data-base={base} data-page-label={pageLabel} data-book={lesson?.book} data-lesson={lesson?.lesson}>
+  <body
+    data-base={base}
+    data-page-label={pageLabel}
+    data-book={lesson?.book}
+    data-lesson={lesson?.lesson}
+    data-not-found={notFound ? 'true' : undefined}
+  >
     <div class="navigation-progress" id="navigation-progress" aria-hidden="true" transition:persist></div>
     <div class="layout">
       <Sidebar currentLesson={lesson} />

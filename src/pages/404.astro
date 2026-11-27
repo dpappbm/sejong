@@ -1,12 +1,11 @@
 ---
 // Shown by GitHub Pages for every missing address under the site (e.g. a mistyped or outdated link).
 import BackButton from '../components/BackButton.astro';
-import ChapterCards from '../components/ChapterCards.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { withBase } from '../lib/content';
 ---
 
-<BaseLayout title="Nem található – 한국어 문법" pageLabel="Nem található">
+<BaseLayout title="Nem található – 한국어 문법" pageLabel="Nem található" notFound>
   <BackButton />
   <div class="hero">
     <h1>Ez az oldal nem létezik</h1>
@@ -15,5 +14,4 @@ import { withBase } from '../lib/content';
       <a href={withBase('/')}>Vissza a főoldalra</a>
     </p>
   </div>
-  <ChapterCards />
 </BaseLayout>
