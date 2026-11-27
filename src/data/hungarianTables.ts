@@ -265,8 +265,8 @@ export default {
     { verb: 'még ha {presentFirstSingular} is', adjective: 'még ha {base} is', existential: 'még ha {base} is' },
   ],
   '3B-1-2': [
-    { verb: '{presentFirstSingular} a kedvéért (tiszteleti)' },
-    { verb: '{pastFirstSingular} a kedvéért (tiszteleti)' },
+    { verb: '{presentFirstSingular} a kedvéért (szerény)' },
+    { verb: '{pastFirstSingular} a kedvéért (szerény)' },
   ],
   '3B-2-1': [
     {

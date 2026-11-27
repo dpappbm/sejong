@@ -49,7 +49,7 @@ const points: PointSource[] = [
     form: '-아/어 드리다',
     name: '„megteszi (tisztelt) valakinek”',
     explanation: [
-      paragraph`A ${korean('-아/어 주다')} (${reference('2B-04-2')}) ${bold('tiszteleti')} párja: akkor használjuk, ha a cselekvést ${bold('idősebb, tisztelt személy javára')} végezzük. A címzett gyakran ${korean('께')} vagy ${korean('에게')} partikulát kap. A ${bold('-아/어')} szabály szerint.`,
+      paragraph`A ${korean('-아/어 주다')} (${reference('2B-04-2')}) ${bold('szerény')} párja: akkor használjuk, ha a cselekvést ${bold('idősebb, tisztelt személy javára')} végezzük. A címzett gyakran ${korean('께')} vagy ${korean('에게')} partikulát kap. A ${bold('-아/어')} szabály szerint.`,
     ],
     table: {
       additionalWords: ['사다', '찾다', '세우다', '읽다', '치우다', '부르다', '만들다', '돕다', '듣다', '보다'],
@@ -74,7 +74,16 @@ const points: PointSource[] = [
       ],
     ],
     ownNote: [
-      paragraph`Felajánlás udvariasan: ${korean('-아/어 드릴까요?')} („…-jak Önnek?”). A ${korean('주다')} „ad” tiszteleti párja önállóan is ${korean('드리다')}: ${korean('선물을 드렸어요')}.`,
+      paragraph`Felajánlás udvariasan: ${korean('-아/어 드릴까요?')} („…-jak Önnek?”). A ${korean('주다')} „ad” szerény párja önállóan is ${korean('드리다')}: ${korean('선물을 드렸어요')}.`,
+      paragraph`Ha viszont ${bold('a tisztelt személy')} teszi meg nekünk, nem ${korean('드리다')}, hanem ${korean('-아/어 주시다')} áll (${reference('2B-04-2')}): ${korean('할머니께서 저에게 편지를 써 주셨어요')} „A nagymama levelet írt nekem”.`,
+    ],
+    correctIncorrect: [
+      { correct: '제가 할머니께 편지를 써 드렸어요.', translation: 'Levelet írtam a nagymamának.' },
+      {
+        incorrect: '할머니께서 저에게 편지를 써 드렸어요.',
+        reason: 'a cselekvő a nagymama; ha ő tesz nekünk valamit, -아/어 주시다 kell',
+        correction: { correct: '할머니께서 저에게 편지를 써 주셨어요.', translation: 'A nagymama levelet írt nekem.' },
+      },
     ],
   },
   {
