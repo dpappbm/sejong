@@ -12,6 +12,7 @@ import {
   putMistakesFirst,
   retryPool,
   shuffle,
+  totalRounds,
   type Card,
   type CardKind,
   type Random,
@@ -211,6 +212,15 @@ describe('flash cards', () => {
     expect(first.batch.every(asked => cards.indexOf(asked) < 15)).toBe(true);
     expect(second.batch.slice(0, 5).every(asked => cards.indexOf(asked) < 15)).toBe(true);
     expect(second.batch.slice(5)).toEqual(cards.slice(20, 25));
+  });
+
+  it('counts the rounds of a book game', () => {
+    // 300 rows, 50 per round: 250 left during the first round.
+    expect(totalRounds(1, 250, 50)).toBe(6);
+    expect(totalRounds(6, 0, 50)).toBe(6);
+    // Mistakes put back: more rows left, more rounds.
+    expect(totalRounds(2, 210, 50)).toBe(7);
+    expect(totalRounds(1, 0, Infinity)).toBe(1);
   });
 
   it('switches languages', () => {
