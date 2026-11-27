@@ -331,14 +331,14 @@ function mistakeLine(className: string, label: string, text: string, language: L
 const fullText = (card: Card, language: Language) => (language === 'korean' ? card.korean : card.hungarian);
 
 /**
- * A book game: "Folytatás" after a "Csak a hibásak" round, "Elölről" when no row is left to ask (the mistakes count if
+ * A book game: "Folytatás" if there are rounds remaining, "Elölről" when no row is left to ask (the mistakes count if
  * they come again).
  */
 function updateRestartLabel(dialog: HTMLDialogElement): void {
   const restartButton = part<HTMLButtonElement>(dialog, 'restart');
   if (!restartButton || !game) return;
   const nothingLeft = !!game.remaining && !game.remaining.length && !(includeMistakes(dialog) && game.mistakes.length);
-  restartButton.textContent = nothingLeft ? 'Elölről' : game.remaining && game.mistakeRetry ? 'Folytatás' : 'Újra';
+  restartButton.textContent = nothingLeft ? 'Elölről' : game.remaining ? 'Folytatás' : 'Újra';
 }
 
 /** A book game: how many rows of the selection have come up (as in the progress line of the rounds). */
