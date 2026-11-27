@@ -25,13 +25,13 @@ To listen, open one of the pages in `scripts/audio/work/`: `index.html` (every t
 
 `collect-texts.mjs` reads the content files of one book:
 
-| File                            | Field                                                                |
-| ------------------------------- | -------------------------------------------------------------------- |
-| `src/data/books/<book>.ts`      | `examples` (also those of the honorific section)                     |
-| `src/data/books/<book>.ts`      | the `exampleList(…)` items of `ownNote`                              |
-| `src/data/books/<book>.ts`      | `correct` of `correctIncorrect` (the incorrect samples get no sound) |
-| `src/data/vocabulary/<book>.ts` | `textbook` (the `own` words get no sound)                            |
-| `src/data/pronunciation.ts`     | `examples` of the lessons of the book                                |
+| File                            | Field                                                                                                                 |
+| ------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| `src/data/books/<book>.ts`      | `examples` (also those of the honorific section)                                                                      |
+| `src/data/books/<book>.ts`      | the `exampleList(…)` items of `ownNote`                                                                               |
+| `src/data/books/<book>.ts`      | `correct` of `correctIncorrect`, also of the `correction` of an incorrect sample (the incorrect samples get no sound) |
+| `src/data/vocabulary/<book>.ts` | `textbook` (the `own` words get no sound)                                                                             |
+| `src/data/pronunciation.ts`     | `examples` of the lessons of the book                                                                                 |
 
 Markup is dropped, and the same text gets one file. Some texts are read differently than written (`spoken-text.mjs`): the speakers of a dialogue (`가:`, `나:`) are left out, and `하나/한` is read as `하나, 한`.
 

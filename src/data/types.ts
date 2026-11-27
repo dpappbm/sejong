@@ -35,11 +35,15 @@ export interface CorrectSample {
   translation: Text;
   note?: Text;
 }
-/** An incorrect usage sample: the Korean sentence, why it is wrong, and optionally what it meant to say. */
+/**
+ * An incorrect usage sample: the Korean sentence, why it is wrong, and optionally the right way to say it
+ * ("helyette helyesen"). A correction that does not use the grammar of the point goes here, not into a correct
+ * sample, so that it is never exported as an example of the point.
+ */
 export interface IncorrectSample {
   incorrect: Text;
   reason: Text;
-  translation?: Text;
+  correction?: CorrectSample;
 }
 export type CorrectIncorrect = CorrectSample | IncorrectSample;
 export type KoreanHungarian = [korean: string, hungarian: string];

@@ -67,7 +67,9 @@ const isDefined = <T>(value: T | undefined): value is T => value !== undefined;
 const sampleTexts = (items: CorrectIncorrect[] = []): Text[] =>
   items
     .flatMap(item =>
-      'correct' in item ? [item.correct, item.translation, item.note] : [item.incorrect, item.reason, item.translation]
+      'correct' in item
+        ? [item.correct, item.translation, item.note]
+        : [item.incorrect, item.reason, item.correction?.correct, item.correction?.translation, item.correction?.note]
     )
     .filter(isDefined);
 

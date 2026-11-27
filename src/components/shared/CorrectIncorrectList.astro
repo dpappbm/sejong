@@ -7,7 +7,7 @@ import RichText from '../text/RichText.astro';
 
 interface Props {
   items: CorrectIncorrect[];
-  /** With a place, the correct samples get a play button (the incorrect ones never do). */
+  /** With a place, the correct samples and corrections get a play button (the incorrect ones never do). */
   place?: TextPlace;
 }
 
@@ -15,26 +15,50 @@ const { items, place } = Astro.props;
 ---
 
 <ul class="correct-incorrect">
-  {items.map(item => {
-    const { translation } = item;
-    const note = 'correct' in item ? item.note : item.reason;
-    return (
-      <li class={'correct' in item ? 'correct' : 'incorrect'}>
+  {items.map(item =>
+    'correct' in item ? (
+      <li class="correct">
         <span class="korean">
-          <RichText content={'correct' in item ? item.correct : item.incorrect} />
-          {'correct' in item && <SoundButton korean={item.correct} book={place?.book} />}
+          <RichText content={item.correct} />
+          <SoundButton korean={item.correct} book={place?.book} />
         </span>
-        {translation && (
-          <span class="hungarian">
-            <RichText content={translation} />
-          </span>
-        )}
-        {note && (
+        <span class="hungarian">
+          <RichText content={item.translation} />
+        </span>
+        {item.note && (
           <span class="correct-incorrect-note">
-            <RichText content={note} />
+            <RichText content={item.note} />
           </span>
         )}
       </li>
-    );
-  })}
+    ) : (
+      <li class="incorrect">
+        <span class="korean">
+          <RichText content={item.incorrect} />
+        </span>
+        <span class="correct-incorrect-note">
+          <RichText content={item.reason} />
+        </span>
+        {item.correction && (
+          <span class="correct-incorrect-correction">
+            <span>
+              <span class="correct-incorrect-correction-label">✅ helyette helyesen:</span>{' '}
+              <span class="korean">
+                <RichText content={item.correction.correct} />
+                <SoundButton korean={item.correction.correct} book={place?.book} />
+              </span>
+            </span>
+            <span class="hungarian">
+              <RichText content={item.correction.translation} />
+            </span>
+            {item.correction.note && (
+              <span class="correct-incorrect-note">
+                <RichText content={item.correction.note} />
+              </span>
+            )}
+          </span>
+        )}
+      </li>
+    )
+  )}
 </ul>

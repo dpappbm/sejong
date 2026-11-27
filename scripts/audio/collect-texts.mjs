@@ -36,8 +36,10 @@ for (const point of BOOK_DATA[book].points) {
   for (const [korean, hungarian] of examples) add('example', point.lesson, korean, hungarian);
   const ownLists = (point.ownNote ?? []).filter(block => block.kind === 'examples');
   for (const [korean, hungarian] of examplesOf(ownLists)) add('ownNote', point.lesson, korean, hungarian);
-  for (const sample of [...(point.correctIncorrect ?? []), ...(point.honorific?.correctIncorrect ?? [])])
-    if ('correct' in sample) add('correct', point.lesson, sample.correct, sample.translation);
+  for (const sample of [...(point.correctIncorrect ?? []), ...(point.honorific?.correctIncorrect ?? [])]) {
+    const correct = 'correct' in sample ? sample : sample.correction;
+    if (correct) add('correct', point.lesson, correct.correct, correct.translation);
+  }
 }
 for (const lesson of Object.keys(BOOK_DATA[book].lessons).map(Number)) {
   for (const [korean, hungarian] of vocabulary[`${book}-${lesson}`]?.textbook ?? [])
