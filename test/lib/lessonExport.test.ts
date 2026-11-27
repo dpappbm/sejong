@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { LESSONS } from '../../src/lib/content';
 import { exportText } from '../../src/lib/exportFormat';
 import { buildLessonExport } from '../../src/lib/lessonExport';
+import { plainText } from '../../src/lib/richText';
 
 const lessonExport = (key: string) => buildLessonExport(LESSONS.find(lesson => lesson.key === key)!);
 const allRows = (key: string) => {
@@ -29,15 +30,29 @@ describe('lesson export', () => {
       .map(row => row[0]);
     expect(koreanTexts).toContain('날씨가 따뜻해졌어요.');
     expect(koreanTexts).not.toContain('날씨가 따뜻했어졌어요.');
-    expect(koreanTexts).toContain('비가 오는데 우산을 가져가세요.');
     expect(koreanTexts).not.toContain('비가 오는 대신에 우산을 가져가세요.');
   });
 
   it('exports a correct sample with its translation, never with its note', () => {
-    const rows = [...lessonExport('1A-8').points, ...lessonExport('2B-8').points].flatMap(point => point.examples);
+    const rows = lessonExport('1A-8').points.flatMap(point => point.examples);
     expect(rows).toContainEqual(['피곤하지 않아요 / 안 피곤해요.', 'Nem vagyok fáradt.']);
-    expect(rows).toContainEqual(['천 원만 있어요.', 'Csak ezer wonom van.']);
-    expect(rows.map(row => row[1])).not.toContain('állító mondatban: 만 „csak”');
+    expect(rows.map(row => row[1])).not.toContain('a 하다 melléknév nem bomlik szét (nem: 피곤 안 해요)');
+  });
+
+  it('never exports the correction of an incorrect sample', () => {
+    const koreanTexts = lessonExport('3A-9')
+      .points.flatMap(point => point.examples)
+      .map(row => row[0]);
+    expect(koreanTexts).not.toContain('비가 오는데 우산을 가져가세요.');
+    expect(koreanTexts).not.toContain('한국어는 어렵지만 공부해요.');
+    for (const lesson of LESSONS) {
+      const exported = new Set(buildLessonExport(lesson).points.flatMap(point => point.examples.map(row => row[0])));
+      const corrections = lesson.points
+        .flatMap(point => point.correctIncorrect ?? [])
+        .flatMap(sample => ('incorrect' in sample && sample.correction ? [plainText(sample.correction.correct)] : []))
+        .filter(korean => exported.has(korean));
+      expect(corrections, lesson.key).toEqual([]);
+    }
   });
 
   it('gives every lesson one export entry per point', () => {

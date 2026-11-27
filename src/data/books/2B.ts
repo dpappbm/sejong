@@ -573,8 +573,15 @@ const points: PointSource[] = [
     ],
     correctIncorrect: [
       { correct: '천 원밖에 없어요.', translation: 'Csak ezer wonom van.' },
-      { incorrect: '천 원밖에 있어요.', reason: 'a 밖에 után tagadás kell' },
-      { correct: '천 원만 있어요.', translation: 'Csak ezer wonom van.', note: 'állító mondatban: 만 „csak”' },
+      {
+        incorrect: '천 원밖에 있어요.',
+        reason: 'a 밖에 után tagadás kell',
+        correction: {
+          correct: '천 원만 있어요.',
+          translation: 'Csak ezer wonom van.',
+          note: 'állító mondatban: 만 „csak”',
+        },
+      },
     ],
     ownNote: [
       paragraph`A ${korean('만')} („csak”) semleges, a ${korean('밖에')} hangsúlyozza, hogy ${bold('kevés')}, és sajnáljuk. Igével: ${korean('-(으)ㄹ 수밖에 없다')} „nem tehetek mást, mint…”.`,

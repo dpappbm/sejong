@@ -818,10 +818,16 @@ const points: PointSource[] = [
       [text`커피 ${bold('대신에')} 차를 마셨어요.`, 'Kávé helyett teát ittam.'],
     ],
     correctIncorrect: [
-      { incorrect: '비가 오는 대신에 우산을 가져가세요.', reason: 'az esernyő nem helyettesíti az esőt' },
-      { correct: '비가 오는데 우산을 가져가세요.', translation: 'Esik az eső, vigyél esernyőt.' },
-      { incorrect: '한국어는 어려운 대신에 공부해요.', reason: 'a tanulás nem ellensúlyozza, hogy nehéz' },
-      { correct: '한국어는 어렵지만 공부해요.', translation: 'A koreai nehéz, de tanulom.' },
+      {
+        incorrect: '비가 오는 대신에 우산을 가져가세요.',
+        reason: 'az esernyő nem helyettesíti az esőt',
+        correction: { correct: '비가 오는데 우산을 가져가세요.', translation: 'Esik az eső, vigyél esernyőt.' },
+      },
+      {
+        incorrect: '한국어는 어려운 대신에 공부해요.',
+        reason: 'a tanulás nem ellensúlyozza, hogy nehéz',
+        correction: { correct: '한국어는 어렵지만 공부해요.', translation: 'A koreai nehéz, de tanulom.' },
+      },
     ],
     ownNote: [
       paragraph`Az ${korean('에')} elhagyható: ${korean('대신')}. Az ${korean('있다/없다')} igeként ragozódik: ${korean('맛있는 대신에')}.`,
@@ -947,12 +953,11 @@ const points: PointSource[] = [
       {
         incorrect: '시간이 있어야 같이 영화 봅시다.',
         reason: 'a -아야/어야 után nem állhat felszólítás vagy javaslat (-(으)세요, -ㅂ시다, -(으)ㄹ까요?)',
-        translation: 'Ha van időd, nézzünk meg együtt egy filmet.',
-      },
-      {
-        correct: '시간이 있으면 같이 영화 봅시다.',
-        translation: 'Ha van időd, nézzünk meg együtt egy filmet.',
-        note: 'kéréshez, javaslathoz -(으)면',
+        correction: {
+          correct: '시간이 있으면 같이 영화 봅시다.',
+          translation: 'Ha van időd, nézzünk meg együtt egy filmet.',
+          note: 'kéréshez, javaslathoz -(으)면',
+        },
       },
     ],
   },
@@ -1109,8 +1114,14 @@ const points: PointSource[] = [
       paragraph`${bold('Stílus:')} mindkettő hétköznapi beszéd. A ${korean('까')} nélküli ${korean('-아/어 보니')} és ${korean('-다 보니')} (${reference('4B-07-2')}) tömörebb, írásban gyakoribb.`,
     ],
     correctIncorrect: [
-      { incorrect: '신발을 한번 신다 보니까 좀 작았어요.', reason: 'egyszeri próba, nem folyamat' },
-      { correct: '신발을 한번 신어 보니까 좀 작았어요.', translation: 'Felpróbáltam a cipőt, és kicsit kicsi volt.' },
+      {
+        incorrect: '신발을 한번 신다 보니까 좀 작았어요.',
+        reason: 'egyszeri próba, nem folyamat',
+        correction: {
+          correct: '신발을 한번 신어 보니까 좀 작았어요.',
+          translation: 'Felpróbáltam a cipőt, és kicsit kicsi volt.',
+        },
+      },
       {
         incorrect: '이야기해 보니까 벌써 12시가 됐어요.',
         reason: 'nem próba: beszélgetés közben telt el az idő',

@@ -10,13 +10,15 @@ export const incompleteExamples = (where: string, examples: Example[] = []): str
     .filter(({ korean, hungarian }) => isEmpty(korean) || isEmpty(hungarian))
     .map(({ korean }) => `${where}: example without Korean or translation: ${plainText(korean)}`);
 
-/** Every correct sample needs a translation, every incorrect one a reason. */
+/** Every correct sample (and correction) needs a translation, every incorrect one a reason. */
 export const incompleteSamples = (where: string, items: CorrectIncorrect[] = []): string[] =>
   items
     .filter(item =>
       'correct' in item
         ? isEmpty(item.correct) || isEmpty(item.translation)
-        : isEmpty(item.incorrect) || isEmpty(item.reason)
+        : isEmpty(item.incorrect) ||
+          isEmpty(item.reason) ||
+          (item.correction !== undefined && (isEmpty(item.correction.correct) || isEmpty(item.correction.translation)))
     )
     .map(item => `${where}: incomplete sample: ${plainText('correct' in item ? item.correct : item.incorrect)}`);
 

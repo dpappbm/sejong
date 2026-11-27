@@ -567,8 +567,11 @@ export default {
         ['내일 뭐 해요?', 'Mit csinálsz holnap? (a 내일 nem kap 에-t)'],
       ],
       correctIncorrect: [
-        { correct: '오늘 공부해요.', translation: 'Ma tanulok.' },
-        { incorrect: '오늘에 공부해요.', reason: 'az 오늘 („ma”) nem kap 에-t' },
+        {
+          incorrect: '오늘에 공부해요.',
+          reason: 'az 오늘 („ma”) nem kap 에-t',
+          correction: { correct: '오늘 공부해요.', translation: 'Ma tanulok.' },
+        },
       ],
     },
     {

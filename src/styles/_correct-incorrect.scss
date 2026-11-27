@@ -7,7 +7,8 @@
   display: grid;
   gap: 8px;
 
-  // The mark in its own column; the sentence, its translation and its reason or note stacked beside it.
+  // The mark in its own column; the sentence, its translation and its reason or note (and the correction of an
+  // incorrect sample) stacked beside it.
   li {
     display: grid;
     grid-template-columns: auto 1fr;
@@ -19,7 +20,7 @@
 
     &::before {
       content: "✅";
-      grid-row: 1 / span 3;
+      grid-row: 1 / span 4;
     }
 
     &.incorrect {
@@ -27,7 +28,8 @@
         content: "❌";
       }
 
-      .korean {
+      // Only the incorrect sentence itself, not its correction.
+      > .korean {
         text-decoration: line-through;
         text-decoration-color: var(--incorrect);
       }
@@ -44,4 +46,15 @@
   font-size: 0.82rem;
   font-style: italic;
   color: var(--muted);
+}
+
+// "✅ helyette helyesen: …" under an incorrect sample.
+.correct-incorrect-correction {
+  display: grid;
+  margin-top: 4px;
+}
+
+.correct-incorrect-correction-label {
+  color: var(--correct);
+  font-size: 0.82rem;
 }

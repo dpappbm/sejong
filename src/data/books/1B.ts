@@ -185,6 +185,7 @@ const points: PointSource[] = [
       {
         incorrect: '비가 와서 우산을 가져가세요.',
         reason: text`felszólítás előtt -(으)니까 kell (${reference('1B-12-2')})`,
+        correction: { correct: '비가 오니까 우산을 가져가세요.', translation: 'Esik az eső, vigyél esernyőt.' },
       },
     ],
     ownNote: [
@@ -387,9 +388,12 @@ const points: PointSource[] = [
       paragraph`${bold('Vigyázat:')} személy ${bold('felé')} mozgásnál nem ${korean('(으)로')} kell, hanem ${korean('에게/한테')} („hozzá”) vagy ${korean('N 쪽으로')} („felé”).`,
     ],
     correctIncorrect: [
-      { correct: '친구한테 가요.', translation: 'A barátomhoz megyek.' },
       { correct: '친구 쪽으로 걸어가요.', translation: 'A barátom felé sétálok.' },
-      { incorrect: '친구로 가요.', reason: 'irányként rossz; így azt jelentené: „barátként megyek”' },
+      {
+        incorrect: '친구로 가요.',
+        reason: 'irányként rossz; így azt jelentené: „barátként megyek”',
+        correction: { correct: '친구한테 가요.', translation: 'A barátomhoz megyek.' },
+      },
     ],
   },
   {
@@ -765,10 +769,10 @@ const points: PointSource[] = [
       paragraph`Tárgyra, helyre (pl. intézményre) nem ${korean('에게')}, hanem ${korean('에')}: ${korean('꽃에 물을 줘요')}, ${korean('회사에 전화해요')}. Az ellenkező irány („-tól/-től”): ${korean('에게서 / 한테서')}.`,
     ],
     correctIncorrect: [
-      { correct: '나무에 물을 줘요.', translation: 'Meglocsolom a fát.' },
       {
         incorrect: '나무에게 물을 줘요.',
         reason: 'az 에게 csak élőlény (ember, állat) után áll; növény, tárgy után 에',
+        correction: { correct: '나무에 물을 줘요.', translation: 'Meglocsolom a fát.' },
       },
     ],
     honorific: {
