@@ -31,6 +31,13 @@ function writeStorage(key: string, value: string, storage: Storage = localStorag
     // Storage blocked (private window, disabled site data): the page works without remembering.
   }
 }
+function removeStorage(key: string, storage: Storage = localStorage): void {
+  try {
+    storage.removeItem(key);
+  } catch {
+    // Storage blocked: nothing was remembered.
+  }
+}
 
 const positionOf = (book: string, lesson: string | number) => BOOKS.indexOf(book) * 100 + Number(lesson);
 const lessonUrl = (book: string, lesson: string | number) => `${base()}/${book.toLowerCase()}/${lesson}/`;
@@ -262,6 +269,8 @@ const normalizedUrl = (url: string) => {
 };
 
 function rememberOrigin(target: string): void {
+  // Going back to the not found page is no use: forget the origin, so an older one cannot show the button either.
+  if (pageData().notFound) return removeStorage(ORIGIN_KEY, sessionStorage);
   const origin: Origin = { target: normalizedUrl(target), label: pageData().pageLabel ?? '' };
   writeStorage(ORIGIN_KEY, JSON.stringify(origin), sessionStorage);
 }

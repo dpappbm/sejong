@@ -1,0 +1,17 @@
+---
+// Shown by GitHub Pages for every missing address under the site (e.g. a mistyped or outdated link).
+import BackButton from '../components/BackButton.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { withBase } from '../lib/content';
+---
+
+<BaseLayout title="Nem található – 한국어 문법" pageLabel="Nem található" notFound>
+  <BackButton />
+  <div class="hero">
+    <h1>Ez az oldal nem létezik</h1>
+    <p>A cím elírt vagy elavult lehet. A tartalomjegyzékben minden lecke és nyelvtani pont megtalálható.</p>
+    <p>
+      <a href={withBase('/')}>Vissza a főoldalra</a>
+    </p>
+  </div>
+</BaseLayout>
