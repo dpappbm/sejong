@@ -76,12 +76,13 @@ document.addEventListener('astro:after-swap', () => {
 });
 
 // The persisted menu is moved into the new body, which resets its scroll position: keep it.
+const sidebarNavigation = sidebar.querySelector('nav')!;
 let sidebarScrollTop = 0;
 document.addEventListener('astro:before-swap', () => {
-  sidebarScrollTop = sidebar.scrollTop;
+  sidebarScrollTop = sidebarNavigation.scrollTop;
 });
 document.addEventListener('astro:after-swap', () => {
-  sidebar.scrollTop = sidebarScrollTop;
+  sidebarNavigation.scrollTop = sidebarScrollTop;
 });
 
 // ---------- progress ----------

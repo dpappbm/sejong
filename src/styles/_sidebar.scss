@@ -1,14 +1,26 @@
 // The sidebar: site name, progress and theme controls.
 @use "mixins" as *;
 
+// The head (name, controls) stays in place; only the table of contents scrolls.
 .sidebar {
   position: sticky;
   top: 0;
   height: 100vh;
-  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
   background: var(--card);
   border-right: 1px solid var(--line);
-  padding: 18px 14px 40px;
+  padding: 18px 14px 0;
+
+  nav {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    // Up to the sidebar's edges, so the scrollbar sits at the border.
+    margin: 0 -14px;
+    padding: 10px 14px 40px;
+    border-top: 1px solid var(--line);
+  }
 
   .brand {
     font-weight: 700;
