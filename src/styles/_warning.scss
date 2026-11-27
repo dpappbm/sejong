@@ -1,0 +1,14 @@
+// A caution inside a text: the ⚠ mark and its words on an amber label. It stays inline, so it wraps with the
+// text; every line of a wrapped label gets its own border and padding.
+
+.warning {
+  color: var(--warning);
+  background: var(--warning-background);
+  border: 1px solid var(--warning-border);
+  border-radius: 4px;
+  padding: 0 4px;
+  font-weight: 600;
+  line-height: 1.6;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}

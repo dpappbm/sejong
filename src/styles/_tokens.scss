@@ -51,6 +51,9 @@ $level-colors: (
   --own-border: #6d5222;
   --future: #f0c674;
   --future-background: #33290f;
+  --warning: #f0c674;
+  --warning-background: #33290f;
+  --warning-border: #6d5222;
   --current: #5fd4cc;
   --current-background: #12302e;
   @include level-tokens("dark");
@@ -72,6 +75,9 @@ $level-colors: (
   --own-border: #f0c27a;
   --future: #8a5a00;
   --future-background: #fdf0d5;
+  --warning: #8a4b00;
+  --warning-background: #fdf0d5;
+  --warning-border: #f0c27a;
   --current: #0b7a75;
   --current-background: #d9f3f1;
   @include level-tokens("light");

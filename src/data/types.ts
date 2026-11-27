@@ -248,10 +248,12 @@ export interface LessonVocabulary {
 }
 
 // ---------- honorific words chapter ----------
+/** [korean, hungarian]; the Hungarian may be formatted, e.g. with a warning(). */
+export type HonorificPair = [korean: string, hungarian: Text];
 export interface HonorificRow {
   /** Base form [korean, hungarian], or null if there is none. */
   base: KoreanHungarian | null;
-  honorific: KoreanHungarian;
+  honorific: HonorificPair;
   example: KoreanHungarian;
   /** Points where the page teaches the form. */
   references?: PointId[];

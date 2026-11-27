@@ -1,4 +1,4 @@
-import { bold, exampleList, korean, list, paragraph, reference, text } from '../lib/richText';
+import { bold, exampleList, korean, list, paragraph, reference, text, warning } from '../lib/richText';
 import type { HonorificsData } from './types';
 
 export default {
@@ -157,7 +157,7 @@ export default {
       ],
       note: [
         paragraph`A többi igénél és melléknévnél elég a szabályos ${korean('-(으)시-')}: ${korean('가다 → 가세요, 읽다 → 읽으세요')} (${reference('2B-03-1', '2B 3/1')}).`,
-        paragraph`⚠ A ${korean('주다 / -아/어 주다')} tiszteleti alakja is a szabályos ${korean('주시다 / -아/어 주시다')}: ha ${bold('a tisztelt személy')} ad vagy tesz nekünk valamit. A ${korean('드리다')} az ellenkező irány, szerény alak (${reference('honorific-category-4', 'Szerény alakok')}).`,
+        paragraph`${warning('Figyelem')} A ${korean('주다 / -아/어 주다')} tiszteleti alakja is a szabályos ${korean('주시다 / -아/어 주시다')}: ha ${bold('a tisztelt személy')} ad vagy tesz nekünk valamit. A ${korean('드리다')} az ellenkező irány, szerény alak (${reference('honorific-category-4', 'Szerény alakok')}).`,
         exampleList([['선생님께서 길을 가르쳐 주셨어요.', 'A tanár úr megmutatta nekem az utat.']]),
       ],
     },
@@ -176,13 +176,13 @@ export default {
         },
         {
           base: ['주다', 'ad'],
-          honorific: ['드리다', 'ad (tisztelt személynek; ⚠ csak ha mi adunk)'],
+          honorific: ['드리다', text`ad (tisztelt személynek; ${warning('csak ha mi adunk')})`],
           example: ['어머니께 선물을 드렸어요.', 'Ajándékot adtam édesanyámnak.'],
           references: ['1B-12-1', '2B-03-2'],
         },
         {
           base: ['-아/어 주다', 'megteszi valakinek'],
-          honorific: ['-아/어 드리다', 'megteszi (tisztelt személynek; ⚠ csak ha mi tesszük)'],
+          honorific: ['-아/어 드리다', text`megteszi (tisztelt személynek; ${warning('csak ha mi tesszük')})`],
           example: ['할머니 가방을 들어 드렸어요.', 'Vittem a nagymama táskáját.'],
           references: ['2B-04-2', '3A-12-2', '3B-01-2'],
         },
@@ -281,7 +281,7 @@ export default {
           base: null,
           honorific: [
             '당신',
-            '⚠ „Ön/maga”: csak házastársak között („drágám”), írásban, dalban, reklámban; szemtől szemben idegennek sértő',
+            text`„Ön/maga”: csak házastársak között („drágám”), írásban, dalban, reklámban; ${warning('szemtől szemben idegennek sértő')}`,
           ],
           example: ['여보, 당신도 커피 마실래요?', 'Drágám, te is kérsz kávét? (házastársak között)'],
           references: [],
