@@ -15,6 +15,7 @@ import {
   putMistakesFirst,
   retryPool,
   shuffle,
+  totalRounds,
   type Card,
   type Language,
   type Round,
@@ -40,6 +41,12 @@ interface GameSetup {
   remaining: Card[] | null;
   /** A book game: the questions of a round. */
   batchSize: number;
+  /** A book game: the rows of the selection asked so far in this pass through it, the current one included. */
+  asked: Set<Card>;
+  /** A book game: the number of the current batch in this pass ("Csak a hibásak" rounds do not count). */
+  roundNumber: number;
+  /** A "Csak a hibásak" round. */
+  mistakeRetry?: boolean;
 }
 
 interface Game extends GameSetup {
@@ -156,17 +163,30 @@ function startSelection(dialog: HTMLDialogElement): void {
       selection: cards,
       remaining: null,
       batchSize: Infinity,
+      asked: new Set(),
+      roundNumber: 1,
     });
     return;
   }
   const batchSize = selectedBatchSize(dialog);
   const { batch, remaining } = drawBatch(shuffle(cards), batchSize);
-  startGame(dialog, { questions: batch, pool: cards, selection: cards, remaining, batchSize });
+  startGame(dialog, {
+    questions: batch,
+    pool: cards,
+    selection: cards,
+    remaining,
+    batchSize,
+    asked: new Set(),
+    roundNumber: 1,
+  });
 }
 
 const includeMistakes = (dialog: HTMLDialogElement) => !!part<HTMLInputElement>(dialog, 'include-mistakes')?.checked;
 
-/** "Újra": a lesson game asks the same rows again; a book game the next batch (the mistakes first, if chosen). */
+/**
+ * "Újra": a lesson game asks the same rows again. A book game ("Újra", or "Folytatás" after a "Csak a hibásak" round)
+ * asks the next batch of rows not asked yet, the mistakes first if chosen.
+ */
 function restart(dialog: HTMLDialogElement): void {
   if (!game) return;
   const { selection, batchSize } = game;
@@ -176,16 +196,38 @@ function restart(dialog: HTMLDialogElement): void {
   }
   const mistakes = game.mistakes.map(mistake => mistake.round.card);
   let remaining = includeMistakes(dialog) ? putMistakesFirst(game.remaining, mistakes) : game.remaining;
-  // Every row has been asked: start the selection over.
-  if (!remaining.length) remaining = shuffle(selection);
+  let { asked, roundNumber } = game;
+  roundNumber++;
+  // Every row has been asked: start the selection over ("Elölről").
+  if (!remaining.length) {
+    remaining = shuffle(selection);
+    asked = new Set();
+    roundNumber = 1;
+  }
   const next = drawBatch(remaining, batchSize);
-  startGame(dialog, { questions: next.batch, pool: selection, selection, remaining: next.remaining, batchSize });
+  startGame(dialog, {
+    questions: next.batch,
+    pool: selection,
+    selection,
+    remaining: next.remaining,
+    batchSize,
+    asked,
+    roundNumber,
+  });
 }
 
+/** The position in the round; a book game also tells the round and how many rows of the selection have come up. */
 function updateProgress(dialog: HTMLDialogElement): void {
   const progressLine = part(dialog, 'progress');
-  if (progressLine && game)
-    progressLine.textContent = `${game.index + 1} / ${game.questions.length} · ${game.correctCount} jó`;
+  if (!progressLine || !game) return;
+  let text = `${game.index + 1} / ${game.questions.length} · ${game.correctCount} jó`;
+  if (game.remaining) {
+    const round = game.mistakeRetry
+      ? 'hibás sorok köre'
+      : `${game.roundNumber} / ${totalRounds(game.roundNumber, game.remaining.length, game.batchSize)} kör`;
+    text += ` (${round}, ${game.asked.size} / ${game.selection.length} összesen)`;
+  }
+  progressLine.textContent = text;
 }
 
 function showRound(dialog: HTMLDialogElement): void {
@@ -198,6 +240,7 @@ function showRound(dialog: HTMLDialogElement): void {
     return;
   }
   game.round = round;
+  game.asked.add(card);
   game.answered = false;
   updateProgress(dialog);
   const question = part(dialog, 'question');
@@ -287,23 +330,27 @@ function mistakeLine(className: string, label: string, text: string, language: L
 
 const fullText = (card: Card, language: Language) => (language === 'korean' ? card.korean : card.hungarian);
 
-/** A book game: "Elölről" instead of "Újra" when no row is left to ask (the mistakes count if they come again). */
+/**
+ * A book game: "Folytatás" after a "Csak a hibásak" round, "Elölről" when no row is left to ask (the mistakes count if
+ * they come again).
+ */
 function updateRestartLabel(dialog: HTMLDialogElement): void {
   const restartButton = part<HTMLButtonElement>(dialog, 'restart');
   if (!restartButton || !game) return;
   const nothingLeft = !!game.remaining && !game.remaining.length && !(includeMistakes(dialog) && game.mistakes.length);
-  restartButton.textContent = nothingLeft ? 'Elölről' : 'Újra';
+  restartButton.textContent = nothingLeft ? 'Elölről' : game.remaining && game.mistakeRetry ? 'Folytatás' : 'Újra';
 }
 
-/** A book game: how far the selection has been asked. */
+/** A book game: how many rows of the selection have come up (as in the progress line of the rounds). */
 function showRemaining(dialog: HTMLDialogElement): void {
   const line = part(dialog, 'remaining');
   if (!line || !game?.remaining) return;
   const total = game.selection.length;
-  const left = game.remaining.length;
-  line.textContent = left
-    ? `Eddig ${total - left} / ${total} sor volt, ${left} van hátra.`
-    : `Mind a ${total} sor sorra került.`;
+  const asked = game.asked.size;
+  line.textContent =
+    asked < total
+      ? `Eddig ${asked} / ${total} sor volt, ${total - asked} van hátra.`
+      : `Mind a ${total} sor sorra került.`;
   const includeLabel = part(dialog, 'include-mistakes-label');
   if (includeLabel) includeLabel.hidden = !game.mistakes.length;
 }
@@ -482,6 +529,7 @@ document.addEventListener('click', event => {
       ...game,
       questions: shuffle(mistakes),
       pool: retryPool(mistakes, game.selection),
+      mistakeRetry: true,
     });
   } else if (target.closest('[data-flashcard-back]')) {
     game = null;

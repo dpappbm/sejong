@@ -152,6 +152,10 @@ export function drawBatch<T>(remaining: readonly T[], size: number): { batch: T[
   return { batch: remaining.slice(0, size), remaining: remaining.slice(size) };
 }
 
+/** The number of batches in a pass of a book game: the current one and those the rows left still fill. */
+export const totalRounds = (roundNumber: number, remainingCount: number, batchSize: number) =>
+  roundNumber + Math.ceil(remainingCount / batchSize);
+
 /** The rows left, with the last round's mistakes in front (shuffled), so the next batch starts with them. */
 export function putMistakesFirst(
   remaining: readonly Card[],
